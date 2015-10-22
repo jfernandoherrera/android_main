@@ -1,6 +1,9 @@
 package com.amtechventures.tucita.utils.blocks;
 
+import android.content.Loader;
+import android.database.Cursor;
 import android.media.Image;
+import android.os.Bundle;
 
 import com.amtechventures.tucita.model.error.AppError;
 
@@ -78,11 +81,36 @@ public class Completion {
         public void completion(JSONObject jsonObject, AppError error);
 
     }
+    public interface DictionaryErrorCompletion2 {
 
+        public void completion(JSONObject jsonObject, AppError error);
+
+    }
+    public interface LongArrayErrorCompletion {
+
+        void completion(long aLong, JSONArray array, AppError error);
+
+    }
     public interface ArrayWithDictionaryErrorCompletion {
 
         public void completion(List<Map<?, ?>> list, AppError error);
 
     }
+    public interface BoolBoolCompletion {
+
+        void completion(boolean bool1, boolean bool2);
+
+        Loader<Cursor> onCreateLoader(int id, Bundle args);
+
+        void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor);
+
+        void onLoaderReset(Loader<Cursor> cursorLoader);
+    }
+    public interface LongErrorCompletion {
+
+        void completion(long aLong, Error error);
+
+    }
+
 
 }
