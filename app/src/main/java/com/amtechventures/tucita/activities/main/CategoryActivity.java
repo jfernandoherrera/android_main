@@ -1,34 +1,37 @@
 package com.amtechventures.tucita.activities.main;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.support.v7.widget.SearchView;
 import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.adapters.CategoryGridAdapter;
-import com.amtechventures.tucita.model.category.Category;
-import com.parse.FindCallback;
-import com.parse.Parse;
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
-import com.parse.SaveCallback;
-import java.util.ArrayList;
-import java.util.List;
+import com.amtechventures.tucita.activities.login.LoginActivity;
+import com.amtechventures.tucita.model.tucita.context.category.CategoryContext;
+
 
 
 public class CategoryActivity extends AppCompatActivity {
 
-    RecyclerView mRecyclerView;
 
-    RecyclerView.LayoutManager mLayoutManager;
+    private RecyclerView.Adapter Adapter;
 
-    RecyclerView.Adapter mAdapter;
+    private RecyclerView RecyclerView;
+
+    private RecyclerView.LayoutManager LayoutManager;
+
+    private CategoryContext categoryContext;
 
     public static final int COLUMNS_IN_CATEGORIES = 3;
 
+    private Button signOrRegister;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,81 +40,63 @@ public class CategoryActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_category);
 
-        ParseObject.registerSubclass(Category.class);
-        Parse.enableLocalDatastore(this);
-        Parse.initialize(this, getResources().getString(R.string.app_parse_id), getResources().getString(R.string.client_parse_id));
+        RecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
+        signOrRegister=(Button) findViewById(R.id.go_to_login);
 
-        // Calling the RecyclerView
-        mRecyclerView = (RecyclerView)findViewById(R.id.recycler_view);
+        RecyclerView.setHasFixedSize(true);
 
-        mRecyclerView.setHasFixedSize(true);
+        LayoutManager = new GridLayoutManager(getApplicationContext(), COLUMNS_IN_CATEGORIES);
 
-        Bundle b = getIntent().getExtras();
-        // The number of Columns
-        mLayoutManager = new GridLayoutManager(getApplicationContext(), COLUMNS_IN_CATEGORIES);
+        RecyclerView.setLayoutManager(LayoutManager);
 
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        categoryContext=CategoryContext.context(this,null);
 
-        loadFromParse();
+        Adapter = new CategoryGridAdapter(categoryContext.getCategories());
 
-  }
-    private void loadFromParse() {
+        RecyclerView.setAdapter(Adapter);
 
-        ParseQuery<Category> query = Category.getQuery();
-
-          query.findInBackground(new FindCallback<Category>() {
-
-              public void done(final List<Category> categoryList, ParseException e) {
-
-                  if (e == null) {
-
-                      ParseObject.pinAllInBackground((List<Category>) categoryList,
-
-                              new SaveCallback() {
-                                  public void done(ParseException e) {
-
-                                      if (e == null) {
-
-                                          if (!isFinishing()) {
-
-                                              ArrayList<Category> categories=new ArrayList();
-
-                                              for (ParseObject cat : categoryList) {
-
-                                                  categories.add((Category)cat);
-
-                                              }
-                                              mAdapter = new CategoryGridAdapter(categories);
-
-                                              mRecyclerView.setAdapter(mAdapter);
-
-                                          }
-                                      } else {
-                                          Log.i(this.getClass().getName(),getResources().getString(R.string.load_from_parse)+
-                                                getResources().getString(R.string.error_finding_pinned_categories)
-                                                          + e.getMessage());
-                                      }
-                                  }
-                              });
-                  } else {
-                      Log.i(this.getClass().getName(),
-                              getResources().getString(R.string.load_from_parse)+
-                                      getResources().getString(R.string.error_pinning_categories)
-                                      + e.getMessage());
-                  }
-              }
-          });
-
+        signOrRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToLogin();
+            }
+        });
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
+
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                goToLogin();
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
         return true;
     }
 
+    private void goToLogin() {
 
+        Intent intent = new Intent(CategoryActivity.this, LoginActivity.class);
+
+        startActivity(intent);
+
+    }
 
 }

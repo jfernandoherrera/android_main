@@ -13,12 +13,12 @@ import java.util.List;
 
 public class CategoryGridAdapter extends RecyclerView.Adapter<CategoryGridAdapter.ViewHolder> {
 
-    List<Category> mItems;
+    List<Category> Items;
 
     public CategoryGridAdapter(ArrayList<Category> offer) {
         super();
 
-        mItems = offer;
+        Items = offer;
 
     }
 
@@ -35,7 +35,7 @@ public class CategoryGridAdapter extends RecyclerView.Adapter<CategoryGridAdapte
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
 
-        Category category = mItems.get(i);
+        Category category = Items.get(i);
 
         viewHolder.category.setText(category.getName());
 
@@ -44,13 +44,13 @@ public class CategoryGridAdapter extends RecyclerView.Adapter<CategoryGridAdapte
     @Override
     public int getItemCount() {
 
-        return mItems.size();
+        return Items.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder{
 
 
-        public TextView category;
+        protected TextView category;
 
         private ImageButton categoryIcon;
 
@@ -59,9 +59,9 @@ public class CategoryGridAdapter extends RecyclerView.Adapter<CategoryGridAdapte
 
             super(itemView);
 
-            categoryIcon=(ImageButton) itemView.findViewById(R.id.imageb);
+            categoryIcon=(ImageButton) itemView.findViewById(R.id.imageButtonCategory);
 
-            category = (TextView )itemView.findViewById(R.id.textView2);
+            category = (TextView )itemView.findViewById(R.id.textCategory);
 
             categoryIcon.setOnClickListener(new View.OnClickListener() {
                 @Override
