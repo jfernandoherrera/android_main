@@ -40,7 +40,7 @@ public class  CategoryContext {
 
                             + e.getMessage());
         }
-            if(categories==null){
+            if(categories.isEmpty()){
             remoteCategory=new RemoteCategory(context);
             loadFromRemote(context);
             LocalCategory.pinAll(categories);
