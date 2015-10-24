@@ -15,12 +15,12 @@ import java.util.List;
 /**
  * Created by techventures on 22/10/15.
  */
-public class LocalCategory {
+public class CategoryLocal {
 
 
     Context con;
 
-    public LocalCategory(Context con) {
+    public CategoryLocal(Context con) {
 
         this.con=con;
 

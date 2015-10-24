@@ -10,11 +10,11 @@ import com.parse.ParseQuery;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RemoteCategory {
+public class CategoryRemote {
 
     Context con;
 
-    public RemoteCategory(Context con) {
+    public CategoryRemote(Context con) {
 
     this.con=con;
 
