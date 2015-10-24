@@ -36,10 +36,10 @@ public class RemoteCategory {
             categories.add(cate);
         }
 
-      //  ParseObject.pinAllInBackground(categories);
 
         return categories;
         }
+
 
 
 }

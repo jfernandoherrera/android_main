@@ -13,7 +13,7 @@ public class Application extends android.app.Application {
 
     	super.onCreate();
         FacebookSdk.sdkInitialize(getApplicationContext());
-       // Parse.enableLocalDatastore(this);
+        Parse.enableLocalDatastore(this);
         String app_parse_id = getResources().getString(R.string.app_parse_id);
         Parse.initialize(getApplicationContext(), app_parse_id, getResources().getString(R.string.client_parse_id));
         ParseObject.registerSubclass(Category.class);

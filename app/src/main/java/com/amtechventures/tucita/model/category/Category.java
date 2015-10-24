@@ -4,6 +4,8 @@ import com.parse.ParseClassName;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import java.util.UUID;
+
 @ParseClassName("Category")
 public class Category extends ParseObject {
 
@@ -18,6 +20,8 @@ public class Category extends ParseObject {
         return getString("name");
 
     }
+
+
 
     public static ParseQuery<Category> getQuery() {
         return ParseQuery.getQuery(Category.class);

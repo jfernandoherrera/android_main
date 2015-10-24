@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.model.category.Category;
+import com.amtechventures.tucita.model.local.LocalCategory;
 import com.amtechventures.tucita.model.remote.RemoteCategory;
 import com.parse.ParseException;
 import java.util.ArrayList;
@@ -14,7 +15,9 @@ public class  CategoryContext {
 
     private RemoteCategory remoteCategory;
 
-    public static CategoryContext context(Context context, CategoryContext categoryContext) {
+    private LocalCategory localCategory;
+
+    public static CategoryContext context(Context context, CategoryContext categoryContext) throws ParseException {
 
         if(categoryContext==null){
 
@@ -24,23 +27,35 @@ public class  CategoryContext {
         return  categoryContext;
     }
 
-    CategoryContext(Context context){
-
-    remoteCategory=new RemoteCategory(context);
-
+    private CategoryContext(Context context) throws ParseException {
+        localCategory=new LocalCategory(context);
         try {
-            categories= remoteCategory.loadFromParse();
-
-        } catch (ParseException e) {
-
+            loadFromLocal(context);
+        }catch (Exception e){
             Log.i(this.getClass().getName(),
 
-                    context.getResources().getString(R.string.load_from_parse)+
+                    context.getResources().getString(R.string.load_from_parse) +
 
                             context.getResources().getString(R.string.error_pinning_categories)
 
-                                + e.getMessage());
+                            + e.getMessage());
         }
+            if(categories==null){
+            remoteCategory=new RemoteCategory(context);
+            loadFromRemote(context);
+            LocalCategory.pinAll(categories);
+        }
+
+
+    }
+
+    private void loadFromLocal(Context context) throws ParseException {
+        categories=localCategory.loadFromParseLocal();
+
+    }
+    private void loadFromRemote(Context context) throws ParseException {
+
+        categories= remoteCategory.loadFromParse();
     }
     public ArrayList<Category> getCategories(){
 

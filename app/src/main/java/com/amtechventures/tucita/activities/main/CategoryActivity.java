@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -50,11 +51,23 @@ public class CategoryActivity extends AppCompatActivity {
 
         RecyclerView.setLayoutManager(LayoutManager);
 
-        categoryContext=CategoryContext.context(this,null);
+        try {
+            categoryContext = CategoryContext.context(this, null);
 
-        Adapter = new CategoryGridAdapter(categoryContext.getCategories());
+            Adapter = new CategoryGridAdapter(categoryContext.getCategories());
 
-        RecyclerView.setAdapter(Adapter);
+            RecyclerView.setAdapter(Adapter);
+        }catch(Exception e){
+            Log.i(this.getClass().getName(),
+
+                    getResources().getString(R.string.load_from_parse) +
+
+                            getResources().getString(R.string.error_pinning_categories)
+
+                            + e.getMessage());
+        }
+
+
 
         signOrRegister.setOnClickListener(new View.OnClickListener() {
             @Override
