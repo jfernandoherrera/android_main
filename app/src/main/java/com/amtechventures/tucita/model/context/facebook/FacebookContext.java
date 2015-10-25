@@ -1,4 +1,4 @@
-package com.amtechventures.tucita.model.tucita.context.user;
+package com.amtechventures.tucita.model.context.facebook;
 
 
 import android.app.Activity;

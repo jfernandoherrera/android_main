@@ -9,7 +9,7 @@ import org.junit.Test;
 import org.robolectric.Robolectric;
 import org.robolectric.annotation.Config;
 
-import com.amtechventures.tucita.activities.main.CategoryActivity;
+import com.amtechventures.tucita.activities.category.CategoryActivity;
 
 import org.junit.runner.RunWith;
 

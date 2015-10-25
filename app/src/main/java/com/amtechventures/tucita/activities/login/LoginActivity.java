@@ -1,49 +1,32 @@
 package com.amtechventures.tucita.activities.login;
 
-
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
-import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Intent;
-import android.content.Loader;
-import android.database.Cursor;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.inputmethod.EditorInfo;
-import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.amtechventures.tucita.R;
-import com.amtechventures.tucita.activities.main.CategoryActivity;
-import com.amtechventures.tucita.model.tucita.context.user.FacebookContext;
-import com.amtechventures.tucita.model.tucita.context.user.UserContext;
+import com.amtechventures.tucita.activities.category.CategoryActivity;
+import com.amtechventures.tucita.model.context.facebook.FacebookContext;
+import com.amtechventures.tucita.model.context.user.UserContext;
 
 import com.amtechventures.tucita.utils.blocks.Completion;
 
-import java.util.ArrayList;
-import java.util.List;
 
-
-/**
- * A login screen that offers login via email/password.
- */
-public class LoginActivity extends AppCompatActivity  {
+public class LoginActivity extends AppCompatActivity {
     private FacebookContext facebookContext = new FacebookContext();
 
-    private EditText PasswordView;
     private TextView EmailView;
+    private EditText PasswordView;
 
     private UserContext userContext;
 
@@ -51,9 +34,11 @@ public class LoginActivity extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
         userContext = UserContext.context(this, userContext);
+
         setContentView(R.layout.activity_login);
-        // Set up the login form.
+
         EmailView = (AutoCompleteTextView) findViewById(R.id.email);
 
         PasswordView = (EditText) findViewById(R.id.password);
@@ -69,12 +54,12 @@ public class LoginActivity extends AppCompatActivity  {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
 
-              /*  if (id == R.id.|| id == EditorInfo.IME_NULL) {
+                  /*  if (id == R.id.|| id == EditorInfo.IME_NULL) {
 
-                    attemptLogin();
+                        attemptLogin();
 
-                    return true;
-                }*/
+                        return true;
+                    }*/
                 return false;
             }
         });
@@ -91,10 +76,12 @@ public class LoginActivity extends AppCompatActivity  {
 
     }
 
-public void loggin(View view){
-    Log.i("log","nice");
+    public void loggin(View view) {
 
-}
+        Log.i("log", "nice");
+
+    }
+
     private void attemptLogin() {
 
         facebookContext.login(this, new Completion.BoolBoolCompletion() {
@@ -110,9 +97,7 @@ public void loggin(View view){
 
                             Toast.makeText(LoginActivity.this, R.string.cancel, Toast.LENGTH_SHORT).show();
 
-                        } else
-
-                        {
+                        } else {
 
                             Toast.makeText(LoginActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
 
@@ -120,22 +105,10 @@ public void loggin(View view){
 
                     }
 
-                    @Override
-                    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-                        return null;
-                    }
-
-                    @Override
-                    public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
-
-                    }
-
-                    @Override
-                    public void onLoaderReset(Loader<Cursor> cursorLoader) {
-
-                    }
                 }
-        );}
+
+        );
+    }
 
 
     private void processLoggedUser() {
@@ -151,15 +124,17 @@ public void loggin(View view){
         finish();
 
     }
+
     private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
+
         return email.contains("@");
+
     }
 
     private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
+
         return password.length() > 4;
+
     }
 
 }
-

@@ -1,24 +1,24 @@
-package com.amtechventures.tucita.activities.adapters;
+package com.amtechventures.tucita.activities.category.adapters;
 
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
+import java.util.List;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.ImageButton;
+import android.view.LayoutInflater;
 import com.amtechventures.tucita.R;
-import com.amtechventures.tucita.model.category.Category;
-import java.util.ArrayList;
-import java.util.List;
+import android.support.v7.widget.RecyclerView;
+import com.amtechventures.tucita.model.domain.category.Category;
 
 public class CategoryGridAdapter extends RecyclerView.Adapter<CategoryGridAdapter.ViewHolder> {
 
-    List<Category> Items;
+    List<Category> items;
 
-    public CategoryGridAdapter(ArrayList<Category> offer) {
+    public CategoryGridAdapter(List<Category> offer) {
+
         super();
 
-        Items = offer;
+        items = offer;
 
     }
 
@@ -35,7 +35,7 @@ public class CategoryGridAdapter extends RecyclerView.Adapter<CategoryGridAdapte
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
 
-        Category category = Items.get(i);
+        Category category = items.get(i);
 
         viewHolder.category.setText(category.getName());
 
@@ -44,11 +44,11 @@ public class CategoryGridAdapter extends RecyclerView.Adapter<CategoryGridAdapte
     @Override
     public int getItemCount() {
 
-        return Items.size();
+        return items.size();
+
     }
 
     class ViewHolder extends RecyclerView.ViewHolder{
-
 
         protected TextView category;
 
@@ -56,21 +56,21 @@ public class CategoryGridAdapter extends RecyclerView.Adapter<CategoryGridAdapte
 
         public ViewHolder(final View itemView) {
 
-
             super(itemView);
 
-            categoryIcon=(ImageButton) itemView.findViewById(R.id.imageButtonCategory);
+            category = (TextView)itemView.findViewById(R.id.textCategory);
 
-            category = (TextView )itemView.findViewById(R.id.textCategory);
+            categoryIcon = (ImageButton)itemView.findViewById(R.id.imageButtonCategory);
 
             categoryIcon.setOnClickListener(new View.OnClickListener() {
+
                 @Override
-                public void onClick(View view) {
+                public void onClick(View view) {}
 
-
-                }
             });
+
         }
+
     }
 
 }

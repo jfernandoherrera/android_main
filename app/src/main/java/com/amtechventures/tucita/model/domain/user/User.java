@@ -1,4 +1,4 @@
-package com.amtechventures.tucita.model.user;
+package com.amtechventures.tucita.model.domain.user;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;

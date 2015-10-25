@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activities.main.CategoryActivity" >
+        <activity android:name=".activities.category.CategoryActivity" >
         </activity>
 
         <activity android:name=".activities.login.LoginActivity" >

@@ -1,11 +1,10 @@
-package com.amtechventures.tucita.model.tucita.context.user;
-
-import android.content.Context;
-
-import com.amtechventures.tucita.model.user.User;
-import com.amtechventures.tucita.utils.blocks.Completion;
+package com.amtechventures.tucita.model.context.user;
 
 import java.util.List;
+import android.content.Context;
+import com.amtechventures.tucita.model.domain.user.User;
+import com.amtechventures.tucita.utils.blocks.Completion;
+import com.amtechventures.tucita.model.context.facebook.FacebookContext;
 
 public class UserContext {
 
@@ -29,14 +28,6 @@ public class UserContext {
 
     }
 
-    /*
-        public User me() {
-
-
-            return me;
-
-        }
-    */
     public String logged() {
         String logged = "";
 
