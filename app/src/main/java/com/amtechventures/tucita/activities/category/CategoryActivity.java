@@ -46,12 +46,16 @@ public class CategoryActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
 
-        if(getIntent().getExtras().getBoolean("authenticated")){
+        String authenticated=getResources().getString(R.string.authenticated);
+
+        if(getIntent().getExtras().getBoolean(authenticated)){
+
             setContentView(R.layout.activity_category_logged);
         }else{
             setContentView(R.layout.activity_category);
 
             signOrRegister = (Button)findViewById(R.id.go_to_login);
+
             signOrRegister.setOnClickListener(new View.OnClickListener() {
 
                 @Override

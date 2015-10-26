@@ -16,6 +16,7 @@
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
     <string name="create_new_account">Crear una cuenta</string>
+    <string name="authenticated">autenticado</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."</string>
 
@@ -33,6 +34,7 @@
     <string name="app_parse_id">EazCp42Fw4yJTEGCuZ9ofl75izJY7a49nw2xufH6</string>
     <string name="client_parse_id">Fr71FqI5chgnNWBbrDa6d9rhxo3PiL8pngM7MUt4</string>
     <string name="name">name</string>
+    <string name="public_profile">public_profile</string>
     <string name="title_activity_main">MainActivity</string>
 
     <string name="hello_world">Hello world!</string>

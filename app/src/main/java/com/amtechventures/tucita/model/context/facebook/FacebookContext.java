@@ -39,14 +39,23 @@ public class FacebookContext {
 
     private List<String> permissions;
 
-    private String meFields = "name,email";
+    private String meFields;
 
-
+    private String name;
 
     public FacebookContext(Context context){
+
         fields=context.getResources().getString(R.string.fields);
-        this.context=context;
-        permissions=Arrays.asList("public_profile", "email");
+
+        name=context.getResources().getString(R.string.name);
+
+        String publicProfile=context.getResources().getString(R.string.public_profile);
+
+        String email=context.getResources().getString(R.string.prompt_email).toLowerCase();
+
+        permissions=Arrays.asList(publicProfile, email);
+
+        meFields=name+","+email;
     }
 
     public static boolean logged() {
@@ -80,8 +89,8 @@ public class FacebookContext {
                   */
                                 ParseUser parseUser = ParseUser.getCurrentUser();
                                 if (fbUser != null && parseUser != null
-                                        && fbUser.optString(context.getResources().getString(R.string.name)).length() > 0) {
-                                    parseUser.put(context.getResources().getString(R.string.name), fbUser.optString("name"));
+                                        && fbUser.optString(name).length() > 0) {
+                                    parseUser.put(name, fbUser.optString(name));
                                     parseUser.saveInBackground(new SaveCallback() {
                                         @Override
                                         public void done(ParseException e) {
@@ -101,7 +110,8 @@ public class FacebookContext {
             } else {
 
             }
-        }};
+        }
+    };
     public void login(Activity activity, Completion.BoolBoolCompletion completion) {
 
         loginCompletion = completion;

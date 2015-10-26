@@ -1,8 +1,6 @@
 package com.amtechventures.tucita.activities.login;
 
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.LinkMovementMethod;
@@ -17,21 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.category.CategoryActivity;
-import com.amtechventures.tucita.model.context.facebook.FacebookContext;
 import com.amtechventures.tucita.model.context.user.UserContext;
-
 import com.amtechventures.tucita.utils.blocks.Completion;
-import com.facebook.AccessToken;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.parse.LogInCallback;
-import com.parse.Parse;
-import com.parse.ParseException;
-import com.parse.ParseFacebookUtils;
-import com.parse.ParseUser;
-import com.parse.SaveCallback;
-
-import org.json.JSONObject;
 
 
 public class LoginActivity extends AppCompatActivity  {
@@ -41,8 +26,6 @@ public class LoginActivity extends AppCompatActivity  {
     private EditText PasswordView;
 
     private UserContext userContext;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,22 +74,12 @@ public class LoginActivity extends AppCompatActivity  {
         facebookButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 attemptLogin();
             }
         });
 
     }
-
-
-
-
-
-    public void loggin(View view) {
-
-        Log.i("log", "nice");
-        // processLoggedUser();
-    }
-
     private void attemptLogin() {
 
         userContext.login(this, new Completion.BoolBoolCompletion() {
@@ -141,7 +114,10 @@ public class LoginActivity extends AppCompatActivity  {
         userContext.updateMe();
 
         Intent intent = new Intent(this, CategoryActivity.class);
-        intent.putExtra("authenticated", true);
+
+        String authenticated=getResources().getString(R.string.authenticated);
+
+        intent.putExtra(authenticated, true);
 
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 

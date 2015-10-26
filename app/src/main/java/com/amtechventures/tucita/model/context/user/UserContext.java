@@ -26,11 +26,13 @@ public class UserContext {
     }
 
     public UserContext(Context context) {
+
       facebookContext  = new FacebookContext(context);
 
     }
 
     public void login(Activity activity, Completion.BoolBoolCompletion completion) {
+
        facebookContext.login(activity,completion);
 
 
