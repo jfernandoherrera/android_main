@@ -17,6 +17,7 @@ import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.category.CategoryActivity;
 import com.amtechventures.tucita.model.context.user.UserContext;
 import com.amtechventures.tucita.utils.blocks.Completion;
+import com.amtechventures.tucita.utils.blocks.Strings;
 
 
 public class LoginActivity extends AppCompatActivity  {
@@ -115,7 +116,7 @@ public class LoginActivity extends AppCompatActivity  {
 
         Intent intent = new Intent(this, CategoryActivity.class);
 
-        String authenticated=getResources().getString(R.string.authenticated);
+        String authenticated= Strings.AUTHENTICATED;
 
         intent.putExtra(authenticated, true);
 

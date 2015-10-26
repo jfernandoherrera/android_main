@@ -10,6 +10,7 @@ import android.os.Bundle;
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.model.error.AppError;
 import com.amtechventures.tucita.utils.blocks.Completion;
+import com.amtechventures.tucita.utils.blocks.Strings;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
@@ -45,11 +46,11 @@ public class FacebookContext {
 
     public FacebookContext(Context context){
 
-        fields=context.getResources().getString(R.string.fields);
+        fields= Strings.FIELDS;
 
-        name=context.getResources().getString(R.string.name);
+        name=Strings.NAME;
 
-        String publicProfile=context.getResources().getString(R.string.public_profile);
+        String publicProfile=Strings.PUBLIC_PROFILE;
 
         String email=context.getResources().getString(R.string.prompt_email).toLowerCase();
 

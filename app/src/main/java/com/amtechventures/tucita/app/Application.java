@@ -1,5 +1,6 @@
 package com.amtechventures.tucita.app;
 
+import com.amtechventures.tucita.utils.blocks.Strings;
 import com.parse.Parse;
 import com.parse.ParseObject;
 import com.facebook.FacebookSdk;
@@ -14,9 +15,9 @@ public class Application extends android.app.Application {
 
 
 
-        String app_parse_id = getResources().getString(R.string.app_parse_id);
+        String app_parse_id = Strings.APP_PARSE_ID;
 
-        String app_client_parse_id=getResources().getString(R.string.client_parse_id);
+        String app_client_parse_id=Strings.CLIENT_PARSE_ID;
 
         Parse.enableLocalDatastore(this);
 

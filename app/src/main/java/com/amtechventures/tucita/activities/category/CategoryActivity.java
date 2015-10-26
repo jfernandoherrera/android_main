@@ -22,6 +22,7 @@ import com.amtechventures.tucita.model.domain.category.Category;
 import com.amtechventures.tucita.model.context.category.CategoryContext;
 import com.amtechventures.tucita.model.context.category.CategoryCompletion;
 import com.amtechventures.tucita.activities.category.adapters.CategoryGridAdapter;
+import com.amtechventures.tucita.utils.blocks.Strings;
 
 public class CategoryActivity extends AppCompatActivity {
 
@@ -46,7 +47,7 @@ public class CategoryActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
 
-        String authenticated=getResources().getString(R.string.authenticated);
+        String authenticated= Strings.FIELDS;
 
         if(getIntent().getExtras().getBoolean(authenticated)){
 
