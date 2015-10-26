@@ -10,7 +10,7 @@ import com.amtechventures.tucita.model.context.facebook.FacebookContext;
 
 public class UserContext {
 
-
+    private User me;
     private FacebookContext facebookContext ;
 
     public static UserContext context(Context context, UserContext userContext) {
@@ -34,7 +34,6 @@ public class UserContext {
     public void login(Activity activity, Completion.BoolBoolCompletion completion) {
 
        facebookContext.login(activity,completion);
-
 
 
     }

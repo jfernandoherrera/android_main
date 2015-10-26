@@ -5,8 +5,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-
-
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.model.error.AppError;
 import com.amtechventures.tucita.utils.blocks.Completion;
@@ -43,6 +41,8 @@ public class FacebookContext {
     private String meFields;
 
     private String name;
+
+    private String email;
 
     public FacebookContext(Context context){
 
@@ -92,6 +92,7 @@ public class FacebookContext {
                                 if (fbUser != null && parseUser != null
                                         && fbUser.optString(name).length() > 0) {
                                     parseUser.put(name, fbUser.optString(name));
+                                    parseUser.put(email,fbUser.optString(email));
                                     parseUser.saveInBackground(new SaveCallback() {
                                         @Override
                                         public void done(ParseException e) {
@@ -127,7 +128,7 @@ public class FacebookContext {
 
     public void logout() {
 
-        LoginManager.getInstance().logOut();
+        //..logOut();
 
     }
 
