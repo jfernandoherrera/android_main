@@ -2,9 +2,7 @@ package com.amtechventures.tucita.activities.category;
 
 import java.util.List;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.view.Menu;
 import android.view.View;
 import java.util.ArrayList;
@@ -12,6 +10,7 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.content.Intent;
 import com.amtechventures.tucita.R;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SearchView;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.RecyclerView;
@@ -85,7 +84,11 @@ public class CategoryActivity extends AppCompatActivity {
 
                     adapter.notifyDataSetChanged();
 
-                }else noInternetConecctionAlert();
+                }else {
+                 
+                    noInternetConecctionAlert();
+                    
+                }
 
             }
 
