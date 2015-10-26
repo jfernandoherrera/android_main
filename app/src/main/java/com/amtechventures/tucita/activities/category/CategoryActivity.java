@@ -102,13 +102,16 @@ public class CategoryActivity extends AppCompatActivity {
 
     }
     private void noInternetConecctionAlert(){
+
         new AlertDialog.Builder(this)
                 .setTitle(getResources().getString(R.string.alert))
                 .setMessage(getResources().getString(R.string.no_internet_connection))
                 .setRecycleOnMeasureEnabled(true)
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
+        
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
