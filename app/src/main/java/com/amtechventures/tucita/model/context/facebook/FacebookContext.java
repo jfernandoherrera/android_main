@@ -10,7 +10,7 @@ import android.os.Bundle;
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.model.error.AppError;
 import com.amtechventures.tucita.utils.blocks.Completion;
-import com.amtechventures.tucita.utils.blocks.Strings;
+import com.amtechventures.tucita.utils.strings.Strings;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;

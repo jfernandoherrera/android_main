@@ -1,6 +1,6 @@
 package com.amtechventures.tucita.app;
 
-import com.amtechventures.tucita.utils.blocks.Strings;
+import com.amtechventures.tucita.utils.strings.Strings;
 import com.parse.Parse;
 import com.parse.ParseObject;
 import com.facebook.FacebookSdk;

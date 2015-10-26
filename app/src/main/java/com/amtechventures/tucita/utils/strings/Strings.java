@@ -1,4 +1,4 @@
-package com.amtechventures.tucita.utils.blocks;
+package com.amtechventures.tucita.utils.strings;
 
 
 public class Strings {

@@ -17,7 +17,7 @@ import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.category.CategoryActivity;
 import com.amtechventures.tucita.model.context.user.UserContext;
 import com.amtechventures.tucita.utils.blocks.Completion;
-import com.amtechventures.tucita.utils.blocks.Strings;
+import com.amtechventures.tucita.utils.strings.Strings;
 
 
 public class LoginActivity extends AppCompatActivity  {

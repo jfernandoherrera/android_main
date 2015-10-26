@@ -22,7 +22,7 @@ import com.amtechventures.tucita.model.domain.category.Category;
 import com.amtechventures.tucita.model.context.category.CategoryContext;
 import com.amtechventures.tucita.model.context.category.CategoryCompletion;
 import com.amtechventures.tucita.activities.category.adapters.CategoryGridAdapter;
-import com.amtechventures.tucita.utils.blocks.Strings;
+import com.amtechventures.tucita.utils.strings.Strings;
 
 public class CategoryActivity extends AppCompatActivity {
 
@@ -47,7 +47,24 @@ public class CategoryActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
 
-        String authenticated= Strings.FIELDS;
+        setupAuthenticated();
+
+        categoryContext = CategoryContext.context(categoryContext);
+
+        recyclerView = (RecyclerView)findViewById(R.id.recycler_view);
+
+        recyclerView.setHasFixedSize(true);
+
+        layoutManager = new GridLayoutManager(getApplicationContext(), COLUMNS_IN_CATEGORIES);
+
+        recyclerView.setLayoutManager(layoutManager);
+
+        setupGrid();
+
+    }
+
+    private void setupAuthenticated(){
+        String authenticated= Strings.AUTHENTICATED;
 
         if(getIntent().getExtras().getBoolean(authenticated)){
 
@@ -68,24 +85,7 @@ public class CategoryActivity extends AppCompatActivity {
 
             });
         }
-
-
-        categoryContext = CategoryContext.context(categoryContext);
-
-        recyclerView = (RecyclerView)findViewById(R.id.recycler_view);
-
-        recyclerView.setHasFixedSize(true);
-
-        layoutManager = new GridLayoutManager(getApplicationContext(), COLUMNS_IN_CATEGORIES);
-
-        recyclerView.setLayoutManager(layoutManager);
-
-
-
-        setupGrid();
-
     }
-
     private void setupGrid() {
 
         List<Category> categoryList = categoryContext.loadCategories(new CategoryCompletion.CategoriesErrorCompletion() {

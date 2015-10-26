@@ -8,6 +8,7 @@ import android.view.MotionEvent;
 import com.amtechventures.tucita.R;
 import android.support.v7.app.AppCompatActivity;
 import com.amtechventures.tucita.activities.category.CategoryActivity;
+import com.amtechventures.tucita.utils.strings.Strings;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -50,7 +51,7 @@ public class SplashActivity extends AppCompatActivity {
                 Class activity = CategoryActivity.class;
 
                 Intent i = new Intent(SplashActivity.this, activity);
-                i.putExtra("authenticated",false);
+                i.putExtra(Strings.AUTHENTICATED,false);
 
                 startActivity(i);
 
