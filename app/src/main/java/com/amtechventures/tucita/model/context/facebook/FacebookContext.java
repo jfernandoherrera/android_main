@@ -29,7 +29,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class FacebookContext {
-
+    private Completion.BoolBoolCompletion loginCompletion;
     private final static String fields = "fields";
     private final static List<String> permissions = Arrays.asList("public_profile", "email");
     private final static String meFields = "name,email";
@@ -90,10 +90,11 @@ public class FacebookContext {
 
             }
         }};
-    public void login(Activity activity, Completion.BoolBoolCompletion boolBoolCompletion) {
-
+    public void login(Activity activity, Completion.BoolBoolCompletion completion) {
+        loginCompletion = completion;
         ParseFacebookUtils.logInWithReadPermissionsInBackground(activity,
                 permissions, facebookLoginCallbackV4);
+        loginCompletion.completion(true,false);
 
     }
 
