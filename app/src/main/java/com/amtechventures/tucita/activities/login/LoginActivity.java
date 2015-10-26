@@ -1,6 +1,8 @@
 package com.amtechventures.tucita.activities.login;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.LinkMovementMethod;
@@ -13,22 +15,36 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.category.CategoryActivity;
 import com.amtechventures.tucita.model.context.facebook.FacebookContext;
 import com.amtechventures.tucita.model.context.user.UserContext;
 
 import com.amtechventures.tucita.utils.blocks.Completion;
+import com.facebook.AccessToken;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.parse.LogInCallback;
+import com.parse.Parse;
+import com.parse.ParseException;
+import com.parse.ParseFacebookUtils;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
+
+import org.json.JSONObject;
 
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity  {
+
     private FacebookContext facebookContext = new FacebookContext();
 
     private TextView EmailView;
+
     private EditText PasswordView;
 
     private UserContext userContext;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,20 +82,31 @@ public class LoginActivity extends AppCompatActivity {
 
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
 
+        Button facebookButton = (Button) findViewById(R.id.facebook_button);
+
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        facebookButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 attemptLogin();
             }
         });
 
-
     }
+
+
+
+
 
     public void loggin(View view) {
 
         Log.i("log", "nice");
-
+        // processLoggedUser();
     }
 
     private void attemptLogin() {
@@ -115,11 +142,12 @@ public class LoginActivity extends AppCompatActivity {
 
         userContext.updateMe();
 
-        Intent i = new Intent(LoginActivity.this, CategoryActivity.class);
+        Intent intent = new Intent(this, CategoryActivity.class);
+        intent.putExtra("authenticated", true);
 
-        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
-        startActivity(i);
+        startActivity(intent);
 
         finish();
 
@@ -136,5 +164,6 @@ public class LoginActivity extends AppCompatActivity {
         return password.length() > 4;
 
     }
-
 }
+
+

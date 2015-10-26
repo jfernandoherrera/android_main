@@ -78,6 +78,7 @@
         android:id="@+id/separator2"/>
     </LinearLayout>
 <com.facebook.login.widget.LoginButton
+    android:id="@+id/facebook_button"
     android:layout_width="match_parent"
     android:layout_height="wrap_content" />
 </LinearLayout>

@@ -5,14 +5,13 @@ import com.parse.ParseObject;
 import com.facebook.FacebookSdk;
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.model.domain.category.Category;
-
+import com.parse.ParseFacebookUtils;
 public class Application extends android.app.Application {
 
     public void onCreate() {
 
     	super.onCreate();
 
-        FacebookSdk.sdkInitialize(getApplicationContext());
 
 
         String app_parse_id = getResources().getString(R.string.app_parse_id);
@@ -22,6 +21,8 @@ public class Application extends android.app.Application {
         Parse.enableLocalDatastore(this);
 
         Parse.initialize(this, app_parse_id, app_client_parse_id);
+        ParseFacebookUtils.initialize(this);
+
 
         ParseObject.registerSubclass(Category.class);
 

@@ -50,6 +50,7 @@ public class SplashActivity extends AppCompatActivity {
                 Class activity = CategoryActivity.class;
 
                 Intent i = new Intent(SplashActivity.this, activity);
+                i.putExtra("authenticated",false);
 
                 startActivity(i);
 

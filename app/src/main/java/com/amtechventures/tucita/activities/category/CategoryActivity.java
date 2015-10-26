@@ -28,23 +28,44 @@ public class CategoryActivity extends AppCompatActivity {
     private int COLUMNS_IN_CATEGORIES = 3;
 
     private Button signOrRegister;
+
     private RecyclerView recyclerView;
+
     private RecyclerView.Adapter adapter;
+
     private RecyclerView.LayoutManager layoutManager;
 
     private CategoryContext categoryContext;
+
     private List<Category> categories = new ArrayList<>();
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_category);
+        if(getIntent().getExtras().getBoolean("authenticated")){
+            setContentView(R.layout.activity_category_logged);
+        }else{
+            setContentView(R.layout.activity_category);
+
+            signOrRegister = (Button)findViewById(R.id.go_to_login);
+            signOrRegister.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View view) {
+
+                    goToLogin();
+
+                }
+
+            });
+        }
+
 
         categoryContext = CategoryContext.context(categoryContext);
-
-        signOrRegister = (Button)findViewById(R.id.go_to_login);
 
         recyclerView = (RecyclerView)findViewById(R.id.recycler_view);
 
@@ -54,16 +75,7 @@ public class CategoryActivity extends AppCompatActivity {
 
         recyclerView.setLayoutManager(layoutManager);
 
-        signOrRegister.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View view) {
-
-                goToLogin();
-
-            }
-
-        });
 
         setupGrid();
 

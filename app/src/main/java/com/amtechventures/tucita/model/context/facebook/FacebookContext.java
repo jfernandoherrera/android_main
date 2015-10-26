@@ -16,6 +16,11 @@ import com.facebook.share.model.AppInviteContent;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.AppInviteDialog;
 import com.facebook.share.widget.MessageDialog;
+import com.parse.LogInCallback;
+import com.parse.ParseException;
+import com.parse.ParseFacebookUtils;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -26,35 +31,69 @@ import java.util.List;
 public class FacebookContext {
 
     private final static String fields = "fields";
-    private final static String friendsFields = "fields=name,picture.type(large)";
-    private final static List<String> permissions = Arrays.asList("public_profile", "user_friends", "email");
-    private final static String meFields = "name,email,picture.type(large),friends.fields(name,picture.type(large))";
-
+    private final static List<String> permissions = Arrays.asList("public_profile", "email");
+    private final static String meFields = "name,email";
+    private static final String USER_OBJECT_NAME_FIELD = "name";
     public static boolean logged() {
 
         return AccessToken.getCurrentAccessToken() != null;
 
     }
 
-    public static boolean usersFriendEnable() {
 
-        boolean usersFriendEnable = false;
 
-        AccessToken accessToken = AccessToken.getCurrentAccessToken();
 
-        if (accessToken != null && accessToken.getDeclinedPermissions() != null) {
 
-            usersFriendEnable = accessToken.getDeclinedPermissions().contains("user_friends") == false;
+    private LogInCallback facebookLoginCallbackV4 = new LogInCallback() {
+        @Override
+        public void done(ParseUser user, ParseException e) {
 
-        }
 
-        return usersFriendEnable;
+            if (user == null) {
 
-    }
+                if (e != null) {
+                  /*  showToast(R.string.com_parse_ui_facebook_login_failed_toast);
+                    debugLog(getString(R.string.com_parse_ui_login_warning_facebook_login_failed) +
+                            e.toString());*/
+                }
+            } else if (user.isNew()) {
+                GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(),
+                        new GraphRequest.GraphJSONObjectCallback() {
+                            @Override
+                            public void onCompleted(JSONObject fbUser,
+                                                    GraphResponse response) {
+                  /*
+                    If we were able to successfully retrieve the Facebook
+                    user's name, let's set it on the fullName field.
+                  */
+                                ParseUser parseUser = ParseUser.getCurrentUser();
+                                if (fbUser != null && parseUser != null
+                                        && fbUser.optString("name").length() > 0) {
+                                    parseUser.put(USER_OBJECT_NAME_FIELD, fbUser.optString("name"));
+                                    parseUser.saveInBackground(new SaveCallback() {
+                                        @Override
+                                        public void done(ParseException e) {
+                                            if (e != null) {
+                                             /*   debugLog(getString(
+                                                        R.string.com_parse_ui_login_warning_facebook_login_user_update_failed) +
+                                                        e.toString());*/
+                                            }
 
+                                        }
+                                    });
+                                }
+
+                            }
+                        }
+                ).executeAsync();
+            } else {
+
+            }
+        }};
     public void login(Activity activity, Completion.BoolBoolCompletion boolBoolCompletion) {
 
-        LoginManager.getInstance().logInWithReadPermissions(activity, permissions);
+        ParseFacebookUtils.logInWithReadPermissionsInBackground(activity,
+                permissions, facebookLoginCallbackV4);
 
     }
 
@@ -128,7 +167,7 @@ public class FacebookContext {
 
         Bundle parameters = new Bundle();
 
-        parameters.putString(fields, friendsFields);
+        //parameters.putString(fields, friendsFields);
 
         request.setParameters(parameters);
 

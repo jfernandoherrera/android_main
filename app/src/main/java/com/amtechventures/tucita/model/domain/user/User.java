@@ -3,9 +3,10 @@ package com.amtechventures.tucita.model.domain.user;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 @ParseClassName("User")
-public class User extends ParseObject {
+public class User extends ParseUser {
     public void setUserName(String name){
 
         put("username",name );
@@ -16,7 +17,5 @@ public class User extends ParseObject {
         return getString("username");
 
     }
-    public static ParseQuery<User> getQuery() {
-        return ParseQuery.getQuery(User.class);
-    }
+
 }
