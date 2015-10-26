@@ -2,10 +2,12 @@ package com.amtechventures.tucita.model.context.facebook;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
 
+import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.model.error.AppError;
 import com.amtechventures.tucita.utils.blocks.Completion;
 import com.facebook.AccessToken;
@@ -30,18 +32,28 @@ import java.util.List;
 
 public class FacebookContext {
     private Completion.BoolBoolCompletion loginCompletion;
-    private final static String fields = "fields";
-    private final static List<String> permissions = Arrays.asList("public_profile", "email");
-    private final static String meFields = "name,email";
-    private static final String USER_OBJECT_NAME_FIELD = "name";
+
+    private Context context;
+
+    private  String fields;
+
+    private List<String> permissions;
+
+    private String meFields = "name,email";
+
+
+
+    public FacebookContext(Context context){
+        fields=context.getResources().getString(R.string.fields);
+        this.context=context;
+        permissions=Arrays.asList("public_profile", "email");
+    }
+
     public static boolean logged() {
 
         return AccessToken.getCurrentAccessToken() != null;
 
     }
-
-
-
 
 
     private LogInCallback facebookLoginCallbackV4 = new LogInCallback() {
@@ -68,8 +80,8 @@ public class FacebookContext {
                   */
                                 ParseUser parseUser = ParseUser.getCurrentUser();
                                 if (fbUser != null && parseUser != null
-                                        && fbUser.optString("name").length() > 0) {
-                                    parseUser.put(USER_OBJECT_NAME_FIELD, fbUser.optString("name"));
+                                        && fbUser.optString(context.getResources().getString(R.string.name)).length() > 0) {
+                                    parseUser.put(context.getResources().getString(R.string.name), fbUser.optString("name"));
                                     parseUser.saveInBackground(new SaveCallback() {
                                         @Override
                                         public void done(ParseException e) {
@@ -91,9 +103,13 @@ public class FacebookContext {
             }
         }};
     public void login(Activity activity, Completion.BoolBoolCompletion completion) {
+
         loginCompletion = completion;
+
         ParseFacebookUtils.logInWithReadPermissionsInBackground(activity,
+
                 permissions, facebookLoginCallbackV4);
+
         loginCompletion.completion(true,false);
 
     }

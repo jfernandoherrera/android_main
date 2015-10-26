@@ -36,8 +36,6 @@ import org.json.JSONObject;
 
 public class LoginActivity extends AppCompatActivity  {
 
-    private FacebookContext facebookContext = new FacebookContext();
-
     private TextView EmailView;
 
     private EditText PasswordView;
@@ -111,7 +109,7 @@ public class LoginActivity extends AppCompatActivity  {
 
     private void attemptLogin() {
 
-        facebookContext.login(this, new Completion.BoolBoolCompletion() {
+        userContext.login(this, new Completion.BoolBoolCompletion() {
 
                     @Override
                     public void completion(boolean logged, boolean cancelled) {

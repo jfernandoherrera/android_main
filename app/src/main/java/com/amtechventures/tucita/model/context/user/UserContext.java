@@ -1,6 +1,8 @@
 package com.amtechventures.tucita.model.context.user;
 
 import java.util.List;
+
+import android.app.Activity;
 import android.content.Context;
 import com.amtechventures.tucita.model.domain.user.User;
 import com.amtechventures.tucita.utils.blocks.Completion;
@@ -9,7 +11,7 @@ import com.amtechventures.tucita.model.context.facebook.FacebookContext;
 public class UserContext {
 
 
-    private FacebookContext facebookContext = new FacebookContext();
+    private FacebookContext facebookContext ;
 
     public static UserContext context(Context context, UserContext userContext) {
 
@@ -24,14 +26,14 @@ public class UserContext {
     }
 
     public UserContext(Context context) {
-
+      facebookContext  = new FacebookContext(context);
 
     }
 
-    public String logged() {
-        String logged = "";
+    public void login(Activity activity, Completion.BoolBoolCompletion completion) {
+       facebookContext.login(activity,completion);
 
-        return logged;
+
 
     }
 
