@@ -1,7 +1,10 @@
 package com.amtechventures.tucita.activities.category;
 
 import java.util.List;
+
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.Menu;
 import android.view.View;
 import java.util.ArrayList;
@@ -76,13 +79,13 @@ public class CategoryActivity extends AppCompatActivity {
 
                 if (categoryList != null) {
 
-                    CategoryActivity.this.categories.clear();
+                   categories.clear();
 
-                    CategoryActivity.this.categories.addAll(categoryList);
+                   categories.addAll(categoryList);
 
                     adapter.notifyDataSetChanged();
 
-                }
+                }else noInternetConecctionAlert();
 
             }
 
@@ -95,7 +98,14 @@ public class CategoryActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
     }
-
+    private void noInternetConecctionAlert(){
+        new AlertDialog.Builder(this)
+                .setTitle(getResources().getString(R.string.alert))
+                .setMessage(getResources().getString(R.string.no_internet_connection))
+                .setRecycleOnMeasureEnabled(true)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 

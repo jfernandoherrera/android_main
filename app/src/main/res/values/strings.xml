@@ -25,9 +25,14 @@
     <string name="error_finding_pinned_categories">Error finding pinned Categories:</string>
     <string name="error_pinning_categories">Error pinning Categories:</string>
     <string name="error">Error</string>
+    <string name="no_internet_connection">No hay conexión a internet</string>
+    <string name="alert">Alerta</string>
     <!-- Strings related to parse -->
     <string name="load_from_parse">load from parse:</string>
     <string name="app_parse_id">EazCp42Fw4yJTEGCuZ9ofl75izJY7a49nw2xufH6</string>
     <string name="client_parse_id">Fr71FqI5chgnNWBbrDa6d9rhxo3PiL8pngM7MUt4</string>
     <string name="name">name</string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="hello_world">Hello world!</string>
 </resources>
