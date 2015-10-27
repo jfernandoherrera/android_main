@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.category.CategoryActivity;
+import com.amtechventures.tucita.activities.signup.SignUpActivity;
 import com.amtechventures.tucita.model.context.facebook.FacebookContext;
 import com.amtechventures.tucita.model.context.user.UserContext;
 import com.amtechventures.tucita.utils.blocks.BoolBoolUserCompletion;
@@ -48,10 +49,7 @@ public class LoginActivity extends AppCompatActivity  {
 
         PasswordView = (EditText) findViewById(R.id.password);
 
-        TextView t2 = (TextView) findViewById(R.id.textViewxd);
-
-        TextView t1 = (TextView) findViewById(R.id.textView2xd);
-        t1.setMovementMethod(LinkMovementMethod.getInstance());
+        TextView t2 = (TextView) findViewById(R.id.newAccount);
 
         t2.setMovementMethod(LinkMovementMethod.getInstance());
 
@@ -154,6 +152,14 @@ public class LoginActivity extends AppCompatActivity  {
 
         return password.length() > 4;
 
+    }
+    public void goToSignUp(View view){
+
+        Intent intent = new Intent(this, SignUpActivity.class);
+
+        startActivity(intent);
+
+        finish();
     }
 }
 

@@ -37,15 +37,15 @@
         android:layout_height="wrap_content"
         android:text="@string/dont_remember_password"
         android:id="@+id/textView2xd"
-        android:onClick="loggin"
         android:layout_gravity="right"
         />
 
     <TextView
+        android:onClick="goToSignUp"
         android:layout_width="152dp"
         android:layout_height="wrap_content"
         android:text="@string/create_new_account"
-        android:id="@+id/textViewxd"
+        android:id="@+id/newAccount"
         android:layout_gravity="left"
         />
 
