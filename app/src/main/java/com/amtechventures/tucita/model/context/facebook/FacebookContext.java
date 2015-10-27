@@ -5,32 +5,40 @@ import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
+
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.model.error.AppError;
+import com.amtechventures.tucita.utils.blocks.BoolBoolUserCompletion;
 import com.amtechventures.tucita.utils.blocks.Completion;
 import com.amtechventures.tucita.utils.strings.Strings;
 import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
 import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
 import com.facebook.share.model.AppInviteContent;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.AppInviteDialog;
 import com.facebook.share.widget.MessageDialog;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
-import com.parse.ParseFacebookUtils;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class FacebookContext {
-    private Completion.BoolBoolCompletion loginCompletion;
+    private BoolBoolUserCompletion loginCompletion;
 
     private Context context;
 
@@ -43,92 +51,45 @@ public class FacebookContext {
     private String name;
 
     private String email;
+    LoginManager loginManager;
+    ParseUser parseUser;
+    private CallbackManager callbackManager;
+    public static FacebookContext context(FacebookContext facebookContext) {
 
-    public FacebookContext(Context context){
+        if (facebookContext == null) {
 
+            facebookContext = new FacebookContext();
+
+        }
+
+        return facebookContext;
+
+    }
+    public FacebookContext(){
+        callbackManager = CallbackManager.Factory.create();
+
+        registerFacebookCallback(callbackManager);
         fields= Strings.FIELDS;
 
         name=Strings.NAME;
 
         String publicProfile=Strings.PUBLIC_PROFILE;
 
-        String email=context.getResources().getString(R.string.prompt_email).toLowerCase();
+        email=Strings.EMAIL;
 
         permissions=Arrays.asList(publicProfile, email);
 
-        meFields=name+","+email;
+        meFields=name+","+email+","+Strings.PROFILE_PICTURE;
     }
 
+    public CallbackManager getCallbackManager() {
+
+        return callbackManager;
+
+    }
     public static boolean logged() {
 
         return AccessToken.getCurrentAccessToken() != null;
-
-    }
-
-
-    private LogInCallback facebookLoginCallbackV4 = new LogInCallback() {
-        @Override
-        public void done(ParseUser user, ParseException e) {
-
-
-            if (user == null) {
-
-                if (e != null) {
-                  /*  showToast(R.string.com_parse_ui_facebook_login_failed_toast);
-                    debugLog(getString(R.string.com_parse_ui_login_warning_facebook_login_failed) +
-                            e.toString());*/
-                }
-            } else if (user.isNew()) {
-                GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(),
-                        new GraphRequest.GraphJSONObjectCallback() {
-                            @Override
-                            public void onCompleted(JSONObject fbUser,
-                                                    GraphResponse response) {
-                  /*
-                    If we were able to successfully retrieve the Facebook
-                    user's name, let's set it on the fullName field.
-                  */
-                                ParseUser parseUser = ParseUser.getCurrentUser();
-                                if (fbUser != null && parseUser != null
-                                        && fbUser.optString(name).length() > 0) {
-                                    parseUser.put(name, fbUser.optString(name));
-                                    parseUser.put(email,fbUser.optString(email));
-                                    parseUser.saveInBackground(new SaveCallback() {
-                                        @Override
-                                        public void done(ParseException e) {
-                                            if (e != null) {
-                                             /*   debugLog(getString(
-                                                        R.string.com_parse_ui_login_warning_facebook_login_user_update_failed) +
-                                                        e.toString());*/
-                                            }
-
-                                        }
-                                    });
-                                }
-
-                            }
-                        }
-                ).executeAsync();
-            } else {
-
-            }
-        }
-    };
-    public void login(Activity activity, Completion.BoolBoolCompletion completion) {
-
-        loginCompletion = completion;
-
-        ParseFacebookUtils.logInWithReadPermissionsInBackground(activity,
-
-                permissions, facebookLoginCallbackV4);
-
-        loginCompletion.completion(true,false);
-
-    }
-
-    public void logout() {
-
-        //..logOut();
 
     }
 
@@ -162,6 +123,52 @@ public class FacebookContext {
         request.setParameters(parameters);
 
         request.executeAsync();
+
+    }
+
+    public void login(Activity activity, BoolBoolUserCompletion completion) {
+
+        loginCompletion = completion;
+
+
+        LoginManager.getInstance().logInWithReadPermissions(activity,
+
+                permissions);
+
+        loginCompletion.completion(parseUser, true, false);
+
+    }
+    public void registerFacebookCallback(CallbackManager callbackManager) {
+
+        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+
+                loginCompletion.completion(parseUser,true, false);
+
+            }
+
+            @Override
+            public void onCancel() {
+
+                loginCompletion.completion(parseUser,false, true);
+
+            }
+
+            @Override
+            public void onError(FacebookException e) {
+
+                loginCompletion.completion(parseUser,false, false);
+
+            }
+
+        });
+
+    }
+    public void logout() {
+
+        //..logOut();
 
     }
 

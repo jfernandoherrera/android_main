@@ -8,6 +8,7 @@ import android.view.MotionEvent;
 import com.amtechventures.tucita.R;
 import android.support.v7.app.AppCompatActivity;
 import com.amtechventures.tucita.activities.category.CategoryActivity;
+import com.amtechventures.tucita.model.context.user.UserContext;
 import com.amtechventures.tucita.utils.strings.Strings;
 
 public class SplashActivity extends AppCompatActivity {
@@ -15,6 +16,7 @@ public class SplashActivity extends AppCompatActivity {
     private Timer timer;
     public boolean active = true;
     private long splashLength = 1000;
+    private UserContext userContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +24,8 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_splash);
+
+        userContext = UserContext.context(this, userContext);
 
     }
 
@@ -48,14 +52,8 @@ public class SplashActivity extends AppCompatActivity {
 
                 active = false;
 
-                Class activity = CategoryActivity.class;
+                checkForLoginStatus();
 
-                Intent i = new Intent(SplashActivity.this, activity);
-                i.putExtra(Strings.AUTHENTICATED,false);
-
-                startActivity(i);
-
-                finish();
 
             }
 
@@ -80,6 +78,45 @@ public class SplashActivity extends AppCompatActivity {
 
         return true;
 
+    }
+    private void checkForLoginStatus() {
+
+        String authType = userContext.getMeAuthenticationType();
+
+        if (authType.equals(Strings.ANONYMOUS)) {
+
+            processAnonymousUser();
+
+        }else {
+
+            processLoggedUser();
+
+        }
+
+    }
+    private void processAnonymousUser(){
+
+        Class activity = CategoryActivity.class;
+
+        Intent i = new Intent(SplashActivity.this, activity);
+
+        i.putExtra(Strings.AUTHENTICATED,false);
+
+        startActivity(i);
+
+        finish();
+    }
+    private void processLoggedUser() {
+
+        Class activity = CategoryActivity.class;
+
+        Intent i = new Intent(SplashActivity.this, activity);
+
+        i.putExtra(Strings.AUTHENTICATED,true);
+
+        startActivity(i);
+
+        finish();
     }
     private void createTimer() {
 

@@ -5,12 +5,19 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import com.amtechventures.tucita.model.domain.user.User;
+import com.amtechventures.tucita.model.error.AppError;
+import com.amtechventures.tucita.utils.blocks.BoolBoolUserCompletion;
 import com.amtechventures.tucita.utils.blocks.Completion;
 import com.amtechventures.tucita.model.context.facebook.FacebookContext;
+import com.amtechventures.tucita.utils.strings.Strings;
+
+import org.json.JSONObject;
 
 public class UserContext {
 
     private User me;
+    UserRemote userRemote;
+    private UserLocal userLocal;
     private FacebookContext facebookContext ;
 
     public static UserContext context(Context context, UserContext userContext) {
@@ -27,14 +34,28 @@ public class UserContext {
 
     public UserContext(Context context) {
 
-      facebookContext  = new FacebookContext(context);
+      facebookContext  = new FacebookContext();
 
+        userRemote=new UserRemote();
     }
+public String getMeAuthenticationType(){
+    String authenticationType= Strings.ANONYMOUS;
+    User me=me();
 
-    public void login(Activity activity, Completion.BoolBoolCompletion completion) {
 
-       facebookContext.login(activity,completion);
+    return authenticationType;
+}
 
+
+    public void login(Activity activity, BoolBoolUserCompletion completion) {
+
+       //facebookContext.login(activity,completion);
+    userRemote.login(activity,completion);
+    }
+    public User me() {
+
+
+        return me;
 
     }
 
@@ -49,6 +70,43 @@ public class UserContext {
     }
 
     public void updateMe() {
+
+       me = me();
+/*
+        if (user.getAuthType() != null) {
+
+            updateWithRemoteUser(user);
+
+            loadSuperUser(null);
+
+        } else {
+
+            reportDeclinedPermissions();
+
+            facebookContext.loadMe(new Completion.DictionaryErrorCompletion() {
+
+                @Override
+                public void completion(JSONObject jsonObject, AppError error) {
+
+                    if (error == null && jsonObject != null) {
+
+                        UserContext instance = UserContext.this;
+
+                        User user = me();
+
+                        instance.userLocal.populateWithDictionary(user, jsonObject);
+
+                        instance.userLocal.save(user);
+
+                        instance.updateRemote(user, null);
+
+                    }
+
+                }
+
+            });
+
+        }*/
 
 
     }

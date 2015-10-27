@@ -15,9 +15,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.category.CategoryActivity;
+import com.amtechventures.tucita.model.context.facebook.FacebookContext;
 import com.amtechventures.tucita.model.context.user.UserContext;
+import com.amtechventures.tucita.utils.blocks.BoolBoolUserCompletion;
 import com.amtechventures.tucita.utils.blocks.Completion;
 import com.amtechventures.tucita.utils.strings.Strings;
+import com.parse.ParseFacebookUtils;
+import com.parse.ParseUser;
 
 
 public class LoginActivity extends AppCompatActivity  {
@@ -28,12 +32,15 @@ public class LoginActivity extends AppCompatActivity  {
 
     private UserContext userContext;
 
+    FacebookContext facebookContext ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
 
         userContext = UserContext.context(this, userContext);
+        facebookContext=FacebookContext.context(null);
 
         setContentView(R.layout.activity_login);
 
@@ -70,6 +77,7 @@ public class LoginActivity extends AppCompatActivity  {
             @Override
             public void onClick(View view) {
 
+                attemptLogin();
             }
         });
         facebookButton.setOnClickListener(new OnClickListener() {
@@ -83,12 +91,13 @@ public class LoginActivity extends AppCompatActivity  {
     }
     private void attemptLogin() {
 
-        userContext.login(this, new Completion.BoolBoolCompletion() {
+        userContext.login(this, new BoolBoolUserCompletion() {
 
                     @Override
-                    public void completion(boolean logged, boolean cancelled) {
+                    public void completion(ParseUser user, boolean logged, boolean cancelled) {
 
                         if (logged) {
+
 
                             processLoggedUser();
 
@@ -127,7 +136,14 @@ public class LoginActivity extends AppCompatActivity  {
         finish();
 
     }
+    @Override
+    protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
 
+        super.onActivityResult(requestCode, resultCode, data);
+
+        facebookContext.getCallbackManager().onActivityResult(requestCode, resultCode, data);
+
+    }
     private boolean isEmailValid(String email) {
 
         return email.contains("@");

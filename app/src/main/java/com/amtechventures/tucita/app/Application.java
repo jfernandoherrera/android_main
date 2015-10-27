@@ -13,8 +13,6 @@ public class Application extends android.app.Application {
 
     	super.onCreate();
 
-
-
         String app_parse_id = Strings.APP_PARSE_ID;
 
         String app_client_parse_id=Strings.CLIENT_PARSE_ID;
@@ -22,8 +20,8 @@ public class Application extends android.app.Application {
         Parse.enableLocalDatastore(this);
 
         Parse.initialize(this, app_parse_id, app_client_parse_id);
-        ParseFacebookUtils.initialize(this);
 
+        FacebookSdk.sdkInitialize(this);
 
         ParseObject.registerSubclass(Category.class);
 

@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import android.media.Image;
 import com.amtechventures.tucita.model.error.AppError;
+import com.parse.ParseUser;
 
 public class Completion {
 
@@ -95,6 +96,7 @@ public class Completion {
         void completion(boolean bool1, boolean bool2);
 
     }
+
 
     public interface LongErrorCompletion {
 

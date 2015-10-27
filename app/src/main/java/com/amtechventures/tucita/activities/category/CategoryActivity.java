@@ -2,7 +2,10 @@ package com.amtechventures.tucita.activities.category;
 
 import java.util.List;
 
+import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import java.util.ArrayList;
@@ -16,6 +19,8 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
+import android.widget.ImageButton;
+
 import com.amtechventures.tucita.model.error.AppError;
 import com.amtechventures.tucita.activities.login.LoginActivity;
 import com.amtechventures.tucita.model.domain.category.Category;
@@ -23,6 +28,8 @@ import com.amtechventures.tucita.model.context.category.CategoryContext;
 import com.amtechventures.tucita.model.context.category.CategoryCompletion;
 import com.amtechventures.tucita.activities.category.adapters.CategoryGridAdapter;
 import com.amtechventures.tucita.utils.strings.Strings;
+import com.parse.ParseFile;
+import com.parse.ParseUser;
 
 public class CategoryActivity extends AppCompatActivity {
 
@@ -40,6 +47,7 @@ public class CategoryActivity extends AppCompatActivity {
 
     private List<Category> categories = new ArrayList<>();
 
+    private ImageButton profile;
 
 
     @Override
@@ -64,11 +72,27 @@ public class CategoryActivity extends AppCompatActivity {
     }
 
     private void setupAuthenticated(){
+
+
         String authenticated= Strings.AUTHENTICATED;
 
         if(getIntent().getExtras().getBoolean(authenticated)){
 
             setContentView(R.layout.activity_category_logged);
+            profile = (ImageButton)findViewById(R.id.go_to_user);
+
+           // ParseFile image = (ParseFile) user.get("cover");
+           // profile.setImageURI(Uri.parse(image.getUrl()));
+            profile.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View view) {
+
+                    goToLogin();
+
+                }
+
+            });
         }else{
             setContentView(R.layout.activity_category);
 
