@@ -21,6 +21,7 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_sign_up);
+
         userContext = UserContext.context(this);
 
         Button singUpButton = (Button) findViewById(R.id.buttonSignUp);
@@ -42,7 +43,7 @@ public class SignUpActivity extends AppCompatActivity {
                     userContext.me().setParseUser(user);
 
                     //goTo deberìa ir a una activity guardada
-                }else{
+                  }else{
                   Toast errorSignUp=  Toast.makeText(SignUpActivity.this, error.getMessage(),Toast.LENGTH_SHORT);
 
                     errorSignUp.setGravity(Gravity.TOP | Gravity.LEFT, 0, 0);
@@ -52,6 +53,5 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
     }
-
 
 }

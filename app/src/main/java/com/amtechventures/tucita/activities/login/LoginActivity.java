@@ -24,9 +24,9 @@ import com.parse.ParseUser;
 
 public class LoginActivity extends AppCompatActivity  {
 
-    private TextView EmailView;
+    private TextView emailView;
 
-    private EditText PasswordView;
+    private EditText passwordView;
 
     private UserContext userContext;
 
@@ -39,19 +39,19 @@ public class LoginActivity extends AppCompatActivity  {
 
         userContext = UserContext.context(this);
 
-        facebookContext=FacebookContext.context(null);
+        facebookContext = FacebookContext.context(null);
 
         setContentView(R.layout.activity_login);
 
-        EmailView = (AutoCompleteTextView) findViewById(R.id.email);
+        emailView = (AutoCompleteTextView) findViewById(R.id.email);
 
-        PasswordView = (EditText) findViewById(R.id.password);
+        passwordView = (EditText) findViewById(R.id.password);
 
         TextView t2 = (TextView) findViewById(R.id.newAccount);
 
         t2.setMovementMethod(LinkMovementMethod.getInstance());
 
-        PasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        passwordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
 
@@ -121,7 +121,7 @@ public class LoginActivity extends AppCompatActivity  {
 
         Intent intent = new Intent(this, CategoryActivity.class);
 
-        String authenticated=userContext.getAuthenticationType();
+        String authenticated = userContext.getAuthenticationType();
 
         intent.putExtra(authenticated, true);
 
@@ -140,17 +140,8 @@ public class LoginActivity extends AppCompatActivity  {
         facebookContext.getCallbackManager().onActivityResult(requestCode, resultCode, data);
 
     }
-    private boolean isEmailValid(String email) {
 
-        return email.contains("@");
 
-    }
-
-    private boolean isPasswordValid(String password) {
-
-        return password.length() > 4;
-
-    }
     public void goToSignUp(View view){
 
         Intent intent = new Intent(this, SignUpActivity.class);

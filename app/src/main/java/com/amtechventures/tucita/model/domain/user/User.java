@@ -13,6 +13,7 @@ public class User {
     private String authType= Strings.ANONYMOUS;
 
     public void setParseUser(ParseUser user){
+
         parseUser=user;
     }
 
@@ -21,28 +22,32 @@ public class User {
         parseUser.put("username",name );
 
     }
+
     public String getUserName(){
 
         return parseUser.getString("username");
 
     }
+
     public String getAuthType(){
+
         return authType;
     }
+
     public void setAuthType(String authType){
-        this.authType=authType;
+        this.authType = authType;
     }
+
     public void setEmail(String email){
 
         parseUser.put("email", email);
 
     }
+
     public String getEmail(){
 
       return  parseUser.getString("email");
 
     }
-
-
 
 }

@@ -49,7 +49,7 @@ public class UserRemote {
 
         TextView name = (TextView) activity.findViewById(R.id.name);
 
-        parseUser=new ParseUser();
+        parseUser = new ParseUser();
 
         parseUser.setEmail(email.getText().toString());
 
@@ -60,10 +60,13 @@ public class UserRemote {
         parseUser.signUpInBackground(new SignUpCallback() {
             @Override
             public void done(ParseException e) {
-                if(e==null){
+                if(e == null){
+
                     signUpCompletion.completion(parseUser, true, null);
+
                 }else {
-                    Error signUpError=new Error(e.getMessage());
+                    Error signUpError = new Error(e.getMessage());
+
                     signUpCompletion.completion(parseUser, false,signUpError);
                 }
             }

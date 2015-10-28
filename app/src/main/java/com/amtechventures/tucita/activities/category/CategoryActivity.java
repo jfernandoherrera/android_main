@@ -2,9 +2,12 @@ package com.amtechventures.tucita.activities.category;
 
 import java.util.List;
 
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.style.BackgroundColorSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -22,6 +25,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.widget.ImageButton;
 
 import com.amtechventures.tucita.model.context.user.UserContext;
+import com.amtechventures.tucita.model.context.user.UserGraphics;
 import com.amtechventures.tucita.model.error.AppError;
 import com.amtechventures.tucita.activities.login.LoginActivity;
 import com.amtechventures.tucita.model.domain.category.Category;
@@ -82,14 +86,15 @@ public class CategoryActivity extends AppCompatActivity {
             setContentView(R.layout.activity_category_logged);
             profile = (ImageButton)findViewById(R.id.go_to_user);
 
-           // ParseFile image = (ParseFile) user.get("cover");
-           // profile.setImageURI(Uri.parse(image.getUrl()));
+            profile.setImageResource(R.drawable.im1662337);
+
+
             profile.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View view) {
 
-                    goToLogin();
+                    //goTo
 
                 }
 

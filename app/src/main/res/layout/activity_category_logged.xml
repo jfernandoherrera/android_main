@@ -21,6 +21,8 @@
             android:layout_height="60dp"
             android:id="@+id/go_to_user"
             android:layout_alignParentBottom="true"
-            />
+            android:layout_alignParentStart="false"
+            android:textAlignment="viewEnd"
+            android:scaleType="fitStart"/>
     </RelativeLayout>
 </RelativeLayout>
