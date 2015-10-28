@@ -21,6 +21,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.widget.ImageButton;
 
+import com.amtechventures.tucita.model.context.user.UserContext;
 import com.amtechventures.tucita.model.error.AppError;
 import com.amtechventures.tucita.activities.login.LoginActivity;
 import com.amtechventures.tucita.model.domain.category.Category;
@@ -74,9 +75,9 @@ public class CategoryActivity extends AppCompatActivity {
     private void setupAuthenticated(){
 
 
-        String authenticated= Strings.AUTHENTICATED;
+        String authenticated= UserContext.context(this).me().getAuthType();
 
-        if(getIntent().getExtras().getBoolean(authenticated)){
+        if(authenticated.equals(Strings.AUTHENTICATED)){
 
             setContentView(R.layout.activity_category_logged);
             profile = (ImageButton)findViewById(R.id.go_to_user);

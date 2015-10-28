@@ -14,8 +14,11 @@ import com.amtechventures.tucita.utils.strings.Strings;
 public class SplashActivity extends AppCompatActivity {
 
     private Timer timer;
+
     public boolean active = true;
+
     private long splashLength = 1000;
+
     private UserContext userContext;
 
     @Override
@@ -100,8 +103,6 @@ public class SplashActivity extends AppCompatActivity {
 
         Intent i = new Intent(SplashActivity.this, activity);
 
-        i.putExtra(Strings.AUTHENTICATED,false);
-
         startActivity(i);
 
         finish();
@@ -112,9 +113,7 @@ public class SplashActivity extends AppCompatActivity {
 
         Intent i = new Intent(SplashActivity.this, activity);
 
-        i.putExtra(Strings.AUTHENTICATED,true);
-
-        startActivity(i);
+       startActivity(i);
 
         finish();
     }

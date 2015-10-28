@@ -14,8 +14,11 @@ import com.parse.SignUpCallback;
 public class UserRemote {
 
     ParseUser parseUser;
+
     private Completion.BoolBoolUserCompletion loginCompletion;
+
     private Completion.BoolErrorUserCompletion signUpCompletion;
+
     public void login(Activity activity, Completion.BoolBoolUserCompletion completion) {
 
         EditText passwordView = (EditText) activity.findViewById(R.id.password);
@@ -30,12 +33,13 @@ public class UserRemote {
             loginCompletion.completion(parseUser, true, false);
 
         } catch (ParseException e) {
+
             Log.i(ParseException.class.getName(), e.toString());
         }
 
     }
 
-    public void signUp(Activity activity,Completion.BoolErrorUserCompletion completion) {
+    public ParseUser signUp(Activity activity,Completion.BoolErrorUserCompletion completion) {
 
         signUpCompletion = completion;
 
@@ -57,13 +61,13 @@ public class UserRemote {
             @Override
             public void done(ParseException e) {
                 if(e==null){
-                    signUpCompletion.completion(parseUser, false, null);
+                    signUpCompletion.completion(parseUser, true, null);
                 }else {
-                    signUpCompletion.completion(parseUser, true, new Error(e.getMessage()));
+                    Error signUpError=new Error(e.getMessage());
+                    signUpCompletion.completion(parseUser, false,signUpError);
                 }
             }
         });
-
-
+        return parseUser;
     }
 }

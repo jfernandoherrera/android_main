@@ -94,7 +94,7 @@ public class LoginActivity extends AppCompatActivity  {
 
                         if (logged) {
 
-
+                            userContext.me().setParseUser(user);
                             processLoggedUser();
 
                         } else if (cancelled) {
@@ -117,11 +117,11 @@ public class LoginActivity extends AppCompatActivity  {
 
     private void processLoggedUser() {
 
-        userContext.updateMe();
+        userContext.setAuthenticationType(Strings.AUTHENTICATED);
 
         Intent intent = new Intent(this, CategoryActivity.class);
 
-        String authenticated= Strings.AUTHENTICATED;
+        String authenticated=userContext.getAuthenticationType();
 
         intent.putExtra(authenticated, true);
 

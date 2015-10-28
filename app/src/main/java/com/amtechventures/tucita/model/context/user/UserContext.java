@@ -1,15 +1,11 @@
 package com.amtechventures.tucita.model.context.user;
 
 import java.util.List;
-
 import android.app.Activity;
 import android.content.Context;
 import com.amtechventures.tucita.model.domain.user.User;
 import com.amtechventures.tucita.utils.blocks.Completion;
 import com.amtechventures.tucita.model.context.facebook.FacebookContext;
-import com.amtechventures.tucita.utils.strings.Strings;
-
-import org.json.JSONObject;
 
 public class UserContext {
 
@@ -35,14 +31,18 @@ public class UserContext {
       facebookContext  = new FacebookContext();
 
         userRemote=new UserRemote();
-    }
-public String getAuthenticationType(){
-    String authenticationType= Strings.ANONYMOUS;
-    User me=me();
 
+        me=new User();
+    }
+    public String getAuthenticationType(){
+
+    String authenticationType=me.getAuthType();
 
     return authenticationType;
-}
+    }
+    public void setAuthenticationType(String authenticationType){
+        me.setAuthType(authenticationType);
+    }
 
 
     public void login(Activity activity, Completion.BoolBoolUserCompletion completion) {
@@ -51,7 +51,7 @@ public String getAuthenticationType(){
     userRemote.login(activity,completion);
     }
     public void signUp(Activity activity, Completion.BoolErrorUserCompletion completion) {
-        userRemote.signUp(activity, completion);
+      me.setParseUser(userRemote.signUp(activity, completion));
     }
 
     public User me() {

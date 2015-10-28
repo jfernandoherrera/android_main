@@ -29,6 +29,9 @@ public class User {
     public String getAuthType(){
         return authType;
     }
+    public void setAuthType(String authType){
+        this.authType=authType;
+    }
     public void setEmail(String email){
 
         parseUser.put("email", email);

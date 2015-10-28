@@ -6,6 +6,7 @@ import com.amtechventures.tucita.model.domain.category.Category;
 public class CategoryContext {
 
     private CategoryLocal categoryLocal;
+
     private CategoryRemote categoryRemote;
 
     public static CategoryContext context(CategoryContext categoryContext) {
