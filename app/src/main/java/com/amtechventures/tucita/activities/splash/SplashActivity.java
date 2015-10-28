@@ -25,7 +25,7 @@ public class SplashActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_splash);
 
-        userContext = UserContext.context(this, userContext);
+        userContext = UserContext.context(this);
 
     }
 
@@ -81,7 +81,7 @@ public class SplashActivity extends AppCompatActivity {
     }
     private void checkForLoginStatus() {
 
-        String authType = userContext.getMeAuthenticationType();
+        String authType = userContext.getAuthenticationType();
 
         if (authType.equals(Strings.ANONYMOUS)) {
 

@@ -12,6 +12,10 @@ public class User {
     private String pictureURL;
     private String authType= Strings.ANONYMOUS;
 
+    public void setParseUser(ParseUser user){
+        parseUser=user;
+    }
+
     public void setUserName(String name){
 
         parseUser.put("username",name );

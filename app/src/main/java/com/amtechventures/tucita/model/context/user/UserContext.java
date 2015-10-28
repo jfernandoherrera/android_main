@@ -5,8 +5,6 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import com.amtechventures.tucita.model.domain.user.User;
-import com.amtechventures.tucita.model.error.AppError;
-import com.amtechventures.tucita.utils.blocks.BoolBoolUserCompletion;
 import com.amtechventures.tucita.utils.blocks.Completion;
 import com.amtechventures.tucita.model.context.facebook.FacebookContext;
 import com.amtechventures.tucita.utils.strings.Strings;
@@ -19,8 +17,8 @@ public class UserContext {
     UserRemote userRemote;
     private UserLocal userLocal;
     private FacebookContext facebookContext ;
-
-    public static UserContext context(Context context, UserContext userContext) {
+    private static UserContext userContext;
+    public static UserContext context(Context context) {
 
         if (userContext == null) {
 
@@ -38,7 +36,7 @@ public class UserContext {
 
         userRemote=new UserRemote();
     }
-public String getMeAuthenticationType(){
+public String getAuthenticationType(){
     String authenticationType= Strings.ANONYMOUS;
     User me=me();
 
@@ -47,11 +45,15 @@ public String getMeAuthenticationType(){
 }
 
 
-    public void login(Activity activity, BoolBoolUserCompletion completion) {
+    public void login(Activity activity, Completion.BoolBoolUserCompletion completion) {
 
        //facebookContext.login(activity,completion);
     userRemote.login(activity,completion);
     }
+    public void signUp(Activity activity, Completion.BoolErrorUserCompletion completion) {
+        userRemote.signUp(activity, completion);
+    }
+
     public User me() {
 
 
@@ -176,6 +178,7 @@ public String getMeAuthenticationType(){
         });*/
 
     }
+
 
     //public void updateWithRemoteUser(User user) { }
 

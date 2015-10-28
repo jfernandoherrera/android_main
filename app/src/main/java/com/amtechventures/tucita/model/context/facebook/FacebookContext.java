@@ -5,11 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
-
-import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.model.error.AppError;
-import com.amtechventures.tucita.utils.blocks.BoolBoolUserCompletion;
 import com.amtechventures.tucita.utils.blocks.Completion;
 import com.amtechventures.tucita.utils.strings.Strings;
 import com.facebook.AccessToken;
@@ -18,27 +14,20 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
-import com.facebook.HttpMethod;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.share.model.AppInviteContent;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.AppInviteDialog;
 import com.facebook.share.widget.MessageDialog;
-import com.parse.LogInCallback;
-import com.parse.ParseException;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
-
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.Arrays;
 import java.util.List;
 
 public class FacebookContext {
-    private BoolBoolUserCompletion loginCompletion;
+    private Completion.BoolBoolUserCompletion loginCompletion;
 
     private Context context;
 
@@ -126,7 +115,7 @@ public class FacebookContext {
 
     }
 
-    public void login(Activity activity, BoolBoolUserCompletion completion) {
+    public void login(Activity activity, Completion.BoolBoolUserCompletion completion) {
 
         loginCompletion = completion;
 

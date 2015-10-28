@@ -104,4 +104,14 @@ public class Completion {
 
     }
 
+    public interface BoolBoolUserCompletion {
+
+        void completion(ParseUser user,boolean bool1, boolean bool2);
+
+    }
+    public interface BoolErrorUserCompletion {
+
+        void completion(ParseUser user,boolean bool1, Error error);
+
+    }
 }

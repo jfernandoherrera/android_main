@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,10 +17,8 @@ import com.amtechventures.tucita.activities.category.CategoryActivity;
 import com.amtechventures.tucita.activities.signup.SignUpActivity;
 import com.amtechventures.tucita.model.context.facebook.FacebookContext;
 import com.amtechventures.tucita.model.context.user.UserContext;
-import com.amtechventures.tucita.utils.blocks.BoolBoolUserCompletion;
 import com.amtechventures.tucita.utils.blocks.Completion;
 import com.amtechventures.tucita.utils.strings.Strings;
-import com.parse.ParseFacebookUtils;
 import com.parse.ParseUser;
 
 
@@ -40,7 +37,8 @@ public class LoginActivity extends AppCompatActivity  {
 
         super.onCreate(savedInstanceState);
 
-        userContext = UserContext.context(this, userContext);
+        userContext = UserContext.context(this);
+
         facebookContext=FacebookContext.context(null);
 
         setContentView(R.layout.activity_login);
@@ -89,7 +87,7 @@ public class LoginActivity extends AppCompatActivity  {
     }
     private void attemptLogin() {
 
-        userContext.login(this, new BoolBoolUserCompletion() {
+        userContext.login(this, new Completion.BoolBoolUserCompletion() {
 
                     @Override
                     public void completion(ParseUser user, boolean logged, boolean cancelled) {

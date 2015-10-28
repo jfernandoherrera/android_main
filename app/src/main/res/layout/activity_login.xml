@@ -47,7 +47,8 @@
         android:text="@string/create_new_account"
         android:id="@+id/newAccount"
         android:layout_gravity="left"
-        />
+        android:clickable="true"
+        android:textColor="#1810ce" />
 
             <Button android:id="@+id/email_sign_in_button" style="?android:textAppearanceSmall"
                 android:layout_width="match_parent" android:layout_height="wrap_content"
