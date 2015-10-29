@@ -3,6 +3,9 @@ package com.amtechventures.tucita.activities.category;
 import java.util.List;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.net.Uri;
@@ -83,10 +86,19 @@ public class CategoryActivity extends AppCompatActivity {
         if(authenticated.equals(Strings.AUTHENTICATED)){
 
             setContentView(R.layout.activity_category_logged);
+
+
             profile = (ImageButton)findViewById(R.id.go_to_user);
 
             profile.setImageResource(R.drawable.im1662337);
 
+            Drawable draw=new UserGraphics();
+
+            Canvas canvas=new Canvas();
+
+            draw.draw(canvas);
+
+            profile.setBackground(draw);
 
             profile.setOnClickListener(new View.OnClickListener() {
 

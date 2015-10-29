@@ -1,38 +1,61 @@
 package com.amtechventures.tucita.model.context.user;
 
-import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.ColorFilter;
 import android.graphics.Paint;
-import android.widget.ImageView;
+import android.graphics.drawable.Drawable;
 
 
-public class UserGraphics extends ImageView {
+public class UserGraphics extends Drawable {
 
+    Paint paint=new Paint();
 
-    Bitmap b = Bitmap.createBitmap(150, 70, Bitmap.Config.ARGB_8888);
+    private int POSITION_ZERO=0;
 
-    Canvas c = new Canvas(b);
+    private int MAX_WIDTH=550;
 
-    Paint paint;
+    private int HEIGHT=90;
 
-    public UserGraphics(Context context) {
+    private int ALPHA_TRANSPARENCY=125;
+    private int TEXT_SIZE=25;
 
-        super(context);
+    private int TEXT_X=122;
 
-        paint = new Paint();
-
-        setMeasuredDimension(300,40);
-    }
+    private int TEXT_Y=40;
     @Override
-    public void onDraw(Canvas canvas){
+    public void draw(Canvas canvas) {
+        //
 
-        canvas.drawColor(Color.RED);
+        paint.setColor(Color.GRAY);
 
-        paint.setColor(Color.CYAN);
+        canvas.drawRect(POSITION_ZERO, POSITION_ZERO, MAX_WIDTH, HEIGHT, paint);
 
-        canvas.drawText("Jose Herrera",150,500,paint);
+        paint.setColor(Color.BLUE);
+
+        paint.setAlpha(ALPHA_TRANSPARENCY);
+
+        paint.setFakeBoldText(true);
+
+        paint.setTextSize(TEXT_SIZE);
+
+        canvas.drawText(UserContext.context().me().getUserName(), TEXT_X, TEXT_Y,paint);
+
+    }
+
+    @Override
+    public void setAlpha(int alpha) {
+
+    }
+
+    @Override
+    public void setColorFilter(ColorFilter colorFilter) {
+
+    }
+
+    @Override
+    public int getOpacity() {
+        return 0;
     }
 
 }

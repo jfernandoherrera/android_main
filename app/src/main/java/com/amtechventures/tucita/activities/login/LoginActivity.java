@@ -50,6 +50,7 @@ public class LoginActivity extends AppCompatActivity  {
 
         TextView t2 = (TextView) findViewById(R.id.newAccount);
 
+       //this code don't works
         t2.setMovementMethod(LinkMovementMethod.getInstance());
 
         passwordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -66,11 +67,11 @@ public class LoginActivity extends AppCompatActivity  {
             }
         });
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+        Button emailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
 
         Button facebookButton = (Button) findViewById(R.id.facebook_button);
 
-        mEmailSignInButton.setOnClickListener(new OnClickListener() {
+        emailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
 

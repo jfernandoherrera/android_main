@@ -23,6 +23,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentStart="false"
             android:textAlignment="viewEnd"
-            android:scaleType="fitStart"/>
+            android:scaleType="fitStart"
+            />
     </RelativeLayout>
 </RelativeLayout>
