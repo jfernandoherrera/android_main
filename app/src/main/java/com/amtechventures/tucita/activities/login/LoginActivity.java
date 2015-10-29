@@ -38,7 +38,7 @@ public class LoginActivity extends AppCompatActivity  {
 
         super.onCreate(savedInstanceState);
 
-        userContext = UserContext.context(this);
+        userContext = UserContext.context();
 
         facebookContext = FacebookContext.context(null);
 
@@ -86,9 +86,12 @@ public class LoginActivity extends AppCompatActivity  {
         });
 
     }
+
     private void attemptLogin() {
         String email = emailView.getText().toString();
+
         String password = passwordView.getText().toString();
+
         userContext.login(email, password, new Completion.BoolBoolUserCompletion() {
 
                     @Override
@@ -97,6 +100,7 @@ public class LoginActivity extends AppCompatActivity  {
                         if (logged) {
 
                             userContext.me().setParseUser(user);
+
                             processLoggedUser();
 
                         } else if (cancelled) {
@@ -123,7 +127,6 @@ public class LoginActivity extends AppCompatActivity  {
         );
     }
 
-
     private void processLoggedUser() {
 
         userContext.setAuthenticationType(Strings.AUTHENTICATED);
@@ -141,6 +144,7 @@ public class LoginActivity extends AppCompatActivity  {
         finish();
 
     }
+
     @Override
     protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
 
@@ -149,7 +153,6 @@ public class LoginActivity extends AppCompatActivity  {
         facebookContext.getCallbackManager().onActivityResult(requestCode, resultCode, data);
 
     }
-
 
     public void goToSignUp(View view){
 

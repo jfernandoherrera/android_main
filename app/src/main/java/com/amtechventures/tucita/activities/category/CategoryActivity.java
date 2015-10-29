@@ -55,7 +55,6 @@ public class CategoryActivity extends AppCompatActivity {
 
     private ImageButton profile;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -79,8 +78,7 @@ public class CategoryActivity extends AppCompatActivity {
 
     private void setupAuthenticated(){
 
-
-        String authenticated= UserContext.context(this).me().getAuthType();
+        String authenticated = UserContext.context().me().getAuthType();
 
         if(authenticated.equals(Strings.AUTHENTICATED)){
 
@@ -117,6 +115,7 @@ public class CategoryActivity extends AppCompatActivity {
             });
         }
     }
+
     private void setupGrid() {
 
         List<Category> categoryList = categoryContext.loadCategories(new CategoryCompletion.CategoriesErrorCompletion() {
@@ -149,6 +148,7 @@ public class CategoryActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
     }
+
     private void noInternetConecctionAlert(){
 
         new AlertDialog.Builder(this)

@@ -38,7 +38,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         nameView = (EditText) findViewById(R.id.name);
 
-        userContext = UserContext.context(this);
+        userContext = UserContext.context();
 
         Button singUpButton = (Button) findViewById(R.id.buttonSignUp);
 
@@ -53,12 +53,16 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void signUp(){
         String email = emailView.getText().toString();
+
         String password = passwordView.getText().toString();
+
         String name = nameView.getText().toString();
+
         userContext.signUp(email,password, name,new Completion.BoolErrorUserCompletion() {
             @Override
             public void completion(ParseUser user, boolean ok, Error error) {
                 if(ok){
+
                     userContext.me().setParseUser(user);
 
                     //goTo deberìa ir a una activity guardada

@@ -18,11 +18,11 @@ public class UserContext {
 
     private static UserContext userContext;
 
-    public static UserContext context(Context context) {
+    public static UserContext context() {
 
         if (userContext == null) {
 
-            userContext = new UserContext(context);
+            userContext = new UserContext();
 
         }
 
@@ -30,7 +30,7 @@ public class UserContext {
 
     }
 
-    public UserContext(Context context) {
+    public UserContext() {
 
       facebookContext  = new FacebookContext();
 
@@ -66,7 +66,7 @@ public class UserContext {
     }
 
     public void logOut(){
-
+    UserLocal.logout();
     }
 
 }

@@ -28,7 +28,7 @@ public class SplashActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_splash);
 
-        userContext = UserContext.context(this);
+        userContext = UserContext.context();
 
     }
 

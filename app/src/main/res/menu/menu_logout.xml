@@ -4,6 +4,6 @@
     <item android:id="@+id/action_logout"
         android:icon="@drawable/ic_action_name"
         android:title="@string/action_logout"
-
+        compat:showAsAction="always"
        />
 </menu>

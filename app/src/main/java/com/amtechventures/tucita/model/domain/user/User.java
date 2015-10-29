@@ -10,11 +10,15 @@ import com.parse.ParseUser;
 public class User {
     private ParseUser parseUser;
     private String pictureURL;
-    private String authType= Strings.ANONYMOUS;
+    private String authType = Strings.ANONYMOUS;
 
     public void setParseUser(ParseUser user){
 
-        parseUser=user;
+        parseUser = user;
+    }
+
+    public ParseUser getParseUser() {
+        return parseUser;
     }
 
     public void setUserName(String name){
@@ -35,6 +39,7 @@ public class User {
     }
 
     public void setAuthType(String authType){
+
         this.authType = authType;
     }
 
