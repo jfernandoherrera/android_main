@@ -24,6 +24,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.widget.ImageButton;
 
+import com.amtechventures.tucita.activities.account.AccountActivity;
 import com.amtechventures.tucita.model.context.user.UserContext;
 import com.amtechventures.tucita.model.context.user.UserGraphics;
 import com.amtechventures.tucita.model.error.AppError;
@@ -94,7 +95,7 @@ public class CategoryActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
 
-                    //goTo
+                    goToAccount();
 
                 }
 
@@ -125,16 +126,16 @@ public class CategoryActivity extends AppCompatActivity {
 
                 if (categoryList != null) {
 
-                   categories.clear();
+                    categories.clear();
 
-                   categories.addAll(categoryList);
+                    categories.addAll(categoryList);
 
                     adapter.notifyDataSetChanged();
 
-                }else {
-                 
+                } else {
+
                     noInternetConecctionAlert();
-                    
+
                 }
 
             }
@@ -195,6 +196,15 @@ public class CategoryActivity extends AppCompatActivity {
     private void goToLogin() {
 
         Intent intent = new Intent(CategoryActivity.this, LoginActivity.class);
+
+        startActivity(intent);
+
+
+    }
+
+    private void goToAccount() {
+
+        Intent intent = new Intent(CategoryActivity.this, AccountActivity.class);
 
         startActivity(intent);
 

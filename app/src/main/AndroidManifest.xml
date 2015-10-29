@@ -35,6 +35,8 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity android:name=".activities.signup.SignUpActivity" >
         </activity>
+        <activity android:name=".activities.account.AccountActivity" >
+        </activity>
     </application>
 
 </manifest>

@@ -19,16 +19,13 @@ public class UserRemote {
 
     private Completion.BoolErrorUserCompletion signUpCompletion;
 
-    public void login(Activity activity, Completion.BoolBoolUserCompletion completion) {
+    public void login(String email, String password,Completion.BoolBoolUserCompletion completion) {
 
-        EditText passwordView = (EditText) activity.findViewById(R.id.password);
-
-        TextView email = (TextView) activity.findViewById(R.id.email);
 
         loginCompletion = completion;
 
         try {
-            parseUser= ParseUser.logIn(email.getText().toString(),passwordView.getText().toString());
+            parseUser= ParseUser.logIn(email,password);
 
             loginCompletion.completion(parseUser, true, false);
 
@@ -39,23 +36,18 @@ public class UserRemote {
 
     }
 
-    public ParseUser signUp(Activity activity,Completion.BoolErrorUserCompletion completion) {
+    public ParseUser signUp(String email, String password,String name, Completion.BoolErrorUserCompletion completion) {
 
         signUpCompletion = completion;
 
-        EditText passwordView = (EditText) activity.findViewById(R.id.password);
-
-        TextView email = (TextView) activity.findViewById(R.id.email);
-
-        TextView name = (TextView) activity.findViewById(R.id.name);
 
         parseUser = new ParseUser();
 
-        parseUser.setEmail(email.getText().toString());
+        parseUser.setEmail(email);
 
-        parseUser.setUsername(name.getText().toString());
+        parseUser.setUsername(name);
 
-        parseUser.setPassword(passwordView.getText().toString());
+        parseUser.setPassword(password);
 
         parseUser.signUpInBackground(new SignUpCallback() {
             @Override

@@ -50,18 +50,22 @@ public class UserContext {
         me.setAuthType(authenticationType);
     }
 
-    public void login(Activity activity, Completion.BoolBoolUserCompletion completion) {
+    public void login(String email, String password, Completion.BoolBoolUserCompletion completion) {
 
-      userRemote.login(activity,completion);
+      userRemote.login(email, password, completion);
     }
 
-    public void signUp(Activity activity, Completion.BoolErrorUserCompletion completion) {
-      me.setParseUser(userRemote.signUp(activity, completion));
+    public void signUp(String email, String password,String name, Completion.BoolErrorUserCompletion completion) {
+      me.setParseUser(userRemote.signUp(email, password, name, completion));
     }
 
     public User me() {
 
         return me;
+
+    }
+
+    public void logOut(){
 
     }
 

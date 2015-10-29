@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.LinkMovementMethod;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -86,8 +87,9 @@ public class LoginActivity extends AppCompatActivity  {
 
     }
     private void attemptLogin() {
-
-        userContext.login(this, new Completion.BoolBoolUserCompletion() {
+        String email = emailView.getText().toString();
+        String password = passwordView.getText().toString();
+        userContext.login(email, password, new Completion.BoolBoolUserCompletion() {
 
                     @Override
                     public void completion(ParseUser user, boolean logged, boolean cancelled) {
@@ -98,12 +100,19 @@ public class LoginActivity extends AppCompatActivity  {
                             processLoggedUser();
 
                         } else if (cancelled) {
+                            Toast errorLogin=  Toast.makeText(LoginActivity.this, R.string.cancel,Toast.LENGTH_SHORT);
 
-                            Toast.makeText(LoginActivity.this, R.string.cancel, Toast.LENGTH_SHORT).show();
+                            errorLogin.setGravity(Gravity.TOP | Gravity.LEFT, 0, 0);
+
+                            errorLogin.show();
 
                         } else {
+                            Toast errorLogin=  Toast.makeText(LoginActivity.this,  R.string.error,Toast.LENGTH_SHORT);
 
-                            Toast.makeText(LoginActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
+                            errorLogin.setGravity(Gravity.TOP | Gravity.LEFT, 0, 0);
+
+                            errorLogin.show();
+
 
                         }
 
