@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">TuCita</string>
-    <string name="action_settings">Settings</string>
     <string name="cancel">Cancel</string>
+    <string name="action_settings">Settings</string>
     <!-- Strings related to login -->
     <string name="facebook_app_id">1652265898354822</string>
     <string name="connect_with_facebook">Entra con Facebook</string>

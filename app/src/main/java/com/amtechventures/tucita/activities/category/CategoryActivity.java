@@ -2,22 +2,14 @@ package com.amtechventures.tucita.activities.category;
 
 import java.util.List;
 
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.Paint;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
-import android.net.Uri;
 import android.os.Bundle;
-import android.text.style.BackgroundColorSpan;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import java.util.ArrayList;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.content.Intent;
+import android.widget.ImageButton;
 import com.amtechventures.tucita.R;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SearchView;
@@ -25,45 +17,40 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
-import android.widget.ImageButton;
 
-import com.amtechventures.tucita.activities.account.AccountActivity;
-import com.amtechventures.tucita.model.context.user.UserContext;
-import com.amtechventures.tucita.model.context.user.UserGraphics;
 import com.amtechventures.tucita.model.error.AppError;
+import com.amtechventures.tucita.utils.strings.Strings;
+import com.amtechventures.tucita.model.context.user.UserContext;
 import com.amtechventures.tucita.activities.login.LoginActivity;
 import com.amtechventures.tucita.model.domain.category.Category;
+import com.amtechventures.tucita.activities.account.AccountActivity;
 import com.amtechventures.tucita.model.context.category.CategoryContext;
 import com.amtechventures.tucita.model.context.category.CategoryCompletion;
 import com.amtechventures.tucita.activities.category.adapters.CategoryGridAdapter;
-import com.amtechventures.tucita.utils.strings.Strings;
-import com.parse.ParseFile;
-import com.parse.ParseUser;
 
 public class CategoryActivity extends AppCompatActivity {
 
     private int COLUMNS_IN_CATEGORIES = 3;
 
+    private ImageButton profile;
     private Button signOrRegister;
-
     private RecyclerView recyclerView;
-
     private RecyclerView.Adapter adapter;
-
     private RecyclerView.LayoutManager layoutManager;
-
-    private CategoryContext categoryContext;
 
     private List<Category> categories = new ArrayList<>();
 
-    private ImageButton profile;
+    private UserContext userContext;
+    private CategoryContext categoryContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
 
-        setupAuthenticated();
+        userContext = UserContext.context(userContext);
+
+        setup();
 
         categoryContext = CategoryContext.context(categoryContext);
 
@@ -79,26 +66,15 @@ public class CategoryActivity extends AppCompatActivity {
 
     }
 
-    private void setupAuthenticated(){
+    private void setup() {
 
-        String authenticated = UserContext.context().me().getAuthType();
-
-        if(authenticated.equals(Strings.AUTHENTICATED)){
+        if (userContext.currentUser() != null) {
 
             setContentView(R.layout.activity_category_logged);
-
 
             profile = (ImageButton)findViewById(R.id.go_to_user);
 
             profile.setImageResource(R.drawable.im1662337);
-
-            Drawable draw=new UserGraphics();
-
-            Canvas canvas=new Canvas();
-
-            draw.draw(canvas);
-
-            profile.setBackground(draw);
 
             profile.setOnClickListener(new View.OnClickListener() {
 
@@ -110,7 +86,9 @@ public class CategoryActivity extends AppCompatActivity {
                 }
 
             });
-        }else{
+
+        }else {
+
             setContentView(R.layout.activity_category);
 
             signOrRegister = (Button)findViewById(R.id.go_to_login);
@@ -126,6 +104,7 @@ public class CategoryActivity extends AppCompatActivity {
 
             });
         }
+
     }
 
     private void setupGrid() {
@@ -145,7 +124,7 @@ public class CategoryActivity extends AppCompatActivity {
 
                 } else {
 
-                    noInternetConecctionAlert();
+                    noInternetConnectionAlert();
 
                 }
 
@@ -161,7 +140,7 @@ public class CategoryActivity extends AppCompatActivity {
 
     }
 
-    private void noInternetConecctionAlert(){
+    private void noInternetConnectionAlert() {
 
         new AlertDialog.Builder(this)
                 .setTitle(getResources().getString(R.string.alert))

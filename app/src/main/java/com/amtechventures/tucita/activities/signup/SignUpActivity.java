@@ -1,29 +1,29 @@
 package com.amtechventures.tucita.activities.signup;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
-import android.widget.AutoCompleteTextView;
+import android.view.Gravity;
+import android.widget.Toast;
 import android.widget.Button;
+import android.content.Intent;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 import com.amtechventures.tucita.R;
+import android.widget.AutoCompleteTextView;
+import android.support.v7.app.AppCompatActivity;
+
+import com.amtechventures.tucita.model.error.AppError;
+import com.amtechventures.tucita.model.domain.user.User;
 import com.amtechventures.tucita.model.context.user.UserContext;
-import com.amtechventures.tucita.utils.blocks.Completion;
-import com.parse.ParseUser;
+import com.amtechventures.tucita.model.context.user.UserCompletion;
+import com.amtechventures.tucita.activities.category.CategoryActivity;
 
 public class SignUpActivity extends AppCompatActivity {
-
 
     private UserContext userContext;
 
     private TextView emailView;
-
     private EditText passwordView;
-
-    private EditText nameView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,49 +32,68 @@ public class SignUpActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_sign_up);
 
-        emailView = (AutoCompleteTextView) findViewById(R.id.email);
+        userContext = UserContext.context(userContext);
 
-        passwordView = (EditText) findViewById(R.id.password);
+        passwordView = (EditText)findViewById(R.id.password);
 
-        nameView = (EditText) findViewById(R.id.name);
+        emailView = (AutoCompleteTextView)findViewById(R.id.email);
 
-        userContext = UserContext.context();
-
-        Button singUpButton = (Button) findViewById(R.id.buttonSignUp);
+        Button singUpButton = (Button)findViewById(R.id.buttonSignUp);
 
         singUpButton.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
 
-            signUp();
+                signUp();
+
             }
+
         });
+
     }
 
-    private void signUp(){
+    private void signUp() {
+
         String email = emailView.getText().toString();
 
         String password = passwordView.getText().toString();
 
-        String name = nameView.getText().toString();
+        userContext.signup(email, password, new UserCompletion.UserErrorCompletion() {
 
-        userContext.signUp(email,password, name,new Completion.BoolErrorUserCompletion() {
             @Override
-            public void completion(ParseUser user, boolean ok, Error error) {
-                if(ok){
+            public void completion(User user, AppError error) {
 
-                    userContext.me().setParseUser(user);
+                if (error == null) {
 
-                    //goTo deberìa ir a una activity guardada
-                  }else{
-                  Toast errorSignUp=  Toast.makeText(SignUpActivity.this, error.getMessage(),Toast.LENGTH_SHORT);
+                    Toast errorSignUp = Toast.makeText(SignUpActivity.this, R.string.error, Toast.LENGTH_SHORT);
 
                     errorSignUp.setGravity(Gravity.TOP | Gravity.LEFT, 0, 0);
 
                     errorSignUp.show();
+
+                } else {
+
+                    processLoggedUser();
+
                 }
+
             }
+
         });
+
+    }
+
+    private void processLoggedUser() {
+
+        Intent intent = new Intent(this, CategoryActivity.class);
+
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+        startActivity(intent);
+
+        finish();
+
     }
 
 }

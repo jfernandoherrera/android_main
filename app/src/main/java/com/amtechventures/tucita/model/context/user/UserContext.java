@@ -1,24 +1,13 @@
 package com.amtechventures.tucita.model.context.user;
 
-import android.app.Activity;
-import android.content.Context;
 import com.amtechventures.tucita.model.domain.user.User;
-import com.amtechventures.tucita.utils.blocks.Completion;
-import com.amtechventures.tucita.model.context.facebook.FacebookContext;
 
 public class UserContext {
 
-    private User me;
+    private UserLocal local;
+    private UserRemote remote;
 
-    UserRemote userRemote;
-
-    private UserLocal userLocal;
-
-    private FacebookContext facebookContext ;
-
-    private static UserContext userContext;
-
-    public static UserContext context() {
+    public static UserContext context(UserContext userContext) {
 
         if (userContext == null) {
 
@@ -32,41 +21,34 @@ public class UserContext {
 
     public UserContext() {
 
-      facebookContext  = new FacebookContext();
+        local = new UserLocal();
 
-        userRemote = new UserRemote();
-
-        me=new User();
-    }
-
-    public String getAuthenticationType(){
-
-    String authenticationType = me.getAuthType();
-
-    return authenticationType;
-    }
-
-    public void setAuthenticationType(String authenticationType){
-        me.setAuthType(authenticationType);
-    }
-
-    public void login(String email, String password, Completion.BoolBoolUserCompletion completion) {
-
-      userRemote.login(email, password, completion);
-    }
-
-    public void signUp(String email, String password,String name, Completion.BoolErrorUserCompletion completion) {
-      me.setParseUser(userRemote.signUp(email, password, name, completion));
-    }
-
-    public User me() {
-
-        return me;
+        remote = new UserRemote();
 
     }
 
-    public void logOut(){
-    UserLocal.logout();
+    public void login(String email, String password, UserCompletion.UserErrorCompletion completion) {
+
+        remote.login(email, password, completion);
+
+    }
+
+    public void signup(String email, String password, UserCompletion.UserErrorCompletion completion) {
+
+        remote.signup(email, password, completion);
+
+    }
+
+    public User currentUser() {
+
+        return local.currentUser();
+
+    }
+
+    public void logout() {
+
+        local.logout();
+
     }
 
 }

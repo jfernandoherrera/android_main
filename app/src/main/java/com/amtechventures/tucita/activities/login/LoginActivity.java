@@ -1,46 +1,39 @@
 package com.amtechventures.tucita.activities.login;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.text.method.LinkMovementMethod;
+import android.view.View;
+import android.widget.Toast;
 import android.view.Gravity;
 import android.view.KeyEvent;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.content.Intent;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
+import android.view.View.OnClickListener;
+import android.widget.AutoCompleteTextView;
+import android.text.method.LinkMovementMethod;
+import android.support.v7.app.AppCompatActivity;
+
 import com.amtechventures.tucita.R;
-import com.amtechventures.tucita.activities.category.CategoryActivity;
-import com.amtechventures.tucita.activities.signup.SignUpActivity;
-import com.amtechventures.tucita.model.context.facebook.FacebookContext;
+import com.amtechventures.tucita.model.error.AppError;
+import com.amtechventures.tucita.model.domain.user.User;
 import com.amtechventures.tucita.model.context.user.UserContext;
-import com.amtechventures.tucita.utils.blocks.Completion;
-import com.amtechventures.tucita.utils.strings.Strings;
-import com.parse.ParseUser;
+import com.amtechventures.tucita.activities.signup.SignUpActivity;
+import com.amtechventures.tucita.model.context.user.UserCompletion;
+import com.amtechventures.tucita.activities.category.CategoryActivity;
 
-
-public class LoginActivity extends AppCompatActivity  {
+public class LoginActivity extends AppCompatActivity {
 
     private TextView emailView;
-
     private EditText passwordView;
-
     private UserContext userContext;
-
-    FacebookContext facebookContext ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
 
-        userContext = UserContext.context();
-
-        facebookContext = FacebookContext.context(null);
+        userContext = UserContext.context(userContext);
 
         setContentView(R.layout.activity_login);
 
@@ -54,89 +47,74 @@ public class LoginActivity extends AppCompatActivity  {
         t2.setMovementMethod(LinkMovementMethod.getInstance());
 
         passwordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
 
-                  /*  if (id == R.id.|| id == EditorInfo.IME_NULL) {
-
-                        attemptLogin();
-
-                        return true;
-                    }*/
                 return false;
+
             }
+
         });
 
         Button emailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
 
-        Button facebookButton = (Button) findViewById(R.id.facebook_button);
+        Button facebookButton = (Button)findViewById(R.id.facebook_button);
 
         emailSignInButton.setOnClickListener(new OnClickListener() {
+
             @Override
             public void onClick(View view) {
 
-                attemptLogin();
+                login();
+
             }
+
         });
-        facebookButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                attemptLogin();
-            }
+        facebookButton.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View view) {}
+
         });
 
     }
 
-    private void attemptLogin() {
+    private void login() {
+
         String email = emailView.getText().toString();
 
         String password = passwordView.getText().toString();
 
-        userContext.login(email, password, new Completion.BoolBoolUserCompletion() {
+        userContext.login(email, password, new UserCompletion.UserErrorCompletion() {
 
-                    @Override
-                    public void completion(ParseUser user, boolean logged, boolean cancelled) {
+            @Override
+            public void completion(User user, AppError error) {
 
-                        if (logged) {
+                if (error != null) {
 
-                            userContext.me().setParseUser(user);
+                    Toast errorLogin = Toast.makeText(LoginActivity.this, R.string.error, Toast.LENGTH_SHORT);
 
-                            processLoggedUser();
+                    errorLogin.setGravity(Gravity.TOP | Gravity.LEFT, 0, 0);
 
-                        } else if (cancelled) {
-                            Toast errorLogin=  Toast.makeText(LoginActivity.this, R.string.cancel,Toast.LENGTH_SHORT);
+                    errorLogin.show();
 
-                            errorLogin.setGravity(Gravity.TOP | Gravity.LEFT, 0, 0);
+                }else {
 
-                            errorLogin.show();
-
-                        } else {
-                            Toast errorLogin=  Toast.makeText(LoginActivity.this,  R.string.error,Toast.LENGTH_SHORT);
-
-                            errorLogin.setGravity(Gravity.TOP | Gravity.LEFT, 0, 0);
-
-                            errorLogin.show();
-
-
-                        }
-
-                    }
+                    processLoggedUser();
 
                 }
 
-        );
+            }
+
+        });
+
     }
 
     private void processLoggedUser() {
 
-        userContext.setAuthenticationType(Strings.AUTHENTICATED);
-
         Intent intent = new Intent(this, CategoryActivity.class);
-
-        String authenticated = userContext.getAuthenticationType();
-
-        intent.putExtra(authenticated, true);
 
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
@@ -151,18 +129,16 @@ public class LoginActivity extends AppCompatActivity  {
 
         super.onActivityResult(requestCode, resultCode, data);
 
-        facebookContext.getCallbackManager().onActivityResult(requestCode, resultCode, data);
-
     }
 
-    public void goToSignUp(View view){
+    public void signup(View view) {
 
         Intent intent = new Intent(this, SignUpActivity.class);
 
         startActivity(intent);
 
         finish();
+
     }
+
 }
-
-

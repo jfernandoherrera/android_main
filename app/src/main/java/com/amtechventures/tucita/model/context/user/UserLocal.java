@@ -1,16 +1,26 @@
 package com.amtechventures.tucita.model.context.user;
 
-
-import com.amtechventures.tucita.utils.strings.Strings;
+import com.parse.ParseUser;
+import com.amtechventures.tucita.model.domain.user.User;
 
 public class UserLocal {
 
-public static void logout(){
+    public User currentUser() {
 
-    UserContext.context().me().getParseUser().logOut();
+        User user = new User();
 
-    UserContext.context().me().setAuthType(Strings.ANONYMOUS);
+        ParseUser parseUser = ParseUser.getCurrentUser();
 
-}
+        user.setParseUser(parseUser);
+
+        return user;
+
+    }
+
+    public void logout() {
+
+        ParseUser.logOut();
+
+    }
 
 }

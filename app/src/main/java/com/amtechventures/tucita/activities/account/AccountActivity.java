@@ -1,22 +1,27 @@
 package com.amtechventures.tucita.activities.account;
 
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.content.Intent;
 import com.amtechventures.tucita.R;
-import com.amtechventures.tucita.activities.category.CategoryActivity;
+import android.support.v7.app.AppCompatActivity;
 import com.amtechventures.tucita.model.context.user.UserContext;
+import com.amtechventures.tucita.activities.category.CategoryActivity;
 
 public class AccountActivity extends AppCompatActivity {
+
+    private UserContext userContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        userContext = UserContext.context(userContext);
+
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_account);
+
     }
 
     @Override
@@ -27,15 +32,18 @@ public class AccountActivity extends AppCompatActivity {
         MenuItem logoutItem = menu.findItem(R.id.action_logout);
 
         logoutItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+
             @Override
             public boolean onMenuItemClick(MenuItem item) {
 
-                UserContext.context().logOut();
+                userContext.logout();
 
                 goToCategories();
 
                 return true;
+
             }
+
         });
 
         return true;
@@ -49,5 +57,6 @@ public class AccountActivity extends AppCompatActivity {
         startActivity(intent);
 
         finish();
+
     }
 }

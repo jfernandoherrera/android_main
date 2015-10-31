@@ -1,15 +1,20 @@
 package com.amtechventures.tucita.activities.splash;
 
 import java.util.Timer;
+
 import android.os.Bundle;
+
 import java.util.TimerTask;
+
 import android.content.Intent;
 import android.view.MotionEvent;
+
 import com.amtechventures.tucita.R;
+
 import android.support.v7.app.AppCompatActivity;
-import com.amtechventures.tucita.activities.category.CategoryActivity;
+
 import com.amtechventures.tucita.model.context.user.UserContext;
-import com.amtechventures.tucita.utils.strings.Strings;
+import com.amtechventures.tucita.activities.category.CategoryActivity;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -28,12 +33,12 @@ public class SplashActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_splash);
 
-        userContext = UserContext.context();
+        userContext = UserContext.context(userContext);
 
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
 
         super.onResume();
 
@@ -51,7 +56,7 @@ public class SplashActivity extends AppCompatActivity {
 
         public void run() {
 
-            if(active) {
+            if (active) {
 
                 active = false;
 
@@ -69,7 +74,7 @@ public class SplashActivity extends AppCompatActivity {
 
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
 
-            if(timer != null) {
+            if (timer != null) {
 
                 timer.cancel();
 
@@ -82,22 +87,22 @@ public class SplashActivity extends AppCompatActivity {
         return true;
 
     }
+
     private void checkForLoginStatus() {
 
-        String authType = userContext.getAuthenticationType();
-
-        if (authType.equals(Strings.ANONYMOUS)) {
+        if (userContext.currentUser() == null) {
 
             processAnonymousUser();
 
-        }else {
+        } else {
 
             processLoggedUser();
 
         }
 
     }
-    private void processAnonymousUser(){
+
+    private void processAnonymousUser() {
 
         Class activity = CategoryActivity.class;
 
@@ -106,20 +111,24 @@ public class SplashActivity extends AppCompatActivity {
         startActivity(i);
 
         finish();
+
     }
+
     private void processLoggedUser() {
 
         Class activity = CategoryActivity.class;
 
         Intent i = new Intent(SplashActivity.this, activity);
 
-       startActivity(i);
+        startActivity(i);
 
         finish();
+
     }
+
     private void createTimer() {
 
-        if(timer == null) {
+        if (timer == null) {
 
             timer = new Timer();
 
@@ -135,7 +144,7 @@ public class SplashActivity extends AppCompatActivity {
 
             }, splashLength);
 
-        }else if (active == false) {
+        } else if (active == false) {
 
             finish();
 

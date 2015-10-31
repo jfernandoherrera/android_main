@@ -1,68 +1,80 @@
 package com.amtechventures.tucita.model.context.user;
 
-
-import android.app.Activity;
-import android.util.Log;
-import android.widget.EditText;
-import android.widget.TextView;
-import com.amtechventures.tucita.R;
-import com.amtechventures.tucita.utils.blocks.Completion;
-import com.parse.ParseException;
 import com.parse.ParseUser;
+import com.parse.LogInCallback;
+import com.parse.ParseException;
 import com.parse.SignUpCallback;
+
+import com.amtechventures.tucita.model.error.AppError;
+import com.amtechventures.tucita.model.domain.user.User;
+import com.amtechventures.tucita.model.domain.category.Category;
 
 public class UserRemote {
 
-    ParseUser parseUser;
+    public void login(String email, String password, final UserCompletion.UserErrorCompletion completion) {
 
-    private Completion.BoolBoolUserCompletion loginCompletion;
+        ParseUser.logInInBackground(email, password, new LogInCallback() {
 
-    private Completion.BoolErrorUserCompletion signUpCompletion;
+            @Override
+            public void done(ParseUser parseUser, ParseException e) {
 
-    public void login(String email, String password,Completion.BoolBoolUserCompletion completion) {
+                User user = null;
 
+                AppError appError = null;
 
-        loginCompletion = completion;
+                if (e == null) {
 
-        try {
-            parseUser= ParseUser.logIn(email,password);
+                    user = new User();
 
-            loginCompletion.completion(parseUser, true, false);
+                    user.setParseUser(parseUser);
 
-        } catch (ParseException e) {
+                    appError = e != null ? new AppError(Category.class.toString(), 0, null) : null;
 
-            Log.i(ParseException.class.getName(), e.toString());
-        }
+                }
+
+                completion.completion(user, appError);
+
+            }
+
+        });
 
     }
 
-    public ParseUser signUp(String email, String password,String name, Completion.BoolErrorUserCompletion completion) {
+    public void signup(String email, String password, final UserCompletion.UserErrorCompletion completion) {
 
-        signUpCompletion = completion;
-
-
-        parseUser = new ParseUser();
+        final ParseUser parseUser = new ParseUser();
 
         parseUser.setEmail(email);
 
-        parseUser.setUsername(name);
+        parseUser.setUsername(email);
 
         parseUser.setPassword(password);
 
         parseUser.signUpInBackground(new SignUpCallback() {
+
             @Override
             public void done(ParseException e) {
-                if(e == null){
 
-                    signUpCompletion.completion(parseUser, true, null);
+                User user = null;
 
-                }else {
-                    Error signUpError = new Error(e.getMessage());
+                AppError appError = null;
 
-                    signUpCompletion.completion(parseUser, false,signUpError);
+                if (e == null) {
+
+                    user = new User();
+
+                    user.setParseUser(parseUser);
+
+                    appError = e != null ? new AppError(Category.class.toString(), 0, null) : null;
+
                 }
+
+                completion.completion(user, appError);
+
             }
+
         });
-        return parseUser;
+
     }
+
 }
