@@ -19,7 +19,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 
 import com.amtechventures.tucita.model.error.AppError;
-import com.amtechventures.tucita.utils.strings.Strings;
 import com.amtechventures.tucita.model.context.user.UserContext;
 import com.amtechventures.tucita.activities.login.LoginActivity;
 import com.amtechventures.tucita.model.domain.category.Category;

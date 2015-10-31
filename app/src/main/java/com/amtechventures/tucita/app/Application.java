@@ -4,9 +4,8 @@ import com.amtechventures.tucita.utils.strings.Strings;
 import com.parse.Parse;
 import com.parse.ParseObject;
 import com.facebook.FacebookSdk;
-import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.model.domain.category.Category;
-import com.parse.ParseFacebookUtils;
+
 public class Application extends android.app.Application {
 
     public void onCreate() {
