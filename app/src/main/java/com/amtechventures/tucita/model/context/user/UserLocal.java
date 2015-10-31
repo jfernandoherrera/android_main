@@ -7,11 +7,17 @@ public class UserLocal {
 
     public User currentUser() {
 
-        User user = new User();
+        User user = null;
 
         ParseUser parseUser = ParseUser.getCurrentUser();
 
-        user.setParseUser(parseUser);
+        if (parseUser != null) {
+
+            user = new User();
+
+            user.setParseUser(parseUser);
+
+        }
 
         return user;
 

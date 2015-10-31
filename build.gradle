@@ -21,7 +21,3 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
-ext {
-    facebookSDK = 'com.facebook.android:facebook-android-sdk:4.6.0'
-    parseFacebookUtils = 'com.parse:parsefacebookutils-v4-android:1.10.3@aar'
-}
