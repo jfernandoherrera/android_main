@@ -20,10 +20,10 @@ import com.amtechventures.tucita.activities.category.CategoryActivity;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    private UserContext userContext;
-
     private TextView emailView;
     private EditText passwordView;
+
+    private UserContext userContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +45,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                signUp();
+                signup();
 
             }
 
@@ -53,7 +53,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     }
 
-    private void signUp() {
+    private void signup() {
 
         String email = emailView.getText().toString();
 
@@ -64,7 +64,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void completion(User user, AppError error) {
 
-                if (error == null) {
+                if (error != null) {
 
                     Toast errorSignUp = Toast.makeText(SignUpActivity.this, R.string.error, Toast.LENGTH_SHORT);
 
