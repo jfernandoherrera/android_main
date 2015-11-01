@@ -41,7 +41,7 @@
         />
 
     <TextView
-        android:onClick="goToSignUp"
+        android:onClick="signup"
         android:layout_width="152dp"
         android:layout_height="wrap_content"
         android:text="@string/create_new_account"
