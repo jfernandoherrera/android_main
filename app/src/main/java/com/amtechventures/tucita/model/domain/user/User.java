@@ -1,57 +1,44 @@
 package com.amtechventures.tucita.model.domain.user;
 
-import com.amtechventures.tucita.utils.strings.Strings;
-import com.parse.ParseClassName;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-@ParseClassName("User")
 public class User {
-    private ParseUser parseUser;
-    private String pictureURL;
-    private String authType = Strings.ANONYMOUS;
 
-    public void setParseUser(ParseUser user){
+    private ParseUser parseUser;
+
+    public void setParseUser(ParseUser user) {
 
         parseUser = user;
+
     }
 
     public ParseUser getParseUser() {
+
         return parseUser;
+
     }
 
-    public void setUserName(String name){
+    public void setUserName(String name) {
 
-        parseUser.put("username",name );
+        parseUser.put(UserAttributes.username, name);
 
     }
 
     public String getUserName(){
 
-        return parseUser.getString("username");
+        return parseUser.getString(UserAttributes.username);
 
-    }
-
-    public String getAuthType(){
-
-        return authType;
-    }
-
-    public void setAuthType(String authType){
-
-        this.authType = authType;
     }
 
     public void setEmail(String email){
 
-        parseUser.put("email", email);
+        parseUser.put(UserAttributes.email, email);
 
     }
 
     public String getEmail(){
 
-      return  parseUser.getString("email");
+      return  parseUser.getString(UserAttributes.email);
 
     }
 

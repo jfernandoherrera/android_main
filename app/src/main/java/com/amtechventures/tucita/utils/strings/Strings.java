@@ -6,12 +6,6 @@ public class Strings {
 
     public static final String PUBLIC_PROFILE = "public_profile";
 
-    public static final String NAME = "name";
-
-    public static final String EMAIL = "email";
-
-    public static final String ANONYMOUS = "anonymous";
-
     public static final String PROFILE_PICTURE = "fieldname_of_type_ProfilePictureSource";
 
     public static final String APP_PARSE_ID = "EazCp42Fw4yJTEGCuZ9ofl75izJY7a49nw2xufH6";
