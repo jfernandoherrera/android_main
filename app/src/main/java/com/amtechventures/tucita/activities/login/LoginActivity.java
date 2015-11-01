@@ -4,14 +4,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 import android.view.Gravity;
-import android.view.KeyEvent;
-import android.widget.Button;
 import android.content.Intent;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.view.View.OnClickListener;
+
+import com.parse.ParseFacebookUtils;
+
 import android.widget.AutoCompleteTextView;
-import android.text.method.LinkMovementMethod;
 import android.support.v7.app.AppCompatActivity;
 
 import com.amtechventures.tucita.R;
@@ -39,49 +38,11 @@ public class LoginActivity extends AppCompatActivity {
 
         emailView = (AutoCompleteTextView) findViewById(R.id.email);
 
-        passwordView = (EditText) findViewById(R.id.password);
-
-        TextView t2 = (TextView) findViewById(R.id.newAccount);
-
-       //this code don't works
-        t2.setMovementMethod(LinkMovementMethod.getInstance());
-
-        passwordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-
-            @Override
-            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-
-                return false;
-
-            }
-
-        });
-
-        Button emailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
-
-        Button facebookButton = (Button)findViewById(R.id.facebook_button);
-
-        emailSignInButton.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-
-                login();
-
-            }
-
-        });
-
-        facebookButton.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View view) {}
-
-        });
+        passwordView = (EditText)findViewById(R.id.password);
 
     }
 
-    private void login() {
+    public void login(View view) {
 
         String email = emailView.getText().toString();
 
@@ -100,7 +61,34 @@ public class LoginActivity extends AppCompatActivity {
 
                     errorLogin.show();
 
-                }else {
+                } else {
+
+                    processLoggedUser();
+
+                }
+
+            }
+
+        });
+
+    }
+
+    public void loginWithFacebook(View view) {
+
+        userContext.loginWithFacebook(this, new UserCompletion.UserErrorCompletion() {
+
+            @Override
+            public void completion(User user, AppError error) {
+
+                if (error != null) {
+
+                    Toast errorLogin = Toast.makeText(LoginActivity.this, R.string.error, Toast.LENGTH_SHORT);
+
+                    errorLogin.setGravity(Gravity.TOP | Gravity.LEFT, 0, 0);
+
+                    errorLogin.show();
+
+                } else {
 
                     processLoggedUser();
 
@@ -125,9 +113,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         super.onActivityResult(requestCode, resultCode, data);
+
+        ParseFacebookUtils.onActivityResult(requestCode, resultCode, data);
 
     }
 

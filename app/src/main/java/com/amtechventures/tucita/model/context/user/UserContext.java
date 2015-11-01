@@ -1,5 +1,7 @@
 package com.amtechventures.tucita.model.context.user;
 
+import android.app.Activity;
+
 import com.amtechventures.tucita.model.domain.user.User;
 
 public class UserContext {
@@ -36,6 +38,12 @@ public class UserContext {
     public void signup(String email, String password, UserCompletion.UserErrorCompletion completion) {
 
         remote.signup(email, password, completion);
+
+    }
+
+    public void loginWithFacebook(Activity activity, UserCompletion.UserErrorCompletion completion) {
+
+        remote.loginWithFacebook(activity, completion);
 
     }
 
