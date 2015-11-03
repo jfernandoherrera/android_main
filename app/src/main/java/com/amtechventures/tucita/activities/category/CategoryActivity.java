@@ -18,6 +18,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 
+import com.amtechventures.tucita.activities.search.SearchActivity;
 import com.amtechventures.tucita.model.error.AppError;
 import com.amtechventures.tucita.model.context.user.UserContext;
 import com.amtechventures.tucita.activities.login.LoginActivity;
@@ -159,27 +160,25 @@ public class CategoryActivity extends AppCompatActivity {
 
         SearchView searchView = (SearchView)MenuItemCompat.getActionView(searchItem);
 
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        searchView.setOnQueryTextFocusChangeListener(new SearchView.OnFocusChangeListener() {
+
 
             @Override
-            public boolean onQueryTextSubmit(String query) {
+            public void onFocusChange(View v, boolean hasFocus) {
 
-                goToLogin();
-
-                return false;
-
+            goToSearch();
             }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-
-                return false;
-
-            }
-
         });
 
         return true;
+
+    }
+
+    private void goToSearch() {
+
+        Intent intent = new Intent(CategoryActivity.this, SearchActivity.class);
+
+        startActivity(intent);
 
     }
 
