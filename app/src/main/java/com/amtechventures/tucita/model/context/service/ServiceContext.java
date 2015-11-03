@@ -4,23 +4,33 @@ package com.amtechventures.tucita.model.context.service;
 import com.amtechventures.tucita.model.domain.category.Category;
 import com.amtechventures.tucita.model.domain.service.Service;
 import com.amtechventures.tucita.utils.blocks.Completion;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseRelation;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ServiceContext {
-
-    ServiceLocal serviceLocal;
-
-
+ServiceLocal serviceLocal;
+ServiceRemote serviceRemote;
     public ServiceContext(){
 
-        serviceLocal = new ServiceLocal();
+        serviceLocal=new ServiceLocal();
 
+        serviceRemote=new ServiceRemote();
     }
-    public List<String> loadServices(String category, Completion.ErrorCompletion completion){
+    public List<Service> loadServices(Category category, ServicesCompletion.ErrorCompletion completion){
 
-        ArrayList<String> services = (ArrayList<String>) serviceLocal.loadServices(category,completion);
+      List services;
+
+        ParseRelation object = (ParseRelation) category.get("services");
+
+        ParseQuery<Service> query = object.getQuery();
+
+        services= serviceLocal.loadServices(query);
+
+        serviceRemote.loadServices(object.getQuery(),completion);
 
         return services;
     }

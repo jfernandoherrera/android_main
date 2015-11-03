@@ -31,7 +31,6 @@ public class CategoryActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
-
     private CategoryContext categoryContext;
     private List<Category> categories = new ArrayList<>();
 

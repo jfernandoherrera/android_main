@@ -1,11 +1,14 @@
 package com.amtechventures.tucita.model.context.category;
 
 import java.util.List;
+
+import com.amtechventures.tucita.model.context.service.ServiceContext;
 import com.amtechventures.tucita.model.domain.category.Category;
 
 public class CategoryContext {
 
     private CategoryLocal categoryLocal;
+
     private CategoryRemote categoryRemote;
 
     public static CategoryContext context(CategoryContext categoryContext) {
@@ -36,6 +39,13 @@ public class CategoryContext {
 
         return list;
 
+    }
+
+    public Category findCategory(String nombre){
+
+       Category category= categoryLocal.findCategory(nombre);
+
+        return category;
     }
 
 }

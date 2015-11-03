@@ -1,27 +1,34 @@
 package com.amtechventures.tucita.model.context.service;
 
 
-import com.amtechventures.tucita.utils.blocks.Completion;
+import com.amtechventures.tucita.model.domain.service.Service;
+import com.parse.ParseQuery;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ServiceLocal {
 
-    ServiceResponse serviceResponse;
+    public static List<Service> loadServices(ParseQuery<Service> servicesLocalQuery){
 
+        servicesLocalQuery.fromLocalDatastore();
 
-    public List<String> loadServices(String category, Completion.ErrorCompletion completion){
+        List<Service> serviceList=new ArrayList<>();
 
-        ArrayList<String> services;
+        try {
+            List services = servicesLocalQuery.find();
 
-        serviceResponse = new ServiceResponse();
+            if(services!=null) {
 
-        services = (ArrayList<String>) serviceResponse.populateWithData(null,null);
+                serviceList= services;
+            }
+        } catch (com.parse.ParseException e) {
 
-        completion.completion(null);
+            e.printStackTrace();
+        }
 
-        return services;
+        return serviceList;
     }
+
 
 
 }
