@@ -12,4 +12,9 @@ public class Strings {
 
     public static final String CLIENT_PARSE_ID = "Fr71FqI5chgnNWBbrDa6d9rhxo3PiL8pngM7MUt4";
 
+    public static final String  capitalize(String word){
+        String s1 = word.substring(0, 1).toUpperCase();
+        String nameCapitalized = s1 + word.substring(1);
+        return nameCapitalized;
+    }
 }

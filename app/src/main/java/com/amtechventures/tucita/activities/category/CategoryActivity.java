@@ -42,7 +42,7 @@ public class CategoryActivity extends AppCompatActivity {
     private List<Category> categories = new ArrayList<>();
 
     private UserContext userContext;
-  
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

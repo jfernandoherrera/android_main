@@ -36,7 +36,6 @@
     <string name="error">Error</string>
     <string name="no_internet_connection">No hay conexión a internet</string>
     <string name="alert">Alerta</string>
+    <string name="services">Servicios</string>
     <string name="o">O</string>
-
-
 </resources>

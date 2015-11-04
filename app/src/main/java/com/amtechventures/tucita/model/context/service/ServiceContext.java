@@ -14,6 +14,18 @@ import java.util.List;
 
 public class ServiceContext {
 
+    public static ServiceContext context(ServiceContext serviceContext) {
+
+        if (serviceContext == null) {
+
+            serviceContext = new ServiceContext();
+
+        }
+
+        return  serviceContext;
+
+    }
+
     public ServiceContext(){
 
     }
@@ -30,6 +42,18 @@ public class ServiceContext {
         ParseQuery<Service> queryRemote = object.getQuery();
 
         ServiceRemote.loadServices(queryRemote,completion);
+
+        return services;
+    }
+
+
+    public List<Service> loadLikeServices(String likeWord, ServicesCompletion.ErrorCompletion completion){
+
+        List services;
+
+        services = ServiceLocal.loadLikeServices(likeWord);
+
+        ServiceRemote.loadLikeServices(likeWord, completion);
 
         return services;
     }

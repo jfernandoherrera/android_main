@@ -6,7 +6,6 @@ import com.parse.ParseQuery;
 @ParseClassName("Service")
 public class Service extends ParseObject {
 
-
         public void setName(String name){
 
            put("name",name );
@@ -18,7 +17,6 @@ public class Service extends ParseObject {
             return getString("name");
 
         }
-
 
         public static ParseQuery<Service> getQuery() {
             return ParseQuery.getQuery(Service.class);

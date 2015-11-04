@@ -32,6 +32,8 @@ public class ServicesActivity extends AppCompatActivity {
     private ArrayAdapter<String> adapter;
 
     private CategoryContext categoryContext;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -43,7 +45,7 @@ public class ServicesActivity extends AppCompatActivity {
 
         listView = (ListView) findViewById(R.id.listViewservices);
 
-        serviceContext = new ServiceContext();
+        serviceContext = ServiceContext.context(serviceContext);
 
         category = categoryContext.findCategory(getIntent().getExtras().getString(Category.class.getName()));
 
