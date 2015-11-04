@@ -17,9 +17,9 @@ public class ServiceLocal {
         try {
             List services = servicesLocalQuery.find();
 
-            if(services!=null) {
+            if(services != null) {
 
-                serviceList= services;
+                serviceList = services;
             }
         } catch (com.parse.ParseException e) {
 

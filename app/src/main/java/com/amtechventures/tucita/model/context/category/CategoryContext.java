@@ -43,7 +43,7 @@ public class CategoryContext {
 
     public Category findCategory(String nombre){
 
-       Category category= categoryLocal.findCategory(nombre);
+       Category category = categoryLocal.findCategory(nombre);
 
         return category;
     }

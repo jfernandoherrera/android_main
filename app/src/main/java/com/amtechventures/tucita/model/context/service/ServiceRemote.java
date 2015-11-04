@@ -1,25 +1,22 @@
 package com.amtechventures.tucita.model.context.service;
 
-import android.util.Log;
-
 import com.amtechventures.tucita.model.domain.service.Service;
 import com.amtechventures.tucita.model.error.AppError;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ServiceRemote {
 
-    public static void loadServices(ParseQuery<Service> servicesLocalQuery, final ServicesCompletion.ErrorCompletion completion){
+    public static void loadServices(ParseQuery<Service> servicesRemoteQuery, final ServicesCompletion.ErrorCompletion completion){
 
-        servicesLocalQuery.findInBackground(new FindCallback<Service>() {
+        servicesRemoteQuery.findInBackground(new FindCallback<Service>() {
             @Override
             public void done(List<Service> objects, com.parse.ParseException e) {
 
-                if(objects!=null){
+                if(objects != null){
                     try {
 
                         ParseObject.pinAll(objects);

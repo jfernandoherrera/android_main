@@ -13,13 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ServiceContext {
-ServiceLocal serviceLocal;
-ServiceRemote serviceRemote;
+
     public ServiceContext(){
 
-        serviceLocal=new ServiceLocal();
-
-        serviceRemote=new ServiceRemote();
     }
     public List<Service> loadServices(Category category, ServicesCompletion.ErrorCompletion completion){
 
@@ -29,9 +25,9 @@ ServiceRemote serviceRemote;
 
         ParseQuery<Service> query = object.getQuery();
 
-        services= serviceLocal.loadServices(query);
+        services = ServiceLocal.loadServices(query);
 
-        serviceRemote.loadServices(object.getQuery(),completion);
+        ServiceRemote.loadServices(object.getQuery(),completion);
 
         return services;
     }

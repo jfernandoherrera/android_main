@@ -2,39 +2,36 @@ package com.amtechventures.tucita.activities.services;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.model.context.category.CategoryContext;
 import com.amtechventures.tucita.model.context.service.ServiceContext;
 import com.amtechventures.tucita.model.context.service.ServicesCompletion;
 import com.amtechventures.tucita.model.domain.category.Category;
+import com.amtechventures.tucita.model.domain.category.CategoryAttributes;
 import com.amtechventures.tucita.model.domain.service.Service;
 import com.amtechventures.tucita.model.error.AppError;
-import com.amtechventures.tucita.utils.blocks.Completion;
 import com.parse.ParseObject;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class ServicesActivity extends AppCompatActivity {
 
-    ServiceContext serviceContext;
+    private ServiceContext serviceContext;
 
-    Category category;
+    private Category category;
 
-    List <Service>services = new ArrayList<>();
+    private List <Service>services = new ArrayList<>();
 
-    ListView listView;
+    private ListView listView;
 
-    ArrayAdapter<String> adapter;
+    private ArrayAdapter<String> adapter;
 
-    CategoryContext categoryContext;
+    private CategoryContext categoryContext;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -57,10 +54,10 @@ public class ServicesActivity extends AppCompatActivity {
                                     int position, long id) {
 
                 // ListView Clicked item index
-                int itemPosition     = position;
+                int itemPosition = position;
 
                 // ListView Clicked item value
-                String  itemValue    = (String) listView.getItemAtPosition(position);
+                String  itemValue = (String) listView.getItemAtPosition(position);
 
                 // Show Alert
                 Toast.makeText(getApplicationContext(),
@@ -73,14 +70,13 @@ public class ServicesActivity extends AppCompatActivity {
         setupList();
     }
 
-
     private ArrayList<String> setStringsArray(){
 
-        ArrayList<String> stringsServices=new ArrayList<>();
+        ArrayList<String> stringsServices = new ArrayList<>();
 
         for(ParseObject service : services){
 
-            stringsServices.add(service.getString("name"));
+            stringsServices.add(service.getString(CategoryAttributes.name));
         }
 
         return stringsServices;
@@ -88,11 +84,13 @@ public class ServicesActivity extends AppCompatActivity {
 
     private void setupList(){
 
-     List<Service> serviceList= serviceContext.loadServices(category, new ServicesCompletion.ErrorCompletion() {
+     List<Service> servicesList = serviceContext.loadServices(category, new ServicesCompletion.ErrorCompletion() {
             @Override
             public void completion(List<Service> servicesList, AppError error) {
 
-                if(servicesList!=null){
+                if(servicesList != null){
+
+                    adapter.clear();
 
                     services.clear();
 
@@ -105,7 +103,7 @@ public class ServicesActivity extends AppCompatActivity {
             }
         });
 
-        services.addAll(serviceList);
+        services.addAll(servicesList);
 
         adapter = new ArrayAdapter<String>(this,  android.R.layout.simple_list_item_1, setStringsArray());
 
