@@ -4,5 +4,6 @@ public class CategoryAttributes {
 
     public static String name = "name";
     public static String category = "Category";
+    public static String services = "services";
 
 }

@@ -43,6 +43,8 @@
         </activity>
         <activity android:name=".activities.search.SearchActivity" >
         </activity>
+        <activity android:name=".activities.services.ServicesActivity" >
+        </activity>
     </application>
 
 </manifest>

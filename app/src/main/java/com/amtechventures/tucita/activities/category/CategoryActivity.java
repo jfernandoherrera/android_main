@@ -38,10 +38,11 @@ public class CategoryActivity extends AppCompatActivity {
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
 
+    private CategoryContext categoryContext;
     private List<Category> categories = new ArrayList<>();
 
     private UserContext userContext;
-    private CategoryContext categoryContext;
+  
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
