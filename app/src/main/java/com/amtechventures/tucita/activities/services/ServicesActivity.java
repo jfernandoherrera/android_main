@@ -105,7 +105,7 @@ public class ServicesActivity extends AppCompatActivity {
 
         services.addAll(servicesList);
 
-        adapter = new ArrayAdapter<String>(this,  android.R.layout.simple_list_item_1, setStringsArray());
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, setStringsArray());
 
         listView.setAdapter(adapter);
 

@@ -23,11 +23,13 @@ public class ServiceContext {
 
         ParseRelation object = (ParseRelation) category.get(CategoryAttributes.services);
 
-        ParseQuery<Service> query = object.getQuery();
+        ParseQuery<Service> queryLocal = object.getQuery();
 
-        services = ServiceLocal.loadServices(query);
+        services = ServiceLocal.loadServices(queryLocal);
 
-        ServiceRemote.loadServices(object.getQuery(),completion);
+        ParseQuery<Service> queryRemote = object.getQuery();
+
+        ServiceRemote.loadServices(queryRemote,completion);
 
         return services;
     }
