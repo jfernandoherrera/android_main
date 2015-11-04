@@ -11,7 +11,7 @@ import java.util.List;
 
 public class ServiceRemote {
 
-    public static void loadServices(ParseQuery<Service> servicesRemoteQuery, final ServicesCompletion.ErrorCompletion completion){
+    public void loadServices(ParseQuery<Service> servicesRemoteQuery, final ServicesCompletion.ErrorCompletion completion){
 
         servicesRemoteQuery.findInBackground(new FindCallback<Service>() {
             @Override
@@ -35,8 +35,7 @@ public class ServiceRemote {
 
     }
 
-
-    public static void loadLikeServices(String like, final ServicesCompletion.ErrorCompletion completion){
+    public void loadLikeServices(String like, final ServicesCompletion.ErrorCompletion completion){
 
         ParseQuery servicesRemoteQuery = Service.getQuery();
 

@@ -4,16 +4,15 @@ package com.amtechventures.tucita.model.context.service;
 import com.amtechventures.tucita.model.domain.category.Category;
 import com.amtechventures.tucita.model.domain.category.CategoryAttributes;
 import com.amtechventures.tucita.model.domain.service.Service;
-import com.amtechventures.tucita.utils.blocks.Completion;
-import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseRelation;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class ServiceContext {
 
+    ServiceLocal serviceLocal;
+
+    ServiceRemote serviceRemote;
     public static ServiceContext context(ServiceContext serviceContext) {
 
         if (serviceContext == null) {
@@ -28,7 +27,11 @@ public class ServiceContext {
 
     public ServiceContext(){
 
+        serviceRemote = new ServiceRemote();
+
+        serviceLocal = new ServiceLocal();
     }
+
     public List<Service> loadServices(Category category, ServicesCompletion.ErrorCompletion completion){
 
       List services;
@@ -37,23 +40,22 @@ public class ServiceContext {
 
         ParseQuery<Service> queryLocal = object.getQuery();
 
-        services = ServiceLocal.loadServices(queryLocal);
+        services = serviceLocal.loadServices(queryLocal);
 
         ParseQuery<Service> queryRemote = object.getQuery();
 
-        ServiceRemote.loadServices(queryRemote,completion);
+        serviceRemote.loadServices(queryRemote,completion);
 
         return services;
     }
-
 
     public List<Service> loadLikeServices(String likeWord, ServicesCompletion.ErrorCompletion completion){
 
         List services;
 
-        services = ServiceLocal.loadLikeServices(likeWord);
+        services = serviceLocal.loadLikeServices(likeWord);
 
-        ServiceRemote.loadLikeServices(likeWord, completion);
+        serviceRemote.loadLikeServices(likeWord, completion);
 
         return services;
     }

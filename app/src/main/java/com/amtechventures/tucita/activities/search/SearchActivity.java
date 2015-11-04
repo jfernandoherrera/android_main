@@ -20,7 +20,6 @@ import com.amtechventures.tucita.model.domain.service.Service;
 import com.amtechventures.tucita.model.error.AppError;
 import com.amtechventures.tucita.utils.strings.Strings;
 import com.parse.ParseObject;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,7 +58,6 @@ public class SearchActivity extends AppCompatActivity {
         separator.setVisibility(View.INVISIBLE);
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -81,8 +79,8 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
 
-
                 if (newText.length() < 3) {
+
                     Toast typeMore = Toast.makeText(SearchActivity.this, R.string.typing_advertisement, Toast.LENGTH_SHORT);
 
                     typeMore.setGravity(Gravity.CENTER | Gravity.LEFT, 0, 0);
@@ -90,6 +88,7 @@ public class SearchActivity extends AppCompatActivity {
                     typeMore.show();
 
                 } else {
+
                     setupList(newText);
                 }
                 return false;
@@ -122,11 +121,11 @@ public class SearchActivity extends AppCompatActivity {
                     @Override
                     public void completion(List<Service> servicesList, AppError error) {
 
-                        textViewTreatments.setVisibility(View.VISIBLE);
+                          if (servicesList != null) {
 
-                        textViewTreatments.setText(getResources().getString(R.string.services));
+                              textViewTreatments.setVisibility(View.VISIBLE);
 
-                        if (servicesList != null) {
+                              textViewTreatments.setText(getResources().getString(R.string.services));
 
                             adapter.clear();
 

@@ -33,7 +33,6 @@ public class ServicesActivity extends AppCompatActivity {
 
     private CategoryContext categoryContext;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
