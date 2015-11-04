@@ -4,6 +4,7 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -56,6 +57,10 @@ public class SearchActivity extends AppCompatActivity {
         textViewVenues.setVisibility(View.INVISIBLE);
 
         separator.setVisibility(View.INVISIBLE);
+
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
+
+        listView.setAdapter(adapter);
     }
 
     @Override
@@ -115,21 +120,21 @@ public class SearchActivity extends AppCompatActivity {
 
     private void setupList(String newText){
 
+        textViewTreatments.setVisibility(View.INVISIBLE);
+
         String capitalized = Strings.capitalize(newText);
 
         List<Service> servicesList = serviceContext.loadLikeServices(capitalized, new ServicesCompletion.ErrorCompletion() {
                     @Override
                     public void completion(List<Service> servicesList, AppError error) {
 
-                          if (servicesList != null) {
+                        adapter.clear();
 
-                              textViewTreatments.setVisibility(View.VISIBLE);
+                        services.clear();
 
-                              textViewTreatments.setText(getResources().getString(R.string.services));
+                          if (servicesList != null && !servicesList.isEmpty()) {
 
-                            adapter.clear();
-
-                            services.clear();
+                              textServices();
 
                             services.addAll(servicesList);
 
@@ -141,11 +146,23 @@ public class SearchActivity extends AppCompatActivity {
                     }
                 });
 
-        services.addAll(servicesList);
+        if (servicesList != null && !servicesList.isEmpty()) {
 
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, setStringsArray());
+            textServices();
 
-        listView.setAdapter(adapter);
+            services.addAll(servicesList);
 
+            adapter.addAll(setStringsArray());
+
+            adapter.notifyDataSetChanged();
+
+        }
+    }
+
+    private void textServices(){
+
+        textViewTreatments.setVisibility(View.VISIBLE);
+
+        textViewTreatments.setText(getResources().getString(R.string.services));
     }
 }
