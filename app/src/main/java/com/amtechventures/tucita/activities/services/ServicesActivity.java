@@ -17,6 +17,7 @@ import com.amtechventures.tucita.model.domain.category.Category;
 import com.amtechventures.tucita.model.domain.service.Service;
 import com.amtechventures.tucita.model.error.AppError;
 import com.amtechventures.tucita.utils.blocks.Completion;
+import com.parse.ParseObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,9 +78,9 @@ public class ServicesActivity extends AppCompatActivity {
 
         ArrayList<String> stringsServices=new ArrayList<>();
 
-        for(Service service : services){
+        for(ParseObject service : services){
 
-            stringsServices.add(service.getName());
+            stringsServices.add(service.getString("name"));
         }
 
         return stringsServices;
@@ -97,8 +98,9 @@ public class ServicesActivity extends AppCompatActivity {
 
                     services.addAll(servicesList);
 
-                    adapter.notifyDataSetChanged();
+                    adapter.addAll(setStringsArray());
 
+                    adapter.notifyDataSetChanged();
                 }
             }
         });

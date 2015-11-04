@@ -2,6 +2,7 @@ package com.amtechventures.tucita.model.context.service;
 
 
 import com.amtechventures.tucita.model.domain.category.Category;
+import com.amtechventures.tucita.model.domain.category.CategoryAttributes;
 import com.amtechventures.tucita.model.domain.service.Service;
 import com.amtechventures.tucita.utils.blocks.Completion;
 import com.parse.ParseObject;
@@ -24,7 +25,7 @@ ServiceRemote serviceRemote;
 
       List services;
 
-        ParseRelation object = (ParseRelation) category.get("services");
+        ParseRelation object = (ParseRelation) category.get(CategoryAttributes.services);
 
         ParseQuery<Service> query = object.getQuery();
 
