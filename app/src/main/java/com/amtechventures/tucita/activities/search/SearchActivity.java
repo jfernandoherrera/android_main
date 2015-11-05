@@ -194,7 +194,7 @@ public class SearchActivity extends AppCompatActivity {
 
         String capitalized = Strings.capitalize(newText);
 
-        final List<Venue> venuesList = venueContext.loadLikeVenues(newText, new VenueCompletion.ErrorCompletion() {
+        final List<Venue> venuesList = venueContext.loadLikeVenues(capitalized, new VenueCompletion.ErrorCompletion() {
                     @Override
                     public void completion(List<Venue> venuesList, AppError error) {
 
