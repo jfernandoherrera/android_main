@@ -33,7 +33,6 @@ public class Category extends ParseObject {
 
     public static ParseQuery<Category> getQuery() {
         ParseQuery<Category> query = ParseQuery.getQuery(Category.class);
-        query.include("Service");
         return query;
 
     }

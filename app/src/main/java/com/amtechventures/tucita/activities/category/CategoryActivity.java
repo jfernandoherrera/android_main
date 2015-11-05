@@ -31,16 +31,13 @@ import com.amtechventures.tucita.activities.category.adapters.CategoryGridAdapte
 public class CategoryActivity extends AppCompatActivity {
 
     private int COLUMNS_IN_CATEGORIES = 3;
-
     private ImageButton profile;
     private Button signOrRegister;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
-
     private CategoryContext categoryContext;
     private List<Category> categories = new ArrayList<>();
-
     private UserContext userContext;
 
 

@@ -1,5 +1,6 @@
 package com.amtechventures.tucita.app;
 
+import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.parse.Parse;
 import com.parse.ParseObject;
 import com.facebook.FacebookSdk;
@@ -23,13 +24,15 @@ public class Application extends android.app.Application {
 
         Parse.enableLocalDatastore(this);
 
+        ParseObject.registerSubclass(Category.class);
+
+        ParseObject.registerSubclass(Venue.class);
+
         Parse.initialize(this, app_parse_id, app_client_parse_id);
 
         ParseFacebookUtils.initialize(this);
 
         FacebookSdk.sdkInitialize(this);
-
-        ParseObject.registerSubclass(Category.class);
 
     }
 

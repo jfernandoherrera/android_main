@@ -1,13 +1,14 @@
 package com.amtechventures.tucita.model.context.venue;
 
+
 import com.amtechventures.tucita.model.domain.venue.Venue;
 
 import java.util.List;
 
 public class VenueContext {
 
-    VenueRemote venueRemote;
-    VenueLocal venueLocal;
+    private VenueRemote venueRemote;
+    private VenueLocal venueLocal;
 
     public static VenueContext context(VenueContext venueContext) {
 
@@ -33,5 +34,13 @@ public class VenueContext {
         venueRemote.loadLikeVenues(likeWord, completion);
 
         return venues;
+    }
+
+
+    public Venue findVenue(String nombre){
+
+        Venue venue = venueLocal.findVenue(nombre);
+
+        return venue;
     }
 }

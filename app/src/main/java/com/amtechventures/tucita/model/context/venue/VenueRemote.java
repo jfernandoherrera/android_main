@@ -1,7 +1,6 @@
 package com.amtechventures.tucita.model.context.venue;
 
-import com.amtechventures.tucita.model.domain.category.CategoryAttributes;
-import com.amtechventures.tucita.model.domain.service.Service;
+
 import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.domain.venue.VenueAttributes;
 import com.amtechventures.tucita.model.error.AppError;
@@ -9,7 +8,6 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +19,7 @@ public class VenueRemote {
 
         ParseQuery queryName = Venue.getQuery();
 
-        queryName.whereContains(CategoryAttributes.name, likeWord);
+        queryName.whereContains(VenueAttributes.name, likeWord);
 
         ParseQuery queryAddress = Venue.getQuery();
 

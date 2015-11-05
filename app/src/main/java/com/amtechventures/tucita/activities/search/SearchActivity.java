@@ -1,5 +1,6 @@
 package com.amtechventures.tucita.activities.search;
 
+import android.content.Intent;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,11 +10,14 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.amtechventures.tucita.R;
+import com.amtechventures.tucita.activities.category.CategoryActivity;
+import com.amtechventures.tucita.activities.venue.VenueActivity;
 import com.amtechventures.tucita.model.context.service.ServiceContext;
 import com.amtechventures.tucita.model.context.service.ServicesCompletion;
 import com.amtechventures.tucita.model.context.venue.VenueCompletion;
@@ -76,6 +80,32 @@ public class SearchActivity extends AppCompatActivity {
         listViewTreatments.setAdapter(servicesAdapter);
 
         listViewVenues.setAdapter(venuesAdapter);
+
+        listViewVenues.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+
+            venue(position);
+            }
+
+        });
+    }
+
+    private void venue(int position){
+
+        String itemValue = (String) listViewVenues.getItemAtPosition(position);
+
+        Class activity = VenueActivity.class;
+
+        Intent i = new Intent(SearchActivity.this, activity);
+
+        i.putExtra(Venue.class.getName(),itemValue);
+
+        startActivity(i);
+
+        finish();
     }
 
     @Override

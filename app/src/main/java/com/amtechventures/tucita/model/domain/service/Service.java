@@ -1,5 +1,6 @@
 package com.amtechventures.tucita.model.domain.service;
 
+import com.amtechventures.tucita.model.domain.category.CategoryAttributes;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -8,13 +9,13 @@ public class Service extends ParseObject {
 
         public void setName(String name){
 
-           put("name",name );
+           put(CategoryAttributes.name,name );
 
         }
 
         public String getName(){
 
-            return getString("name");
+            return getString(CategoryAttributes.name);
 
         }
 

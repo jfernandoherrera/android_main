@@ -1,8 +1,7 @@
 package com.amtechventures.tucita.model.context.venue;
 
 
-import com.amtechventures.tucita.model.domain.category.CategoryAttributes;
-import com.amtechventures.tucita.model.domain.service.Service;
+
 import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.domain.venue.VenueAttributes;
 import com.parse.ParseException;
@@ -14,11 +13,37 @@ import java.util.List;
 
 public class VenueLocal {
 
+    public Venue findVenue(String nombre){
+
+        Venue find = new Venue();
+
+        List<Venue> venuesList = loadLikeVenues(nombre);
+
+        for(ParseObject venue : venuesList){
+
+            String name = venue.getString(VenueAttributes.name);
+
+            if(name.equals(nombre)){
+
+                find.setName(name);
+
+                String description = venue.getString(VenueAttributes.description);
+
+                find.setDescription(description);
+
+                int rating = venue.getInt(VenueAttributes.rating);
+
+                find.setRating(rating);
+            }
+        }
+        return find;
+    }
+
     public List<Venue> loadLikeVenues(String likeWord){
 
         ParseQuery queryName = Venue.getQuery();
 
-        queryName.whereContains(CategoryAttributes.name, likeWord);
+        queryName.whereContains(VenueAttributes.name, likeWord);
 
         ParseQuery queryAddress = Venue.getQuery();
 

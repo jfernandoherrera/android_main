@@ -18,13 +18,11 @@ public class CategoryLocal {
 
     public Category findCategory(String nombre){
 
-        ParseQuery<Category> query = Category.getQuery().fromLocalDatastore();
-
         Category find = null;
 
         List<Category> categoryList = loadCategories();
 
-        for(Category category:categoryList){
+        for(Category category : categoryList){
             if(category.getName().equals(nombre)){
                 find = category;
             }

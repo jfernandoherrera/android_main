@@ -81,8 +81,6 @@ public class CategoryGridAdapter extends RecyclerView.Adapter<CategoryGridAdapte
 
                     view.getContext().startActivity(intent);
 
-                    Intent i = new Intent(view.getContext(), VenueActivity.class);
-                    view.getContext().startActivity(i);
                 }
 
             });

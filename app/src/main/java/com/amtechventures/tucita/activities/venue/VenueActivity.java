@@ -2,14 +2,26 @@ package com.amtechventures.tucita.activities.venue;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.RatingBar;
+import android.widget.TextView;
+
 import com.amtechventures.tucita.R;
+import com.amtechventures.tucita.model.context.venue.VenueContext;
+import com.amtechventures.tucita.model.domain.venue.Venue;
+
 import java.util.Calendar;
 
 
 public class VenueActivity extends AppCompatActivity {
 
-
+    private Venue venue;
+    private VenueContext venueContext;
+    private ImageView venuePicture;
+    private TextView venueName;
+    private TextView venueDescription;
+    private RatingBar ratingBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -17,14 +29,72 @@ public class VenueActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_venue);
 
+        venueContext = VenueContext.context(venueContext);
+
+        venuePicture = (ImageView) findViewById(R.id.imageVenue);
+
+        venueName = (TextView) findViewById(R.id.title_Venue);
+
+        venueDescription = (TextView) findViewById(R.id.textViewDescription);
+
+        ratingBar = (RatingBar) findViewById(R.id.ratingBar);
+
         setup();
     }
 
     private void setup(){
 
-    setupDay();
+        thisVenue();
+
+        setupPicture();
+
+        setupName();
+
+        setupDescription();
+
+        setupRating();
+
+        setupAddressAndlocation();
+
+        setupOpeningHours();
+
+        setupDay();
+
     }
 
+    private void setupPicture(){
+
+
+    }
+
+    private void setupName(){
+
+        venueName.setText(venue.getName());
+    }
+
+    private void setupDescription(){
+
+        venueDescription.setText(venue.getDescription());
+    }
+
+    private void setupRating(){
+        ratingBar.setRating((float) venue.getRating());
+    }
+
+    private void setupOpeningHours(){
+
+    }
+
+    private void setupAddressAndlocation(){
+
+    }
+
+    private void thisVenue(){
+
+        String name = getIntent().getExtras().getString(Venue.class.getName());
+
+        venue = venueContext.findVenue(name);
+    }
     private void setupDay(){
 
         Calendar c = Calendar.getInstance();
