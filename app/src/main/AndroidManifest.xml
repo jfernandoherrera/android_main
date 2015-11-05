@@ -48,6 +48,10 @@
         </activity>
         <activity android:name=".activities.services.ServicesActivity" >
         </activity>
+        <activity android:name=".activities.venue.VenueActivity"
+             >
+
+        </activity>
     </application>
 
 </manifest>

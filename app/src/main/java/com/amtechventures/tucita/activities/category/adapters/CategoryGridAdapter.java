@@ -15,6 +15,7 @@ import android.support.v7.widget.RecyclerView;
 import com.amtechventures.tucita.activities.category.CategoryActivity;
 import com.amtechventures.tucita.activities.login.LoginActivity;
 import com.amtechventures.tucita.activities.services.ServicesActivity;
+import com.amtechventures.tucita.activities.venue.VenueActivity;
 import com.amtechventures.tucita.model.domain.category.Category;
 
 public class CategoryGridAdapter extends RecyclerView.Adapter<CategoryGridAdapter.ViewHolder> {
@@ -80,6 +81,8 @@ public class CategoryGridAdapter extends RecyclerView.Adapter<CategoryGridAdapte
 
                     view.getContext().startActivity(intent);
 
+                    Intent i = new Intent(view.getContext(), VenueActivity.class);
+                    view.getContext().startActivity(i);
                 }
 
             });

@@ -38,4 +38,29 @@
     <string name="alert">Alerta</string>
     <string name="services">Servicios</string>
     <string name="o">O</string>
+    <!-- Strings related to parse -->
+    <string name="load_from_parse">load from parse:</string>
+    <string name="app_parse_id">EazCp42Fw4yJTEGCuZ9ofl75izJY7a49nw2xufH6</string>
+    <string name="client_parse_id">Fr71FqI5chgnNWBbrDa6d9rhxo3PiL8pngM7MUt4</string>
+    <string name="name">name</string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="hello_world">Hello world!</string>
+
+<!-- TODO: Venue -->
+    <string name="monday">lunes</string>
+    <string name="tuesday">martes</string>
+    <string name="wednesday">miercoles</string>
+    <string name="thursday">jueves</string>
+    <string name="friday">viernes</string>
+    <string name="saturday">sabado</string>
+    <string name="sunday">domingo</string>
+    <string name="top_services">Servicios principales</string>
+    <string name="full_menu">Menù completo</string>
+    <string name="ven_title">Beauty 4 Busy Women</string>
+    <string name="opening_hours">Horario de trabajo</string>
+    <string name="about">Acerca de</string>
+    <string name="about_Beauty">Beauty 4 Busy Women specialise in Lazer Lipo treatments \.
+Knowing how busy you are \, Beauty 4 Busy Women knows that your time is precious and has a range of packages offering painless weight loss and pampering all in one \- so no need to waste hours of your time \.
+Whether you\'re trying to get rid of some extra holiday weight \, get back into shape or get rid of stubborn areas that you can \'t shift on your own \, then look no further \.</string>
 </resources>
