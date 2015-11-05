@@ -12,10 +12,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
-
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id"/>
+            android:value="@string/facebook_app_id" />
 
         <activity android:name=".activities.splash.SplashActivity" >
             <intent-filter>
@@ -45,6 +44,10 @@
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="bdc2bab408011afda99f5bc67d47cd792679dd64" />
+        <activity android:name=".activities.search.SearchActivity" >
+        </activity>
+        <activity android:name=".activities.services.ServicesActivity" >
+        </activity>
     </application>
 
 </manifest>
