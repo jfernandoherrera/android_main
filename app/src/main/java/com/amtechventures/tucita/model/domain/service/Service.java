@@ -19,6 +19,7 @@ public class Service extends ParseObject {
         }
 
         public static ParseQuery<Service> getQuery() {
+
             return ParseQuery.getQuery(Service.class);
         }
 }

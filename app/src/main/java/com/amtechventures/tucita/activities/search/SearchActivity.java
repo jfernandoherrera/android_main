@@ -16,8 +16,11 @@ import android.widget.Toast;
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.model.context.service.ServiceContext;
 import com.amtechventures.tucita.model.context.service.ServicesCompletion;
+import com.amtechventures.tucita.model.context.venue.VenueCompletion;
+import com.amtechventures.tucita.model.context.venue.VenueContext;
 import com.amtechventures.tucita.model.domain.category.CategoryAttributes;
 import com.amtechventures.tucita.model.domain.service.Service;
+import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.error.AppError;
 import com.amtechventures.tucita.utils.strings.Strings;
 import com.parse.ParseObject;
@@ -30,10 +33,14 @@ public class SearchActivity extends AppCompatActivity {
     private TextView textViewTreatments;
     private TextView textViewVenues;
     private View separator;
-    private ListView listView;
+    private ListView listViewTreatments;
+    private ListView listViewVenues;
     private ServiceContext serviceContext;
-    private ArrayAdapter<String> adapter;
-    private List <Service>services = new ArrayList<>();
+    private VenueContext venueContext;
+    private ArrayAdapter<String> servicesAdapter;
+    private ArrayAdapter<String> venuesAdapter;
+    private List <Service> services = new ArrayList<>();
+    private List <Venue> venues = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +51,11 @@ public class SearchActivity extends AppCompatActivity {
 
         serviceContext = ServiceContext.context(serviceContext);
 
-        listView = (ListView) findViewById(R.id.listViewTreatments);
+        venueContext = VenueContext.context(venueContext);
+
+        listViewTreatments = (ListView) findViewById(R.id.listViewTreatments);
+
+        listViewVenues = (ListView) findViewById(R.id.listViewVenues);
 
         textViewTreatments = (TextView) findViewById(R.id.textViewTreatments);
 
@@ -58,9 +69,13 @@ public class SearchActivity extends AppCompatActivity {
 
         separator.setVisibility(View.INVISIBLE);
 
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
+        servicesAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
 
-        listView.setAdapter(adapter);
+        venuesAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
+
+        listViewTreatments.setAdapter(servicesAdapter);
+
+        listViewVenues.setAdapter(venuesAdapter);
     }
 
     @Override
@@ -94,7 +109,9 @@ public class SearchActivity extends AppCompatActivity {
 
                 } else {
 
-                    setupList(newText);
+                    setupServiceList(newText);
+
+                    setupVenueList(newText);
                 }
                 return false;
 
@@ -106,7 +123,7 @@ public class SearchActivity extends AppCompatActivity {
 
     }
 
-    private ArrayList<String> setStringsArray(){
+    private ArrayList<String> setServicesToStringsArray(){
 
         ArrayList<String> stringsServices = new ArrayList<>();
 
@@ -118,33 +135,45 @@ public class SearchActivity extends AppCompatActivity {
         return stringsServices;
     }
 
-    private void setupList(String newText){
+    private ArrayList<String> setVenuesToStringsArray(){
+
+        ArrayList<String> stringsVenues = new ArrayList<>();
+
+        for(ParseObject venue : venues){
+
+            stringsVenues.add(venue.getString(CategoryAttributes.name));
+        }
+
+        return stringsVenues;
+    }
+
+    private void setupServiceList(String newText){
 
         textViewTreatments.setVisibility(View.INVISIBLE);
 
         String capitalized = Strings.capitalize(newText);
 
         List<Service> servicesList = serviceContext.loadLikeServices(capitalized, new ServicesCompletion.ErrorCompletion() {
-                    @Override
-                    public void completion(List<Service> servicesList, AppError error) {
+            @Override
+            public void completion(List<Service> servicesList, AppError error) {
 
-                        adapter.clear();
+                servicesAdapter.clear();
 
-                        services.clear();
+                services.clear();
 
-                          if (servicesList != null && !servicesList.isEmpty()) {
+                if (servicesList != null && !servicesList.isEmpty()) {
 
-                              textServices();
+                    textServices();
 
-                            services.addAll(servicesList);
+                    services.addAll(servicesList);
 
-                            adapter.addAll(setStringsArray());
+                    servicesAdapter.addAll(setServicesToStringsArray());
 
-                            adapter.notifyDataSetChanged();
-                        }
+                    servicesAdapter.notifyDataSetChanged();
+                }
 
-                    }
-                });
+            }
+        });
 
         if (servicesList != null && !servicesList.isEmpty()) {
 
@@ -152,11 +181,56 @@ public class SearchActivity extends AppCompatActivity {
 
             services.addAll(servicesList);
 
-            adapter.addAll(setStringsArray());
+            servicesAdapter.addAll(setServicesToStringsArray());
 
-            adapter.notifyDataSetChanged();
+            servicesAdapter.notifyDataSetChanged();
 
         }
+    }
+
+    private void setupVenueList(String newText){
+
+        textViewVenues.setVisibility(View.INVISIBLE);
+
+        String capitalized = Strings.capitalize(newText);
+
+        final List<Venue> venuesList = venueContext.loadLikeVenues(newText, new VenueCompletion.ErrorCompletion() {
+                    @Override
+                    public void completion(List<Venue> venuesList, AppError error) {
+
+                        venuesAdapter.clear();
+
+                        venues.clear();
+
+                        if (venuesList != null && !venuesList.isEmpty()) {
+
+                            textVenues();
+
+                            venues.addAll(venuesList);
+
+                            venuesAdapter.addAll(setVenuesToStringsArray());
+
+                            venuesAdapter.notifyDataSetChanged();
+
+
+                        }
+                    }
+
+                }
+            );
+
+            if (venuesList != null && !venuesList.isEmpty()) {
+
+                textVenues();
+
+                venues.addAll(venuesList);
+
+                venuesAdapter.addAll(setVenuesToStringsArray());
+
+                venuesAdapter.notifyDataSetChanged();
+
+            }
+
     }
 
     private void textServices(){
@@ -164,5 +238,12 @@ public class SearchActivity extends AppCompatActivity {
         textViewTreatments.setVisibility(View.VISIBLE);
 
         textViewTreatments.setText(getResources().getString(R.string.services));
+    }
+
+    private void textVenues(){
+
+        textViewVenues.setVisibility(View.VISIBLE);
+
+        textViewVenues.setText(getResources().getString(R.string.venues));
     }
 }

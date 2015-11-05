@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:id="@+id/scrollView"
     android:layout_alignParentTop="true"
-    android:layout_alignParentStart="true">
+    android:layout_alignParentLeft="true">
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -14,10 +14,11 @@
                 android:layout_height="250dp"
                 android:id="@+id/imageVenue"
                 android:layout_alignParentTop="true"
-                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
                     android:scaleType="fitStart"/>
 
-                <TextView android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="35dp"
                     android:textSize="25sp"
                     android:text="@string/ven_title"
@@ -47,7 +48,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/textViewTop"
                     android:id="@+id/listViewTop"
-                    android:layout_alignParentStart="true" />
+                    android:layout_alignParentLeft="true" />
                 <TextView
                     android:layout_width="match_parent"
                     android:text="@string/full_menu"
@@ -62,7 +63,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/listViewFull"
                     android:layout_below="@+id/textViewFull"
-                    android:layout_alignParentStart="true" />
+                    android:layout_alignParentLeft="true" />
                 <TextView
                     android:layout_width="match_parent"
                     android:text="@string/about"
