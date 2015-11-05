@@ -4,7 +4,9 @@ package com.amtechventures.tucita.model.context.venue;
 import com.amtechventures.tucita.model.domain.category.CategoryAttributes;
 import com.amtechventures.tucita.model.domain.service.Service;
 import com.amtechventures.tucita.model.domain.venue.Venue;
+import com.amtechventures.tucita.model.domain.venue.VenueAttributes;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import java.util.ArrayList;
@@ -14,10 +16,23 @@ public class VenueLocal {
 
     public List<Venue> loadLikeVenues(String likeWord){
 
-        ParseQuery query = Venue.getQuery();
+        ParseQuery queryName = Venue.getQuery();
+
+        queryName.whereContains(CategoryAttributes.name, likeWord);
+
+        ParseQuery queryAddress = Venue.getQuery();
+
+        queryAddress.whereContains(VenueAttributes.address, likeWord);
+
+        List<ParseQuery<ParseObject>> queries = new ArrayList<ParseQuery<ParseObject>>();
+
+        queries.add(queryAddress);
+
+        queries.add(queryName);
+
+        ParseQuery query = ParseQuery.or(queries) ;
 
         query.fromLocalDatastore();
-        query.whereContains(CategoryAttributes.name,likeWord);
 
         List<Venue> venueList = new ArrayList<>();
 
