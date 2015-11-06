@@ -2,13 +2,15 @@ package com.amtechventures.tucita.model.domain.venue;
 
 
 import android.graphics.Bitmap;
-
 import com.parse.ParseClassName;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseRelation;
+
 @ParseClassName("Venue")
+
 public class Venue extends ParseObject {
 
     Bitmap picture;
@@ -87,6 +89,10 @@ public class Venue extends ParseObject {
         this.picture = bm;
 
         put(VenueAttributes.picture, picture);
+    }
+
+    public void setOpeningHour(ParseRelation openingHour){
+        put(VenueAttributes.openingHours,openingHour);
     }
 
     public static ParseQuery<Venue> getQuery() {

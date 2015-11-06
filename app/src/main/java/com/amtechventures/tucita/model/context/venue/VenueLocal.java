@@ -10,6 +10,8 @@ import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseRelation;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,6 +55,7 @@ public class VenueLocal {
         }
 
         if(venue != null){
+            find = (Venue) venue;
             String name = venue.getString(VenueAttributes.name);
 
                 find.setName(name);
@@ -84,6 +87,8 @@ public class VenueLocal {
                 find.setAddress(address);
 
                 find.setLocation(venue.getParseGeoPoint(VenueAttributes.location));
+
+                find.setOpeningHour((ParseRelation) venue.get(VenueAttributes.openingHours));
 
             }
         return find;

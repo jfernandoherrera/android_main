@@ -2,6 +2,7 @@ package com.amtechventures.tucita.activities.venue;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -11,22 +12,30 @@ import android.widget.RadioButton;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import com.amtechventures.tucita.R;
+import com.amtechventures.tucita.model.context.openingHour.OpeningHourCompletion;
+import com.amtechventures.tucita.model.context.openingHour.OpeningHourContext;
 import com.amtechventures.tucita.model.context.venue.VenueContext;
+import com.amtechventures.tucita.model.domain.openingHour.OpeningHour;
+import com.amtechventures.tucita.model.domain.openingHour.OpeningHourAttributes;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.domain.venue.VenueAttributes;
-
+import com.amtechventures.tucita.model.error.AppError;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 
 public class VenueActivity extends AppCompatActivity {
 
     private Venue venue;
     private VenueContext venueContext;
+    private OpeningHourContext openingHourContext;
     private ImageView venuePicture;
     private TextView venueName;
     private TextView venueDescription;
     private RatingBar ratingBar;
     private Button location;
+    private List<OpeningHour> openingHours = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -35,6 +44,8 @@ public class VenueActivity extends AppCompatActivity {
         setContentView(R.layout.activity_venue);
 
         venueContext = VenueContext.context(venueContext);
+
+        openingHourContext = OpeningHourContext.context(openingHourContext);
 
         venuePicture = (ImageView) findViewById(R.id.imageVenue);
 
@@ -63,9 +74,9 @@ public class VenueActivity extends AppCompatActivity {
 
         setupAddressAndlocation();
 
-        setupOpeningHours();
-
         setupDay();
+
+        setupOpeningHours();
 
     }
 
@@ -102,6 +113,89 @@ public class VenueActivity extends AppCompatActivity {
 
     private void setupOpeningHours(){
 
+
+        List<OpeningHour> openingHoursList = openingHourContext.loadOpeningHours(venue, new OpeningHourCompletion.OpeningHourErrorCompletion(){
+
+            @Override
+            public void completion(List<OpeningHour> openingHoursList, AppError error) {
+
+                if (openingHoursList != null) {
+
+                    openingHours.clear();
+
+                    populateOpeningHours();
+                } else {
+
+                    noInternetConnectionAlert();
+
+                }
+
+            }
+
+        });
+
+        openingHours.addAll(openingHoursList);
+
+        populateOpeningHours();
+    }
+
+    private void populateOpeningHours(){
+
+        for(OpeningHour openingHour : openingHours ){
+
+            RadioButton radioButton;
+
+            switch (openingHour.getDay()){
+
+                case OpeningHourAttributes.monday :
+
+
+                    radioButton = (RadioButton) findViewById(R.id.radioButton1);
+
+                    break;
+                case OpeningHourAttributes.tuesday :
+
+                    radioButton = (RadioButton) findViewById(R.id.radioButton2);
+
+                    break;
+                case OpeningHourAttributes.wednesday :
+
+                    radioButton = (RadioButton) findViewById(R.id.radioButton3);
+
+                    break;
+                case OpeningHourAttributes.thursday :
+
+                    radioButton = (RadioButton) findViewById(R.id.radioButton4);
+
+                    break;
+                case OpeningHourAttributes.friday :
+
+                    radioButton = (RadioButton) findViewById(R.id.radioButton5);
+
+                    break;
+                case OpeningHourAttributes.saturday :
+
+                    radioButton = (RadioButton) findViewById(R.id.radioButton6);
+
+                    break;
+                case OpeningHourAttributes.sunday :
+
+                    radioButton = (RadioButton) findViewById(R.id.radioButton7);
+
+                    break;
+                default:
+
+                    radioButton = (RadioButton) findViewById(R.id.radioButton1);
+
+                    break;
+
+            }
+
+            String textOpeningHour = radioButton.getText().toString() + openingHour.getStartHour() + " - " + openingHour.getEndHour();
+
+            radioButton.setText(textOpeningHour);
+
+        }
     }
 
     private void setupAddressAndlocation(){
@@ -186,5 +280,16 @@ public class VenueActivity extends AppCompatActivity {
         Intent browse = new Intent( Intent.ACTION_VIEW , Uri.parse(inURL) );
 
         startActivity(browse);
+    }
+
+    private void noInternetConnectionAlert() {
+
+        new AlertDialog.Builder(this)
+                .setTitle(getResources().getString(R.string.alert))
+                .setMessage(getResources().getString(R.string.no_internet_connection))
+                .setRecycleOnMeasureEnabled(true)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+
     }
 }

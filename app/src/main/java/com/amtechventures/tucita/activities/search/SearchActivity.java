@@ -100,7 +100,7 @@ public class SearchActivity extends AppCompatActivity {
 
         Class activity = VenueActivity.class;
 
-        String address= venues.get(position).getAddress();
+        String address = venues.get(position).getAddress();
 
         Intent intent = new Intent(SearchActivity.this, activity);
 

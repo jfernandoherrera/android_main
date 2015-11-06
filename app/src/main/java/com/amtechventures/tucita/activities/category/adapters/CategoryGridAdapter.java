@@ -2,7 +2,6 @@ package com.amtechventures.tucita.activities.category.adapters;
 
 import java.util.List;
 
-import android.app.Service;
 import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,11 +10,7 @@ import android.widget.ImageButton;
 import android.view.LayoutInflater;
 import com.amtechventures.tucita.R;
 import android.support.v7.widget.RecyclerView;
-
-import com.amtechventures.tucita.activities.category.CategoryActivity;
-import com.amtechventures.tucita.activities.login.LoginActivity;
 import com.amtechventures.tucita.activities.services.ServicesActivity;
-import com.amtechventures.tucita.activities.venue.VenueActivity;
 import com.amtechventures.tucita.model.domain.category.Category;
 
 public class CategoryGridAdapter extends RecyclerView.Adapter<CategoryGridAdapter.ViewHolder> {

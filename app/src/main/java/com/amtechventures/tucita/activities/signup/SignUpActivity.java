@@ -22,7 +22,6 @@ public class SignUpActivity extends AppCompatActivity {
 
     private TextView emailView;
     private EditText passwordView;
-
     private UserContext userContext;
 
     @Override

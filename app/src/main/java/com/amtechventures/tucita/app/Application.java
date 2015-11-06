@@ -1,5 +1,6 @@
 package com.amtechventures.tucita.app;
 
+import com.amtechventures.tucita.model.domain.openingHour.OpeningHour;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.parse.Parse;
 import com.parse.ParseObject;
@@ -27,6 +28,8 @@ public class Application extends android.app.Application {
         ParseObject.registerSubclass(Category.class);
 
         ParseObject.registerSubclass(Venue.class);
+
+        ParseObject.registerSubclass(OpeningHour.class);
 
         Parse.initialize(this, app_parse_id, app_client_parse_id);
 

@@ -10,9 +10,9 @@ import java.util.List;
 
 public class ServiceContext {
 
-    ServiceLocal serviceLocal;
+    private ServiceLocal serviceLocal;
+    private ServiceRemote serviceRemote;
 
-    ServiceRemote serviceRemote;
     public static ServiceContext context(ServiceContext serviceContext) {
 
         if (serviceContext == null) {

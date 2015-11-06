@@ -90,7 +90,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below = "@+id/separator3"
                     android:id="@+id/watch_location"
-                    />
+                    android:background="#ffffff" />
                 <TextView
                     android:layout_width="match_parent"
                     android:text="@string/opening_hours"
