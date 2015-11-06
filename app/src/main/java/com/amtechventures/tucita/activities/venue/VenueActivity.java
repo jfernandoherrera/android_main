@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.model.context.venue.VenueContext;
 import com.amtechventures.tucita.model.domain.venue.Venue;
+import com.amtechventures.tucita.model.domain.venue.VenueAttributes;
+import com.amtechventures.tucita.utils.strings.Strings;
 
 import java.util.Calendar;
 
@@ -75,7 +77,9 @@ public class VenueActivity extends AppCompatActivity {
 
     private void setupDescription(){
 
-        venueDescription.setText(venue.getDescription());
+        String description = getResources().getString(R.string.description) + venue.getDescription();
+
+        venueDescription.setText(description );
     }
 
     private void setupRating(){

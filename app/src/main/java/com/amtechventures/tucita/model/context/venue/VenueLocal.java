@@ -17,17 +17,17 @@ import java.util.List;
 
 public class VenueLocal {
 
-    public Venue findVenue(String nombre){
+    public Venue findVenue(String lookThat){
 
         Venue find = new Venue();
 
-        List<Venue> venuesList = loadLikeVenues(nombre);
+        List<Venue> venuesList = loadLikeVenues(lookThat);
 
         for(ParseObject venue : venuesList){
 
             String name = venue.getString(VenueAttributes.name);
 
-            if(name.equals(nombre)){
+            if(name.equals(lookThat)){
 
                 find.setName(name);
 
@@ -42,15 +42,18 @@ public class VenueLocal {
                 ParseFile picture = venue.getParseFile(VenueAttributes.picture);
 
                 Bitmap bm = null;
+
                 try {
+
                   bm = BitmapFactory.decodeByteArray(picture.getData(), 0, picture.getData().length);
+
                 } catch (ParseException e) {
+
                     e.printStackTrace();
+
                 }
 
                 find.setPicture(picture, bm);
-
-
 
             }
         }
