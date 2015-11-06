@@ -25,6 +25,7 @@ import com.amtechventures.tucita.model.context.venue.VenueContext;
 import com.amtechventures.tucita.model.domain.category.CategoryAttributes;
 import com.amtechventures.tucita.model.domain.service.Service;
 import com.amtechventures.tucita.model.domain.venue.Venue;
+import com.amtechventures.tucita.model.domain.venue.VenueAttributes;
 import com.amtechventures.tucita.model.error.AppError;
 import com.amtechventures.tucita.utils.strings.Strings;
 import com.parse.ParseObject;
@@ -99,11 +100,15 @@ public class SearchActivity extends AppCompatActivity {
 
         Class activity = VenueActivity.class;
 
-        Intent i = new Intent(SearchActivity.this, activity);
+        String address= venues.get(position).getAddress();
 
-        i.putExtra(Venue.class.getName(),itemValue);
+        Intent intent = new Intent(SearchActivity.this, activity);
 
-        startActivity(i);
+        intent.putExtra(Venue.class.getName(),itemValue);
+
+        intent.putExtra(VenueAttributes.address, address);
+
+        startActivity(intent);
 
         finish();
     }

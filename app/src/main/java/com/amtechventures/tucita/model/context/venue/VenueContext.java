@@ -37,9 +37,9 @@ public class VenueContext {
     }
 
 
-    public Venue findVenue(String lookThat){
+    public Venue findVenue(String lookThat, String address){
 
-        Venue venue = venueLocal.findVenue(lookThat);
+        Venue venue = venueLocal.findVenue(lookThat,address);
 
         return venue;
     }

@@ -17,17 +17,45 @@ import java.util.List;
 
 public class VenueLocal {
 
-    public Venue findVenue(String lookThat){
+    public Venue findVenue(String lookThat, String address){
 
         Venue find = new Venue();
 
-        List<Venue> venuesList = loadLikeVenues(lookThat);
+        ParseQuery queryName = Venue.getQuery();
 
-        for(ParseObject venue : venuesList){
+        queryName.whereEqualTo(VenueAttributes.name, lookThat);
 
+        ParseQuery queryAddress = Venue.getQuery();
+
+        queryAddress.whereEqualTo(VenueAttributes.address, address);
+
+        List<ParseQuery<ParseObject>> queries = new ArrayList<ParseQuery<ParseObject>>();
+
+        queries.add(queryAddress);
+
+        queries.add(queryName);
+
+        ParseQuery query = ParseQuery.or(queries) ;
+
+        query.fromLocalDatastore();
+
+        List<Venue> venuesList;
+
+        ParseObject venue = null;
+
+        try {
+
+            venuesList = query.find();
+
+            venue = venuesList.get(0);
+
+        } catch (ParseException e) {
+
+            e.printStackTrace();
+        }
+
+        if(venue != null){
             String name = venue.getString(VenueAttributes.name);
-
-            if(name.equals(lookThat)){
 
                 find.setName(name);
 
@@ -56,7 +84,6 @@ public class VenueLocal {
                 find.setPicture(picture, bm);
 
             }
-        }
         return find;
     }
 

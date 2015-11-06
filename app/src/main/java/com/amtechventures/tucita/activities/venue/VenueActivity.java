@@ -99,7 +99,9 @@ public class VenueActivity extends AppCompatActivity {
 
         String name = getIntent().getExtras().getString(Venue.class.getName());
 
-        venue = venueContext.findVenue(name);
+        String address = getIntent().getExtras().getString(VenueAttributes.address);
+
+        venue = venueContext.findVenue(name,address);
     }
     private void setupDay(){
 

@@ -43,7 +43,7 @@ public class Venue extends ParseObject {
 
     public void setRating(double rating){
 
-        put(VenueAttributes.rating,rating );
+        put(VenueAttributes.rating, rating );
     }
 
     public Bitmap getPicture(){
@@ -51,8 +51,15 @@ public class Venue extends ParseObject {
         return picture;
     }
 
-    public void setPicture(ParseFile picture,Bitmap bm){
+    public String getAddress(){
+
+        return getString(VenueAttributes.address);
+    }
+
+    public void setPicture(ParseFile picture, Bitmap bm){
+
         this.picture = bm;
+
         put(VenueAttributes.picture, picture);
     }
 
