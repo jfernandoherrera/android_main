@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 
 import com.parse.ParseClassName;
 import com.parse.ParseFile;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 @ParseClassName("Venue")
@@ -16,6 +17,26 @@ public class Venue extends ParseObject {
 
         put(VenueAttributes.name,name );
 
+    }
+
+    public double getLatitude(){
+
+        return getLocation().getLatitude();
+    }
+
+    public double getLongitude(){
+
+        return getLocation().getLongitude();
+    }
+
+    public ParseGeoPoint getLocation(){
+
+        return getParseGeoPoint(VenueAttributes.location);
+    }
+
+    public void setLocation(ParseGeoPoint location){
+
+        put(VenueAttributes.location,location);
     }
 
     public String getName(){
@@ -49,6 +70,11 @@ public class Venue extends ParseObject {
     public Bitmap getPicture(){
 
         return picture;
+    }
+
+    public void setAddress(String address){
+
+        put(VenueAttributes.address, address);
     }
 
     public String getAddress(){

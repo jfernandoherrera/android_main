@@ -1,18 +1,19 @@
 package com.amtechventures.tucita.activities.venue;
 
-import android.graphics.Bitmap;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RatingBar;
 import android.widget.TextView;
-
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.model.context.venue.VenueContext;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.domain.venue.VenueAttributes;
-import com.amtechventures.tucita.utils.strings.Strings;
 
 import java.util.Calendar;
 
@@ -25,6 +26,7 @@ public class VenueActivity extends AppCompatActivity {
     private TextView venueName;
     private TextView venueDescription;
     private RatingBar ratingBar;
+    private Button location;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -41,6 +43,8 @@ public class VenueActivity extends AppCompatActivity {
         venueDescription = (TextView) findViewById(R.id.textViewDescription);
 
         ratingBar = (RatingBar) findViewById(R.id.ratingBar);
+
+        location = (Button) findViewById(R.id.watch_location);
 
         setup();
     }
@@ -79,12 +83,21 @@ public class VenueActivity extends AppCompatActivity {
 
         String description = getResources().getString(R.string.description) + venue.getDescription();
 
-        venueDescription.setText(description );
+        venueDescription.setText(description);
     }
 
     private void setupRating(){
 
-        ratingBar.setRating((float) venue.getRating());
+        float rating = (float)venue.getRating();
+
+        if(rating != 0) {
+
+            ratingBar.setRating(rating);
+
+        }else{
+
+            ratingBar.setVisibility(View.INVISIBLE);
+        }
     }
 
     private void setupOpeningHours(){
@@ -93,6 +106,17 @@ public class VenueActivity extends AppCompatActivity {
 
     private void setupAddressAndlocation(){
 
+        location.setText(venue.getAddress());
+
+        location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String url = VenueAttributes.linkToLocation + venue.getLatitude() + "," + venue.getLongitude();
+
+                openWebURL(url);
+            }
+        });
     }
 
     private void thisVenue(){
@@ -155,5 +179,12 @@ public class VenueActivity extends AppCompatActivity {
                 break;
         }
         radioButton.toggle();
+    }
+
+    public void openWebURL( String inURL ) {
+
+        Intent browse = new Intent( Intent.ACTION_VIEW , Uri.parse(inURL) );
+
+        startActivity(browse);
     }
 }

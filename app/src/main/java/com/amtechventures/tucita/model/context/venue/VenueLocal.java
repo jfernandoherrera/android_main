@@ -4,14 +4,12 @@ package com.amtechventures.tucita.model.context.venue;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-
 import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.domain.venue.VenueAttributes;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,6 +80,10 @@ public class VenueLocal {
                 }
 
                 find.setPicture(picture, bm);
+
+                find.setAddress(address);
+
+                find.setLocation(venue.getParseGeoPoint(VenueAttributes.location));
 
             }
         return find;
