@@ -2,9 +2,13 @@ package com.amtechventures.tucita.model.context.venue;
 
 
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
 import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.domain.venue.VenueAttributes;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
@@ -34,6 +38,20 @@ public class VenueLocal {
                 int rating = venue.getInt(VenueAttributes.rating);
 
                 find.setRating(rating);
+
+                ParseFile picture = venue.getParseFile(VenueAttributes.picture);
+
+                Bitmap bm = null;
+                try {
+                  bm = BitmapFactory.decodeByteArray(picture.getData(), 0, picture.getData().length);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                find.setPicture(picture, bm);
+
+
+
             }
         }
         return find;

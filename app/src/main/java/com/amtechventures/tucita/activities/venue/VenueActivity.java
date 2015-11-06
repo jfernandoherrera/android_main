@@ -1,5 +1,6 @@
 package com.amtechventures.tucita.activities.venue;
 
+import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -64,7 +65,7 @@ public class VenueActivity extends AppCompatActivity {
 
     private void setupPicture(){
 
-
+        venuePicture.setImageBitmap(venue.getPicture());
     }
 
     private void setupName(){
@@ -78,6 +79,7 @@ public class VenueActivity extends AppCompatActivity {
     }
 
     private void setupRating(){
+
         ratingBar.setRating((float) venue.getRating());
     }
 
