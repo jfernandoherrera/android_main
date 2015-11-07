@@ -13,14 +13,24 @@ public class OpeningHour extends ParseObject{
         return getString(OpeningHourAttributes.day);
     }
 
-    public String getStartHour(){
+    public int getStartHour(){
 
-        return getString(OpeningHourAttributes.startHour);
+        return getInt(OpeningHourAttributes.startHour);
     }
 
-    public String getEndHour(){
+    public int getEndHour(){
 
-        return getString(OpeningHourAttributes.endHour);
+        return getInt(OpeningHourAttributes.endHour);
+    }
+
+    public int getStartMinute(){
+
+        return getInt(OpeningHourAttributes.startMinute);
+    }
+
+    public int getEndMinute(){
+
+        return getInt(OpeningHourAttributes.endMinute);
     }
 
     public static ParseQuery<OpeningHour> getQuery() {

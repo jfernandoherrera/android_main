@@ -38,7 +38,7 @@ public class OpeningHourContext {
 
         ParseRelation object = (ParseRelation) venue.get(VenueAttributes.openingHours);
 
-        Log.i("hgfd", object.toString());
+
         ParseQuery<OpeningHour> queryLocal = object.getQuery();
 
         openingHours = openingHourLocal.loadOpeningHours(queryLocal);

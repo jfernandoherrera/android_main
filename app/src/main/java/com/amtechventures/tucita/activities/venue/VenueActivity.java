@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -27,6 +28,8 @@ import java.util.List;
 
 public class VenueActivity extends AppCompatActivity {
 
+    private int twelveHoursClock = 12;
+    private int oneDigitNumber = 9;
     private Venue venue;
     private VenueContext venueContext;
     private OpeningHourContext openingHourContext;
@@ -123,7 +126,7 @@ public class VenueActivity extends AppCompatActivity {
 
                     openingHours.clear();
 
-                    populateOpeningHours();
+                    populateOpeningHours(openingHoursList);
                 } else {
 
                     noInternetConnectionAlert();
@@ -134,12 +137,10 @@ public class VenueActivity extends AppCompatActivity {
 
         });
 
-        openingHours.addAll(openingHoursList);
-
-        populateOpeningHours();
+        populateOpeningHours(openingHoursList);
     }
 
-    private void populateOpeningHours(){
+    private void populateOpeningHours(List<OpeningHour> openingHours){
 
         for(OpeningHour openingHour : openingHours ){
 
@@ -148,7 +149,6 @@ public class VenueActivity extends AppCompatActivity {
             switch (openingHour.getDay()){
 
                 case OpeningHourAttributes.monday :
-
 
                     radioButton = (RadioButton) findViewById(R.id.radioButton1);
 
@@ -191,13 +191,31 @@ public class VenueActivity extends AppCompatActivity {
 
             }
 
-            String textOpeningHour = radioButton.getText().toString() + openingHour.getStartHour() + " - " + openingHour.getEndHour();
+            String textOpeningStartHour =  hourFormat(openingHour.getStartHour(), openingHour.getStartMinute());
 
-            radioButton.setText(textOpeningHour);
+            String textOpeningEndHour = hourFormat(openingHour.getEndHour(), openingHour.getEndMinute());
+
+            String textDay = radioButton.getText().toString();
+
+            String textTime = textDay + textOpeningStartHour + "-" + textOpeningEndHour;
+
+            radioButton.setText(textTime);
 
         }
     }
 
+    private String hourFormat(int hour, int minute){
+
+        String amPm = hour <= 12 ? "AM" : "PM";
+
+        String minuteString = minute <= oneDigitNumber ?  "0" + String.valueOf(minute) :  String.valueOf(minute);
+
+        hour = hour <= twelveHoursClock ? hour : hour - twelveHoursClock;
+
+        String hourString = " " + String.valueOf(hour) + ":" + minuteString + amPm + " ";
+
+        return hourString;
+    }
     private void setupAddressAndlocation(){
 
         location.setText(venue.getAddress());

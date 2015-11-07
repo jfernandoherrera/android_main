@@ -36,11 +36,6 @@ public class Venue extends ParseObject {
         return getParseGeoPoint(VenueAttributes.location);
     }
 
-    public void setLocation(ParseGeoPoint location){
-
-        put(VenueAttributes.location,location);
-    }
-
     public String getName(){
 
         return getString(VenueAttributes.name);
@@ -53,20 +48,10 @@ public class Venue extends ParseObject {
 
     }
 
-    public void setDescription(String description){
-
-        put(VenueAttributes.description,description);
-    }
-
     public double getRating(){
 
         return getDouble(VenueAttributes.rating);
 
-    }
-
-    public void setRating(double rating){
-
-        put(VenueAttributes.rating, rating );
     }
 
     public Bitmap getPicture(){
@@ -74,25 +59,15 @@ public class Venue extends ParseObject {
         return picture;
     }
 
-    public void setAddress(String address){
-
-        put(VenueAttributes.address, address);
-    }
-
     public String getAddress(){
 
         return getString(VenueAttributes.address);
     }
 
-    public void setPicture(ParseFile picture, Bitmap bm){
+    public void setPicture( Bitmap bm){
 
         this.picture = bm;
 
-        put(VenueAttributes.picture, picture);
-    }
-
-    public void setOpeningHour(ParseRelation openingHour){
-        put(VenueAttributes.openingHours,openingHour);
     }
 
     public static ParseQuery<Venue> getQuery() {

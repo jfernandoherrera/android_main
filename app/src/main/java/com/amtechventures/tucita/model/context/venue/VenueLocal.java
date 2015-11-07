@@ -55,18 +55,8 @@ public class VenueLocal {
         }
 
         if(venue != null){
+
             find = (Venue) venue;
-            String name = venue.getString(VenueAttributes.name);
-
-                find.setName(name);
-
-                String description = venue.getString(VenueAttributes.description);
-
-                find.setDescription(description);
-
-                int rating = venue.getInt(VenueAttributes.rating);
-
-                find.setRating(rating);
 
                 ParseFile picture = venue.getParseFile(VenueAttributes.picture);
 
@@ -82,13 +72,7 @@ public class VenueLocal {
 
                 }
 
-                find.setPicture(picture, bm);
-
-                find.setAddress(address);
-
-                find.setLocation(venue.getParseGeoPoint(VenueAttributes.location));
-
-                find.setOpeningHour((ParseRelation) venue.get(VenueAttributes.openingHours));
+                find.setPicture( bm);
 
             }
         return find;
