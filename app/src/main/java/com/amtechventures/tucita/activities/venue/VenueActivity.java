@@ -140,110 +140,7 @@ public class VenueActivity extends AppCompatActivity {
         populateOpeningHours(openingHoursList);
     }
 
-    private void populateOpeningHours(List<OpeningHour> openingHours){
-
-        for(OpeningHour openingHour : openingHours ){
-
-            RadioButton radioButton;
-
-            switch (openingHour.getDay()){
-
-                case OpeningHourAttributes.monday :
-
-                    radioButton = (RadioButton) findViewById(R.id.radioButton1);
-
-                    break;
-                case OpeningHourAttributes.tuesday :
-
-                    radioButton = (RadioButton) findViewById(R.id.radioButton2);
-
-                    break;
-                case OpeningHourAttributes.wednesday :
-
-                    radioButton = (RadioButton) findViewById(R.id.radioButton3);
-
-                    break;
-                case OpeningHourAttributes.thursday :
-
-                    radioButton = (RadioButton) findViewById(R.id.radioButton4);
-
-                    break;
-                case OpeningHourAttributes.friday :
-
-                    radioButton = (RadioButton) findViewById(R.id.radioButton5);
-
-                    break;
-                case OpeningHourAttributes.saturday :
-
-                    radioButton = (RadioButton) findViewById(R.id.radioButton6);
-
-                    break;
-                case OpeningHourAttributes.sunday :
-
-                    radioButton = (RadioButton) findViewById(R.id.radioButton7);
-
-                    break;
-                default:
-
-                    radioButton = (RadioButton) findViewById(R.id.radioButton1);
-
-                    break;
-
-            }
-
-            String textOpeningStartHour =  hourFormat(openingHour.getStartHour(), openingHour.getStartMinute());
-
-            String textOpeningEndHour = hourFormat(openingHour.getEndHour(), openingHour.getEndMinute());
-
-            String textDay = radioButton.getText().toString();
-
-            String textTime = textDay + textOpeningStartHour + "-" + textOpeningEndHour;
-
-            radioButton.setText(textTime);
-
-        }
-    }
-
-    private String hourFormat(int hour, int minute){
-
-        String amPm = hour <= 12 ? "AM" : "PM";
-
-        String minuteString = minute <= oneDigitNumber ?  "0" + String.valueOf(minute) :  String.valueOf(minute);
-
-        hour = hour <= twelveHoursClock ? hour : hour - twelveHoursClock;
-
-        String hourString = " " + String.valueOf(hour) + ":" + minuteString + amPm + " ";
-
-        return hourString;
-    }
-    private void setupAddressAndlocation(){
-
-        location.setText(venue.getAddress());
-
-        location.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                String url = VenueAttributes.linkToLocation + venue.getLatitude() + "," + venue.getLongitude();
-
-                openWebURL(url);
-            }
-        });
-    }
-
-    private void thisVenue(){
-
-        String name = getIntent().getExtras().getString(Venue.class.getName());
-
-        String address = getIntent().getExtras().getString(VenueAttributes.address);
-
-        venue = venueContext.findVenue(name,address);
-    }
-    private void setupDay(){
-
-        Calendar c = Calendar.getInstance();
-
-        int day = c.get(Calendar.DAY_OF_WEEK);
+    private RadioButton getViewDay(int day){
 
         RadioButton radioButton;
 
@@ -290,6 +187,78 @@ public class VenueActivity extends AppCompatActivity {
 
                 break;
         }
+
+        return radioButton;
+    }
+
+    private void populateOpeningHours(List<OpeningHour> openingHours){
+
+        for(OpeningHour openingHour : openingHours ){
+
+            RadioButton radioButton;
+
+            radioButton = getViewDay(openingHour.getDay());
+
+            String textOpeningStartHour =  hourFormat(openingHour.getStartHour(), openingHour.getStartMinute());
+
+            String textOpeningEndHour = hourFormat(openingHour.getEndHour(), openingHour.getEndMinute());
+
+            String textDay = radioButton.getText().toString();
+
+            String textTime = textDay + textOpeningStartHour + "-" + textOpeningEndHour;
+
+            radioButton.setText(textTime);
+
+        }
+    }
+
+    private String hourFormat(int hour, int minute){
+
+        String amPm = hour <= twelveHoursClock ? "AM" : "PM";
+
+        String minuteString = minute <= oneDigitNumber ?  "0" + String.valueOf(minute) :  String.valueOf(minute);
+
+        hour = hour <= twelveHoursClock ? hour : hour - twelveHoursClock;
+
+        String hourString = " " + String.valueOf(hour) + ":" + minuteString + amPm + " ";
+
+        return hourString;
+    }
+
+    private void setupAddressAndlocation(){
+
+        location.setText(venue.getAddress());
+
+        location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String url = VenueAttributes.linkToLocation + venue.getLatitude() + "," + venue.getLongitude();
+
+                openWebURL(url);
+            }
+        });
+    }
+
+    private void thisVenue(){
+
+        String name = getIntent().getExtras().getString(Venue.class.getName());
+
+        String address = getIntent().getExtras().getString(VenueAttributes.address);
+
+        venue = venueContext.findVenue(name,address);
+    }
+
+    private void setupDay(){
+
+        Calendar c = Calendar.getInstance();
+
+        int day = c.get(Calendar.DAY_OF_WEEK);
+
+        RadioButton radioButton;
+
+        radioButton = getViewDay(day);
+
         radioButton.toggle();
     }
 
@@ -310,4 +279,5 @@ public class VenueActivity extends AppCompatActivity {
                 .show();
 
     }
+
 }

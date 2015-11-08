@@ -48,13 +48,14 @@
     <string name="hello_world">Hello world!</string>
 
 <!-- TODO: Venue -->
-    <string name="monday">lunes</string>
-    <string name="tuesday">martes</string>
-    <string name="wednesday">miercoles</string>
-    <string name="thursday">jueves</string>
-    <string name="friday">viernes</string>
-    <string name="saturday">sabado</string>
-    <string name="sunday">domingo</string>
+    <string name="closed">CERRADO</string>
+    <string name="monday">Lunes</string>
+    <string name="tuesday">Martes</string>
+    <string name="wednesday">Miercoles</string>
+    <string name="thursday">Jueves</string>
+    <string name="friday">Viernes</string>
+    <string name="saturday">Sabado</string>
+    <string name="sunday">Domingo</string>
     <string name="top_services">Servicios principales</string>
     <string name="full_menu">Menù completo</string>
     <string name="ven_title">Beauty 4 Busy Women</string>

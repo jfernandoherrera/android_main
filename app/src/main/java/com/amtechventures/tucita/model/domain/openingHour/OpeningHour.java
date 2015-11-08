@@ -8,9 +8,9 @@ import com.parse.ParseClassName;
 @ParseClassName("Opening_Hour")
 public class OpeningHour extends ParseObject{
 
-    public String getDay(){
+    public int getDay(){
 
-        return getString(OpeningHourAttributes.day);
+        return getInt(OpeningHourAttributes.day);
     }
 
     public int getStartHour(){
