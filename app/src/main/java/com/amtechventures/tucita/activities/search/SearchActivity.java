@@ -44,7 +44,7 @@ public class SearchActivity extends AppCompatActivity {
     private ArrayAdapter<String> venuesAdapter;
     private List <Service> services = new ArrayList<>();
     private List <Venue> venues = new ArrayList<>();
-
+    private int minimunToSearch = 3;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -134,7 +134,7 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
 
-                if (newText.length() < 3) {
+                if (newText.length() < minimunToSearch) {
 
                     Toast typeMore = Toast.makeText(SearchActivity.this, R.string.typing_advertisement, Toast.LENGTH_SHORT);
 
@@ -237,7 +237,7 @@ public class SearchActivity extends AppCompatActivity {
 
                         venues.clear();
 
-                        if (venuesList != null && !venuesList.isEmpty()) {
+                        if (venuesList != null && ! venuesList.isEmpty()) {
 
                             textVenues();
 
@@ -246,7 +246,6 @@ public class SearchActivity extends AppCompatActivity {
                             venuesAdapter.addAll(setVenuesToStringsArray());
 
                             venuesAdapter.notifyDataSetChanged();
-
 
                         }
                     }

@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -17,7 +16,6 @@ import com.amtechventures.tucita.model.context.openingHour.OpeningHourCompletion
 import com.amtechventures.tucita.model.context.openingHour.OpeningHourContext;
 import com.amtechventures.tucita.model.context.venue.VenueContext;
 import com.amtechventures.tucita.model.domain.openingHour.OpeningHour;
-import com.amtechventures.tucita.model.domain.openingHour.OpeningHourAttributes;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.domain.venue.VenueAttributes;
 import com.amtechventures.tucita.model.error.AppError;
@@ -39,6 +37,7 @@ public class VenueActivity extends AppCompatActivity {
     private RatingBar ratingBar;
     private Button location;
     private List<OpeningHour> openingHours = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -80,7 +79,6 @@ public class VenueActivity extends AppCompatActivity {
         setupDay();
 
         setupOpeningHours();
-
     }
 
     private void setupPicture(){
@@ -208,7 +206,6 @@ public class VenueActivity extends AppCompatActivity {
             String textTime = textDay + textOpeningStartHour + "-" + textOpeningEndHour;
 
             radioButton.setText(textTime);
-
         }
     }
 

@@ -7,12 +7,6 @@ import com.parse.ParseQuery;
 @ParseClassName("Service")
 public class Service extends ParseObject {
 
-        public void setName(String name){
-
-           put(CategoryAttributes.name,name );
-
-        }
-
         public String getName(){
 
             return getString(CategoryAttributes.name);
