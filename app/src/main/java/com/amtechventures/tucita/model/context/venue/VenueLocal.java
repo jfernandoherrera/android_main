@@ -4,6 +4,9 @@ package com.amtechventures.tucita.model.context.venue;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+
+import com.amtechventures.tucita.model.domain.city.City;
+import com.amtechventures.tucita.model.domain.city.CityAttributes;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.domain.venue.VenueAttributes;
 import com.parse.ParseException;
@@ -36,6 +39,8 @@ public class VenueLocal {
         queries.add(queryName);
 
         ParseQuery query = ParseQuery.or(queries) ;
+
+        query.include(VenueAttributes.city);
 
         query.fromLocalDatastore();
 
@@ -88,11 +93,31 @@ public class VenueLocal {
 
         queryAddress.whereContains(VenueAttributes.address, likeWord);
 
+        ParseQuery queryCityName = City.getQuery();
+
+        queryCityName.whereContains(CityAttributes.name, likeWord);
+
+        ParseQuery queryVenueCity = Venue.getQuery();
+
+        queryVenueCity.whereMatchesQuery(VenueAttributes.city, queryCityName);
+
+        ParseQuery queryCityDepartment = City.getQuery();
+
+        queryCityName.whereContains(CityAttributes.department, likeWord);
+
+        ParseQuery queryVenueDepartment = Venue.getQuery();
+
+        queryVenueDepartment.whereMatchesQuery(VenueAttributes.city, queryCityDepartment);
+
         List<ParseQuery<ParseObject>> queries = new ArrayList<ParseQuery<ParseObject>>();
 
         queries.add(queryAddress);
 
         queries.add(queryName);
+
+        queries.add(queryVenueCity);
+
+        queries.add(queryVenueDepartment);
 
         ParseQuery query = ParseQuery.or(queries) ;
 

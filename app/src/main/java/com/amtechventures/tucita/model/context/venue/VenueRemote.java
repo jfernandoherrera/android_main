@@ -1,6 +1,8 @@
 package com.amtechventures.tucita.model.context.venue;
 
 
+import com.amtechventures.tucita.model.domain.city.City;
+import com.amtechventures.tucita.model.domain.city.CityAttributes;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.domain.venue.VenueAttributes;
 import com.amtechventures.tucita.model.error.AppError;
@@ -25,13 +27,35 @@ public class VenueRemote {
 
         queryAddress.whereContains(VenueAttributes.address,likeWord);
 
+        ParseQuery queryCityName = City.getQuery();
+
+        queryCityName.whereContains(CityAttributes.name, likeWord);
+
+        ParseQuery queryVenueCity = Venue.getQuery();
+
+        queryVenueCity.whereMatchesQuery(VenueAttributes.city, queryCityName);
+
+        ParseQuery queryCityDepartment = City.getQuery();
+
+        queryCityName.whereContains(CityAttributes.department, likeWord);
+
+        ParseQuery queryVenueDepartment = Venue.getQuery();
+
+        queryVenueDepartment.whereMatchesQuery(VenueAttributes.city, queryCityDepartment);
+
         List<ParseQuery<ParseObject>> queries = new ArrayList<ParseQuery<ParseObject>>();
 
         queries.add(queryAddress);
 
         queries.add(queryName);
 
+        queries.add(queryVenueCity);
+
+        queries.add(queryVenueDepartment);
+
         ParseQuery query = ParseQuery.or(queries) ;
+
+        query.include(VenueAttributes.city);
 
         query.findInBackground(new FindCallback<Venue>() {
             @Override

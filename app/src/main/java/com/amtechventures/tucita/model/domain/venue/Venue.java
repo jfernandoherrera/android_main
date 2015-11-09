@@ -2,12 +2,13 @@ package com.amtechventures.tucita.model.domain.venue;
 
 
 import android.graphics.Bitmap;
+import android.util.Log;
+
+import com.amtechventures.tucita.model.domain.city.City;
 import com.parse.ParseClassName;
-import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import com.parse.ParseRelation;
 
 @ParseClassName("Venue")
 
@@ -64,6 +65,10 @@ public class Venue extends ParseObject {
         return getString(VenueAttributes.address);
     }
 
+    public City getCity(){
+
+        return (City) get(VenueAttributes.city);
+    }
     public void setPicture( Bitmap bm){
 
         this.picture = bm;

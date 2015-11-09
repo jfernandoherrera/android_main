@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -224,7 +225,13 @@ public class VenueActivity extends AppCompatActivity {
 
     private void setupAddressAndlocation(){
 
-        location.setText(venue.getAddress());
+        String city = venue.getCity().getName();
+
+        String department = venue.getCity().getDepartment();
+
+        String address = city + " " + department + " " + venue.getAddress();
+
+        location.setText(address);
 
         location.setOnClickListener(new View.OnClickListener() {
             @Override
