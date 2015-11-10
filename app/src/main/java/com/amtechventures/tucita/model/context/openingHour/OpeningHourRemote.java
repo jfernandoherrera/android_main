@@ -1,9 +1,7 @@
 package com.amtechventures.tucita.model.context.openingHour;
 
 
-import com.amtechventures.tucita.model.context.service.ServicesCompletion;
 import com.amtechventures.tucita.model.domain.openingHour.OpeningHour;
-import com.amtechventures.tucita.model.domain.service.Service;
 import com.amtechventures.tucita.model.error.AppError;
 import com.parse.FindCallback;
 import com.parse.ParseException;

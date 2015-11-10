@@ -16,12 +16,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.venue.VenueActivity;
-import com.amtechventures.tucita.model.context.service.ServiceContext;
-import com.amtechventures.tucita.model.context.service.ServicesCompletion;
+import com.amtechventures.tucita.model.context.subcategory.SubCategoryContext;
+import com.amtechventures.tucita.model.context.subcategory.SubCategoryCompletion;
 import com.amtechventures.tucita.model.context.venue.VenueCompletion;
 import com.amtechventures.tucita.model.context.venue.VenueContext;
 import com.amtechventures.tucita.model.domain.category.CategoryAttributes;
-import com.amtechventures.tucita.model.domain.service.Service;
+import com.amtechventures.tucita.model.domain.subcategory.SubCategory;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.domain.venue.VenueAttributes;
 import com.amtechventures.tucita.model.error.AppError;
@@ -38,11 +38,11 @@ public class SearchActivity extends AppCompatActivity {
     private View separator;
     private ListView listViewTreatments;
     private ListView listViewVenues;
-    private ServiceContext serviceContext;
+    private SubCategoryContext subCategoryContext;
     private VenueContext venueContext;
     private ArrayAdapter<String> servicesAdapter;
     private ArrayAdapter<String> venuesAdapter;
-    private List <Service> services = new ArrayList<>();
+    private List <SubCategory> subCategories = new ArrayList<>();
     private List <Venue> venues = new ArrayList<>();
     private int minimunToSearch = 3;
     @Override
@@ -52,7 +52,7 @@ public class SearchActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_search);
 
-        serviceContext = ServiceContext.context(serviceContext);
+        subCategoryContext = SubCategoryContext.context(subCategoryContext);
 
         venueContext = VenueContext.context(venueContext);
 
@@ -162,7 +162,7 @@ public class SearchActivity extends AppCompatActivity {
 
         ArrayList<String> stringsServices = new ArrayList<>();
 
-        for(ParseObject service : services){
+        for(ParseObject service : subCategories){
 
             stringsServices.add(service.getString(CategoryAttributes.name));
         }
@@ -188,19 +188,19 @@ public class SearchActivity extends AppCompatActivity {
 
         String capitalized = Strings.capitalize(newText);
 
-        List<Service> servicesList = serviceContext.loadLikeServices(capitalized, new ServicesCompletion.ErrorCompletion() {
+        List<SubCategory> servicesList = subCategoryContext.loadLikeServices(capitalized, new SubCategoryCompletion.ErrorCompletion() {
             @Override
-            public void completion(List<Service> servicesList, AppError error) {
+            public void completion(List<SubCategory> servicesList, AppError error) {
 
                 servicesAdapter.clear();
 
-                services.clear();
+                subCategories.clear();
 
                 if (servicesList != null && !servicesList.isEmpty()) {
 
                     textServices();
 
-                    services.addAll(servicesList);
+                    subCategories.addAll(servicesList);
 
                     servicesAdapter.addAll(setServicesToStringsArray());
 
@@ -214,7 +214,7 @@ public class SearchActivity extends AppCompatActivity {
 
             textServices();
 
-            services.addAll(servicesList);
+            subCategories.addAll(servicesList);
 
             servicesAdapter.addAll(setServicesToStringsArray());
 

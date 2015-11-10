@@ -2,7 +2,6 @@ package com.amtechventures.tucita.model.context.category;
 
 import java.util.List;
 
-import com.amtechventures.tucita.model.context.service.ServiceContext;
 import com.amtechventures.tucita.model.domain.category.Category;
 
 public class CategoryContext {

@@ -1,11 +1,11 @@
-package com.amtechventures.tucita.model.domain.service;
+package com.amtechventures.tucita.model.domain.subcategory;
 
 import com.amtechventures.tucita.model.domain.category.CategoryAttributes;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-@ParseClassName("Service")
-public class Service extends ParseObject {
+@ParseClassName("SubCategory")
+public class SubCategory extends ParseObject {
 
         public String getName(){
 
@@ -13,8 +13,8 @@ public class Service extends ParseObject {
 
         }
 
-        public static ParseQuery<Service> getQuery() {
+        public static ParseQuery<SubCategory> getQuery() {
 
-            return ParseQuery.getQuery(Service.class);
+            return ParseQuery.getQuery(SubCategory.class);
         }
 }

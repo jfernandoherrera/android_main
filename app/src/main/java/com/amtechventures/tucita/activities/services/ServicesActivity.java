@@ -9,11 +9,11 @@ import android.widget.ListView;
 import android.widget.Toast;
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.model.context.category.CategoryContext;
-import com.amtechventures.tucita.model.context.service.ServiceContext;
-import com.amtechventures.tucita.model.context.service.ServicesCompletion;
+import com.amtechventures.tucita.model.context.subcategory.SubCategoryContext;
+import com.amtechventures.tucita.model.context.subcategory.SubCategoryCompletion;
 import com.amtechventures.tucita.model.domain.category.Category;
 import com.amtechventures.tucita.model.domain.category.CategoryAttributes;
-import com.amtechventures.tucita.model.domain.service.Service;
+import com.amtechventures.tucita.model.domain.subcategory.SubCategory;
 import com.amtechventures.tucita.model.error.AppError;
 import com.parse.ParseObject;
 import java.util.ArrayList;
@@ -21,11 +21,11 @@ import java.util.List;
 
 public class ServicesActivity extends AppCompatActivity {
 
-    private ServiceContext serviceContext;
+    private SubCategoryContext subCategoryContext;
 
     private Category category;
 
-    private List <Service>services = new ArrayList<>();
+    private List <SubCategory> subCategories = new ArrayList<>();
 
     private ListView listView;
 
@@ -44,7 +44,7 @@ public class ServicesActivity extends AppCompatActivity {
 
         listView = (ListView) findViewById(R.id.listViewservices);
 
-        serviceContext = ServiceContext.context(serviceContext);
+        subCategoryContext = SubCategoryContext.context(subCategoryContext);
 
         category = categoryContext.findCategory(getIntent().getExtras().getString(Category.class.getName()));
 
@@ -75,7 +75,7 @@ public class ServicesActivity extends AppCompatActivity {
 
         ArrayList<String> stringsServices = new ArrayList<>();
 
-        for(ParseObject service : services){
+        for(ParseObject service : subCategories){
 
             stringsServices.add(service.getString(CategoryAttributes.name));
         }
@@ -85,17 +85,17 @@ public class ServicesActivity extends AppCompatActivity {
 
     private void setupList(){
 
-     List<Service> servicesList = serviceContext.loadServices(category, new ServicesCompletion.ErrorCompletion() {
+     List<SubCategory> servicesList = subCategoryContext.loadServices(category, new SubCategoryCompletion.ErrorCompletion() {
             @Override
-            public void completion(List<Service> servicesList, AppError error) {
+            public void completion(List<SubCategory> servicesList, AppError error) {
 
                 if(servicesList != null){
 
                     adapter.clear();
 
-                    services.clear();
+                    subCategories.clear();
 
-                    services.addAll(servicesList);
+                    subCategories.addAll(servicesList);
 
                     adapter.addAll(setStringsArray());
 
@@ -104,7 +104,7 @@ public class ServicesActivity extends AppCompatActivity {
             }
         });
 
-        services.addAll(servicesList);
+        subCategories.addAll(servicesList);
 
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, setStringsArray());
 

@@ -1,56 +1,56 @@
-package com.amtechventures.tucita.model.context.service;
+package com.amtechventures.tucita.model.context.subcategory;
 
 
 import com.amtechventures.tucita.model.domain.category.CategoryAttributes;
-import com.amtechventures.tucita.model.domain.service.Service;
+import com.amtechventures.tucita.model.domain.subcategory.SubCategory;
 import com.parse.ParseQuery;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ServiceLocal {
+public class SubCategoryLocal {
 
-    public List<Service> loadServices(ParseQuery<Service> servicesLocalQuery){
+    public List<SubCategory> loadServices(ParseQuery<SubCategory> servicesLocalQuery){
 
         servicesLocalQuery.fromLocalDatastore();
 
-        List<Service> serviceList = new ArrayList<>();
+        List<SubCategory> subCategoryList = new ArrayList<>();
 
         try {
             List services = servicesLocalQuery.find();
 
             if(services != null) {
 
-                serviceList = services;
+                subCategoryList = services;
             }
         } catch (com.parse.ParseException e) {
 
             e.printStackTrace();
         }
 
-        return serviceList;
+        return subCategoryList;
     }
 
-    public List<Service> loadLikeServices(String likeWord){
+    public List<SubCategory> loadLikeServices(String likeWord){
 
-        ParseQuery servicesLocalQuery = Service.getQuery();
+        ParseQuery servicesLocalQuery = SubCategory.getQuery();
 
         servicesLocalQuery.fromLocalDatastore();
 
-        List<Service> serviceList = new ArrayList<>();
+        List<SubCategory> subCategoryList = new ArrayList<>();
 
         try {
             List services = servicesLocalQuery.whereContains(CategoryAttributes.name,likeWord).find();
 
             if(services != null) {
 
-                serviceList = services;
+                subCategoryList = services;
             }
         } catch (com.parse.ParseException e) {
 
             e.printStackTrace();
         }
 
-        return serviceList;
+        return subCategoryList;
     }
 
 }

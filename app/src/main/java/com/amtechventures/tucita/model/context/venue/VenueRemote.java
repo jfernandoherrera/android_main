@@ -25,7 +25,7 @@ public class VenueRemote {
 
         ParseQuery queryAddress = Venue.getQuery();
 
-        queryAddress.whereContains(VenueAttributes.address,likeWord);
+        queryAddress.whereContains(VenueAttributes.address, likeWord);
 
         ParseQuery queryCityName = City.getQuery();
 
@@ -37,7 +37,7 @@ public class VenueRemote {
 
         ParseQuery queryCityDepartment = City.getQuery();
 
-        queryCityName.whereContains(CityAttributes.department, likeWord);
+        queryCityDepartment.whereContains(CityAttributes.department, likeWord);
 
         ParseQuery queryVenueDepartment = Venue.getQuery();
 

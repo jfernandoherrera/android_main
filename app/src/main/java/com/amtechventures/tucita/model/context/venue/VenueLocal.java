@@ -103,7 +103,7 @@ public class VenueLocal {
 
         ParseQuery queryCityDepartment = City.getQuery();
 
-        queryCityName.whereContains(CityAttributes.department, likeWord);
+        queryCityDepartment.whereContains(CityAttributes.department, likeWord);
 
         ParseQuery queryVenueDepartment = Venue.getQuery();
 

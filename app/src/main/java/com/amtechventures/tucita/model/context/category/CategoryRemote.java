@@ -1,22 +1,13 @@
 package com.amtechventures.tucita.model.context.category;
 
-import android.util.Log;
-
-import java.util.ArrayList;
 import java.util.List;
 
-import com.amtechventures.tucita.model.context.service.ServiceContext;
-import com.amtechventures.tucita.model.context.service.ServiceLocal;
-import com.amtechventures.tucita.model.context.service.ServiceRemote;
-import com.amtechventures.tucita.model.context.service.ServicesCompletion;
-import com.amtechventures.tucita.model.domain.service.Service;
 import com.parse.ParseQuery;
 import com.parse.ParseObject;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.amtechventures.tucita.model.error.AppError;
 import com.amtechventures.tucita.model.domain.category.Category;
-import com.parse.ParseRelation;
 
 public class CategoryRemote {
 
