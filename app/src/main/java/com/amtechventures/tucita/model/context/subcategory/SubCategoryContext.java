@@ -32,31 +32,31 @@ public class SubCategoryContext {
         subCategoryLocal = new SubCategoryLocal();
     }
 
-    public List<SubCategory> loadServices(Category category, SubCategoryCompletion.ErrorCompletion completion){
+    public List<SubCategory> loadSubCategories(Category category, SubCategoryCompletion.ErrorCompletion completion){
 
-      List services;
+      List subCategories;
 
         ParseRelation object = (ParseRelation) category.get(CategoryAttributes.subCategories);
 
         ParseQuery<SubCategory> queryLocal = object.getQuery();
 
-        services = subCategoryLocal.loadServices(queryLocal);
+        subCategories = subCategoryLocal.loadSubCategories(queryLocal);
 
         ParseQuery<SubCategory> queryRemote = object.getQuery();
 
-        subCategoryRemote.loadServices(queryRemote,completion);
+        subCategoryRemote.loadSubCategories(queryRemote,completion);
 
-        return services;
+        return subCategories;
     }
 
-    public List<SubCategory> loadLikeServices(String likeWord, SubCategoryCompletion.ErrorCompletion completion){
+    public List<SubCategory> loadLikeSubCategories(String likeWord, SubCategoryCompletion.ErrorCompletion completion){
 
-        List services;
+        List subCategories;
 
-        services = subCategoryLocal.loadLikeServices(likeWord);
+        subCategories = subCategoryLocal.loadLikeSubCategories(likeWord);
 
-        subCategoryRemote.loadLikeServices(likeWord, completion);
+        subCategoryRemote.loadLikeSubCategories(likeWord, completion);
 
-        return services;
+        return subCategories;
     }
 }

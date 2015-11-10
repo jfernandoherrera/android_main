@@ -9,18 +9,18 @@ import java.util.List;
 
 public class SubCategoryLocal {
 
-    public List<SubCategory> loadServices(ParseQuery<SubCategory> servicesLocalQuery){
+    public List<SubCategory> loadSubCategories(ParseQuery<SubCategory> subCategoryLocalQuery){
 
-        servicesLocalQuery.fromLocalDatastore();
+        subCategoryLocalQuery.fromLocalDatastore();
 
         List<SubCategory> subCategoryList = new ArrayList<>();
 
         try {
-            List services = servicesLocalQuery.find();
+            List subCategories = subCategoryLocalQuery.find();
 
-            if(services != null) {
+            if(subCategories != null) {
 
-                subCategoryList = services;
+                subCategoryList = subCategories;
             }
         } catch (com.parse.ParseException e) {
 
@@ -30,20 +30,20 @@ public class SubCategoryLocal {
         return subCategoryList;
     }
 
-    public List<SubCategory> loadLikeServices(String likeWord){
+    public List<SubCategory> loadLikeSubCategories(String likeWord){
 
-        ParseQuery servicesLocalQuery = SubCategory.getQuery();
+        ParseQuery subCategoriesLocalQuery = SubCategory.getQuery();
 
-        servicesLocalQuery.fromLocalDatastore();
+        subCategoriesLocalQuery.fromLocalDatastore();
 
         List<SubCategory> subCategoryList = new ArrayList<>();
 
         try {
-            List services = servicesLocalQuery.whereContains(CategoryAttributes.name,likeWord).find();
+            List subCategories = subCategoriesLocalQuery.whereContains(CategoryAttributes.name,likeWord).find();
 
-            if(services != null) {
+            if(subCategories != null) {
 
-                subCategoryList = services;
+                subCategoryList = subCategories;
             }
         } catch (com.parse.ParseException e) {
 

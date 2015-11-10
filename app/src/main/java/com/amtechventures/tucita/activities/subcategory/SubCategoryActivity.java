@@ -1,4 +1,4 @@
-package com.amtechventures.tucita.activities.services;
+package com.amtechventures.tucita.activities.subcategory;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,7 +19,7 @@ import com.parse.ParseObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ServicesActivity extends AppCompatActivity {
+public class SubCategoryActivity extends AppCompatActivity {
 
     private SubCategoryContext subCategoryContext;
 
@@ -38,7 +38,7 @@ public class ServicesActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_services);
+        setContentView(R.layout.activity_sub_categories);
 
         categoryContext = CategoryContext.context(categoryContext);
 
@@ -73,38 +73,38 @@ public class ServicesActivity extends AppCompatActivity {
 
     private ArrayList<String> setStringsArray(){
 
-        ArrayList<String> stringsServices = new ArrayList<>();
+        ArrayList<String> stringsSubCategories = new ArrayList<>();
 
-        for(ParseObject service : subCategories){
+        for(ParseObject subCategory : subCategories){
 
-            stringsServices.add(service.getString(CategoryAttributes.name));
+            stringsSubCategories.add(subCategory.getString(CategoryAttributes.name));
         }
 
-        return stringsServices;
+        return stringsSubCategories;
     }
 
     private void setupList(){
 
-     List<SubCategory> servicesList = subCategoryContext.loadServices(category, new SubCategoryCompletion.ErrorCompletion() {
-            @Override
-            public void completion(List<SubCategory> servicesList, AppError error) {
+     List<SubCategory> subCategoriesList = subCategoryContext.loadSubCategories(category, new SubCategoryCompletion.ErrorCompletion() {
+         @Override
+         public void completion(List<SubCategory> subCategoriesList, AppError error) {
 
-                if(servicesList != null){
+             if (subCategoriesList != null) {
 
-                    adapter.clear();
+                 adapter.clear();
 
-                    subCategories.clear();
+                 subCategories.clear();
 
-                    subCategories.addAll(servicesList);
+                 subCategories.addAll(subCategoriesList);
 
-                    adapter.addAll(setStringsArray());
+                 adapter.addAll(setStringsArray());
 
-                    adapter.notifyDataSetChanged();
-                }
-            }
-        });
+                 adapter.notifyDataSetChanged();
+             }
+         }
+     });
 
-        subCategories.addAll(servicesList);
+        subCategories.addAll(subCategoriesList);
 
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, setStringsArray());
 

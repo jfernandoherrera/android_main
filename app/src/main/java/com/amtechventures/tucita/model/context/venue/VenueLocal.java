@@ -121,6 +121,8 @@ public class VenueLocal {
 
         ParseQuery query = ParseQuery.or(queries) ;
 
+        query.include(VenueAttributes.city);
+
         query.fromLocalDatastore();
 
         List<Venue> venueList = new ArrayList<>();

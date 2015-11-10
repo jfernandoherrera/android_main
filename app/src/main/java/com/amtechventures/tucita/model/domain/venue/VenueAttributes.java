@@ -10,6 +10,7 @@ public class VenueAttributes {
     public static final String rating = "rating";
     public static final String location = "location";
     public static final String openingHours = "openingHours";
+    public static final String services = "services";
     public static final String city = "city";
     public static final String linkToLocation = "http://maps.google.com/?q=";
 }

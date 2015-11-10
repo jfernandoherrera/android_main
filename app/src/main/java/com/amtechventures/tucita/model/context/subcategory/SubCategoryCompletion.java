@@ -10,7 +10,7 @@ public class SubCategoryCompletion {
 
     public interface ErrorCompletion {
 
-        void completion(List<SubCategory> servicesList, AppError error);
+        void completion(List<SubCategory> subCategoriesList, AppError error);
 
     }
 }

@@ -7,19 +7,30 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.model.context.openingHour.OpeningHourCompletion;
 import com.amtechventures.tucita.model.context.openingHour.OpeningHourContext;
+import com.amtechventures.tucita.model.context.service.ServiceCompletion;
+import com.amtechventures.tucita.model.context.service.ServiceContext;
+import com.amtechventures.tucita.model.context.subcategory.SubCategoryCompletion;
 import com.amtechventures.tucita.model.context.venue.VenueContext;
+import com.amtechventures.tucita.model.domain.category.CategoryAttributes;
 import com.amtechventures.tucita.model.domain.openingHour.OpeningHour;
+import com.amtechventures.tucita.model.domain.service.Service;
+import com.amtechventures.tucita.model.domain.service.ServiceAttributes;
+import com.amtechventures.tucita.model.domain.subcategory.SubCategory;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.domain.venue.VenueAttributes;
 import com.amtechventures.tucita.model.error.AppError;
+import com.parse.ParseObject;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -27,10 +38,13 @@ import java.util.List;
 
 public class VenueActivity extends AppCompatActivity {
 
-    private int twelveHoursClock = 12;
-    private int oneDigitNumber = 9;
+    private final int twelveHoursClock = 12;
+    private final int oneDigitNumber = 9;
+    private final String shortHour = "hr";
+    private final String shortMinutes = "mins";
     private Venue venue;
     private VenueContext venueContext;
+    private ServiceContext serviceContext;
     private OpeningHourContext openingHourContext;
     private ImageView venuePicture;
     private TextView venueName;
@@ -38,6 +52,10 @@ public class VenueActivity extends AppCompatActivity {
     private RatingBar ratingBar;
     private Button location;
     private List<OpeningHour> openingHours = new ArrayList<>();
+    private List<Service> services = new ArrayList<>();
+    private ArrayAdapter<String> fullMenuAdapter;
+    private ListView listViewFullMenu;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +65,8 @@ public class VenueActivity extends AppCompatActivity {
         setContentView(R.layout.activity_venue);
 
         venueContext = VenueContext.context(venueContext);
+
+        serviceContext = ServiceContext.context(serviceContext);
 
         openingHourContext = OpeningHourContext.context(openingHourContext);
 
@@ -59,6 +79,8 @@ public class VenueActivity extends AppCompatActivity {
         ratingBar = (RatingBar) findViewById(R.id.ratingBar);
 
         location = (Button) findViewById(R.id.watch_location);
+
+        listViewFullMenu = (ListView) findViewById(R.id.listViewFull);
 
         setup();
     }
@@ -88,6 +110,8 @@ public class VenueActivity extends AppCompatActivity {
         setupDay();
 
         setupOpeningHours();
+
+        setupFullmenu();
     }
 
     private void setupPicture(){
@@ -105,6 +129,66 @@ public class VenueActivity extends AppCompatActivity {
         String description = getResources().getString(R.string.description) + venue.getDescription();
 
         venueDescription.setText(description);
+    }
+
+    private void setupFullmenu(){
+
+
+        List<Service> servicesList = serviceContext.loadServices(venue, new ServiceCompletion.ErrorCompletion() {
+            @Override
+            public void completion(List<Service> servicesList, AppError error) {
+
+                if(servicesList != null){
+
+                    fullMenuAdapter.clear();
+
+                    services.clear();
+
+                    services.addAll(servicesList);
+
+                    fullMenuAdapter.addAll(setStringsArray());
+
+                    fullMenuAdapter.notifyDataSetChanged();
+                }
+            }
+        });
+
+        services.addAll(servicesList);
+
+        fullMenuAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, setStringsArray());
+
+        listViewFullMenu.setAdapter(fullMenuAdapter);
+    }
+
+    private ArrayList<String> setStringsArray(){
+
+        ArrayList<String> stringsServices = new ArrayList<>();
+
+        for(ParseObject service : services){
+
+            stringsServices.add(setServiceString(service));
+        }
+
+        return stringsServices;
+    }
+
+    private String setServiceString(ParseObject service){
+
+        String serviceName = service.getString(ServiceAttributes.name);
+
+        int durationHours = service.getInt(ServiceAttributes.durationHours);
+
+        int durationMinutes = service.getInt(ServiceAttributes.durationMinutes);
+
+        String serviceDurationHours = durationHours == 0 ? "" : String.valueOf(durationHours) + shortHour;
+
+        String serviceDurationMinutes = durationMinutes == 0 ? "" : String.valueOf(durationMinutes) + shortMinutes;
+
+        String servicePrice = String.valueOf(service.getInt(ServiceAttributes.price));
+
+        String serviceInfo = serviceName + " " + serviceDurationHours + " " + serviceDurationMinutes + " " + servicePrice;
+
+        return serviceInfo;
     }
 
     private void setupRating(){

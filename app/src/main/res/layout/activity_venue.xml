@@ -45,7 +45,7 @@
                     />
                 <ListView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="?android:attr/listPreferredItemHeightLarge"
                     android:layout_below="@+id/textViewTop"
                     android:id="@+id/listViewTop"
                     android:layout_alignParentLeft="true" />
@@ -60,7 +60,7 @@
                     />
                 <ListView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="?android:attr/listPreferredItemHeightLarge"
                     android:id="@+id/listViewFull"
                     android:layout_below="@+id/textViewFull"
                     android:layout_alignParentLeft="true" />

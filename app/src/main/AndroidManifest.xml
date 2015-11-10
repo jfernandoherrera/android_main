@@ -10,12 +10,10 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:supportsRtl="true"
         android:theme="@style/AppTheme" >
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
-
         <activity android:name=".activities.splash.SplashActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -46,11 +44,9 @@
             android:value="bdc2bab408011afda99f5bc67d47cd792679dd64" />
         <activity android:name=".activities.search.SearchActivity" >
         </activity>
-        <activity android:name=".activities.services.ServicesActivity" >
+        <activity android:name=".activities.subcategory.SubCategoryActivity" >
         </activity>
-        <activity android:name=".activities.venue.VenueActivity"
-             >
-
+        <activity android:name=".activities.venue.VenueActivity">
         </activity>
     </application>
 

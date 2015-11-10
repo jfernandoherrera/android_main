@@ -40,11 +40,11 @@ public class SearchActivity extends AppCompatActivity {
     private ListView listViewVenues;
     private SubCategoryContext subCategoryContext;
     private VenueContext venueContext;
-    private ArrayAdapter<String> servicesAdapter;
+    private ArrayAdapter<String> subCategoriesAdapter;
     private ArrayAdapter<String> venuesAdapter;
     private List <SubCategory> subCategories = new ArrayList<>();
     private List <Venue> venues = new ArrayList<>();
-    private int minimunToSearch = 3;
+    private final int minimunToSearch = 3;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -72,11 +72,11 @@ public class SearchActivity extends AppCompatActivity {
 
         separator.setVisibility(View.INVISIBLE);
 
-        servicesAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
+        subCategoriesAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
 
         venuesAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
 
-        listViewTreatments.setAdapter(servicesAdapter);
+        listViewTreatments.setAdapter(subCategoriesAdapter);
 
         listViewVenues.setAdapter(venuesAdapter);
 
@@ -144,7 +144,7 @@ public class SearchActivity extends AppCompatActivity {
 
                 } else {
 
-                    setupServiceList(newText);
+                    setupSubCategoryList(newText);
 
                     setupVenueList(newText);
                 }
@@ -158,16 +158,16 @@ public class SearchActivity extends AppCompatActivity {
 
     }
 
-    private ArrayList<String> setServicesToStringsArray(){
+    private ArrayList<String> setsubCategoriesToStringsArray(){
 
-        ArrayList<String> stringsServices = new ArrayList<>();
+        ArrayList<String> stringsSubCategories = new ArrayList<>();
 
-        for(ParseObject service : subCategories){
+        for(ParseObject subCategory : subCategories){
 
-            stringsServices.add(service.getString(CategoryAttributes.name));
+            stringsSubCategories.add(subCategory.getString(CategoryAttributes.name));
         }
 
-        return stringsServices;
+        return stringsSubCategories;
     }
 
     private ArrayList<String> setVenuesToStringsArray(){
@@ -182,43 +182,43 @@ public class SearchActivity extends AppCompatActivity {
         return stringsVenues;
     }
 
-    private void setupServiceList(String newText){
+    private void setupSubCategoryList(String newText){
 
         textViewTreatments.setVisibility(View.INVISIBLE);
 
         String capitalized = Strings.capitalize(newText);
 
-        List<SubCategory> servicesList = subCategoryContext.loadLikeServices(capitalized, new SubCategoryCompletion.ErrorCompletion() {
+        List<SubCategory> subCategoriesList = subCategoryContext.loadLikeSubCategories(capitalized, new SubCategoryCompletion.ErrorCompletion() {
             @Override
-            public void completion(List<SubCategory> servicesList, AppError error) {
+            public void completion(List<SubCategory> subCategoriesList, AppError error) {
 
-                servicesAdapter.clear();
+                subCategoriesAdapter.clear();
 
                 subCategories.clear();
 
-                if (servicesList != null && !servicesList.isEmpty()) {
+                if (subCategoriesList != null && !subCategoriesList.isEmpty()) {
 
-                    textServices();
+                    textSubCategories();
 
-                    subCategories.addAll(servicesList);
+                    subCategories.addAll(subCategoriesList);
 
-                    servicesAdapter.addAll(setServicesToStringsArray());
+                    subCategoriesAdapter.addAll(setsubCategoriesToStringsArray());
 
-                    servicesAdapter.notifyDataSetChanged();
+                    subCategoriesAdapter.notifyDataSetChanged();
                 }
 
             }
         });
 
-        if (servicesList != null && !servicesList.isEmpty()) {
+        if (subCategoriesList != null && !subCategoriesList.isEmpty()) {
 
-            textServices();
+            textSubCategories();
 
-            subCategories.addAll(servicesList);
+            subCategories.addAll(subCategoriesList);
 
-            servicesAdapter.addAll(setServicesToStringsArray());
+            subCategoriesAdapter.addAll(setsubCategoriesToStringsArray());
 
-            servicesAdapter.notifyDataSetChanged();
+            subCategoriesAdapter.notifyDataSetChanged();
 
         }
     }
@@ -267,7 +267,7 @@ public class SearchActivity extends AppCompatActivity {
 
     }
 
-    private void textServices(){
+    private void textSubCategories(){
 
         textViewTreatments.setVisibility(View.VISIBLE);
 
