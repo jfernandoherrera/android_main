@@ -63,6 +63,12 @@ public class VenueActivity extends AppCompatActivity {
         setup();
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        finish();
+    }
+
     private void setup(){
 
         thisVenue();
