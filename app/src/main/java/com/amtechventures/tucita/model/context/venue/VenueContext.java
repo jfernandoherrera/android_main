@@ -18,16 +18,16 @@ public class VenueContext {
 
         }
 
-        return  venueContext;
+        return venueContext;
 
     }
 
-    VenueContext(){
+    VenueContext() {
         venueLocal = new VenueLocal();
         venueRemote = new VenueRemote();
     }
 
-    public List<Venue> loadLikeVenues(String likeWord, VenueCompletion.ErrorCompletion completion){
+    public List<Venue> loadLikeVenues(String likeWord, VenueCompletion.ErrorCompletion completion) {
 
         List venues = venueLocal.loadLikeVenues(likeWord);
 
@@ -37,10 +37,20 @@ public class VenueContext {
     }
 
 
-    public Venue findVenue(String lookThat, String address){
+    public Venue findVenue(String lookThat, String address) {
 
-        Venue venue = venueLocal.findVenue(lookThat,address);
+        Venue venue = venueLocal.findVenue(lookThat, address);
 
         return venue;
     }
+
+    public List<Venue> loadSubCategorizedVenues(String likeWord, VenueCompletion.ErrorCompletion completion) {
+
+        List venues = venueLocal.loadLikeVenues(likeWord);
+
+        venueRemote.loadLikeVenues(likeWord, completion);
+
+        return venues;
+    }
+
 }

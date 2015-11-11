@@ -83,7 +83,15 @@ public class VenueLocal {
         return find;
     }
 
-    public List<Venue> loadLikeVenues(String likeWord){
+    public List<Venue> loadSubCategorizedVenues(String likeWord){
+        List<Venue> venueList = new ArrayList<>();
+
+
+
+        return venueList;
+    }
+
+        public List<Venue> loadLikeVenues(String likeWord){
 
         ParseQuery queryName = Venue.getQuery();
 

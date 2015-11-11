@@ -3,6 +3,7 @@ package com.amtechventures.tucita.activities.category;
 import java.util.List;
 
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
 import java.util.ArrayList;
@@ -39,6 +40,7 @@ public class CategoryActivity extends AppCompatActivity {
     private CategoryContext categoryContext;
     private List<Category> categories = new ArrayList<>();
     private UserContext userContext;
+    private Toolbar toolbar;
 
 
     @Override
@@ -64,11 +66,22 @@ public class CategoryActivity extends AppCompatActivity {
 
     }
 
+    private void setToolbar(){
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        if (toolbar != null) {
+
+            setSupportActionBar(toolbar);
+        }
+    }
     private void setup() {
 
         if (userContext.currentUser() != null) {
 
             setContentView(R.layout.activity_category_logged);
+
+            setToolbar();
 
             profile = (ImageButton)findViewById(R.id.go_to_user);
 
@@ -88,6 +101,8 @@ public class CategoryActivity extends AppCompatActivity {
         }else {
 
             setContentView(R.layout.activity_category);
+
+            setToolbar();
 
             signOrRegister = (Button)findViewById(R.id.go_to_login);
 
@@ -152,7 +167,8 @@ public class CategoryActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        toolbar.inflateMenu((R.menu.menu_main));
 
         MenuItem searchItem = menu.findItem(R.id.action_search);
 
@@ -164,9 +180,10 @@ public class CategoryActivity extends AppCompatActivity {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
 
-            goToSearch();
+                goToSearch();
             }
         });
+
 
         return true;
 

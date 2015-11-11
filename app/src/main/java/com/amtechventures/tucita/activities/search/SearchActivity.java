@@ -5,6 +5,7 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -45,12 +46,15 @@ public class SearchActivity extends AppCompatActivity {
     private List <SubCategory> subCategories = new ArrayList<>();
     private List <Venue> venues = new ArrayList<>();
     private final int minimunToSearch = 3;
+    private Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_search);
+
+        setToolbar();
 
         subCategoryContext = SubCategoryContext.context(subCategoryContext);
 
@@ -92,6 +96,16 @@ public class SearchActivity extends AppCompatActivity {
         });
     }
 
+    private void setToolbar(){
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        if (toolbar != null) {
+
+            setSupportActionBar(toolbar);
+        }
+    }
+
     private void venue(int position){
 
         String itemValue = (String) listViewVenues.getItemAtPosition(position);
@@ -114,7 +128,7 @@ public class SearchActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        toolbar.inflateMenu(R.menu.menu_main);
 
         MenuItem searchItem = menu.findItem(R.id.action_search);
 
@@ -158,7 +172,7 @@ public class SearchActivity extends AppCompatActivity {
 
     }
 
-    private ArrayList<String> setsubCategoriesToStringsArray(){
+    private ArrayList<String> setSubCategoriesToStringsArray(){
 
         ArrayList<String> stringsSubCategories = new ArrayList<>();
 
@@ -202,7 +216,7 @@ public class SearchActivity extends AppCompatActivity {
 
                     subCategories.addAll(subCategoriesList);
 
-                    subCategoriesAdapter.addAll(setsubCategoriesToStringsArray());
+                    subCategoriesAdapter.addAll(setSubCategoriesToStringsArray());
 
                     subCategoriesAdapter.notifyDataSetChanged();
                 }
@@ -216,7 +230,7 @@ public class SearchActivity extends AppCompatActivity {
 
             subCategories.addAll(subCategoriesList);
 
-            subCategoriesAdapter.addAll(setsubCategoriesToStringsArray());
+            subCategoriesAdapter.addAll(setSubCategoriesToStringsArray());
 
             subCategoriesAdapter.notifyDataSetChanged();
 
