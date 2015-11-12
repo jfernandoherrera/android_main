@@ -44,7 +44,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter{
 
         child = (ArrayList<String>) childtems.get(groupPosition);
 
-        TextView textView = null;
+        TextView textView;
 
         if (convertView == null) {
 

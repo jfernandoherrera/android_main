@@ -3,6 +3,7 @@ package com.amtechventures.tucita.model.context.subcategory;
 
 import com.amtechventures.tucita.model.domain.category.CategoryAttributes;
 import com.amtechventures.tucita.model.domain.subcategory.SubCategory;
+import com.parse.ParseException;
 import com.parse.ParseQuery;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +52,23 @@ public class SubCategoryLocal {
         }
 
         return subCategoryList;
+    }
+
+    public SubCategory findSubCategory(String name){
+
+        SubCategory subCategory = null;
+        ParseQuery query = SubCategory.getQuery();
+        query.whereEqualTo(CategoryAttributes.name, name);
+        List subCategories = null;
+        try {
+            subCategories = query.find();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if(subCategories!=null){
+            subCategory = (SubCategory) subCategories.get(0);
+        }
+        return subCategory;
     }
 
 }

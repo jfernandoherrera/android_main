@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 
 import com.amtechventures.tucita.model.domain.city.City;
 import com.amtechventures.tucita.model.domain.city.CityAttributes;
+import com.amtechventures.tucita.model.domain.service.Service;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.domain.venue.VenueAttributes;
 import com.parse.ParseException;
@@ -83,10 +84,24 @@ public class VenueLocal {
         return find;
     }
 
-    public List<Venue> loadSubCategorizedVenues(String likeWord){
-        List<Venue> venueList = new ArrayList<>();
+    public List<Venue> loadSubCategorizedVenues(List<Service> services){
+        List<Venue> venueList = null;
 
+        ParseQuery query = Venue.getQuery();
 
+        query.whereContainedIn(VenueAttributes.services,services);
+
+        query.include(VenueAttributes.city);
+
+        query.fromLocalDatastore();
+
+        try {
+            venueList = query.find();
+
+        } catch (ParseException e) {
+
+            e.printStackTrace();
+        }
 
         return venueList;
     }

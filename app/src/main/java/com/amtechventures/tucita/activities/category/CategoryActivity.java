@@ -1,10 +1,7 @@
 package com.amtechventures.tucita.activities.category;
 
 import java.util.List;
-
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
@@ -20,7 +17,6 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
-
 import com.amtechventures.tucita.activities.search.SearchActivity;
 import com.amtechventures.tucita.model.error.AppError;
 import com.amtechventures.tucita.model.context.user.UserContext;
@@ -43,7 +39,6 @@ public class CategoryActivity extends AppCompatActivity {
     private List<Category> categories = new ArrayList<>();
     private UserContext userContext;
     private Toolbar toolbar;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -211,7 +206,5 @@ public class CategoryActivity extends AppCompatActivity {
         Intent intent = new Intent(CategoryActivity.this, AccountActivity.class);
 
         startActivity(intent);
-
     }
-
 }

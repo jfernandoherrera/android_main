@@ -1,6 +1,7 @@
 package com.amtechventures.tucita.model.context.venue;
 
 
+import com.amtechventures.tucita.model.domain.service.Service;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 
 import java.util.List;
@@ -44,11 +45,11 @@ public class VenueContext {
         return venue;
     }
 
-    public List<Venue> loadSubCategorizedVenues(String likeWord, VenueCompletion.ErrorCompletion completion) {
+    public List<Venue> loadSubCategorizedVenues(List<Service> services, VenueCompletion.ErrorCompletion completion) {
 
-        List venues = venueLocal.loadLikeVenues(likeWord);
+        List venues = venueLocal.loadSubCategorizedVenues(services);
 
-        venueRemote.loadLikeVenues(likeWord, completion);
+        venueRemote.loadSubCategorizedVenues(services, completion);
 
         return venues;
     }

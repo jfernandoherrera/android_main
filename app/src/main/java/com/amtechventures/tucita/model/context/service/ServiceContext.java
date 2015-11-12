@@ -54,4 +54,8 @@ public class ServiceContext {
 
         return services;
     }
+
+    public List<Service> loadSubCategorizedServices(SubCategory subCategory){
+        return serviceLocal.loadSubCategorizedServices(subCategory);
+    }
 }

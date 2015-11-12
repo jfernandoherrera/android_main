@@ -1,5 +1,6 @@
 package com.amtechventures.tucita.activities.subcategory;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 import com.amtechventures.tucita.R;
+import com.amtechventures.tucita.activities.account.AccountActivity;
+import com.amtechventures.tucita.activities.search.advanced.AdvancedSearchActivity;
 import com.amtechventures.tucita.model.context.category.CategoryContext;
 import com.amtechventures.tucita.model.context.subcategory.SubCategoryContext;
 import com.amtechventures.tucita.model.context.subcategory.SubCategoryCompletion;
@@ -64,6 +67,8 @@ public class SubCategoryActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),
                         "Position :" + itemPosition + "  ListItem : " + itemValue, Toast.LENGTH_LONG)
                         .show();
+                goToAdvancedSearch(itemValue);
+
 
             }
 
@@ -109,7 +114,16 @@ public class SubCategoryActivity extends AppCompatActivity {
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, setStringsArray());
 
         listView.setAdapter(adapter);
+    }
 
+
+    private void goToAdvancedSearch(String name) {
+
+        Intent intent = new Intent(SubCategoryActivity.this, AdvancedSearchActivity.class);
+
+        intent.putExtra(CategoryAttributes.name, name);
+
+        startActivity(intent);
     }
 
 }

@@ -180,9 +180,9 @@ public class SearchActivity extends AppCompatActivity {
 
         ArrayList<String> stringsSubCategories = new ArrayList<>();
 
-        for(ParseObject subCategory : subCategories){
+        for(SubCategory subCategory : subCategories){
 
-            stringsSubCategories.add(subCategory.getString(CategoryAttributes.name));
+            stringsSubCategories.add(subCategory.getName());
         }
 
         return stringsSubCategories;
@@ -192,9 +192,9 @@ public class SearchActivity extends AppCompatActivity {
 
         ArrayList<String> stringsVenues = new ArrayList<>();
 
-        for(ParseObject venue : venues){
+        for(Venue venue : venues){
 
-            stringsVenues.add(venue.getString(CategoryAttributes.name));
+            stringsVenues.add(venue.getName());
         }
 
         return stringsVenues;
