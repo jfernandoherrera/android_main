@@ -8,8 +8,22 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="fontPath">fonts/Roboto-BlackItalic.ttf</item>
     </style>
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" >
+    </style>
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
+    <style name="AppTheme.ListView" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginLeft">@dimen/activity_horizontal_margin</item>
+        <item name="android:layout_marginRight">@dimen/activity_horizontal_margin</item>
+    </style>
+    <style name="AppTheme.ExpandableListViewItem" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:textSize">@dimen/sub_title</item>
+        <item name="android:background">@color/colorPrimaryLight</item>
+    </style>
+    <style name="AppTheme.ListViewItem" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:textSize">@dimen/text</item>
+    </style>
 </resources>

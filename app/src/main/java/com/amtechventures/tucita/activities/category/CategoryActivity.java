@@ -3,6 +3,8 @@ package com.amtechventures.tucita.activities.category;
 import java.util.List;
 
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
@@ -191,9 +193,7 @@ public class CategoryActivity extends AppCompatActivity {
 
     private void goToSearch() {
 
-        Intent intent = new Intent(CategoryActivity.this, SearchActivity.class);
-
-        startActivity(intent);
+       SearchActivity.launch(CategoryActivity.this,toolbar, String.valueOf(toolbar.getTag()));
 
     }
 

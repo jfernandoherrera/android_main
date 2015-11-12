@@ -3,6 +3,7 @@ package com.amtechventures.tucita.model.context.service;
 
 import com.amtechventures.tucita.model.context.subcategory.SubCategoryCompletion;
 import com.amtechventures.tucita.model.domain.service.Service;
+import com.amtechventures.tucita.model.domain.service.ServiceAttributes;
 import com.amtechventures.tucita.model.domain.subcategory.SubCategory;
 import com.amtechventures.tucita.model.error.AppError;
 import com.parse.FindCallback;
@@ -15,6 +16,8 @@ import java.util.List;
 public class ServiceRemote {
 
     public void loadServices(ParseQuery<Service> servicesRemoteQuery, final ServiceCompletion.ErrorCompletion completion){
+
+        servicesRemoteQuery.include(ServiceAttributes.subCategory);
 
         servicesRemoteQuery.findInBackground(new FindCallback<Service>() {
             @Override

@@ -1,20 +1,26 @@
 package com.amtechventures.tucita.activities.venue;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RatingBar;
+import android.widget.SimpleExpandableListAdapter;
 import android.widget.TextView;
 import com.amtechventures.tucita.R;
+import com.amtechventures.tucita.activities.venue.adapters.ExpandableListAdapter;
 import com.amtechventures.tucita.model.context.openingHour.OpeningHourCompletion;
 import com.amtechventures.tucita.model.context.openingHour.OpeningHourContext;
 import com.amtechventures.tucita.model.context.service.ServiceCompletion;
@@ -52,9 +58,10 @@ public class VenueActivity extends AppCompatActivity {
     private RatingBar ratingBar;
     private Button location;
     private List<OpeningHour> openingHours = new ArrayList<>();
-    private List<Service> services = new ArrayList<>();
-    private ArrayAdapter<String> fullMenuAdapter;
-    private ListView listViewFullMenu;
+    private List<ArrayList> services = new ArrayList<>();
+    private List<SubCategory> subCategories = new ArrayList<>();
+    private ExpandableListAdapter fullMenuAdapter;
+    private ExpandableListView listViewFullMenu;
 
 
     @Override
@@ -80,7 +87,7 @@ public class VenueActivity extends AppCompatActivity {
 
         location = (Button) findViewById(R.id.watch_location);
 
-        listViewFullMenu = (ListView) findViewById(R.id.listViewFull);
+        listViewFullMenu = (ExpandableListView) findViewById(R.id.listViewFull);
 
         setup();
     }
@@ -140,33 +147,44 @@ public class VenueActivity extends AppCompatActivity {
 
                 if(servicesList != null){
 
-                    fullMenuAdapter.clear();
-
                     services.clear();
 
-                    services.addAll(servicesList);
+                    subCategories.clear();
 
-                    fullMenuAdapter.addAll(setStringsArray());
+                    setStringsArray(servicesList);
 
                     fullMenuAdapter.notifyDataSetChanged();
                 }
             }
         });
 
-        services.addAll(servicesList);
+        setStringsArray(servicesList);
 
-        fullMenuAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, setStringsArray());
+        fullMenuAdapter = new ExpandableListAdapter(subCategories, services);
+
+        fullMenuAdapter.setInflater((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE), this);
 
         listViewFullMenu.setAdapter(fullMenuAdapter);
+
     }
 
-    private ArrayList<String> setStringsArray(){
+    private ArrayList<String> setStringsArray(List<Service> servicesList){
 
         ArrayList<String> stringsServices = new ArrayList<>();
 
-        for(ParseObject service : services){
+        for(ParseObject service : servicesList){
 
-            stringsServices.add(setServiceString(service));
+            SubCategory subCategory = (SubCategory) service.get(ServiceAttributes.subCategory);
+
+            if(subCategories.contains(subCategory)){
+                services.get(subCategories.indexOf(subCategory)).add(setServiceString(service));
+            }else {
+                subCategories.add(subCategory);
+                ArrayList temp = new ArrayList();
+                temp.add(setServiceString(service));
+                services.add(temp);
+            }
+
         }
 
         return stringsServices;
@@ -373,7 +391,6 @@ public class VenueActivity extends AppCompatActivity {
                 .setRecycleOnMeasureEnabled(true)
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
-
     }
 
 }

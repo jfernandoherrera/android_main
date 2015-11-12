@@ -2,7 +2,9 @@ package com.amtechventures.tucita.model.context.service;
 
 
 import com.amtechventures.tucita.model.domain.service.Service;
+import com.amtechventures.tucita.model.domain.service.ServiceAttributes;
 import com.amtechventures.tucita.model.domain.subcategory.SubCategory;
+import com.amtechventures.tucita.model.domain.venue.VenueAttributes;
 import com.parse.ParseQuery;
 
 import java.util.ArrayList;
@@ -12,6 +14,8 @@ public class ServiceLocal {
 
 
     public List<Service> loadServices(ParseQuery<Service> servicesLocalQuery){
+
+        servicesLocalQuery.include(ServiceAttributes.subCategory);
 
         servicesLocalQuery.fromLocalDatastore();
 

@@ -1,6 +1,8 @@
 package com.amtechventures.tucita.activities.search;
 
 import android.content.Intent;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,11 +18,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.amtechventures.tucita.R;
+import com.amtechventures.tucita.activities.category.CategoryActivity;
 import com.amtechventures.tucita.activities.venue.VenueActivity;
 import com.amtechventures.tucita.model.context.subcategory.SubCategoryContext;
 import com.amtechventures.tucita.model.context.subcategory.SubCategoryCompletion;
 import com.amtechventures.tucita.model.context.venue.VenueCompletion;
 import com.amtechventures.tucita.model.context.venue.VenueContext;
+import com.amtechventures.tucita.model.domain.category.Category;
 import com.amtechventures.tucita.model.domain.category.CategoryAttributes;
 import com.amtechventures.tucita.model.domain.subcategory.SubCategory;
 import com.amtechventures.tucita.model.domain.venue.Venue;
@@ -251,7 +255,7 @@ public class SearchActivity extends AppCompatActivity {
 
                         venues.clear();
 
-                        if (venuesList != null && ! venuesList.isEmpty()) {
+                        if (venuesList != null && !venuesList.isEmpty()) {
 
                             textVenues();
 
@@ -265,7 +269,7 @@ public class SearchActivity extends AppCompatActivity {
                     }
 
                 }
-            );
+        );
 
             if (venuesList != null && !venuesList.isEmpty()) {
 
@@ -293,5 +297,16 @@ public class SearchActivity extends AppCompatActivity {
         textViewVenues.setVisibility(View.VISIBLE);
 
         textViewVenues.setText(getResources().getString(R.string.venues));
+    }
+
+    public static void launch(CategoryActivity activity, View transitionView, String shared) {
+
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+
+                        activity, transitionView, shared);
+
+        Intent intent = new Intent(activity, SearchActivity.class);
+
+        ActivityCompat.startActivity(activity, intent, options.toBundle());
     }
 }

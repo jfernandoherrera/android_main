@@ -69,10 +69,10 @@ public class Venue extends ParseObject {
 
         return (City) get(VenueAttributes.city);
     }
+
     public void setPicture( Bitmap bm){
 
         this.picture = bm;
-
     }
 
     public static ParseQuery<Venue> getQuery() {
