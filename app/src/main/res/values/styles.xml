@@ -10,11 +10,7 @@
         <item name="windowNoTitle">true</item>
 
     </style>
-    <style name="AppTheme.subCategory" parent="@style/Theme.AppCompat.Dialog" >
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:background">@color/white</item>
-        <item name="android:textColor">@color/black</item>
+    <style name="AppTheme.subCategory" parent="Base.Theme.AppCompat.Light.Dialog.FixedSize" >
     </style>
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" >
     </style>
