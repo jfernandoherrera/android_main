@@ -63,7 +63,6 @@ public class VenueActivity extends AppCompatActivity {
     private ExpandableListAdapter fullMenuAdapter;
     private ExpandableListView listViewFullMenu;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -140,7 +139,6 @@ public class VenueActivity extends AppCompatActivity {
 
     private void setupFullmenu(){
 
-
         List<Service> servicesList = serviceContext.loadServices(venue, new ServiceCompletion.ErrorCompletion() {
             @Override
             public void completion(List<Service> servicesList, AppError error) {
@@ -160,12 +158,11 @@ public class VenueActivity extends AppCompatActivity {
 
         setStringsArray(servicesList);
 
-        fullMenuAdapter = new ExpandableListAdapter(subCategories, services);
+        fullMenuAdapter = new ExpandableListAdapter(subCategories, services,listViewFullMenu);
 
         fullMenuAdapter.setInflater((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE), this);
 
         listViewFullMenu.setAdapter(fullMenuAdapter);
-
     }
 
     private ArrayList<String> setStringsArray(List<Service> servicesList){
@@ -177,7 +174,10 @@ public class VenueActivity extends AppCompatActivity {
             SubCategory subCategory = (SubCategory) service.get(ServiceAttributes.subCategory);
 
             if(subCategories.contains(subCategory)){
-                services.get(subCategories.indexOf(subCategory)).add(setServiceString(service));
+
+                int indexOfsubCategory = subCategories.indexOf(subCategory);
+
+                services.get(indexOfsubCategory).add(setServiceString(service));
             }else {
                 subCategories.add(subCategory);
                 ArrayList temp = new ArrayList();
@@ -186,7 +186,6 @@ public class VenueActivity extends AppCompatActivity {
             }
 
         }
-
         return stringsServices;
     }
 
@@ -392,5 +391,6 @@ public class VenueActivity extends AppCompatActivity {
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
     }
+
 
 }

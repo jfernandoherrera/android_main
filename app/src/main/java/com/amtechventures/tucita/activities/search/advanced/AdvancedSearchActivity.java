@@ -11,6 +11,7 @@ import com.amtechventures.tucita.activities.category.adapters.CategoryGridAdapte
 import com.amtechventures.tucita.activities.search.adapters.AdvancedSearchAdapter;
 import com.amtechventures.tucita.model.context.category.CategoryCompletion;
 import com.amtechventures.tucita.model.context.category.CategoryContext;
+import com.amtechventures.tucita.model.context.service.ServiceCompletion;
 import com.amtechventures.tucita.model.context.service.ServiceContext;
 import com.amtechventures.tucita.model.context.subcategory.SubCategoryContext;
 import com.amtechventures.tucita.model.context.venue.VenueCompletion;
@@ -26,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AdvancedSearchActivity extends AppCompatActivity {
+
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
@@ -34,6 +36,7 @@ public class AdvancedSearchActivity extends AppCompatActivity {
     private ServiceContext serviceContext;
     private SubCategoryContext subCategoryContext;
     private List<Category> categories = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,22 +58,16 @@ public class AdvancedSearchActivity extends AppCompatActivity {
 
         setupGrid();
     }
-    private void setupGrid() {
-        String name = getIntent().getStringExtra(CategoryAttributes.name);
+    private void setupVenues(List<Service> services){
 
-        SubCategory subCategory = subCategoryContext.findSubCategory(name);
-
-        List<Service> services = serviceContext.loadSubCategorizedServices(subCategory);
-        Log.i("gfdsrg", String.valueOf(services.size()));
-
-        List<Venue> categoryList = venueContext.loadSubCategorizedVenues(services,new VenueCompletion.ErrorCompletion() {
+        List<Venue> categoryList = venueContext.loadSubCategorizedVenues(services, new VenueCompletion.ErrorCompletion() {
 
             @Override
             public void completion(List<Venue> venueList, AppError error) {
 
                 if (venueList != null) {
 
-                   venues.clear();
+                    venues.clear();
 
                     venues.addAll(venueList);
 
@@ -90,6 +87,28 @@ public class AdvancedSearchActivity extends AppCompatActivity {
         adapter = new AdvancedSearchAdapter(venues);
 
         recyclerView.setAdapter(adapter);
+    }
 
+    private void setupGrid() {
+        String name = getIntent().getStringExtra(CategoryAttributes.name);
+
+                SubCategory subCategory = subCategoryContext.findSubCategory(name);
+
+                 List<Service> services = serviceContext.loadSubCategorizedServices(subCategory, new ServiceCompletion.ErrorCompletion()
+                 {
+                    @Override
+                    public void completion(List<Service> servicesList, AppError error) {
+
+                        if (servicesList != null) {
+
+                            setupVenues(servicesList);
+
+                        } else {
+
+
+                        }
+                    }});
+
+                     setupVenues(services);
     }
 }

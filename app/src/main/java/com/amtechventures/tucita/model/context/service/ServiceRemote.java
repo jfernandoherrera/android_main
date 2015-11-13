@@ -42,7 +42,8 @@ public class ServiceRemote {
 
     }
 
-    public void loadSubCategorizedServices(ParseQuery<Service> servicesRemoteQuery, final ServiceCompletion.ErrorCompletion completion){
+    public void loadSubCategorizedServices(SubCategory subCategory, final ServiceCompletion.ErrorCompletion completion){
+
 
 
     }

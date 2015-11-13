@@ -55,7 +55,15 @@ public class ServiceContext {
         return services;
     }
 
-    public List<Service> loadSubCategorizedServices(SubCategory subCategory){
-        return serviceLocal.loadSubCategorizedServices(subCategory);
+    public List<Service> loadSubCategorizedServices(SubCategory subCategory, ServiceCompletion.ErrorCompletion errorCompletion){
+
+        List<Service> services;
+
+        services = serviceLocal.loadSubCategorizedServices(subCategory);
+
+        serviceRemote.loadSubCategorizedServices(subCategory,errorCompletion);
+
+        return services;
     }
 }
+

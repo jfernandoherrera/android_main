@@ -6,10 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckedTextView;
+import android.widget.ExpandableListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.model.domain.subcategory.SubCategory;
+import com.amtechventures.tucita.utils.views.ViewUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,16 +20,17 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter{
 
 
     private Activity activity;
-    private ArrayList<ArrayList> childtems;
+    private ArrayList<ArrayList> childItems;
     private LayoutInflater inflater;
     private ArrayList<SubCategory> parentItems;
     private ArrayList<String> child;
-
+    private final ExpandableListView expandableListView;
     // constructor
-    public ExpandableListAdapter(List<SubCategory> parents, List<ArrayList> childern)
+    public ExpandableListAdapter(List<SubCategory> parents, List<ArrayList> childern,ExpandableListView expandableListView)
     {
         this.parentItems = (ArrayList<SubCategory>) parents;
-        this.childtems = (ArrayList<ArrayList>) childern;
+        this.childItems = (ArrayList<ArrayList>) childern;
+        this.expandableListView = expandableListView;
     }
 
     public void setInflater(LayoutInflater inflater, Activity activity)
@@ -42,7 +45,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter{
     public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent)
     {
 
-        child = (ArrayList<String>) childtems.get(groupPosition);
+        child = (ArrayList<String>) childItems.get(groupPosition);
 
         TextView textView;
 
@@ -102,7 +105,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter{
     @Override
     public int getChildrenCount(int groupPosition)
     {
-        return ((ArrayList<String>) childtems.get(groupPosition)).size();
+        return ((ArrayList<String>) childItems.get(groupPosition)).size();
     }
 
     @Override
@@ -121,12 +124,16 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter{
     public void onGroupCollapsed(int groupPosition)
     {
         super.onGroupCollapsed(groupPosition);
+
+        ViewUtils.setListViewHeightBasedOnChildren(expandableListView);
     }
 
     @Override
     public void onGroupExpanded(int groupPosition)
     {
         super.onGroupExpanded(groupPosition);
+
+        ViewUtils.setListViewHeightBasedOnChildren(expandableListView);
     }
 
     @Override
