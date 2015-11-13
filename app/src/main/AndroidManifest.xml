@@ -47,7 +47,9 @@
 
         <activity android:name=".activities.search.SearchActivity" >
         </activity>
-        <activity android:name=".activities.subcategory.SubCategoryActivity" >
+        <activity android:name=".activities.subcategory.SubCategoryActivity"
+            android:theme="@style/AppTheme.subCategory" >
+
         </activity>
         <activity android:name=".activities.venue.VenueActivity" >
         </activity>
