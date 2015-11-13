@@ -7,9 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 import com.amtechventures.tucita.R;
-import com.amtechventures.tucita.activities.account.AccountActivity;
 import com.amtechventures.tucita.activities.search.advanced.AdvancedSearchActivity;
 import com.amtechventures.tucita.model.context.category.CategoryContext;
 import com.amtechventures.tucita.model.context.subcategory.SubCategoryContext;
@@ -57,19 +55,9 @@ public class SubCategoryActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
 
-                // ListView Clicked item index
-                int itemPosition = position;
+                String  name = subCategories.get(position).getName();
 
-                // ListView Clicked item value
-                String  itemValue = (String) listView.getItemAtPosition(position);
-
-                // Show Alert
-                Toast.makeText(getApplicationContext(),
-                        "Position :" + itemPosition + "  ListItem : " + itemValue, Toast.LENGTH_LONG)
-                        .show();
-                goToAdvancedSearch(itemValue);
-
-
+                goToAdvancedSearch(name);
             }
 
         });

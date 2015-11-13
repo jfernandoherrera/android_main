@@ -155,7 +155,6 @@ public class VenueActivity extends AppCompatActivity {
                 }
             }
         });
-
         setStringsArray(servicesList);
 
         fullMenuAdapter = new ExpandableListAdapter(subCategories, services,listViewFullMenu);
@@ -201,7 +200,7 @@ public class VenueActivity extends AppCompatActivity {
 
         String serviceDurationMinutes = durationMinutes == 0 ? "" : String.valueOf(durationMinutes) + shortMinutes;
 
-        String servicePrice = String.valueOf(service.getInt(ServiceAttributes.price));
+        String servicePrice = "$" + String.valueOf(service.getInt(ServiceAttributes.price));
 
         String serviceInfo = serviceName + " " + serviceDurationHours + " " + serviceDurationMinutes + " " + servicePrice;
 
@@ -223,7 +222,6 @@ public class VenueActivity extends AppCompatActivity {
     }
 
     private void setupOpeningHours(){
-
 
         List<OpeningHour> openingHoursList = openingHourContext.loadOpeningHours(venue, new OpeningHourCompletion.OpeningHourErrorCompletion(){
 
@@ -391,6 +389,4 @@ public class VenueActivity extends AppCompatActivity {
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
     }
-
-
 }
