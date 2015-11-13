@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.category.CategoryActivity;
+import com.amtechventures.tucita.activities.search.advanced.AdvancedSearchActivity;
 import com.amtechventures.tucita.activities.venue.VenueActivity;
 import com.amtechventures.tucita.model.context.subcategory.SubCategoryContext;
 import com.amtechventures.tucita.model.context.subcategory.SubCategoryCompletion;
@@ -86,6 +87,15 @@ public class SearchActivity extends AppCompatActivity {
 
         listViewTreatments.setAdapter(subCategoriesAdapter);
 
+        listViewTreatments.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                advancedSearch(position);
+            }
+        });
+
         listViewVenues.setAdapter(venuesAdapter);
 
         listViewVenues.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -110,9 +120,24 @@ public class SearchActivity extends AppCompatActivity {
         }
     }
 
+    private void advancedSearch(int position){
+
+        String name = subCategories.get(position).getName();
+
+        Class activity = AdvancedSearchActivity.class;
+
+        Intent intent = new Intent(SearchActivity.this, activity);
+
+        intent.putExtra(CategoryAttributes.name, name);
+
+        startActivity(intent);
+
+        finish();
+
+    }
     private void venue(int position){
 
-        String itemValue = (String) listViewVenues.getItemAtPosition(position);
+        String name = venues.get(position).getName();
 
         Class activity = VenueActivity.class;
 
@@ -120,7 +145,7 @@ public class SearchActivity extends AppCompatActivity {
 
         Intent intent = new Intent(SearchActivity.this, activity);
 
-        intent.putExtra(Venue.class.getName(),itemValue);
+        intent.putExtra(Venue.class.getName(), name);
 
         intent.putExtra(VenueAttributes.address, address);
 
