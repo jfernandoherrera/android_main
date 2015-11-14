@@ -6,18 +6,13 @@ import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RatingBar;
-import android.widget.SimpleExpandableListAdapter;
 import android.widget.TextView;
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.venue.adapters.ExpandableListAdapter;
@@ -25,9 +20,7 @@ import com.amtechventures.tucita.model.context.openingHour.OpeningHourCompletion
 import com.amtechventures.tucita.model.context.openingHour.OpeningHourContext;
 import com.amtechventures.tucita.model.context.service.ServiceCompletion;
 import com.amtechventures.tucita.model.context.service.ServiceContext;
-import com.amtechventures.tucita.model.context.subcategory.SubCategoryCompletion;
 import com.amtechventures.tucita.model.context.venue.VenueContext;
-import com.amtechventures.tucita.model.domain.category.CategoryAttributes;
 import com.amtechventures.tucita.model.domain.openingHour.OpeningHour;
 import com.amtechventures.tucita.model.domain.service.Service;
 import com.amtechventures.tucita.model.domain.service.ServiceAttributes;
@@ -35,8 +28,6 @@ import com.amtechventures.tucita.model.domain.subcategory.SubCategory;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.domain.venue.VenueAttributes;
 import com.amtechventures.tucita.model.error.AppError;
-import com.parse.ParseObject;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -168,9 +159,9 @@ public class VenueActivity extends AppCompatActivity {
 
         ArrayList<String> stringsServices = new ArrayList<>();
 
-        for(ParseObject service : servicesList){
+        for( Service service : servicesList){
 
-            SubCategory subCategory = (SubCategory) service.get(ServiceAttributes.subCategory);
+            SubCategory subCategory = service.getSubcategory();
 
             if(subCategories.contains(subCategory)){
 
@@ -178,23 +169,27 @@ public class VenueActivity extends AppCompatActivity {
 
                 services.get(indexOfsubCategory).add(setServiceString(service));
             }else {
+
                 subCategories.add(subCategory);
-                ArrayList temp = new ArrayList();
-                temp.add(setServiceString(service));
-                services.add(temp);
+
+                ArrayList subCategoriesString = new ArrayList();
+
+                subCategoriesString.add(setServiceString(service));
+
+                services.add(subCategoriesString);
             }
 
         }
         return stringsServices;
     }
 
-    private String setServiceString(ParseObject service){
+    private String setServiceString(Service service){
 
-        String serviceName = service.getString(ServiceAttributes.name);
+        String serviceName = service.getName();
 
-        int durationHours = service.getInt(ServiceAttributes.durationHours);
+        int durationHours = service.getDurationHour();
 
-        int durationMinutes = service.getInt(ServiceAttributes.durationMinutes);
+        int durationMinutes = service.getDurationMinutes();
 
         String serviceDurationHours = durationHours == 0 ? "" : String.valueOf(durationHours) + shortHour;
 
@@ -332,11 +327,9 @@ public class VenueActivity extends AppCompatActivity {
 
     private void setupAddressAndlocation(){
 
-        String city = venue.getCity().getName();
+        String locationString = venue.getCity().formatedLocation();
 
-        String department = venue.getCity().getDepartment();
-
-        String address = city + " " + department + " " + venue.getAddress();
+        String address = locationString + " " + venue.getAddress();
 
         location.setText(address);
 

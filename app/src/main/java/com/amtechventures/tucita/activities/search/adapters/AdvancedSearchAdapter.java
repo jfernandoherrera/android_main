@@ -6,13 +6,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
-
 import com.amtechventures.tucita.R;
-import com.amtechventures.tucita.activities.subcategory.SubCategoryActivity;
 import com.amtechventures.tucita.activities.venue.VenueActivity;
-import com.amtechventures.tucita.model.domain.category.Category;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.domain.venue.VenueAttributes;
 
@@ -41,13 +39,19 @@ public class AdvancedSearchAdapter extends RecyclerView.Adapter<AdvancedSearchAd
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(ViewHolder viewHolder, int position) {
 
-        Venue venue = items.get(i);
+        Venue venue = items.get(position);
 
         viewHolder.name.setText(venue.getName());
 
-        viewHolder.address.setText(venue.getAddress());
+        viewHolder.setAddress(venue.getAddress());
+
+        viewHolder.location.setText(venue.getCity().formatedLocation());
+
+        viewHolder.venueImage.setImageBitmap(venue.getPicture());
+
+        viewHolder.ratingBar.setRating((float) venue.getRating());
 
     }
 
@@ -62,19 +66,34 @@ public class AdvancedSearchAdapter extends RecyclerView.Adapter<AdvancedSearchAd
 
         protected TextView name;
 
-        protected TextView address;
+        protected String address;
+
+        protected TextView location;
+
+        protected RatingBar ratingBar;
+
+        protected ImageView venueImage;
 
         private CardView categoryIcon;
+
+        public void setAddress(String address){
+
+            this.address = address;
+        }
 
         public ViewHolder(final View itemView) {
 
             super(itemView);
 
+            location = (TextView)itemView.findViewById(R.id.textLocation);
+
             name = (TextView)itemView.findViewById(R.id.textName);
 
-            address = (TextView)itemView.findViewById(R.id.textLocation);
-
             categoryIcon = (CardView)itemView.findViewById(R.id.card_view);
+
+            venueImage = (ImageView) itemView.findViewById(R.id.imageSearchVenue);
+
+            ratingBar = (RatingBar) itemView.findViewById(R.id.ratingBar);
 
             categoryIcon.setOnClickListener(new View.OnClickListener() {
 
@@ -85,7 +104,7 @@ public class AdvancedSearchAdapter extends RecyclerView.Adapter<AdvancedSearchAd
 
                     intent.putExtra(Venue.class.getName(),name.getText());
 
-                    intent.putExtra(VenueAttributes.address, address.getText());
+                    intent.putExtra(VenueAttributes.address, address);
 
                     view.getContext().startActivity(intent);
 

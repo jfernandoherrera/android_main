@@ -6,8 +6,6 @@ import android.util.Log;
 import com.amtechventures.tucita.model.domain.city.City;
 import com.amtechventures.tucita.model.domain.city.CityAttributes;
 import com.amtechventures.tucita.model.domain.service.Service;
-import com.amtechventures.tucita.model.domain.service.ServiceAttributes;
-import com.amtechventures.tucita.model.domain.subcategory.SubCategory;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.domain.venue.VenueAttributes;
 import com.amtechventures.tucita.model.error.AppError;
@@ -84,11 +82,6 @@ public class VenueRemote {
 
     public void loadSubCategorizedVenues(List<Service> services, final VenueCompletion.ErrorCompletion completion )
     {
-
-        ParseQuery innerQuery = Service.getQuery();
-
- //innerQuery.whereMatchesQuery(ServiceAttributes.subCategory, SubCategory.getQuery().whereEqualTo("objectId",subCategory));
-
         ParseQuery query = Venue.getQuery();
 
         query.whereContainedIn(VenueAttributes.services, services);
@@ -97,7 +90,7 @@ public class VenueRemote {
 
         query.findInBackground(new FindCallback<Venue>() {
             @Override
-            public void done(List objects, ParseException e) {
+            public void done(List<Venue> objects, ParseException e) {
 
                 if (objects != null) {
                     try {
@@ -108,7 +101,6 @@ public class VenueRemote {
                     }
 
                 }
-               // Log.i("bgf",e.getMessage());
                 AppError appError = e != null ? new AppError(Venue.class.toString(), 0, null) : null;
 
                 completion.completion(objects, appError);

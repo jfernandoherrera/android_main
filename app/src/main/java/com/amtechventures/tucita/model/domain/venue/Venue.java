@@ -2,10 +2,11 @@ package com.amtechventures.tucita.model.domain.venue;
 
 
 import android.graphics.Bitmap;
-import android.util.Log;
-
+import android.graphics.BitmapFactory;
 import com.amtechventures.tucita.model.domain.city.City;
 import com.parse.ParseClassName;
+import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -14,12 +15,9 @@ import com.parse.ParseQuery;
 
 public class Venue extends ParseObject {
 
-    Bitmap picture;
-
     public void setName(String name){
 
         put(VenueAttributes.name,name );
-
     }
 
     public double getLatitude(){
@@ -40,24 +38,33 @@ public class Venue extends ParseObject {
     public String getName(){
 
         return getString(VenueAttributes.name);
-
     }
 
     public String getDescription(){
 
         return getString(VenueAttributes.description);
-
     }
 
     public double getRating(){
 
         return getDouble(VenueAttributes.rating);
-
     }
 
     public Bitmap getPicture(){
 
-        return picture;
+        ParseFile picture = getParseFile(VenueAttributes.picture);
+
+        Bitmap bm = null;
+
+        try {
+
+            bm = BitmapFactory.decodeByteArray(picture.getData(), 0, picture.getData().length);
+
+        } catch (ParseException e) {
+
+            e.printStackTrace();
+        }
+        return bm;
     }
 
     public String getAddress(){
@@ -68,11 +75,6 @@ public class Venue extends ParseObject {
     public City getCity(){
 
         return (City) get(VenueAttributes.city);
-    }
-
-    public void setPicture( Bitmap bm){
-
-        this.picture = bm;
     }
 
     public static ParseQuery<Venue> getQuery() {

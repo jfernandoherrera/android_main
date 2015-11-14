@@ -1,7 +1,6 @@
 package com.amtechventures.tucita.model.domain.service;
 
-
-
+import com.amtechventures.tucita.model.domain.subcategory.SubCategory;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -13,6 +12,21 @@ public class Service extends ParseObject{
 
         return getString(ServiceAttributes.name);
 
+    }
+
+    public SubCategory getSubcategory(){
+
+        return (SubCategory) getParseObject(ServiceAttributes.subCategory);
+    }
+
+    public int getDurationHour(){
+
+      return getInt(ServiceAttributes.durationHours);
+    }
+
+    public int getDurationMinutes(){
+
+       return getInt(ServiceAttributes.durationMinutes);
     }
 
     public static ParseQuery<Service> getQuery() {

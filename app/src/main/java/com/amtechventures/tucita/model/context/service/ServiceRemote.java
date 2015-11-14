@@ -44,8 +44,30 @@ public class ServiceRemote {
 
     public void loadSubCategorizedServices(SubCategory subCategory, final ServiceCompletion.ErrorCompletion completion){
 
+        ParseQuery query = Service.getQuery();
 
+        query.whereEqualTo(ServiceAttributes.subCategory, subCategory);
+
+             query.findInBackground(new FindCallback<Service>() {
+                 @Override
+                 public void done(List objects, ParseException e) {
+
+
+                     if (objects != null) {
+                         try {
+
+                             ParseObject.pinAll(objects);
+
+                         } catch (ParseException pe) {
+                         }
+                     }
+                         completion.completion(objects, null);
+
+                     }
+                 }
+
+                 );
+
+             }
 
     }
-
-}

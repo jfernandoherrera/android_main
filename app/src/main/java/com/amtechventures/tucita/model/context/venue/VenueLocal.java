@@ -1,21 +1,14 @@
 package com.amtechventures.tucita.model.context.venue;
 
 
-
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-
 import com.amtechventures.tucita.model.domain.city.City;
 import com.amtechventures.tucita.model.domain.city.CityAttributes;
 import com.amtechventures.tucita.model.domain.service.Service;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.domain.venue.VenueAttributes;
 import com.parse.ParseException;
-import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import com.parse.ParseRelation;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,27 +57,12 @@ public class VenueLocal {
 
             find = (Venue) venue;
 
-                ParseFile picture = venue.getParseFile(VenueAttributes.picture);
-
-                Bitmap bm = null;
-
-                try {
-
-                  bm = BitmapFactory.decodeByteArray(picture.getData(), 0, picture.getData().length);
-
-                } catch (ParseException e) {
-
-                    e.printStackTrace();
-
-                }
-
-                find.setPicture( bm);
-
             }
         return find;
     }
 
     public List<Venue> loadSubCategorizedVenues(List<Service> services){
+
         List<Venue> venueList = null;
 
         ParseQuery query = Venue.getQuery();

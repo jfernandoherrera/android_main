@@ -47,7 +47,7 @@ public class VenueContext {
 
     public List<Venue> loadSubCategorizedVenues(List<Service> services, VenueCompletion.ErrorCompletion completion) {
 
-        List venues = venueLocal.loadSubCategorizedVenues(services);
+        List<Venue> venues = venueLocal.loadSubCategorizedVenues(services);
 
         venueRemote.loadSubCategorizedVenues(services, completion);
 

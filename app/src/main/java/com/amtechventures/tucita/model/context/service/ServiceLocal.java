@@ -19,6 +19,8 @@ public class ServiceLocal {
 
         ParseQuery query = Service.getQuery();
 
+        query.fromLocalDatastore();
+
         query.whereEqualTo(ServiceAttributes.subCategory,subCategory);
 
         try {
