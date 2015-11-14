@@ -93,7 +93,7 @@ public class AdvancedSearchAdapter extends RecyclerView.Adapter<AdvancedSearchAd
 
             venueImage = (ImageView) itemView.findViewById(R.id.imageSearchVenue);
 
-            ratingBar = (RatingBar) itemView.findViewById(R.id.ratingBar);
+            ratingBar = (RatingBar) itemView.findViewById(R.id.searchRatingBar);
 
             categoryIcon.setOnClickListener(new View.OnClickListener() {
 
