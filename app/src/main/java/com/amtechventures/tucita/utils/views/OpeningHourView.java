@@ -16,6 +16,8 @@ public class OpeningHourView extends LinearLayout {
 
     private TextView hours;
 
+    private String closed;
+    
     public OpeningHourView(Context context, AttributeSet attributes){
 
         super(context, attributes);
@@ -73,7 +75,21 @@ public class OpeningHourView extends LinearLayout {
 
     public void setHours(String hours){
 
-        this.hours.setText(hours);
+        String current = (String) this.hours.getText();
+
+        current = current.replace(closed, "");
+
+        this.hours.setText(current + hours);
+
+        invalidate();
+
+        requestLayout();
+    }
+    public void setClosed(String closed){
+
+        this.closed = closed;
+
+        this.hours.setText(" " + closed);
 
         invalidate();
 

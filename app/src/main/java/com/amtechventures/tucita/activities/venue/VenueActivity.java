@@ -33,9 +33,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-
 public class VenueActivity extends AppCompatActivity {
 
+    private ArrayList<Integer> days;
     private final int twelveHoursClock = 12;
     private final int oneDigitNumber = 9;
     private final String shortHour = "hr";
@@ -92,6 +92,13 @@ public class VenueActivity extends AppCompatActivity {
     }
 
     private void setup(){
+
+        days = new ArrayList();
+
+        for(int day = 1; day <= 7; day++){
+
+            days.add(day);
+        }
 
         thisVenue();
 
@@ -301,12 +308,23 @@ public class VenueActivity extends AppCompatActivity {
 
                 break;
         }
-        setupDay(day,openingHourView);
+        setupDay(day, openingHourView);
 
         return  openingHourView;
     }
 
     private void populateOpeningHours(List<OpeningHour> openingHours){
+
+        for(Integer day : days){
+
+                OpeningHourView openingHourView;
+
+                openingHourView = getViewDay(day);
+
+                String closed = getResources().getString(R.string.closed);
+
+                openingHourView.setClosed(closed);
+         }
 
         for(OpeningHour openingHour : openingHours ){
 
@@ -388,6 +406,7 @@ public class VenueActivity extends AppCompatActivity {
             openingHourView.setState_drawable(false);
         }
     }
+
     public void openWebURL( String inURL ) {
 
         Intent browse = new Intent( Intent.ACTION_VIEW , Uri.parse(inURL) );
