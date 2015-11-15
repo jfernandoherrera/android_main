@@ -15,11 +15,9 @@ public class CategoryContext {
         if (categoryContext == null) {
 
             categoryContext = new CategoryContext();
-
         }
 
         return  categoryContext;
-
     }
 
     public CategoryContext() {
@@ -37,12 +35,11 @@ public class CategoryContext {
         categoryRemote.loadCategories(completion);
 
         return list;
-
     }
 
-    public Category findCategory(String nombre){
+    public Category findCategory(String name){
 
-       Category category = categoryLocal.findCategory(nombre);
+       Category category = categoryLocal.findCategory(name);
 
         return category;
     }

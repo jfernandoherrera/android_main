@@ -61,6 +61,7 @@ public class SubCategoryContext {
     }
 
     public SubCategory findSubCategory(String name){
+
         return subCategoryLocal.findSubCategory(name);
     }
 }

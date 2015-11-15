@@ -57,15 +57,25 @@ public class SubCategoryLocal {
     public SubCategory findSubCategory(String name){
 
         SubCategory subCategory = null;
+
         ParseQuery query = SubCategory.getQuery();
+
+        query.fromLocalDatastore();
+
         query.whereEqualTo(CategoryAttributes.name, name);
+
         List subCategories = null;
+
         try {
+
             subCategories = query.find();
+
         } catch (ParseException e) {
+
             e.printStackTrace();
         }
-        if(subCategories!=null){
+        if(subCategories != null){
+
             subCategory = (SubCategory) subCategories.get(0);
         }
         return subCategory;

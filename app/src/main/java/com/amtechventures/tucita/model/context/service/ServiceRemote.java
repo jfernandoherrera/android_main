@@ -1,7 +1,5 @@
 package com.amtechventures.tucita.model.context.service;
 
-
-import com.amtechventures.tucita.model.context.subcategory.SubCategoryCompletion;
 import com.amtechventures.tucita.model.domain.service.Service;
 import com.amtechventures.tucita.model.domain.service.ServiceAttributes;
 import com.amtechventures.tucita.model.domain.subcategory.SubCategory;
@@ -35,7 +33,7 @@ public class ServiceRemote {
 
                 AppError appError = e != null ? new AppError(Service.class.toString(), 0, null) : null;
 
-                completion.completion(objects,appError);
+                completion.completion(objects, appError);
             }
 
         });
@@ -50,24 +48,24 @@ public class ServiceRemote {
 
              query.findInBackground(new FindCallback<Service>() {
                  @Override
-                 public void done(List objects, ParseException e) {
+                 public void done(List<Service> objects, ParseException e) {
 
+                     if(objects != null){
 
-                     if (objects != null) {
                          try {
 
                              ParseObject.pinAll(objects);
 
-                         } catch (ParseException pe) {
-                         }
-                     }
-                         completion.completion(objects, null);
+                         } catch (ParseException pe) {}
 
                      }
+                     AppError appError = e != null ? new AppError(Service.class.toString(), 0, null) : null;
+
+                     completion.completion(objects, appError);
+
                  }
-
-                 );
-
-             }
+             });
 
     }
+
+}

@@ -29,7 +29,7 @@ public class AdvancedSearchAdapter extends RecyclerView.Adapter<AdvancedSearchAd
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int position) {
 
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_venue, viewGroup, false);
 

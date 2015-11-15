@@ -20,6 +20,7 @@ import com.amtechventures.tucita.model.context.openingHour.OpeningHourCompletion
 import com.amtechventures.tucita.model.context.openingHour.OpeningHourContext;
 import com.amtechventures.tucita.model.context.service.ServiceCompletion;
 import com.amtechventures.tucita.model.context.service.ServiceContext;
+import com.amtechventures.tucita.model.context.venue.VenueCompletion;
 import com.amtechventures.tucita.model.context.venue.VenueContext;
 import com.amtechventures.tucita.model.domain.openingHour.OpeningHour;
 import com.amtechventures.tucita.model.domain.service.Service;
@@ -350,7 +351,16 @@ public class VenueActivity extends AppCompatActivity {
 
         String address = getIntent().getExtras().getString(VenueAttributes.address);
 
-        venue = venueContext.findVenue(name,address);
+        venue = venueContext.findVenue(name, address, new VenueCompletion.ErrorCompletion() {
+            @Override
+            public void completion(List<Venue> venuesList, AppError error) {
+
+                if(venuesList != null){
+
+                    venue = venuesList.get(0);
+                }
+            }
+        });
     }
 
     private void setupDay(){

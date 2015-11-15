@@ -1,8 +1,5 @@
 package com.amtechventures.tucita.model.context.venue;
 
-
-import android.util.Log;
-
 import com.amtechventures.tucita.model.domain.city.City;
 import com.amtechventures.tucita.model.domain.city.CityAttributes;
 import com.amtechventures.tucita.model.domain.service.Service;
@@ -18,10 +15,49 @@ import java.util.List;
 
 public class VenueRemote {
 
+    public void findVenue(String lookThat, String address, final VenueCompletion.ErrorCompletion completion){
+
+    ParseQuery queryName = Venue.getQuery();
+
+    queryName.whereEqualTo(VenueAttributes.name, lookThat);
+
+    ParseQuery queryAddress = Venue.getQuery();
+
+    queryAddress.whereEqualTo(VenueAttributes.address, address);
+
+    List<ParseQuery<ParseObject>> queries = new ArrayList<>();
+
+    queries.add(queryAddress);
+
+    queries.add(queryName);
+
+    ParseQuery query = ParseQuery.or(queries) ;
+
+    query.include(VenueAttributes.city);
+
+        query.findInBackground(new FindCallback<Venue>() {
+            @Override
+            public void done(List<Venue> objects, ParseException e) {
+
+                if(objects != null){
+                    try {
+
+                        ParseObject.pinAll(objects);
+
+                    } catch (ParseException pe) {}
+
+                }
+
+                AppError appError = e != null ? new AppError(Venue.class.toString(), 0, null) : null;
+
+                completion.completion(objects,appError);
+            }
+        });
+
+}
 
     public void loadLikeVenues(String likeWord, final VenueCompletion.ErrorCompletion completion )
     {
-
         ParseQuery queryName = Venue.getQuery();
 
         queryName.whereContains(VenueAttributes.name, likeWord);

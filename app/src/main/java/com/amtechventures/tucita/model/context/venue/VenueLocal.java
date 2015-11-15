@@ -1,6 +1,5 @@
 package com.amtechventures.tucita.model.context.venue;
 
-
 import com.amtechventures.tucita.model.domain.city.City;
 import com.amtechventures.tucita.model.domain.city.CityAttributes;
 import com.amtechventures.tucita.model.domain.service.Service;
@@ -26,7 +25,7 @@ public class VenueLocal {
 
         queryAddress.whereEqualTo(VenueAttributes.address, address);
 
-        List<ParseQuery<ParseObject>> queries = new ArrayList<ParseQuery<ParseObject>>();
+        List<ParseQuery<ParseObject>> queries = new ArrayList<>();
 
         queries.add(queryAddress);
 
@@ -38,15 +37,15 @@ public class VenueLocal {
 
         query.fromLocalDatastore();
 
-        List<Venue> venuesList;
+        List venuesList;
 
-        ParseObject venue = null;
+        Venue venue = null;
 
         try {
 
             venuesList = query.find();
 
-            venue = venuesList.get(0);
+            venue = (Venue)venuesList.get(0);
 
         } catch (ParseException e) {
 
@@ -55,7 +54,7 @@ public class VenueLocal {
 
         if(venue != null){
 
-            find = (Venue) venue;
+            find = venue;
 
             }
         return find;
@@ -63,15 +62,15 @@ public class VenueLocal {
 
     public List<Venue> loadSubCategorizedVenues(List<Service> services){
 
-        List<Venue> venueList = null;
+        List venueList = null;
 
         ParseQuery query = Venue.getQuery();
 
-        query.whereContainedIn(VenueAttributes.services,services);
+        query.fromLocalDatastore();
+
+        query.whereContainedIn(VenueAttributes.services, services);
 
         query.include(VenueAttributes.city);
-
-        query.fromLocalDatastore();
 
         try {
             venueList = query.find();

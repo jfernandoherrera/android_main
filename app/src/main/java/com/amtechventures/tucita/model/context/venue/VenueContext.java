@@ -25,6 +25,7 @@ public class VenueContext {
 
     VenueContext() {
         venueLocal = new VenueLocal();
+
         venueRemote = new VenueRemote();
     }
 
@@ -38,9 +39,11 @@ public class VenueContext {
     }
 
 
-    public Venue findVenue(String lookThat, String address) {
+    public Venue findVenue(String lookThat, String address, VenueCompletion.ErrorCompletion completion) {
 
         Venue venue = venueLocal.findVenue(lookThat, address);
+
+        venueRemote.findVenue(lookThat, address, completion);
 
         return venue;
     }
@@ -53,5 +56,4 @@ public class VenueContext {
 
         return venues;
     }
-
 }

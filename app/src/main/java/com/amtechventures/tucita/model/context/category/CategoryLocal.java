@@ -10,14 +10,16 @@ import com.amtechventures.tucita.model.domain.category.Category;
 
 public class CategoryLocal {
 
-    public Category findCategory(String nombre){
+    public Category findCategory(String name){
 
         Category find = null;
 
         List<Category> categoryList = loadCategories();
 
         for(Category category : categoryList){
-            if(category.getName().equals(nombre)){
+
+            if(category.getName().equals(name)){
+
                 find = category;
             }
         }

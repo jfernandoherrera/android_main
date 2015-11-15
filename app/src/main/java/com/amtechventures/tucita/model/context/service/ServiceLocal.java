@@ -1,14 +1,10 @@
 package com.amtechventures.tucita.model.context.service;
 
-
 import com.amtechventures.tucita.model.domain.service.Service;
 import com.amtechventures.tucita.model.domain.service.ServiceAttributes;
 import com.amtechventures.tucita.model.domain.subcategory.SubCategory;
-import com.amtechventures.tucita.model.domain.venue.VenueAttributes;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class ServiceLocal {
@@ -21,7 +17,7 @@ public class ServiceLocal {
 
         query.fromLocalDatastore();
 
-        query.whereEqualTo(ServiceAttributes.subCategory,subCategory);
+        query.whereEqualTo(ServiceAttributes.subCategory, subCategory);
 
         try {
            services = query.find();
@@ -30,6 +26,7 @@ public class ServiceLocal {
 
             e.printStackTrace();
         }
+
         return services;
     }
 
@@ -40,7 +37,7 @@ public class ServiceLocal {
 
         servicesLocalQuery.fromLocalDatastore();
 
-        List<Service> serviceList = new ArrayList<>();
+        List serviceList = null;
 
         try {
             List services = servicesLocalQuery.find();
