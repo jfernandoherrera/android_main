@@ -101,60 +101,46 @@
                     android:textSize="25sp"
                     android:background="@color/com_facebook_button_login_silver_background_color"
                     />
-                <RadioButton
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/monday"
+                <com.amtechventures.tucita.utils.views.OpeningHourView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/state_drawable_size"
                     android:id="@+id/radioButton1"
-                    android:layout_below="@+id/textViewOpeningHours"
-                    android:clickable="false" />
-                <RadioButton
+                    android:layout_below="@+id/textViewOpeningHours"/>
+                <com.amtechventures.tucita.utils.views.OpeningHourView
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/tuesday"
+                    android:layout_height="@dimen/state_drawable_size"
                     android:id="@+id/radioButton2"
                     android:layout_below="@+id/radioButton1"
-                    android:clickable="false"
                     />
-                <RadioButton
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/wednesday"
+                <com.amtechventures.tucita.utils.views.OpeningHourView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/state_drawable_size"
                     android:id="@+id/radioButton3"
                     android:layout_below="@+id/radioButton2"
-                    android:clickable="false"
                     />
-                <RadioButton
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/thursday"
+                <com.amtechventures.tucita.utils.views.OpeningHourView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/state_drawable_size"
                     android:id="@+id/radioButton4"
                     android:layout_below="@+id/radioButton3"
-                    android:clickable="false"
                     />
-                <RadioButton
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/friday"
+                <com.amtechventures.tucita.utils.views.OpeningHourView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/state_drawable_size"
                     android:id="@+id/radioButton5"
                     android:layout_below="@+id/radioButton4"
-                    android:clickable="false"
                     />
-                <RadioButton
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/saturday"
+                <com.amtechventures.tucita.utils.views.OpeningHourView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/state_drawable_size"
                     android:id="@+id/radioButton6"
                     android:layout_below="@+id/radioButton5"
-                    android:clickable="false"
                     />
-                <RadioButton
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/sunday"
+                <com.amtechventures.tucita.utils.views.OpeningHourView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/state_drawable_size"
                     android:id="@+id/radioButton7"
                     android:layout_below="@+id/radioButton6"
-                    android:clickable="false"
                     />
             </RelativeLayout>
 </ScrollView>

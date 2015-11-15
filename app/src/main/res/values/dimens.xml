@@ -7,5 +7,5 @@
     <dimen name="title">16dp</dimen>
     <dimen name="sub_title">16dp</dimen>
     <dimen name="text">16dp</dimen>
-
+    <dimen name="state_drawable_size">50dp</dimen>
 </resources>

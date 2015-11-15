@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import com.amtechventures.tucita.R;
@@ -29,6 +28,7 @@ import com.amtechventures.tucita.model.domain.subcategory.SubCategory;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.domain.venue.VenueAttributes;
 import com.amtechventures.tucita.model.error.AppError;
+import com.amtechventures.tucita.utils.views.OpeningHourView;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -104,8 +104,6 @@ public class VenueActivity extends AppCompatActivity {
         setupRating();
 
         setupAddressAndlocation();
-
-        setupDay();
 
         setupOpeningHours();
 
@@ -219,7 +217,7 @@ public class VenueActivity extends AppCompatActivity {
 
     private void setupOpeningHours(){
 
-        List<OpeningHour> openingHoursList = openingHourContext.loadOpeningHours(venue, new OpeningHourCompletion.OpeningHourErrorCompletion(){
+        List<OpeningHour> openingHoursList = openingHourContext.loadOpeningHours(venue, new OpeningHourCompletion.OpeningHourErrorCompletion() {
 
             @Override
             public void completion(List<OpeningHour> openingHoursList, AppError error) {
@@ -242,74 +240,87 @@ public class VenueActivity extends AppCompatActivity {
         populateOpeningHours(openingHoursList);
     }
 
-    private RadioButton getViewDay(int day){
+    private OpeningHourView getViewDay(int day){
 
-        RadioButton radioButton;
+        OpeningHourView openingHourView;
 
         switch (day){
 
             case Calendar.MONDAY:
 
-                radioButton = (RadioButton) findViewById(R.id.radioButton1);
+                openingHourView = (OpeningHourView) findViewById(R.id.radioButton1);
+
+                openingHourView.setDay(getResources().getString(R.string.monday));
 
                 break;
             case Calendar.TUESDAY:
 
-                radioButton = (RadioButton) findViewById(R.id.radioButton2);
+                openingHourView = (OpeningHourView) findViewById(R.id.radioButton2);
+
+                openingHourView.setDay(getResources().getString(R.string.tuesday));
 
                 break;
             case Calendar.WEDNESDAY:
 
-                radioButton = (RadioButton) findViewById(R.id.radioButton3);
+                openingHourView = (OpeningHourView) findViewById(R.id.radioButton3);
+
+                openingHourView.setDay(getResources().getString(R.string.wednesday));
 
                 break;
             case Calendar.THURSDAY:
 
-                radioButton = (RadioButton) findViewById(R.id.radioButton4);
+                openingHourView = (OpeningHourView)findViewById(R.id.radioButton4);
+
+                openingHourView.setDay(getResources().getString(R.string.thursday));
 
                 break;
             case Calendar.FRIDAY:
 
-                radioButton = (RadioButton) findViewById(R.id.radioButton5);
+                openingHourView = (OpeningHourView) findViewById(R.id.radioButton5);
+
+                openingHourView.setDay(getResources().getString(R.string.friday));
 
                 break;
             case Calendar.SATURDAY:
 
-                radioButton = (RadioButton) findViewById(R.id.radioButton6);
+                openingHourView = (OpeningHourView) findViewById(R.id.radioButton6);
+
+                openingHourView.setDay(getResources().getString(R.string.saturday));
 
                 break;
             case Calendar.SUNDAY:
 
-                radioButton = (RadioButton) findViewById(R.id.radioButton7);
+                openingHourView = (OpeningHourView) findViewById(R.id.radioButton7);
+
+                openingHourView.setDay(getResources().getString(R.string.sunday));
 
                 break;
             default:
 
-                radioButton = (RadioButton) findViewById(R.id.radioButton1);
+                openingHourView = (OpeningHourView) findViewById(R.id.radioButton1);
 
                 break;
         }
+        setupDay(day,openingHourView);
 
-        return radioButton;
+        return  openingHourView;
     }
 
     private void populateOpeningHours(List<OpeningHour> openingHours){
 
         for(OpeningHour openingHour : openingHours ){
 
-            RadioButton radioButton;
+            OpeningHourView openingHourView;
 
-            radioButton = getViewDay(openingHour.getDay());
+            openingHourView = getViewDay(openingHour.getDay());
 
             String textOpeningStartHour =  hourFormat(openingHour.getStartHour(), openingHour.getStartMinute());
 
             String textOpeningEndHour = hourFormat(openingHour.getEndHour(), openingHour.getEndMinute());
 
-            String textDay = radioButton.getText().toString();
+            String textTime =  textOpeningStartHour + "-" + textOpeningEndHour;
 
-            String textTime = textDay + textOpeningStartHour + "-" + textOpeningEndHour;
-
-            radioButton.setText(textTime);
+            openingHourView.setHours(textTime);
         }
     }
 
@@ -363,19 +374,20 @@ public class VenueActivity extends AppCompatActivity {
         });
     }
 
-    private void setupDay(){
+    private void setupDay(int day,  OpeningHourView openingHourView) {
 
         Calendar c = Calendar.getInstance();
 
-        int day = c.get(Calendar.DAY_OF_WEEK);
+        int dayCurrent = c.get(Calendar.DAY_OF_WEEK);
 
-        RadioButton radioButton;
+        if (day == dayCurrent) {
 
-        radioButton = getViewDay(day);
+            openingHourView.setState_drawable(true);
+        } else {
 
-        radioButton.toggle();
+            openingHourView.setState_drawable(false);
+        }
     }
-
     public void openWebURL( String inURL ) {
 
         Intent browse = new Intent( Intent.ACTION_VIEW , Uri.parse(inURL) );
