@@ -3,7 +3,7 @@ package com.amtechventures.tucita;
 
 
 
-import com.amtechventures.tucita.activities.category.CategoryActivity;
+import com.amtechventures.tucita.activities.category.CategoryFragment;
 import org.junit.Before;
 import org.junit.Test;
 import org.robolectric.Robolectric;
@@ -14,11 +14,11 @@ import org.junit.runner.RunWith;
 @Config(constants = BuildConfig.class,sdk =  19, manifest = "app/manifests/AndroidManifest.xml")
 public class CategoryActivityUnitTest {
 
-    private CategoryActivity activity;
+    private CategoryFragment activity;
 
     @Before
     public void setup() {
-        activity = Robolectric.buildActivity(CategoryActivity.class).create()
+        activity = Robolectric.buildActivity(CategoryFragment.class).create()
                 .get();
     }
 

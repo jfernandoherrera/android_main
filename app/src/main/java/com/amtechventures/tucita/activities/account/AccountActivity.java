@@ -7,7 +7,7 @@ import android.content.Intent;
 import com.amtechventures.tucita.R;
 import android.support.v7.app.AppCompatActivity;
 import com.amtechventures.tucita.model.context.user.UserContext;
-import com.amtechventures.tucita.activities.category.CategoryActivity;
+import com.amtechventures.tucita.activities.category.CategoryFragment;
 
 public class AccountActivity extends AppCompatActivity {
 
@@ -52,7 +52,7 @@ public class AccountActivity extends AppCompatActivity {
 
     public void goToCategories(){
 
-        Intent intent = new Intent(this, CategoryActivity.class);
+        Intent intent = new Intent(this, CategoryFragment.class);
 
         startActivity(intent);
 

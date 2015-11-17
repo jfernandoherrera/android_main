@@ -13,8 +13,9 @@ import com.amtechventures.tucita.R;
 
 import android.support.v7.app.AppCompatActivity;
 
+import com.amtechventures.tucita.activities.main.MainActivity;
 import com.amtechventures.tucita.model.context.user.UserContext;
-import com.amtechventures.tucita.activities.category.CategoryActivity;
+import com.amtechventures.tucita.activities.category.CategoryFragment;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -104,7 +105,7 @@ public class SplashActivity extends AppCompatActivity {
 
     private void processAnonymousUser() {
 
-        Class activity = CategoryActivity.class;
+        Class activity = MainActivity.class;
 
         Intent i = new Intent(SplashActivity.this, activity);
 
@@ -116,7 +117,7 @@ public class SplashActivity extends AppCompatActivity {
 
     private void processLoggedUser() {
 
-        Class activity = CategoryActivity.class;
+        Class activity = MainActivity.class;
 
         Intent i = new Intent(SplashActivity.this, activity);
 

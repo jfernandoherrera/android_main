@@ -16,7 +16,7 @@ import com.amtechventures.tucita.model.error.AppError;
 import com.amtechventures.tucita.model.domain.user.User;
 import com.amtechventures.tucita.model.context.user.UserContext;
 import com.amtechventures.tucita.model.context.user.UserCompletion;
-import com.amtechventures.tucita.activities.category.CategoryActivity;
+import com.amtechventures.tucita.activities.category.CategoryFragment;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -85,7 +85,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void processLoggedUser() {
 
-        Intent intent = new Intent(this, CategoryActivity.class);
+        Intent intent = new Intent(this, CategoryFragment.class);
 
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 

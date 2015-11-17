@@ -22,8 +22,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.category.CategoryActivity" >
-        </activity>
         <activity android:name=".activities.login.LoginActivity" >
         </activity>
 
@@ -45,15 +43,17 @@
             android:name="io.fabric.ApiKey"
             android:value="bdc2bab408011afda99f5bc67d47cd792679dd64" />
 
-        <activity android:name=".activities.search.SearchActivity" >
+        <activity android:name=".activities.search.SearchFragment" >
         </activity>
-        <activity android:name=".activities.subcategory.SubCategoryActivity"
+        <activity
+            android:name=".activities.subcategory.SubCategoryActivity"
             android:theme="@style/AppTheme.subCategory" >
-
         </activity>
         <activity android:name=".activities.venue.VenueActivity" >
         </activity>
         <activity android:name=".activities.search.advanced.AdvancedSearchActivity" >
+        </activity>
+        <activity android:name=".activities.main.MainActivity" >
         </activity>
     </application>
 
