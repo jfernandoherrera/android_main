@@ -1,9 +1,15 @@
 package com.amtechventures.tucita.activities.search.advanced;
 
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.search.adapters.AdvancedSearchAdapter;
 import com.amtechventures.tucita.model.context.service.ServiceCompletion;
@@ -28,7 +34,8 @@ public class AdvancedSearchActivity extends AppCompatActivity {
     private VenueContext venueContext;
     private ServiceContext serviceContext;
     private SubCategoryContext subCategoryContext;
-
+    private Toolbar toolbar;
+    private String name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +48,8 @@ public class AdvancedSearchActivity extends AppCompatActivity {
 
         subCategoryContext = SubCategoryContext.context(subCategoryContext);
 
+        name = getIntent().getStringExtra(CategoryAttributes.name);
+
         serviceContext = ServiceContext.context(serviceContext);
 
         recyclerView = (RecyclerView)findViewById(R.id.recycler_view);
@@ -51,7 +60,19 @@ public class AdvancedSearchActivity extends AppCompatActivity {
 
         recyclerView.setLayoutManager(layoutManager);
 
+        setToolbar();
+
         setupGrid();
+    }
+
+    private void setToolbar(){
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        if (toolbar != null) {
+
+            setSupportActionBar(toolbar);
+        }
     }
 
     private List<Venue> setupVenues(List<Service> services){
@@ -85,8 +106,6 @@ public class AdvancedSearchActivity extends AppCompatActivity {
 
     private void setupGrid() {
 
-                String name = getIntent().getStringExtra(CategoryAttributes.name);
-
                 SubCategory subCategory = subCategoryContext.findSubCategory(name);
 
                 List services = serviceContext.loadSubCategorizedServices(subCategory, new ServiceCompletion.ErrorCompletion() {
@@ -103,5 +122,24 @@ public class AdvancedSearchActivity extends AppCompatActivity {
 
         setupVenues(services);
 
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        getSupportActionBar().setTitle(name);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        finish();
+        
+        return super.onOptionsItemSelected(item);
     }
 }

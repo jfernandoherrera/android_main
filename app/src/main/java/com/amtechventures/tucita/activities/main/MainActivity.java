@@ -12,8 +12,6 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.amtechventures.tucita.R;
@@ -29,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private UserContext userContext;
     private final int minimunToSearch = 3;
-    private boolean isCategory;
     private CategoryFragment fragment;
 
     @Override
@@ -69,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
         FragmentTransaction transaction = fragmentManager.beginTransaction();
 
-            transaction.replace(R.id.layout_main, searchFragment);
+        transaction.replace(R.id.layout_main, searchFragment);
 
         transaction.addToBackStack(null);
 
