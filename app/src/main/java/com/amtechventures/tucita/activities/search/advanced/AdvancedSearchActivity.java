@@ -1,6 +1,5 @@
 package com.amtechventures.tucita.activities.search.advanced;
 
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -9,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.search.adapters.AdvancedSearchAdapter;
@@ -22,6 +22,8 @@ import com.amtechventures.tucita.model.domain.service.Service;
 import com.amtechventures.tucita.model.domain.subcategory.SubCategory;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.error.AppError;
+import com.amtechventures.tucita.utils.blocks.Completion;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +38,8 @@ public class AdvancedSearchActivity extends AppCompatActivity {
     private SubCategoryContext subCategoryContext;
     private Toolbar toolbar;
     private String name;
+    private SubCategory subCategory;
+    private ArrayList priceStrings = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +52,9 @@ public class AdvancedSearchActivity extends AppCompatActivity {
 
         subCategoryContext = SubCategoryContext.context(subCategoryContext);
 
-        name = getIntent().getStringExtra(CategoryAttributes.name);
-
         serviceContext = ServiceContext.context(serviceContext);
+
+        name = getIntent().getStringExtra(CategoryAttributes.name);
 
         recyclerView = (RecyclerView)findViewById(R.id.recycler_view);
 
@@ -75,6 +79,36 @@ public class AdvancedSearchActivity extends AppCompatActivity {
         }
     }
 
+    private void setupPriceFrom(){
+        try {
+
+            for (Venue venue : venues) {
+
+                int price = serviceContext.getPricesFrom(subCategory, venue, new Completion.IntErrorCompletion() {
+
+                    @Override
+                    public void completion(int number, AppError error) {
+
+                        if (number != 0) {
+                            priceStrings.add(String.valueOf(number));
+
+                            adapter = new AdvancedSearchAdapter(venues, priceStrings);
+
+                            recyclerView.setAdapter(adapter);
+
+                        }
+                    }
+                });
+                if(price != 0) {
+
+                    priceStrings.add(String.valueOf(price));
+                }
+            }
+        }catch (Exception e){
+
+        }
+    }
+
     private List<Venue> setupVenues(List<Service> services){
 
         List<Venue> venuesList = venueContext.loadSubCategorizedVenues(services, new VenueCompletion.ErrorCompletion() {
@@ -88,7 +122,8 @@ public class AdvancedSearchActivity extends AppCompatActivity {
 
                     venues.addAll(venueList);
 
-                    adapter.notifyDataSetChanged();
+                    setupPriceFrom();
+
                 }
             }
 
@@ -97,16 +132,12 @@ public class AdvancedSearchActivity extends AppCompatActivity {
 
         venues.addAll(venuesList);
 
-        adapter = new AdvancedSearchAdapter(venues);
-
-        recyclerView.setAdapter(adapter);
-
         return  venuesList;
     }
 
     private void setupGrid() {
 
-                SubCategory subCategory = subCategoryContext.findSubCategory(name);
+                subCategory = subCategoryContext.findSubCategory(name);
 
                 List services = serviceContext.loadSubCategorizedServices(subCategory, new ServiceCompletion.ErrorCompletion() {
                     @Override
@@ -124,7 +155,6 @@ public class AdvancedSearchActivity extends AppCompatActivity {
 
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -139,7 +169,7 @@ public class AdvancedSearchActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         finish();
-        
+
         return super.onOptionsItemSelected(item);
     }
 }

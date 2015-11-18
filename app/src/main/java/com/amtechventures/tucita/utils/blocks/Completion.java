@@ -18,5 +18,10 @@ public class Completion {
 
     }
 
+    public interface IntErrorCompletion{
+
+        void completion(int number, AppError error);
+    }
+
 
 }

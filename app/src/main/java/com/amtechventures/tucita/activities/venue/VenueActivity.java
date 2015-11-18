@@ -49,7 +49,6 @@ public class VenueActivity extends AppCompatActivity {
     private TextView venueDescription;
     private RatingBar ratingBar;
     private Button location;
-    private List<OpeningHour> openingHours = new ArrayList<>();
     private List<ArrayList> services = new ArrayList<>();
     private List<SubCategory> subCategories = new ArrayList<>();
     private ExpandableListAdapter fullMenuAdapter;
@@ -201,7 +200,7 @@ public class VenueActivity extends AppCompatActivity {
 
         String serviceDurationMinutes = durationMinutes == 0 ? "" : String.valueOf(durationMinutes) + shortMinutes;
 
-        String servicePrice = "$" + String.valueOf(service.getInt(ServiceAttributes.price));
+        String servicePrice = "$" + String.valueOf(service.getPrice());
 
         String serviceInfo = serviceName + " " + serviceDurationHours + " " + serviceDurationMinutes + " " + servicePrice;
 
@@ -230,8 +229,6 @@ public class VenueActivity extends AppCompatActivity {
             public void completion(List<OpeningHour> openingHoursList, AppError error) {
 
                 if (openingHoursList != null) {
-
-                    openingHours.clear();
 
                     populateOpeningHours(openingHoursList);
                 } else {

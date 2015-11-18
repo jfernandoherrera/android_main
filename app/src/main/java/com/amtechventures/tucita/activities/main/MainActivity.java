@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,6 +21,8 @@ import com.amtechventures.tucita.activities.category.CategoryFragment;
 import com.amtechventures.tucita.activities.login.LoginActivity;
 import com.amtechventures.tucita.activities.search.SearchFragment;
 import com.amtechventures.tucita.model.context.user.UserContext;
+
+import static android.view.View.INVISIBLE;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,9 +47,13 @@ public class MainActivity extends AppCompatActivity {
 
         setCategoryFragment();
 
-        setToolbar();
+        setFragmentToSearch();
 
-        setupVisibility();
+        searchFragment.setUserVisibleHint(false);
+
+        fragment.setUserVisibleHint(true);
+
+        setToolbar();
     }
 
     private void setCategoryFragment(){
@@ -60,15 +67,57 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
     }
 
-    private void replaceFragmentToSearch(){
+    private void setFragmentToSearch(){
 
         FragmentManager fragmentManager = getSupportFragmentManager();
 
         FragmentTransaction transaction = fragmentManager.beginTransaction();
 
-        transaction.replace(R.id.layout_main, searchFragment);
+        transaction.add(R.id.layout_main, searchFragment);
 
-        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    private void categoryHide(){
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+        transaction.hide(fragment);
+
+        transaction.commit();
+    }
+
+    private void categoryShow(){
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+        transaction.show(fragment);
+
+        transaction.commit();
+    }
+
+    private void searchHide(){
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+        transaction.hide(searchFragment);
+
+        transaction.commit();
+    }
+
+    private void searchShow(){
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+        transaction.show(searchFragment);
 
         transaction.commit();
     }
@@ -97,7 +146,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
 
-                replaceFragmentToSearch();
+                if(!hasFocus){
+
+                    searchHide();
+
+                    categoryShow();
+                }
+
             }
         });
 
@@ -135,15 +190,14 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    private void setupVisibility() {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
 
-        if (userContext.currentUser() != null) {
+      searchShow();
 
+      categoryHide();
 
-        }else {
-
-        }
-
+        return super.onOptionsItemSelected(item);
     }
 
     public void goToLogin(View v) {

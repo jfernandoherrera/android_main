@@ -81,6 +81,7 @@ public class CategoryFragment extends Fragment {
             }
 
         });
+        categories.clear();
 
         categories.addAll(categoryList);
 

@@ -11,7 +11,11 @@ public class Service extends ParseObject{
     public String getName(){
 
         return getString(ServiceAttributes.name);
+    }
 
+    public int getPrice(){
+
+      return getInt(ServiceAttributes.price);
     }
 
     public SubCategory getSubcategory(){

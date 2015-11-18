@@ -11,8 +11,12 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.venue.VenueActivity;
+import com.amtechventures.tucita.model.context.service.ServiceContext;
+import com.amtechventures.tucita.model.domain.subcategory.SubCategory;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.domain.venue.VenueAttributes;
+import com.amtechventures.tucita.model.error.AppError;
+import com.amtechventures.tucita.utils.blocks.Completion;
 
 import java.util.List;
 
@@ -20,11 +24,15 @@ public class AdvancedSearchAdapter extends RecyclerView.Adapter<AdvancedSearchAd
 
     List<Venue> items;
 
-    public AdvancedSearchAdapter(List<Venue> offer) {
+    List<String> priceStrings;
+
+    public AdvancedSearchAdapter(List<Venue> offer, List<String> priceStrings) {
 
         super();
 
         items = offer;
+
+        this.priceStrings = priceStrings;
 
     }
 
@@ -51,8 +59,19 @@ public class AdvancedSearchAdapter extends RecyclerView.Adapter<AdvancedSearchAd
 
         viewHolder.venueImage.setImageBitmap(venue.getPicture());
 
-        viewHolder.ratingBar.setRating((float) venue.getRating());
+            float rating = (float)venue.getRating();
 
+            if(rating != 0) {
+
+                viewHolder.ratingBar.setRating(rating);
+
+            }
+            else{
+
+                viewHolder.ratingBar.setVisibility(View.INVISIBLE);
+            }
+
+        viewHolder.pricesFrom.setText(priceStrings.get(position));
     }
 
     @Override
@@ -76,6 +95,8 @@ public class AdvancedSearchAdapter extends RecyclerView.Adapter<AdvancedSearchAd
 
         private CardView categoryIcon;
 
+        protected TextView pricesFrom;
+
         public void setAddress(String address){
 
             this.address = address;
@@ -94,6 +115,8 @@ public class AdvancedSearchAdapter extends RecyclerView.Adapter<AdvancedSearchAd
             venueImage = (ImageView) itemView.findViewById(R.id.imageSearchVenue);
 
             ratingBar = (RatingBar) itemView.findViewById(R.id.searchRatingBar);
+
+            pricesFrom = (TextView) itemView.findViewById(R.id.textPricesFrom);
 
             categoryIcon.setOnClickListener(new View.OnClickListener() {
 
