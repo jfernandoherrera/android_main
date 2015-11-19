@@ -45,7 +45,7 @@
     <string name="name">name</string>
     <string name="title_activity_main">MainActivity</string>
 
-    <string name="hello_world">Hello world!</string>
+    <string name="find_service">Servicios que puedes estar buscando!</string>
 
 <!-- TODO: Venue -->
     <string name="closed">CERRADO</string>

@@ -8,20 +8,14 @@ import android.view.View;
 import java.util.ArrayList;
 
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.content.Intent;
-import android.widget.ImageButton;
+
 import com.amtechventures.tucita.R;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 
 import com.amtechventures.tucita.model.error.AppError;
-import com.amtechventures.tucita.model.context.user.UserContext;
-import com.amtechventures.tucita.activities.login.LoginActivity;
 import com.amtechventures.tucita.model.domain.category.Category;
-import com.amtechventures.tucita.activities.account.AccountActivity;
 import com.amtechventures.tucita.model.context.category.CategoryContext;
 import com.amtechventures.tucita.model.context.category.CategoryCompletion;
 import com.amtechventures.tucita.activities.category.adapters.CategoryGridAdapter;
@@ -40,7 +34,7 @@ public class CategoryFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.activity_category, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_category, container, false);
 
         categoryContext = CategoryContext.context(categoryContext);
 

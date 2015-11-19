@@ -56,13 +56,16 @@ public class Venue extends ParseObject {
 
         Bitmap bm = null;
 
-        try {
+        if(picture != null) {
 
-            bm = BitmapFactory.decodeByteArray(picture.getData(), 0, picture.getData().length);
+            try {
 
-        } catch (ParseException e) {
+                bm = BitmapFactory.decodeByteArray(picture.getData(), 0, picture.getData().length);
 
-            e.printStackTrace();
+            } catch (ParseException e) {
+
+                e.printStackTrace();
+            }
         }
         return bm;
     }

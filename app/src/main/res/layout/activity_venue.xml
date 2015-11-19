@@ -24,7 +24,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="35dp"
                     android:textSize="25sp"
-                    android:text="@string/ven_title"
                     android:layout_gravity="center_horizontal"
                     android:layout_below="@+id/imageVenue"
                     android:id="@+id/title_Venue"/>
@@ -42,7 +41,7 @@
                     android:text="@string/top_services"
                     android:id="@+id/textViewTop"
                     android:layout_below="@+id/ratingBar"
-                    android:layout_height="35dp"
+                    android:layout_height="wrap_content"
                     android:textSize="25sp"
                     android:background="@color/com_facebook_button_login_silver_background_color"
                     />

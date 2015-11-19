@@ -177,6 +177,12 @@ public class VenueActivity extends AppCompatActivity {
 
         if (subCategory != null){
 
+            TextView specials = (TextView) findViewById(R.id.textViewTop);
+
+            String findService = getResources().getString(R.string.find_service);
+
+            specials.setText(findService);
+
             ArrayList<SubCategory> arrayList = new ArrayList();
 
             int indexOf = 0;
@@ -449,11 +455,5 @@ public class VenueActivity extends AppCompatActivity {
         Intent browse = new Intent( Intent.ACTION_VIEW , Uri.parse(inURL) );
 
         startActivity(browse);
-    }
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-
     }
 }

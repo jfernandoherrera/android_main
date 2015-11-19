@@ -75,9 +75,9 @@ public class AdvancedSearchAdapter extends RecyclerView.Adapter<AdvancedSearchAd
                 viewHolder.ratingBar.setVisibility(View.INVISIBLE);
             }
 
-        String from = viewHolder.from + " $";
+        String from = viewHolder.from + " $"+priceStrings.get(position);
 
-        viewHolder.pricesFrom.setText(from + priceStrings.get(position));
+        viewHolder.pricesFrom.setText(from);
     }
 
     @Override

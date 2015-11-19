@@ -79,6 +79,14 @@ public class AdvancedSearchActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onPause() {
+
+        super.onPause();
+
+        finish();
+    }
+
     private void setupPriceFrom(){
         try {
 
