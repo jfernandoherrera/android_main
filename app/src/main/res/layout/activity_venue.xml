@@ -46,12 +46,11 @@
                     android:textSize="25sp"
                     android:background="@color/com_facebook_button_login_silver_background_color"
                     />
-                <ListView
-                    android:layout_width="match_parent"
-                    android:layout_height="?android:attr/listPreferredItemHeightLarge"
+                <ExpandableListView
+                    style="@style/AppTheme.ListView"
                     android:layout_below="@+id/textViewTop"
                     android:id="@+id/listViewTop"
-                    android:layout_alignParentLeft="true" />
+                    />
                 <TextView
                     android:layout_width="match_parent"
                     android:text="@string/full_menu"
@@ -64,7 +63,6 @@
                 <ExpandableListView
                     android:id="@+id/listViewFull"
                     android:layout_below="@+id/textViewFull"
-                    android:layout_alignParentLeft="true"
                     style="@style/AppTheme.ListView"
                     />
                 <TextView

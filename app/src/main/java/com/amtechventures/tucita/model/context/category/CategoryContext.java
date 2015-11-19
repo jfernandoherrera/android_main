@@ -28,6 +28,11 @@ public class CategoryContext {
 
     }
 
+    public void cancelQuery(){
+
+        categoryRemote.cancelQuery();
+    }
+
     public List<Category> loadCategories(final CategoryCompletion.CategoriesErrorCompletion completion)  {
 
         List<Category> list = categoryLocal.loadCategories();

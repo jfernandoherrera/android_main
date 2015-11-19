@@ -10,15 +10,20 @@ import android.view.LayoutInflater;
 import com.amtechventures.tucita.R;
 import android.support.v7.widget.RecyclerView;
 import com.amtechventures.tucita.activities.subcategory.SubCategoryActivity;
+import com.amtechventures.tucita.model.context.category.CategoryContext;
 import com.amtechventures.tucita.model.domain.category.Category;
 
 public class CategoryGridAdapter extends RecyclerView.Adapter<CategoryGridAdapter.ViewHolder> {
 
     List<Category> items;
 
-    public CategoryGridAdapter(List<Category> offer) {
+    CategoryContext categoryContext;
+
+    public CategoryGridAdapter(List<Category> offer, CategoryContext categoryContext) {
 
         super();
+
+        this.categoryContext = categoryContext;
 
         items = offer;
 
@@ -75,6 +80,7 @@ public class CategoryGridAdapter extends RecyclerView.Adapter<CategoryGridAdapte
 
                     view.getContext().startActivity(intent);
 
+                    categoryContext.cancelQuery();
                 }
 
             });

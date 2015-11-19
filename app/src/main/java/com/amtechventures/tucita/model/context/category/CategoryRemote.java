@@ -12,9 +12,21 @@ import com.amtechventures.tucita.model.domain.category.Category;
 
 public class CategoryRemote {
 
+    ParseQuery<Category> query;
+
+    private void setQuery(){
+
+        query = Category.getQuery();
+    }
+
+    public void cancelQuery(){
+
+        query.cancel();
+    }
+
     public void loadCategories(final CategoryCompletion.CategoriesErrorCompletion completion) {
 
-        ParseQuery<Category> query = Category.getQuery();
+        setQuery();
 
         query.orderByAscending(CategoryAttributes.name);
 

@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -29,6 +30,8 @@ import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.domain.venue.VenueAttributes;
 import com.amtechventures.tucita.model.error.AppError;
 import com.amtechventures.tucita.utils.views.OpeningHourView;
+import com.amtechventures.tucita.utils.views.ViewUtils;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -53,6 +56,8 @@ public class VenueActivity extends AppCompatActivity {
     private List<SubCategory> subCategories = new ArrayList<>();
     private ExpandableListAdapter fullMenuAdapter;
     private ExpandableListView listViewFullMenu;
+    private ExpandableListAdapter anotherMenuAdapter;
+    private ExpandableListView listViewAnotherMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +83,8 @@ public class VenueActivity extends AppCompatActivity {
         location = (Button) findViewById(R.id.watch_location);
 
         listViewFullMenu = (ExpandableListView) findViewById(R.id.listViewFull);
+
+        listViewAnotherMenu = (ExpandableListView) findViewById(R.id.listViewTop);
 
         setup();
     }
@@ -114,6 +121,8 @@ public class VenueActivity extends AppCompatActivity {
         setupOpeningHours();
 
         setupFullmenu();
+
+        setupAnotherMenu();
     }
 
     private void setupPicture(){
@@ -139,13 +148,15 @@ public class VenueActivity extends AppCompatActivity {
             @Override
             public void completion(List<Service> servicesList, AppError error) {
 
-                if(servicesList != null){
+                if (servicesList != null) {
 
                     services.clear();
 
                     subCategories.clear();
 
                     setStringsArray(servicesList);
+
+                    ViewUtils.setListViewHeightBasedOnChildren(listViewFullMenu);
 
                     fullMenuAdapter.notifyDataSetChanged();
                 }
@@ -158,6 +169,40 @@ public class VenueActivity extends AppCompatActivity {
         fullMenuAdapter.setInflater((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE), this);
 
         listViewFullMenu.setAdapter(fullMenuAdapter);
+    }
+
+    private void setupAnotherMenu(){
+
+        String subCategory = getIntent().getStringExtra(ServiceAttributes.subCategory);
+
+        if (subCategory != null){
+
+            ArrayList<SubCategory> arrayList = new ArrayList();
+
+            int indexOf = 0;
+
+            ArrayList<ArrayList> arrayListServices = new ArrayList<>();
+
+            for (SubCategory subCategory1 : subCategories) {
+
+                if(subCategory1.getName().equals(subCategory)){
+
+                    arrayList.add(subCategory1);
+
+                    indexOf = subCategories.indexOf(subCategory1);
+                }
+            }
+            arrayListServices.add(services.get(indexOf));
+
+            anotherMenuAdapter = new ExpandableListAdapter(arrayList, arrayListServices,listViewAnotherMenu);
+
+            anotherMenuAdapter.setInflater((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE), this);
+
+            listViewAnotherMenu.setAdapter(anotherMenuAdapter);
+
+            listViewAnotherMenu.expandGroup(0);
+
+        }
     }
 
     private ArrayList<String> setStringsArray(List<Service> servicesList){
@@ -231,16 +276,11 @@ public class VenueActivity extends AppCompatActivity {
                 if (openingHoursList != null) {
 
                     populateOpeningHours(openingHoursList);
-                } else {
-
-                    noInternetConnectionAlert();
-
                 }
 
             }
 
         });
-
         populateOpeningHours(openingHoursList);
     }
 
@@ -411,13 +451,9 @@ public class VenueActivity extends AppCompatActivity {
         startActivity(browse);
     }
 
-    private void noInternetConnectionAlert() {
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
 
-        new AlertDialog.Builder(this)
-                .setTitle(getResources().getString(R.string.alert))
-                .setMessage(getResources().getString(R.string.no_internet_connection))
-                .setRecycleOnMeasureEnabled(true)
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .show();
     }
 }

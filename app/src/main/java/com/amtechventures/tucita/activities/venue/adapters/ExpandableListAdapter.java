@@ -26,7 +26,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter{
     private ArrayList<String> child;
     private final ExpandableListView expandableListView;
     // constructor
-    public ExpandableListAdapter(List<SubCategory> parents, List<ArrayList> childern,ExpandableListView expandableListView)
+    public ExpandableListAdapter(List<SubCategory> parents, List<ArrayList> childern, ExpandableListView expandableListView)
     {
         this.parentItems = (ArrayList<SubCategory>) parents;
         this.childItems = (ArrayList<ArrayList>) childern;
@@ -153,4 +153,5 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter{
     {
         return false;
     }
+
 }

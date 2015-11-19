@@ -92,7 +92,7 @@ public class AdvancedSearchActivity extends AppCompatActivity {
                         if (number != 0) {
                             priceStrings.add(String.valueOf(number));
 
-                            adapter = new AdvancedSearchAdapter(venues, priceStrings);
+                            adapter = new AdvancedSearchAdapter(venues, priceStrings, subCategory.getName());
 
                             recyclerView.setAdapter(adapter);
 

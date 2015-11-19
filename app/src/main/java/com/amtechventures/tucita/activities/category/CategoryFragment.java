@@ -85,7 +85,7 @@ public class CategoryFragment extends Fragment {
 
         categories.addAll(categoryList);
 
-        adapter = new CategoryGridAdapter(categories);
+        adapter = new CategoryGridAdapter(categories, categoryContext);
 
         recyclerView.setAdapter(adapter);
 

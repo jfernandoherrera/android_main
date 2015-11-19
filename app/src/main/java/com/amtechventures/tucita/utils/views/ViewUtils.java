@@ -1,10 +1,16 @@
 package com.amtechventures.tucita.utils.views;
 
 
+
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckedTextView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+
+import com.amtechventures.tucita.activities.venue.adapters.ExpandableListAdapter;
+
 import static android.view.View.MeasureSpec.*;
 
 public class ViewUtils {
@@ -28,7 +34,15 @@ public class ViewUtils {
 
             listItem.measure(desiredWidth, UNSPECIFIED);
 
-            totalHeight += listItem.getMeasuredHeight();
+            if(listItem instanceof CheckedTextView) {
+
+                totalHeight += 41;
+            }else {
+
+                totalHeight += 29;
+            }
+
+            Log.i("nbv", String.valueOf(listItem));
         }
 
         ViewGroup.LayoutParams params = listView.getLayoutParams();

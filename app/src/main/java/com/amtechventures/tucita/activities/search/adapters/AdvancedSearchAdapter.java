@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.venue.VenueActivity;
 import com.amtechventures.tucita.model.context.service.ServiceContext;
+import com.amtechventures.tucita.model.domain.service.ServiceAttributes;
 import com.amtechventures.tucita.model.domain.subcategory.SubCategory;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.domain.venue.VenueAttributes;
@@ -26,7 +27,9 @@ public class AdvancedSearchAdapter extends RecyclerView.Adapter<AdvancedSearchAd
 
     List<String> priceStrings;
 
-    public AdvancedSearchAdapter(List<Venue> offer, List<String> priceStrings) {
+    String subCategory;
+
+    public AdvancedSearchAdapter(List<Venue> offer, List<String> priceStrings, String subCategory) {
 
         super();
 
@@ -34,6 +37,7 @@ public class AdvancedSearchAdapter extends RecyclerView.Adapter<AdvancedSearchAd
 
         this.priceStrings = priceStrings;
 
+        this.subCategory = subCategory;
     }
 
     @Override
@@ -129,11 +133,13 @@ public class AdvancedSearchAdapter extends RecyclerView.Adapter<AdvancedSearchAd
                 @Override
                 public void onClick(View view) {
 
-                    Intent intent = new Intent(view.getContext() , VenueActivity.class);
+                    Intent intent = new Intent(view.getContext(), VenueActivity.class);
 
                     intent.putExtra(Venue.class.getName(),name.getText());
 
                     intent.putExtra(VenueAttributes.address, address);
+
+                    intent.putExtra(ServiceAttributes.subCategory, subCategory);
 
                     view.getContext().startActivity(intent);
 

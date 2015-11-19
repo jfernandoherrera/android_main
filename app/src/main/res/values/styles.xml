@@ -10,19 +10,24 @@
         <item name="windowNoTitle">true</item>
 
     </style>
+    <style name="AppTheme.Title" parent="AppTheme">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/title</item>
+
+    </style>
     <style name="AppTheme.subCategory" parent="Base.Theme.AppCompat.Light.Dialog.FixedSize" >
     </style>
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" >
     </style>
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
     <style name="AppTheme.ListView" parent="ThemeOverlay.AppCompat.Light">
-        <item name="android:layout_height">50dp</item>
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_marginLeft">@dimen/activity_horizontal_margin</item>
-        <item name="android:layout_marginRight">@dimen/activity_horizontal_margin</item>
+        <item name="android:layout_height">wrap_content</item>
     </style>
     <style name="AppTheme.ExpandableListViewItem" parent="ThemeOverlay.AppCompat.Light">
-        <item name="android:textSize">@dimen/sub_title</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/title</item>
         <item name="android:background">@color/colorPrimaryLight</item>
     </style>
     <style name="AppTheme.ListViewItem" parent="ThemeOverlay.AppCompat.Light">

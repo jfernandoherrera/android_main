@@ -26,6 +26,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/textName"
         android:layout_below="@+id/imageSearchVenue"
+        style="@style/AppTheme.Title"
         />
     <TextView
         android:layout_width="wrap_content"
@@ -33,7 +34,6 @@
         android:id="@+id/textLocation"
         android:layout_below="@+id/textName"
         />
-
             <RatingBar
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
