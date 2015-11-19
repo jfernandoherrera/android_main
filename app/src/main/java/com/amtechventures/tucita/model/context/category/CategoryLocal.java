@@ -4,6 +4,8 @@ package com.amtechventures.tucita.model.context.category;
 
 import java.util.List;
 import java.util.ArrayList;
+
+import com.amtechventures.tucita.model.domain.category.CategoryAttributes;
 import com.parse.ParseQuery;
 import com.amtechventures.tucita.model.domain.category.Category;
 
@@ -31,6 +33,8 @@ public class CategoryLocal {
         List<Category> categoryList = new ArrayList<>();
 
         ParseQuery<Category> query = Category.getQuery().fromLocalDatastore();
+
+        query.orderByAscending(CategoryAttributes.name);
 
         try {
 

@@ -2,6 +2,7 @@ package com.amtechventures.tucita.model.context.category;
 
 import java.util.List;
 
+import com.amtechventures.tucita.model.domain.category.CategoryAttributes;
 import com.parse.ParseQuery;
 import com.parse.ParseObject;
 import com.parse.FindCallback;
@@ -14,6 +15,8 @@ public class CategoryRemote {
     public void loadCategories(final CategoryCompletion.CategoriesErrorCompletion completion) {
 
         ParseQuery<Category> query = Category.getQuery();
+        
+        query.orderByAscending(CategoryAttributes.name);
 
         query.findInBackground(new FindCallback<Category>() {
 
