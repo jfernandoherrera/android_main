@@ -15,7 +15,7 @@ public class CategoryRemote {
     public void loadCategories(final CategoryCompletion.CategoriesErrorCompletion completion) {
 
         ParseQuery<Category> query = Category.getQuery();
-        
+
         query.orderByAscending(CategoryAttributes.name);
 
         query.findInBackground(new FindCallback<Category>() {

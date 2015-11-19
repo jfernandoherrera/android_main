@@ -71,7 +71,9 @@ public class AdvancedSearchAdapter extends RecyclerView.Adapter<AdvancedSearchAd
                 viewHolder.ratingBar.setVisibility(View.INVISIBLE);
             }
 
-        viewHolder.pricesFrom.setText(priceStrings.get(position));
+        String from = viewHolder.from + " $";
+
+        viewHolder.pricesFrom.setText(from + priceStrings.get(position));
     }
 
     @Override
@@ -97,6 +99,8 @@ public class AdvancedSearchAdapter extends RecyclerView.Adapter<AdvancedSearchAd
 
         protected TextView pricesFrom;
 
+        protected String from;
+
         public void setAddress(String address){
 
             this.address = address;
@@ -117,6 +121,8 @@ public class AdvancedSearchAdapter extends RecyclerView.Adapter<AdvancedSearchAd
             ratingBar = (RatingBar) itemView.findViewById(R.id.searchRatingBar);
 
             pricesFrom = (TextView) itemView.findViewById(R.id.textPricesFrom);
+
+            from = itemView.getContext().getResources().getString(R.string.from);
 
             categoryIcon.setOnClickListener(new View.OnClickListener() {
 
