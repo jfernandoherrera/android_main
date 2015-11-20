@@ -113,6 +113,13 @@ public class SubCategoryActivity extends AppCompatActivity {
         intent.putExtra(CategoryAttributes.name, name);
 
         startActivity(intent);
+
+        subCategoryContext.cancelQuery();
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        subCategoryContext.cancelQuery();
+    }
 }

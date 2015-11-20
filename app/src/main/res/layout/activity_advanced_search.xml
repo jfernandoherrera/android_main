@@ -17,6 +17,13 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_marginTop="60dp"
+        android:layout_below="@+id/toolbar"
         android:layout_height="wrap_content"/>
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progress"
+        android:indeterminateOnly="true"
+        style="@android:style/Widget.ProgressBar.Large.Inverse"
+        android:layout_below="@+id/toolbar"/>
 </RelativeLayout>

@@ -15,6 +15,11 @@ public class ServiceContext {
     ServiceLocal serviceLocal;
     ServiceRemote serviceRemote;
 
+    public void cancelQuery(){
+
+        serviceRemote.cancelQuery();
+    }
+
     public int getPricesFrom(SubCategory subCategory, Venue venue){
 
         ParseRelation object = (ParseRelation) venue.get(VenueAttributes.services);

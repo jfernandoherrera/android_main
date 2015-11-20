@@ -105,6 +105,10 @@ public class SearchFragment extends Fragment {
 
         intent.putExtra(CategoryAttributes.name, name);
 
+        subCategoryContext.cancelQuery();
+
+        venueContext.cancelQuery();
+
         startActivity(intent);
     }
 
@@ -121,6 +125,10 @@ public class SearchFragment extends Fragment {
         intent.putExtra(Venue.class.getName(), name);
 
         intent.putExtra(VenueAttributes.address, address);
+
+        subCategoryContext.cancelQuery();
+
+        venueContext.cancelQuery();
 
         startActivity(intent);
     }

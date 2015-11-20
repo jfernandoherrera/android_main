@@ -1,29 +1,45 @@
 package com.amtechventures.tucita.model.context.service;
 
+import com.amtechventures.tucita.model.domain.category.Category;
 import com.amtechventures.tucita.model.domain.service.Service;
 import com.amtechventures.tucita.model.domain.service.ServiceAttributes;
 import com.amtechventures.tucita.model.domain.subcategory.SubCategory;
 import com.amtechventures.tucita.model.error.AppError;
-import com.amtechventures.tucita.utils.blocks.Completion;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-
 import java.util.List;
 
 public class ServiceRemote {
 
+    ParseQuery<Service> query;
+
+    private void setQuery(){
+
+        query = Service.getQuery();
+    }
+
+    public void cancelQuery(){
+
+        if(query != null){
+
+            query.cancel();
+        }
+    }
+
     public int getPricesFrom(SubCategory subCategory, ParseQuery<Service> servicesLocalQuery){
 
-        servicesLocalQuery.include(ServiceAttributes.subCategory);
+        query = servicesLocalQuery;
 
-        servicesLocalQuery.whereEqualTo(ServiceAttributes.subCategory, subCategory);
+        query.include(ServiceAttributes.subCategory);
+
+        query.whereEqualTo(ServiceAttributes.subCategory, subCategory);
 
         List<Service> services = null;
 
         try {
-            services = servicesLocalQuery.find();
+            services = query.find();
 
         } catch (ParseException e) {
 
@@ -50,9 +66,11 @@ public class ServiceRemote {
 
     public void loadServices(ParseQuery<Service> servicesRemoteQuery, final ServiceCompletion.ErrorCompletion completion){
 
-        servicesRemoteQuery.include(ServiceAttributes.subCategory);
+        query = servicesRemoteQuery;
 
-        servicesRemoteQuery.findInBackground(new FindCallback<Service>() {
+        query.include(ServiceAttributes.subCategory);
+
+        query.findInBackground(new FindCallback<Service>() {
             @Override
             public void done(List<Service> objects, com.parse.ParseException e) {
 
@@ -77,7 +95,7 @@ public class ServiceRemote {
 
     public void loadSubCategorizedServices(SubCategory subCategory, final ServiceCompletion.ErrorCompletion completion){
 
-        ParseQuery query = Service.getQuery();
+        setQuery();
 
         query.whereEqualTo(ServiceAttributes.subCategory, subCategory);
 

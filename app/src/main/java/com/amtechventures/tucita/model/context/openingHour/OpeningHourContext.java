@@ -16,8 +16,15 @@ public class OpeningHourContext {
     private OpeningHourRemote openingHourRemote;
 
     public OpeningHourContext(){
+
         openingHourLocal = new OpeningHourLocal();
+        
         openingHourRemote = new OpeningHourRemote();
+    }
+
+    public void cancelQuery(){
+
+        openingHourRemote.cancelQuery();
     }
 
     public static OpeningHourContext context(OpeningHourContext openingHourContext) {

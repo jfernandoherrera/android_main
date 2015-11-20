@@ -21,7 +21,10 @@ public class CategoryRemote {
 
     public void cancelQuery(){
 
-        query.cancel();
+        if(query != null){
+
+            query.cancel();
+        }
     }
 
     public void loadCategories(final CategoryCompletion.CategoriesErrorCompletion completion) {

@@ -11,9 +11,28 @@ import java.util.List;
 
 public class SubCategoryRemote {
 
+    ParseQuery<SubCategory> query;
+
+    private void setQuery(){
+
+        query = SubCategory.getQuery();
+    }
+
+    public void cancelQuery(){
+
+        if(query != null){
+
+            query.cancel();
+        }
+
+    }
+
     public void loadSubCategories(ParseQuery<SubCategory> subCategoryRemoteQuery, final SubCategoryCompletion.ErrorCompletion completion) {
 
-        subCategoryRemoteQuery.findInBackground(new FindCallback<SubCategory>() {
+        query = subCategoryRemoteQuery;
+
+        query.findInBackground(new FindCallback<SubCategory>() {
+
             @Override
             public void done(List<SubCategory> objects, com.parse.ParseException e) {
 
@@ -39,9 +58,9 @@ public class SubCategoryRemote {
 
     public void loadLikeSubCategories(String like, final SubCategoryCompletion.ErrorCompletion completion) {
 
-        ParseQuery subCategoriesRemoteQuery = SubCategory.getQuery();
+        setQuery();
 
-        subCategoriesRemoteQuery.whereContains(CategoryAttributes.name, like).findInBackground(new FindCallback<SubCategory>() {
+        query.whereContains(CategoryAttributes.name, like).findInBackground(new FindCallback<SubCategory>() {
             @Override
             public void done(List<SubCategory> objects, com.parse.ParseException e) {
 

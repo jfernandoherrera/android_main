@@ -32,6 +32,11 @@ public class SubCategoryContext {
         subCategoryLocal = new SubCategoryLocal();
     }
 
+    public void cancelQuery(){
+
+    subCategoryRemote.cancelQuery();
+    }
+
     public List<SubCategory> loadSubCategories(Category category, SubCategoryCompletion.ErrorCompletion completion){
 
       List subCategories;

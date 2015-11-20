@@ -1,6 +1,7 @@
 package com.amtechventures.tucita.activities.search.advanced;
 
 import android.location.Location;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -9,7 +10,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.search.adapters.AdvancedSearchAdapter;
@@ -23,16 +25,15 @@ import com.amtechventures.tucita.model.domain.service.Service;
 import com.amtechventures.tucita.model.domain.subcategory.SubCategory;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.error.AppError;
-import com.amtechventures.tucita.utils.blocks.Completion;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class AdvancedSearchActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
+    private ProgressBar progressBar;
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
@@ -44,8 +45,8 @@ public class AdvancedSearchActivity extends AppCompatActivity implements GoogleA
     private String name;
     private SubCategory subCategory;
     private ArrayList priceStrings = new ArrayList<>();
-    GoogleApiClient googleApiClient;
-    Location lastLocation;
+    private GoogleApiClient googleApiClient;
+    private Location lastLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +67,8 @@ public class AdvancedSearchActivity extends AppCompatActivity implements GoogleA
 
         recyclerView.setHasFixedSize(true);
 
+        progressBar = (ProgressBar) findViewById(R.id.progress);
+
         layoutManager = new GridLayoutManager(getApplicationContext(), 1);
 
         recyclerView.setLayoutManager(layoutManager);
@@ -76,11 +79,17 @@ public class AdvancedSearchActivity extends AppCompatActivity implements GoogleA
     }
 
     protected synchronized void buildGoogleApiClient() {
+
          googleApiClient = new GoogleApiClient.Builder(this)
+
                 .addConnectionCallbacks(this)
+
                 .addOnConnectionFailedListener(this)
+
                 .addApi(LocationServices.API)
+
                 .build();
+
         googleApiClient.connect();
     }
 
@@ -99,6 +108,12 @@ public class AdvancedSearchActivity extends AppCompatActivity implements GoogleA
 
         super.onPause();
 
+        subCategoryContext.cancelQuery();
+
+        serviceContext.cancelQuery();
+
+        venueContext.cancelQuery();
+
         finish();
     }
 
@@ -116,7 +131,7 @@ public class AdvancedSearchActivity extends AppCompatActivity implements GoogleA
 
     }
 
-    private List<Venue> setupVenues(List<Service> services){
+    private List<Venue> setupVenues(List<Service> services) {
 
         List<Venue> venuesList = venueContext.loadSubCategorizedNearVenues(services, lastLocation, new VenueCompletion.ErrorCompletion() {
 
@@ -134,6 +149,8 @@ public class AdvancedSearchActivity extends AppCompatActivity implements GoogleA
                     adapter = new AdvancedSearchAdapter(venues, priceStrings, subCategory.getName());
 
                     recyclerView.setAdapter(adapter);
+
+                    progressBar.setVisibility(View.INVISIBLE);
                 }
             }
 
@@ -202,6 +219,6 @@ public class AdvancedSearchActivity extends AppCompatActivity implements GoogleA
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
-        Log.i("derdd",connectionResult.getErrorMessage());
+
     }
 }

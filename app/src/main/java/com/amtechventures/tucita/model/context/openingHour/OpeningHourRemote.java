@@ -13,9 +13,21 @@ import java.util.List;
 public class OpeningHourRemote {
 
 
+    ParseQuery<OpeningHour> query;
+
+    public void cancelQuery(){
+
+        if(query != null){
+
+            query.cancel();
+        }
+    }
+
     public void loadOpeningHours(ParseQuery<OpeningHour> openingHourRemoteQuery, final OpeningHourCompletion.OpeningHourErrorCompletion completion){
 
-        openingHourRemoteQuery.findInBackground(new FindCallback<OpeningHour>() {
+        query = openingHourRemoteQuery;
+
+        query.findInBackground(new FindCallback<OpeningHour>() {
             @Override
             public void done(List<OpeningHour> objects, com.parse.ParseException e) {
 

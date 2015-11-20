@@ -58,4 +58,9 @@ public class VenueContext {
 
         return venues;
     }
+
+    public void cancelQuery(){
+
+        venueRemote.cancelQuery();
+    }
 }

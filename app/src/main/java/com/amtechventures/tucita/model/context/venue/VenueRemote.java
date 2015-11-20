@@ -2,6 +2,7 @@ package com.amtechventures.tucita.model.context.venue;
 
 import android.location.Location;
 
+import com.amtechventures.tucita.model.domain.category.Category;
 import com.amtechventures.tucita.model.domain.city.City;
 import com.amtechventures.tucita.model.domain.city.CityAttributes;
 import com.amtechventures.tucita.model.domain.service.Service;
@@ -17,6 +18,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VenueRemote {
+
+    ParseQuery<Venue> query;
+
+    private void setQuery(){
+
+        query = Venue.getQuery();
+    }
+
+    public void cancelQuery(){
+
+        if(query != null){
+
+            query.cancel();
+        }
+    }
 
     public void findVenue(String lookThat, String address, final VenueCompletion.ErrorCompletion completion){
 
@@ -34,9 +50,11 @@ public class VenueRemote {
 
     queries.add(queryName);
 
-    ParseQuery query = ParseQuery.or(queries) ;
+    ParseQuery queryTemp = ParseQuery.or(queries) ;
 
-    query.include(VenueAttributes.city);
+        query = queryTemp;
+
+        query.include(VenueAttributes.city);
 
         query.findInBackground(new FindCallback<Venue>() {
             @Override
@@ -95,7 +113,9 @@ public class VenueRemote {
 
         queries.add(queryVenueDepartment);
 
-        ParseQuery query = ParseQuery.or(queries) ;
+        ParseQuery queryTemp = ParseQuery.or(queries) ;
+
+        query = queryTemp;
 
         query.include(VenueAttributes.city);
 
@@ -123,7 +143,7 @@ public class VenueRemote {
     {
         ParseGeoPoint point = new ParseGeoPoint(location.getLatitude(), location.getLongitude());
 
-        ParseQuery query = Venue.getQuery();
+        setQuery();
 
         query.whereContainedIn(VenueAttributes.services, services);
 
