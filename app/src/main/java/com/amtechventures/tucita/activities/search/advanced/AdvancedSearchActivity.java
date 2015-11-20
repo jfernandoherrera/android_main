@@ -1,5 +1,6 @@
 package com.amtechventures.tucita.activities.search.advanced;
 
+import android.location.Location;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -23,11 +24,14 @@ import com.amtechventures.tucita.model.domain.subcategory.SubCategory;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.error.AppError;
 import com.amtechventures.tucita.utils.blocks.Completion;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdvancedSearchActivity extends AppCompatActivity {
+public class AdvancedSearchActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView recyclerView;
@@ -40,6 +44,7 @@ public class AdvancedSearchActivity extends AppCompatActivity {
     private String name;
     private SubCategory subCategory;
     private ArrayList priceStrings = new ArrayList<>();
+    GoogleApiClient googleApiClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +71,18 @@ public class AdvancedSearchActivity extends AppCompatActivity {
 
         setToolbar();
 
+        buildGoogleApiClient();
+
         setupGrid();
+    }
+
+    protected synchronized void buildGoogleApiClient() {
+         googleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+        googleApiClient.connect();
     }
 
     private void setToolbar(){
@@ -88,33 +104,17 @@ public class AdvancedSearchActivity extends AppCompatActivity {
     }
 
     private void setupPriceFrom(){
-        try {
 
             for (Venue venue : venues) {
 
-                int price = serviceContext.getPricesFrom(subCategory, venue, new Completion.IntErrorCompletion() {
+                int price = serviceContext.getPricesFrom(subCategory, venue);
 
-                    @Override
-                    public void completion(int number, AppError error) {
-
-                        if (number != 0) {
-                            priceStrings.add(String.valueOf(number));
-
-                            adapter = new AdvancedSearchAdapter(venues, priceStrings, subCategory.getName());
-
-                            recyclerView.setAdapter(adapter);
-
-                        }
-                    }
-                });
                 if(price != 0) {
 
                     priceStrings.add(String.valueOf(price));
                 }
             }
-        }catch (Exception e){
 
-        }
     }
 
     private List<Venue> setupVenues(List<Service> services){
@@ -132,6 +132,9 @@ public class AdvancedSearchActivity extends AppCompatActivity {
 
                     setupPriceFrom();
 
+                    adapter = new AdvancedSearchAdapter(venues, priceStrings, subCategory.getName());
+
+                    recyclerView.setAdapter(adapter);
                 }
             }
 
@@ -179,5 +182,26 @@ public class AdvancedSearchActivity extends AppCompatActivity {
         finish();
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        Log.i("derdd","noo");
+       Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(
+                googleApiClient);
+        if (lastLocation != null) {
+            Log.i("derdd",String.valueOf(lastLocation.getLatitude()));
+            Log.i("derdd", String.valueOf(lastLocation.getLongitude()));
+        }
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        Log.i("derdd",connectionResult.getErrorMessage());
     }
 }

@@ -14,27 +14,24 @@ import java.util.List;
 
 public class ServiceRemote {
 
-    public void getPricesFrom(SubCategory subCategory, ParseQuery<Service> servicesLocalQuery, final Completion.IntErrorCompletion completion){
+    public int getPricesFrom(SubCategory subCategory, ParseQuery<Service> servicesLocalQuery){
 
         servicesLocalQuery.include(ServiceAttributes.subCategory);
 
         servicesLocalQuery.whereEqualTo(ServiceAttributes.subCategory, subCategory);
 
-          servicesLocalQuery.findInBackground(new FindCallback<Service>() {
-                @Override
-                public void done(List<Service> services, ParseException e) {
+        List<Service> services = null;
 
-                    int priceFrom = 0;
+        try {
+            services = servicesLocalQuery.find();
+
+        } catch (ParseException e) {
+
+            e.printStackTrace();
+        }
+        int priceFrom = 0;
 
                     if(services != null){
-
-                        try {
-                            ParseObject.pinAll(services);
-
-                        } catch (ParseException e1) {
-
-                            e1.printStackTrace();
-                        }
 
                         priceFrom = services.get(0).getPrice();
 
@@ -48,14 +45,7 @@ public class ServiceRemote {
                             }
                         }
                     }
-
-                    AppError appError = e != null ? new AppError(Service.class.toString(), 0, null) : null;
-
-                    completion.completion(priceFrom, appError);
-                }
-
-            });
-
+        return priceFrom;
     }
 
     public void loadServices(ParseQuery<Service> servicesRemoteQuery, final ServiceCompletion.ErrorCompletion completion){

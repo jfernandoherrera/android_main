@@ -11,13 +11,9 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.venue.VenueActivity;
-import com.amtechventures.tucita.model.context.service.ServiceContext;
 import com.amtechventures.tucita.model.domain.service.ServiceAttributes;
-import com.amtechventures.tucita.model.domain.subcategory.SubCategory;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.domain.venue.VenueAttributes;
-import com.amtechventures.tucita.model.error.AppError;
-import com.amtechventures.tucita.utils.blocks.Completion;
 
 import java.util.List;
 
@@ -29,11 +25,11 @@ public class AdvancedSearchAdapter extends RecyclerView.Adapter<AdvancedSearchAd
 
     String subCategory;
 
-    public AdvancedSearchAdapter(List<Venue> offer, List<String> priceStrings, String subCategory) {
+    public AdvancedSearchAdapter(List<Venue> venues, List<String> priceStrings, String subCategory) {
 
         super();
 
-        items = offer;
+        items = venues;
 
         this.priceStrings = priceStrings;
 
