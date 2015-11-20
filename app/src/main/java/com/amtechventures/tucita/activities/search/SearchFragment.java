@@ -64,9 +64,9 @@ public class SearchFragment extends Fragment {
 
         separator.setVisibility(View.INVISIBLE);
 
-        subCategoriesAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1);
+        subCategoriesAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1);
 
-        venuesAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1);
+        venuesAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1);
 
         listViewTreatments.setAdapter(subCategoriesAdapter);
 
@@ -190,6 +190,8 @@ public class SearchFragment extends Fragment {
 
             textSubCategories();
 
+            subCategories.clear();
+
             subCategories.addAll(subCategoriesList);
 
             subCategoriesAdapter.addAll(setSubCategoriesToStringsArray());
@@ -231,6 +233,8 @@ public class SearchFragment extends Fragment {
             if (venuesList != null && !venuesList.isEmpty()) {
 
                 textVenues();
+
+                venues.clear();
 
                 venues.addAll(venuesList);
 
