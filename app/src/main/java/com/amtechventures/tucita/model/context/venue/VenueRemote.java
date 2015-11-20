@@ -1,5 +1,7 @@
 package com.amtechventures.tucita.model.context.venue;
 
+import android.location.Location;
+
 import com.amtechventures.tucita.model.domain.city.City;
 import com.amtechventures.tucita.model.domain.city.CityAttributes;
 import com.amtechventures.tucita.model.domain.service.Service;
@@ -8,6 +10,7 @@ import com.amtechventures.tucita.model.domain.venue.VenueAttributes;
 import com.amtechventures.tucita.model.error.AppError;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import java.util.ArrayList;
@@ -116,11 +119,15 @@ public class VenueRemote {
         });
     }
 
-    public void loadSubCategorizedVenues(List<Service> services, final VenueCompletion.ErrorCompletion completion )
+    public void loadSubCategorizedNearVenues(List<Service> services, Location location, final VenueCompletion.ErrorCompletion completion )
     {
+        ParseGeoPoint point = new ParseGeoPoint(location.getLatitude(), location.getLongitude());
+
         ParseQuery query = Venue.getQuery();
 
         query.whereContainedIn(VenueAttributes.services, services);
+
+        query.whereNear(VenueAttributes.location, point);
 
         query.include(VenueAttributes.city);
 

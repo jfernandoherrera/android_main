@@ -1,6 +1,8 @@
 package com.amtechventures.tucita.model.context.venue;
 
 
+import android.location.Location;
+
 import com.amtechventures.tucita.model.domain.service.Service;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 
@@ -48,11 +50,11 @@ public class VenueContext {
         return venue;
     }
 
-    public List<Venue> loadSubCategorizedVenues(List<Service> services, VenueCompletion.ErrorCompletion completion) {
+    public List<Venue> loadSubCategorizedNearVenues(List<Service> services, Location location, VenueCompletion.ErrorCompletion completion) {
 
         List<Venue> venues = venueLocal.loadSubCategorizedVenues(services);
 
-        venueRemote.loadSubCategorizedVenues(services, completion);
+        venueRemote.loadSubCategorizedNearVenues(services,location, completion);
 
         return venues;
     }

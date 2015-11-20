@@ -45,6 +45,7 @@ public class AdvancedSearchActivity extends AppCompatActivity implements GoogleA
     private SubCategory subCategory;
     private ArrayList priceStrings = new ArrayList<>();
     GoogleApiClient googleApiClient;
+    Location lastLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,8 +73,6 @@ public class AdvancedSearchActivity extends AppCompatActivity implements GoogleA
         setToolbar();
 
         buildGoogleApiClient();
-
-        setupGrid();
     }
 
     protected synchronized void buildGoogleApiClient() {
@@ -119,7 +118,7 @@ public class AdvancedSearchActivity extends AppCompatActivity implements GoogleA
 
     private List<Venue> setupVenues(List<Service> services){
 
-        List<Venue> venuesList = venueContext.loadSubCategorizedVenues(services, new VenueCompletion.ErrorCompletion() {
+        List<Venue> venuesList = venueContext.loadSubCategorizedNearVenues(services, lastLocation, new VenueCompletion.ErrorCompletion() {
 
             @Override
             public void completion(List<Venue> venueList, AppError error) {
@@ -163,7 +162,6 @@ public class AdvancedSearchActivity extends AppCompatActivity implements GoogleA
                 });
 
         setupVenues(services);
-
     }
 
     @Override
@@ -186,12 +184,14 @@ public class AdvancedSearchActivity extends AppCompatActivity implements GoogleA
 
     @Override
     public void onConnected(Bundle bundle) {
-        Log.i("derdd","noo");
-       Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(
+
+       lastLocation = LocationServices.FusedLocationApi.getLastLocation(
+
                 googleApiClient);
+
         if (lastLocation != null) {
-            Log.i("derdd",String.valueOf(lastLocation.getLatitude()));
-            Log.i("derdd", String.valueOf(lastLocation.getLongitude()));
+
+            setupGrid();
         }
     }
 
