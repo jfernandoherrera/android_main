@@ -1,20 +1,18 @@
 package com.amtechventures.tucita.activities.search.advanced;
 
 import android.location.Location;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
-
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.search.adapters.AdvancedSearchAdapter;
+import com.amtechventures.tucita.model.context.location.LocationContext;
 import com.amtechventures.tucita.model.context.service.ServiceCompletion;
 import com.amtechventures.tucita.model.context.service.ServiceContext;
 import com.amtechventures.tucita.model.context.subcategory.SubCategoryContext;
@@ -27,11 +25,10 @@ import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.error.AppError;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationServices;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdvancedSearchActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class AdvancedSearchActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks{
 
     private ProgressBar progressBar;
     private RecyclerView.LayoutManager layoutManager;
@@ -45,8 +42,7 @@ public class AdvancedSearchActivity extends AppCompatActivity implements GoogleA
     private String name;
     private SubCategory subCategory;
     private ArrayList priceStrings = new ArrayList<>();
-    private GoogleApiClient googleApiClient;
-    private Location lastLocation;
+    private LocationContext locationContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +57,8 @@ public class AdvancedSearchActivity extends AppCompatActivity implements GoogleA
 
         serviceContext = ServiceContext.context(serviceContext);
 
+        locationContext = LocationContext.context(locationContext, this, this, this);
+
         name = getIntent().getStringExtra(CategoryAttributes.name);
 
         recyclerView = (RecyclerView)findViewById(R.id.recycler_view);
@@ -74,23 +72,6 @@ public class AdvancedSearchActivity extends AppCompatActivity implements GoogleA
         recyclerView.setLayoutManager(layoutManager);
 
         setToolbar();
-
-        buildGoogleApiClient();
-    }
-
-    protected synchronized void buildGoogleApiClient() {
-
-         googleApiClient = new GoogleApiClient.Builder(this)
-
-                .addConnectionCallbacks(this)
-
-                .addOnConnectionFailedListener(this)
-
-                .addApi(LocationServices.API)
-
-                .build();
-
-        googleApiClient.connect();
     }
 
     private void setToolbar(){
@@ -131,35 +112,38 @@ public class AdvancedSearchActivity extends AppCompatActivity implements GoogleA
 
     }
 
-    private List<Venue> setupVenues(List<Service> services) {
+    private void setupVenues(List<Service> services) {
 
-        List<Venue> venuesList = venueContext.loadSubCategorizedNearVenues(services, lastLocation, new VenueCompletion.ErrorCompletion() {
+        Location lastLocation = locationContext.getLastLocation();
 
-            @Override
-            public void completion(List<Venue> venueList, AppError error) {
+        if (lastLocation != null) {
 
-                if (venueList != null) {
+            List<Venue> venuesList  = venueContext.loadSubCategorizedNearVenues(services, lastLocation, new VenueCompletion.ErrorCompletion() {
 
-                    venues.clear();
+                @Override
+                public void completion(List<Venue> venueList, AppError error) {
 
-                    venues.addAll(venueList);
+                    if (venueList != null) {
 
-                    setupPriceFrom();
+                        venues.clear();
 
-                    adapter = new AdvancedSearchAdapter(venues, priceStrings, subCategory.getName());
+                        venues.addAll(venueList);
 
-                    recyclerView.setAdapter(adapter);
+                        setupPriceFrom();
 
-                    progressBar.setVisibility(View.INVISIBLE);
+                        adapter = new AdvancedSearchAdapter(venues, priceStrings, subCategory.getName());
+
+                        recyclerView.setAdapter(adapter);
+
+                        progressBar.setVisibility(View.INVISIBLE);
+                    }
                 }
-            }
 
-        });
-        venues.clear();
+            });
+            venues.clear();
 
-        venues.addAll(venuesList);
-
-        return  venuesList;
+            venues.addAll(venuesList);
+        }
     }
 
     private void setupGrid() {
@@ -202,14 +186,9 @@ public class AdvancedSearchActivity extends AppCompatActivity implements GoogleA
     @Override
     public void onConnected(Bundle bundle) {
 
-       lastLocation = LocationServices.FusedLocationApi.getLastLocation(
-
-                googleApiClient);
-
-        if (lastLocation != null) {
+    locationContext.setLocation();
 
             setupGrid();
-        }
     }
 
     @Override
