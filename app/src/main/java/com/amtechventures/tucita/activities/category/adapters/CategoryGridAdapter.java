@@ -5,13 +5,14 @@ import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.ImageButton;
 import android.view.LayoutInflater;
 import com.amtechventures.tucita.R;
 import android.support.v7.widget.RecyclerView;
 import com.amtechventures.tucita.activities.subcategory.SubCategoryActivity;
 import com.amtechventures.tucita.model.context.category.CategoryContext;
 import com.amtechventures.tucita.model.domain.category.Category;
+import com.mikhaellopez.circularimageview.CircularImageView;
+
 
 public class CategoryGridAdapter extends RecyclerView.Adapter<CategoryGridAdapter.ViewHolder> {
 
@@ -59,7 +60,7 @@ public class CategoryGridAdapter extends RecyclerView.Adapter<CategoryGridAdapte
 
         protected TextView category;
 
-        private ImageButton categoryIcon;
+        private CircularImageView categoryIcon;
 
         public ViewHolder(final View itemView) {
 
@@ -67,7 +68,7 @@ public class CategoryGridAdapter extends RecyclerView.Adapter<CategoryGridAdapte
 
             category = (TextView)itemView.findViewById(R.id.textCategory);
 
-            categoryIcon = (ImageButton)itemView.findViewById(R.id.imageButtonCategory);
+            categoryIcon = (CircularImageView)itemView.findViewById(R.id.imageButtonCategory);
 
             categoryIcon.setOnClickListener(new View.OnClickListener() {
 

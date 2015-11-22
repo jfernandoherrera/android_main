@@ -26,6 +26,7 @@
         android:id="@+id/go_to_login"
         android:text="@string/action_sign_in"
         android:onClick="goToLogin"
+        android:padding="5dp"
         android:layout_alignParentBottom="true"
         />
 </RelativeLayout>
