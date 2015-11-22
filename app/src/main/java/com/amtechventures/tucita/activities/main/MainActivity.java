@@ -1,6 +1,7 @@
 package com.amtechventures.tucita.activities.main;
 
 import android.content.Intent;
+import android.media.Image;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MenuItemCompat;
@@ -8,11 +9,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.amtechventures.tucita.R;
@@ -21,15 +23,14 @@ import com.amtechventures.tucita.activities.category.CategoryFragment;
 import com.amtechventures.tucita.activities.login.LoginActivity;
 import com.amtechventures.tucita.activities.search.SearchFragment;
 import com.amtechventures.tucita.model.context.user.UserContext;
-
-import static android.view.View.INVISIBLE;
+import com.amtechventures.tucita.model.domain.user.UserAttributes;
 
 public class MainActivity extends AppCompatActivity {
 
     private SearchFragment searchFragment;
     private Toolbar toolbar;
     private UserContext userContext;
-    private final int minimunToSearch = 3;
+    private final int minimumToSearch = 3;
     private CategoryFragment fragment;
 
     @Override
@@ -54,6 +55,26 @@ public class MainActivity extends AppCompatActivity {
         fragment.setUserVisibleHint(true);
 
         setToolbar();
+
+        setupLogged();
+    }
+
+    private void setupLogged(){
+
+        boolean connected = getIntent().getExtras().getBoolean(UserAttributes.connected);
+
+        if (connected){
+
+            Button button = (Button) findViewById(R.id.go_to_login);
+
+            button.setVisibility(View.GONE);
+
+        }else {
+
+            ImageButton button = (ImageButton) findViewById(R.id.account);
+
+            button.setVisibility(View.GONE);
+        }
     }
 
     private void setCategoryFragment(){
@@ -168,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
 
-                if (newText.length() < minimunToSearch) {
+                if (newText.length() < minimumToSearch) {
 
                     Toast typeMore = Toast.makeText(getApplicationContext(), R.string.typing_advertisement, Toast.LENGTH_SHORT);
 

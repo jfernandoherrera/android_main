@@ -20,6 +20,13 @@
         android:id="@+id/layout_main"
         >
     </RelativeLayout>
+    <ImageButton
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:id="@+id/account"
+        android:layout_alignParentBottom="true"
+        android:onClick="goToAccount"
+        />
     <Button
         android:layout_width="match_parent"
         android:layout_height="60dp"

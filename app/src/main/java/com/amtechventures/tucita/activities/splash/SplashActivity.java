@@ -16,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.amtechventures.tucita.activities.main.MainActivity;
 import com.amtechventures.tucita.model.context.user.UserContext;
 import com.amtechventures.tucita.activities.category.CategoryFragment;
+import com.amtechventures.tucita.model.domain.user.UserAttributes;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -107,9 +108,11 @@ public class SplashActivity extends AppCompatActivity {
 
         Class activity = MainActivity.class;
 
-        Intent i = new Intent(SplashActivity.this, activity);
+        Intent intent = new Intent(SplashActivity.this, activity);
 
-        startActivity(i);
+        intent.putExtra(UserAttributes.connected, false);
+
+        startActivity(intent);
 
         finish();
 
@@ -119,9 +122,11 @@ public class SplashActivity extends AppCompatActivity {
 
         Class activity = MainActivity.class;
 
-        Intent i = new Intent(SplashActivity.this, activity);
+        Intent intent = new Intent(SplashActivity.this, activity);
 
-        startActivity(i);
+        intent.putExtra(UserAttributes.connected, true);
+
+        startActivity(intent);
 
         finish();
 
