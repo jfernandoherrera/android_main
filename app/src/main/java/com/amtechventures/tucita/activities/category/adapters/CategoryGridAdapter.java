@@ -4,6 +4,8 @@ import java.util.List;
 import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.view.LayoutInflater;
 import com.amtechventures.tucita.R;
@@ -74,6 +76,10 @@ public class CategoryGridAdapter extends RecyclerView.Adapter<CategoryGridAdapte
 
                 @Override
                 public void onClick(View view) {
+
+                    Animation animation = AnimationUtils.loadAnimation(view.getContext(),R.anim.circular_image_view);
+
+                    categoryIcon.startAnimation(animation);
 
                     Intent intent = new Intent(view.getContext() , SubCategoryActivity.class);
 
