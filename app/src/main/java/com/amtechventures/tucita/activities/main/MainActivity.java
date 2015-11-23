@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
     private UserContext userContext;
     private final int minimumToSearch = 3;
     private CategoryFragment fragment;
-    private  boolean forward;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,8 +57,6 @@ public class MainActivity extends AppCompatActivity {
         setToolbar();
 
         setupLogged();
-
-        forward = false;
     }
 
     private void setupLogged(){
@@ -226,8 +223,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void goToLogin(View v) {
 
-        forward = true;
-
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
 
         startActivity(intent);
@@ -235,8 +230,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goToAccount(View v) {
-
-        forward = true;
 
         Intent intent = new Intent(MainActivity.this, AccountActivity.class);
 

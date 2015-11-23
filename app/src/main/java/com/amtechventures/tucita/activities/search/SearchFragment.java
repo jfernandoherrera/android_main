@@ -11,8 +11,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.amtechventures.tucita.R;
+import com.amtechventures.tucita.activities.book.BookActivity;
 import com.amtechventures.tucita.activities.search.advanced.AdvancedSearchActivity;
-import com.amtechventures.tucita.activities.venue.VenueActivity;
+import com.amtechventures.tucita.activities.venue.VenueFragment;
 import com.amtechventures.tucita.model.context.subcategory.SubCategoryContext;
 import com.amtechventures.tucita.model.context.subcategory.SubCategoryCompletion;
 import com.amtechventures.tucita.model.context.venue.VenueCompletion;
@@ -116,7 +117,7 @@ public class SearchFragment extends Fragment {
 
         String name = venues.get(position).getName();
 
-        Class activity = VenueActivity.class;
+        Class activity = BookActivity.class;
 
         String address = venues.get(position).getAddress();
 

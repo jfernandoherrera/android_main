@@ -2,6 +2,7 @@ package com.amtechventures.tucita.activities.category.adapters;
 
 import java.util.List;
 import android.content.Intent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -72,28 +73,51 @@ public class CategoryGridAdapter extends RecyclerView.Adapter<CategoryGridAdapte
 
             categoryIcon = (CircularImageView)itemView.findViewById(R.id.imageButtonCategory);
 
-            categoryIcon.setOnClickListener(new View.OnClickListener() {
+            categoryIcon.setOnTouchListener(new View.OnTouchListener() {
 
                 @Override
-                public void onClick(View view) {
+                public boolean onTouch(View view, MotionEvent event) {
 
-                    Animation animation = AnimationUtils.loadAnimation(view.getContext(),R.anim.circular_image_view);
+                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
 
-                    categoryIcon.startAnimation(animation);
+                        Animation animation = AnimationUtils.loadAnimation(view.getContext(), R.anim.circular_image_view);
 
-                    Intent intent = new Intent(view.getContext() , SubCategoryActivity.class);
+                        categoryIcon.startAnimation(animation);
 
-                    intent.putExtra(Category.class.getName(),category.getText());
+                    } else {
 
-                    view.getContext().startActivity(intent);
+                        if (event.getAction() == MotionEvent.ACTION_UP) {
 
-                    categoryContext.cancelQuery();
+                            categoryIcon.callOnClick();
+                        }
+                    }
+                        return true;
+                    }
                 }
 
-            });
+                );
+
+                categoryIcon.setOnClickListener(new View.OnClickListener()
+                                                {
+
+                                                    @Override
+                                                    public void onClick(View view) {
+
+                                                        Intent intent = new Intent(view.getContext(), SubCategoryActivity.class);
+
+                                                        intent.putExtra(Category.class.getName(), category.getText());
+
+                                                        view.getContext().startActivity(intent);
+
+                                                        categoryContext.cancelQuery();
+                                                    }
+
+                                                }
+
+                );
+
+            }
 
         }
-
-    }
 
 }

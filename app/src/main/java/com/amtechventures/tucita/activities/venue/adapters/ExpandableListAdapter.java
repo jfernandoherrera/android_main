@@ -1,6 +1,7 @@
 package com.amtechventures.tucita.activities.venue.adapters;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,8 @@ import android.widget.ExpandableListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.amtechventures.tucita.R;
+import com.amtechventures.tucita.activities.book.BookActivity;
+import com.amtechventures.tucita.activities.venue.VenueFragment;
 import com.amtechventures.tucita.model.domain.subcategory.SubCategory;
 import com.amtechventures.tucita.utils.views.ViewUtils;
 
@@ -25,14 +28,17 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter{
     private ArrayList<SubCategory> parentItems;
     private ArrayList<String> child;
     private final ExpandableListView expandableListView;
+    VenueFragment.OnServiceSelected listener;
     // constructor
-    public ExpandableListAdapter(List<SubCategory> parents, List<ArrayList> children, ExpandableListView expandableListView)
+    public ExpandableListAdapter(List<SubCategory> parents, List<ArrayList> children, ExpandableListView expandableListView, VenueFragment.OnServiceSelected listener)
     {
         this.parentItems = (ArrayList<SubCategory>) parents;
 
         this.childItems = (ArrayList<ArrayList>) children;
 
         this.expandableListView = expandableListView;
+
+        this.listener = listener;
     }
 
     public void setInflater(LayoutInflater inflater, Activity activity)
@@ -68,12 +74,13 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter{
             @Override
             public void onClick(View view) {
 
-                Toast.makeText(activity, textView.getText(),
-                        Toast.LENGTH_SHORT).show();
+                listener.onServiceSelected((String) textView.getText());
             }
         });
         return convertView;
     }
+
+
 
     // method getGroupView is called automatically for each parent item
     // Implement this method as per your requirement

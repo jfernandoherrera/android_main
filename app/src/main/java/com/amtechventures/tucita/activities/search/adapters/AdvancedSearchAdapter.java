@@ -10,7 +10,8 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import com.amtechventures.tucita.R;
-import com.amtechventures.tucita.activities.venue.VenueActivity;
+import com.amtechventures.tucita.activities.book.BookActivity;
+import com.amtechventures.tucita.activities.venue.VenueFragment;
 import com.amtechventures.tucita.model.domain.service.ServiceAttributes;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.domain.venue.VenueAttributes;
@@ -129,7 +130,7 @@ public class AdvancedSearchAdapter extends RecyclerView.Adapter<AdvancedSearchAd
                 @Override
                 public void onClick(View view) {
 
-                    Intent intent = new Intent(view.getContext(), VenueActivity.class);
+                    Intent intent = new Intent(view.getContext(), BookActivity.class);
 
                     intent.putExtra(Venue.class.getName(),name.getText());
 

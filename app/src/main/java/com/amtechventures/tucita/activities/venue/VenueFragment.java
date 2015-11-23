@@ -3,12 +3,12 @@ package com.amtechventures.tucita.activities.venue;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
@@ -31,16 +31,17 @@ import com.amtechventures.tucita.model.domain.venue.VenueAttributes;
 import com.amtechventures.tucita.model.error.AppError;
 import com.amtechventures.tucita.utils.views.OpeningHourView;
 import com.amtechventures.tucita.utils.views.ViewUtils;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class VenueActivity extends AppCompatActivity {
+
+public class VenueFragment extends Fragment {
 
     private ArrayList<Integer> days;
     private final int twelveHoursClock = 12;
     private final int oneDigitNumber = 9;
+    private final int daysInAWeek = 7;
     private final String shortHour = "hr";
     private final String shortMinutes = "mins";
     private Venue venue;
@@ -58,13 +59,34 @@ public class VenueActivity extends AppCompatActivity {
     private ExpandableListView listViewFullMenu;
     private ExpandableListAdapter anotherMenuAdapter;
     private ExpandableListView listViewAnotherMenu;
+    private OnServiceSelected listener;
+
+    public interface OnServiceSelected{
+
+        void onServiceSelected(String serviceName);
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            listener = (OnServiceSelected) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
 
-        super.onCreate(savedInstanceState);
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        listener = null;
+    }
 
-        setContentView(R.layout.activity_venue);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        View rootView = inflater.inflate(R.layout.fragment_venue, container, false);
 
         venueContext = VenueContext.context(venueContext);
 
@@ -72,39 +94,38 @@ public class VenueActivity extends AppCompatActivity {
 
         openingHourContext = OpeningHourContext.context(openingHourContext);
 
-        venuePicture = (ImageView) findViewById(R.id.imageVenue);
+        venuePicture = (ImageView) rootView.findViewById(R.id.imageVenue);
 
-        venueName = (TextView) findViewById(R.id.title_Venue);
+        venueName = (TextView) rootView.findViewById(R.id.title_Venue);
 
-        venueDescription = (TextView) findViewById(R.id.textViewDescription);
+        venueDescription = (TextView) rootView.findViewById(R.id.textViewDescription);
 
-        ratingBar = (RatingBar) findViewById(R.id.ratingBar);
+        ratingBar = (RatingBar) rootView.findViewById(R.id.ratingBar);
 
-        location = (Button) findViewById(R.id.watch_location);
+        location = (Button) rootView.findViewById(R.id.watch_location);
 
-        listViewFullMenu = (ExpandableListView) findViewById(R.id.listViewFull);
+        listViewFullMenu = (ExpandableListView) rootView.findViewById(R.id.listViewFull);
 
-        listViewAnotherMenu = (ExpandableListView) findViewById(R.id.listViewTop);
+        listViewAnotherMenu = (ExpandableListView) rootView.findViewById(R.id.listViewTop);
 
-        setup();
+        setup(inflater, rootView);
+
+        return rootView;
     }
 
-    @Override
-    protected void onPause() {
-
-        super.onPause();
-
-        finish();
-    }
-
-    private void setup(){
+    private void setupDaysInAWeek(){
 
         days = new ArrayList();
 
-        for(int day = 1; day <= 7; day++){
+        for(int day = 1; day <= daysInAWeek; day++){
 
             days.add(day);
         }
+    }
+
+    private void setup(LayoutInflater inflater, View view){
+
+        setupDaysInAWeek();
 
         thisVenue();
 
@@ -118,11 +139,11 @@ public class VenueActivity extends AppCompatActivity {
 
         setupAddressAndlocation();
 
-        setupOpeningHours();
+        setupOpeningHours(view);
 
-        setupFullmenu();
+        setupFullMenu(inflater);
 
-        setupAnotherMenu();
+        setupAnotherMenu(inflater, view);
     }
 
     private void setupPicture(){
@@ -142,7 +163,7 @@ public class VenueActivity extends AppCompatActivity {
         venueDescription.setText(description);
     }
 
-    private void setupFullmenu(){
+    private void setupFullMenu(LayoutInflater inflater){
 
         List<Service> servicesList = serviceContext.loadServices(venue, new ServiceCompletion.ErrorCompletion() {
             @Override
@@ -164,20 +185,20 @@ public class VenueActivity extends AppCompatActivity {
         });
         setStringsArray(servicesList);
 
-        fullMenuAdapter = new ExpandableListAdapter(subCategories, services,listViewFullMenu);
+        fullMenuAdapter = new ExpandableListAdapter(subCategories, services,listViewFullMenu, listener);
 
-        fullMenuAdapter.setInflater((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE), this);
+        fullMenuAdapter.setInflater(inflater, getActivity());
 
         listViewFullMenu.setAdapter(fullMenuAdapter);
     }
 
-    private void setupAnotherMenu(){
+    private void setupAnotherMenu(LayoutInflater inflater, View view){
 
-        String subCategory = getIntent().getStringExtra(ServiceAttributes.subCategory);
+        String subCategory = getActivity().getIntent().getStringExtra(ServiceAttributes.subCategory);
 
         if (subCategory != null){
 
-            TextView specials = (TextView) findViewById(R.id.textViewTop);
+            TextView specials = (TextView) view.findViewById(R.id.textViewTop);
 
             String findService = getResources().getString(R.string.find_service);
 
@@ -200,9 +221,9 @@ public class VenueActivity extends AppCompatActivity {
             }
             arrayListServices.add(services.get(indexOf));
 
-            anotherMenuAdapter = new ExpandableListAdapter(arrayList, arrayListServices,listViewAnotherMenu);
+            anotherMenuAdapter = new ExpandableListAdapter(arrayList, arrayListServices,listViewAnotherMenu, listener);
 
-            anotherMenuAdapter.setInflater((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE), this);
+            anotherMenuAdapter.setInflater(inflater, getActivity());
 
             listViewAnotherMenu.setAdapter(anotherMenuAdapter);
 
@@ -221,9 +242,9 @@ public class VenueActivity extends AppCompatActivity {
 
             if(subCategories.contains(subCategory)){
 
-                int indexOfsubCategory = subCategories.indexOf(subCategory);
+                int indexOfSubCategory = subCategories.indexOf(subCategory);
 
-                services.get(indexOfsubCategory).add(setServiceString(service));
+                services.get(indexOfSubCategory).add(setServiceString(service));
             }else {
 
                 subCategories.add(subCategory);
@@ -272,7 +293,7 @@ public class VenueActivity extends AppCompatActivity {
         }
     }
 
-    private void setupOpeningHours(){
+    private void setupOpeningHours(final View view){
 
         List<OpeningHour> openingHoursList = openingHourContext.loadOpeningHours(venue, new OpeningHourCompletion.OpeningHourErrorCompletion() {
 
@@ -281,16 +302,16 @@ public class VenueActivity extends AppCompatActivity {
 
                 if (openingHoursList != null) {
 
-                    populateOpeningHours(openingHoursList);
+                    populateOpeningHours(openingHoursList, view);
                 }
 
             }
 
         });
-        populateOpeningHours(openingHoursList);
+        populateOpeningHours(openingHoursList, view);
     }
 
-    private OpeningHourView getViewDay(int day){
+    private OpeningHourView getViewDay(int day, View view){
 
         OpeningHourView openingHourView;
 
@@ -298,56 +319,56 @@ public class VenueActivity extends AppCompatActivity {
 
             case Calendar.MONDAY:
 
-                openingHourView = (OpeningHourView) findViewById(R.id.radioButton1);
+                openingHourView = (OpeningHourView) view.findViewById(R.id.radioButton1);
 
                 openingHourView.setDay(getResources().getString(R.string.monday));
 
                 break;
             case Calendar.TUESDAY:
 
-                openingHourView = (OpeningHourView) findViewById(R.id.radioButton2);
+                openingHourView = (OpeningHourView) view.findViewById(R.id.radioButton2);
 
                 openingHourView.setDay(getResources().getString(R.string.tuesday));
 
                 break;
             case Calendar.WEDNESDAY:
 
-                openingHourView = (OpeningHourView) findViewById(R.id.radioButton3);
+                openingHourView = (OpeningHourView) view.findViewById(R.id.radioButton3);
 
                 openingHourView.setDay(getResources().getString(R.string.wednesday));
 
                 break;
             case Calendar.THURSDAY:
 
-                openingHourView = (OpeningHourView)findViewById(R.id.radioButton4);
+                openingHourView = (OpeningHourView)view.findViewById(R.id.radioButton4);
 
                 openingHourView.setDay(getResources().getString(R.string.thursday));
 
                 break;
             case Calendar.FRIDAY:
 
-                openingHourView = (OpeningHourView) findViewById(R.id.radioButton5);
+                openingHourView = (OpeningHourView) view.findViewById(R.id.radioButton5);
 
                 openingHourView.setDay(getResources().getString(R.string.friday));
 
                 break;
             case Calendar.SATURDAY:
 
-                openingHourView = (OpeningHourView) findViewById(R.id.radioButton6);
+                openingHourView = (OpeningHourView) view.findViewById(R.id.radioButton6);
 
                 openingHourView.setDay(getResources().getString(R.string.saturday));
 
                 break;
             case Calendar.SUNDAY:
 
-                openingHourView = (OpeningHourView) findViewById(R.id.radioButton7);
+                openingHourView = (OpeningHourView) view.findViewById(R.id.radioButton7);
 
                 openingHourView.setDay(getResources().getString(R.string.sunday));
 
                 break;
             default:
 
-                openingHourView = (OpeningHourView) findViewById(R.id.radioButton1);
+                openingHourView = (OpeningHourView) view.findViewById(R.id.radioButton1);
 
                 break;
         }
@@ -356,13 +377,13 @@ public class VenueActivity extends AppCompatActivity {
         return  openingHourView;
     }
 
-    private void populateOpeningHours(List<OpeningHour> openingHours){
+    private void populateOpeningHours(List<OpeningHour> openingHours, View view){
 
         for(Integer day : days){
 
                 OpeningHourView openingHourView;
 
-                openingHourView = getViewDay(day);
+                openingHourView = getViewDay(day, view);
 
                 String closed = getResources().getString(R.string.closed);
 
@@ -373,7 +394,7 @@ public class VenueActivity extends AppCompatActivity {
 
             OpeningHourView openingHourView;
 
-            openingHourView = getViewDay(openingHour.getDay());
+            openingHourView = getViewDay(openingHour.getDay(), view);
 
             String textOpeningStartHour =  hourFormat(openingHour.getStartHour(), openingHour.getStartMinute());
 
@@ -419,9 +440,11 @@ public class VenueActivity extends AppCompatActivity {
 
     private void thisVenue(){
 
-        String name = getIntent().getExtras().getString(Venue.class.getName());
+        Intent intent = getActivity().getIntent();
 
-        String address = getIntent().getExtras().getString(VenueAttributes.address);
+        String name = intent.getExtras().getString(Venue.class.getName());
+
+        String address = intent.getExtras().getString(VenueAttributes.address);
 
         venue = venueContext.findVenue(name, address, new VenueCompletion.ErrorCompletion() {
             @Override
