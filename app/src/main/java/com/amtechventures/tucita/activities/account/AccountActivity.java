@@ -70,7 +70,7 @@ public class AccountActivity extends AppCompatActivity {
     public void goToCategories(){
 
         Intent intent = new Intent(this, MainActivity.class);
-        
+
         intent.putExtra(UserAttributes.connected, false);
 
         startActivity(intent);

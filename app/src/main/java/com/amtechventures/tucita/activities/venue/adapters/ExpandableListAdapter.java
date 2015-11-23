@@ -26,16 +26,19 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter{
     private ArrayList<String> child;
     private final ExpandableListView expandableListView;
     // constructor
-    public ExpandableListAdapter(List<SubCategory> parents, List<ArrayList> childern, ExpandableListView expandableListView)
+    public ExpandableListAdapter(List<SubCategory> parents, List<ArrayList> children, ExpandableListView expandableListView)
     {
         this.parentItems = (ArrayList<SubCategory>) parents;
-        this.childItems = (ArrayList<ArrayList>) childern;
+
+        this.childItems = (ArrayList<ArrayList>) children;
+
         this.expandableListView = expandableListView;
     }
 
     public void setInflater(LayoutInflater inflater, Activity activity)
     {
         this.inflater = inflater;
+
         this.activity = activity;
     }
 
@@ -47,7 +50,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter{
 
         child = (ArrayList<String>) childItems.get(groupPosition);
 
-        TextView textView;
+        final TextView textView;
 
         if (convertView == null) {
 
@@ -65,7 +68,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter{
             @Override
             public void onClick(View view) {
 
-                Toast.makeText(activity, child.get(childPosition),
+                Toast.makeText(activity, textView.getText(),
                         Toast.LENGTH_SHORT).show();
             }
         });

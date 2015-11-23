@@ -1,6 +1,8 @@
 package com.amtechventures.tucita.activities.category;
 
 import java.util.List;
+
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,6 +15,7 @@ import com.amtechventures.tucita.R;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.GridLayoutManager;
+import android.widget.ProgressBar;
 
 import com.amtechventures.tucita.model.error.AppError;
 import com.amtechventures.tucita.model.domain.category.Category;
@@ -29,8 +32,6 @@ public class CategoryFragment extends Fragment {
     private CategoryContext categoryContext;
     private List<Category> categories = new ArrayList<>();
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -46,12 +47,12 @@ public class CategoryFragment extends Fragment {
 
         recyclerView.setLayoutManager(layoutManager);
 
-        setupGrid();
+        setupGrid(rootView);
 
         return rootView;
     }
 
-    private void setupGrid() {
+    private void setupGrid(final View view) {
 
         List<Category> categoryList = categoryContext.loadCategories(new CategoryCompletion.CategoriesErrorCompletion() {
 
@@ -66,23 +67,33 @@ public class CategoryFragment extends Fragment {
 
                     adapter.notifyDataSetChanged();
 
+                    goneProgressBar(view);
                 } else {
 
                     noInternetConnectionAlert();
-
                 }
 
             }
 
         });
-        categories.clear();
+        if (categoryList != null) {
 
-        categories.addAll(categoryList);
+            categories.clear();
 
+            categories.addAll(categoryList);
+
+            goneProgressBar(view);
+        }
         adapter = new CategoryGridAdapter(categories, categoryContext);
 
         recyclerView.setAdapter(adapter);
+    }
 
+    private void goneProgressBar(View view){
+
+        ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.progress);
+
+        progressBar.setVisibility(View.GONE);
     }
 
     private void noInternetConnectionAlert() {
