@@ -1,6 +1,6 @@
 package com.amtechventures.tucita.model.context.service;
 
-import com.amtechventures.tucita.model.domain.category.Category;
+
 import com.amtechventures.tucita.model.domain.service.Service;
 import com.amtechventures.tucita.model.domain.service.ServiceAttributes;
 import com.amtechventures.tucita.model.domain.subcategory.SubCategory;

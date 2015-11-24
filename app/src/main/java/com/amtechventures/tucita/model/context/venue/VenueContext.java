@@ -50,13 +50,9 @@ public class VenueContext {
         return venue;
     }
 
-    public List<Venue> loadSubCategorizedNearVenues(List<Service> services, Location location, VenueCompletion.ErrorCompletion completion) {
-
-        List<Venue> venues = venueLocal.loadSubCategorizedVenues(services);
+    public void loadSubCategorizedNearVenues(List<Service> services, Location location, VenueCompletion.ErrorCompletion completion) {
 
         venueRemote.loadSubCategorizedNearVenues(services,location, completion);
-
-        return venues;
     }
 
     public void cancelQuery(){

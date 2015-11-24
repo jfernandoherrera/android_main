@@ -1,6 +1,7 @@
 package com.amtechventures.tucita.activities.book;
 
 import android.graphics.Color;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -24,6 +25,7 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
     private VenueFragment venueFragment;
     private ServiceFragment serviceFragment;
     private Toolbar toolbar;
+    private Snackbar snackbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,8 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
         serviceHide();
 
         setToolbar();
+
+        setSnackbar();
     }
 
     private void setVenueFragment() {
@@ -123,25 +127,16 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
         }
     }
 
-    public void bookNow(View v) {
-
+    public void setSnackbar(){
         ImageSpan is = new ImageSpan(this, R.mipmap.ic_launcher);
 
         final Spannable text = new SpannableString("    Had a snack" + " ");
 
         text.setSpan(is, 0, 4, 0);
 
-        Snackbar snackbar = Snackbar
+        snackbar = Snackbar
 
-                .make(findViewById(R.id.layout_main), text, Snackbar.LENGTH_LONG)
-
-                .setAction("Undo", new View.OnClickListener() {
-
-                    @Override
-                    public void onClick(View v) {
-
-                    }
-                });
+                .make(findViewById(R.id.layout_main), text, Snackbar.LENGTH_INDEFINITE);
 
         snackbar.setActionTextColor(Color.RED);
 
@@ -151,11 +146,25 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
         TextView textView = (TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text);
 
-        snackbar.setDuration(Snackbar.LENGTH_INDEFINITE);
 
         textView.setTextColor(Color.BLUE);
 
+    }
+
+    public void bookNow(View v) {
+
         snackbar.show();
+
+    }
+
+
+    public void book(View v) {
+
+        FloatingActionButton floatingActionButton = (FloatingActionButton) findViewById(R.id.floatingCar);
+
+        floatingActionButton.bringToFront();
+
+        floatingActionButton.setTranslationY(25);
     }
 
     @Override
@@ -174,21 +183,7 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
     return true;
     }
 
-    @Override
-    public void onBackPressed() {
-
-        super.onBackPressed();
-
-        if (! venueFragment.isHidden()){
-
-            finish();
-        }
-
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    private void back(){
 
         if (! venueFragment.isHidden()){
 
@@ -199,6 +194,21 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
             venueShow();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        super.onBackPressed();
+
+        back();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        back();
+
         return super.onOptionsItemSelected(item);
     }
 }

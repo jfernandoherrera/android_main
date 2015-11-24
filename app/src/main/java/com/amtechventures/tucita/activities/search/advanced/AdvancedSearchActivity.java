@@ -1,11 +1,13 @@
 package com.amtechventures.tucita.activities.search.advanced;
 
+import android.app.ProgressDialog;
 import android.location.Location;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +25,7 @@ import com.amtechventures.tucita.model.domain.service.Service;
 import com.amtechventures.tucita.model.domain.subcategory.SubCategory;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.error.AppError;
+import com.amtechventures.tucita.utils.views.AlertDialogError;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import java.util.ArrayList;
@@ -30,7 +33,7 @@ import java.util.List;
 
 public class AdvancedSearchActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks{
 
-    private ProgressBar progressBar;
+    private ProgressDialog progress;
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
@@ -51,6 +54,8 @@ public class AdvancedSearchActivity extends AppCompatActivity implements GoogleA
 
         setContentView(R.layout.activity_advanced_search);
 
+        setupProgress();
+
         venueContext = VenueContext.context(venueContext);
 
         subCategoryContext = SubCategoryContext.context(subCategoryContext);
@@ -65,13 +70,18 @@ public class AdvancedSearchActivity extends AppCompatActivity implements GoogleA
 
         recyclerView.setHasFixedSize(true);
 
-        progressBar = (ProgressBar) findViewById(R.id.progress);
-
         layoutManager = new GridLayoutManager(getApplicationContext(), 1);
 
         recyclerView.setLayoutManager(layoutManager);
 
         setToolbar();
+    }
+
+    private void setupProgress(){
+
+        progress = ProgressDialog.show(this, getResources().getString(R.string.dialog_progress_title),
+
+                getResources().getString(R.string.dialog_advanced_search_progress_message), true);
     }
 
     private void setToolbar(){
@@ -94,8 +104,6 @@ public class AdvancedSearchActivity extends AppCompatActivity implements GoogleA
         serviceContext.cancelQuery();
 
         venueContext.cancelQuery();
-
-        finish();
     }
 
     private void setupPriceFrom(){
@@ -109,7 +117,6 @@ public class AdvancedSearchActivity extends AppCompatActivity implements GoogleA
                     priceStrings.add(String.valueOf(price));
                 }
             }
-
     }
 
     private void setupVenues(List<Service> services) {
@@ -118,7 +125,7 @@ public class AdvancedSearchActivity extends AppCompatActivity implements GoogleA
 
         if (lastLocation != null) {
 
-            List<Venue> venuesList  = venueContext.loadSubCategorizedNearVenues(services, lastLocation, new VenueCompletion.ErrorCompletion() {
+             venueContext.loadSubCategorizedNearVenues(services, lastLocation, new VenueCompletion.ErrorCompletion() {
 
                 @Override
                 public void completion(List<Venue> venueList, AppError error) {
@@ -135,14 +142,12 @@ public class AdvancedSearchActivity extends AppCompatActivity implements GoogleA
 
                         recyclerView.setAdapter(adapter);
 
-                        progressBar.setVisibility(View.INVISIBLE);
+                        progress.dismiss();
                     }
                 }
 
             });
-            venues.clear();
 
-            venues.addAll(venuesList);
         }
     }
 
@@ -150,7 +155,7 @@ public class AdvancedSearchActivity extends AppCompatActivity implements GoogleA
 
                 subCategory = subCategoryContext.findSubCategory(name);
 
-                List services = serviceContext.loadSubCategorizedServices(subCategory, new ServiceCompletion.ErrorCompletion() {
+                serviceContext.loadSubCategorizedServices(subCategory, new ServiceCompletion.ErrorCompletion() {
                     @Override
                     public void completion(List<Service> servicesList, AppError error) {
 
@@ -158,11 +163,16 @@ public class AdvancedSearchActivity extends AppCompatActivity implements GoogleA
 
                             setupVenues(servicesList);
 
+                        }else{
+
+                            progress.dismiss();
+
+                            AlertDialogError alertDialogError = new AlertDialogError();
+
+                            alertDialogError.noInternetConnectionAlert(getApplicationContext());
                         }
                     }
                 });
-
-        setupVenues(services);
     }
 
     @Override

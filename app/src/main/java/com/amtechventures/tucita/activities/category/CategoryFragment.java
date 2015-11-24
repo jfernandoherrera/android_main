@@ -22,6 +22,7 @@ import com.amtechventures.tucita.model.domain.category.Category;
 import com.amtechventures.tucita.model.context.category.CategoryContext;
 import com.amtechventures.tucita.model.context.category.CategoryCompletion;
 import com.amtechventures.tucita.activities.category.adapters.CategoryGridAdapter;
+import com.amtechventures.tucita.utils.views.AlertDialogError;
 
 public class CategoryFragment extends Fragment {
 
@@ -70,7 +71,9 @@ public class CategoryFragment extends Fragment {
                     goneProgressBar(view);
                 } else {
 
-                    noInternetConnectionAlert();
+                    AlertDialogError alertDialogError = new AlertDialogError();
+
+                    alertDialogError.noInternetConnectionAlert(getContext());
                 }
 
             }
@@ -96,14 +99,4 @@ public class CategoryFragment extends Fragment {
         progressBar.setVisibility(View.GONE);
     }
 
-    private void noInternetConnectionAlert() {
-
-        new AlertDialog.Builder(getContext())
-                .setTitle(getResources().getString(R.string.alert))
-                .setMessage(getResources().getString(R.string.no_internet_connection))
-                .setRecycleOnMeasureEnabled(true)
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .show();
-        
-    }
 }

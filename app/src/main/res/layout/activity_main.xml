@@ -13,7 +13,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimaryDark"/>
+       style="@style/AppTheme.AppBarOverlay"/>
     <RelativeLayout
         android:layout_height="match_parent"
         android:layout_width="match_parent"
@@ -22,8 +22,8 @@
     </RelativeLayout>
     <ImageButton
         android:layout_width="match_parent"
-        android:layout_height="60dp"
         android:id="@+id/account"
+        style="@style/AppTheme.Button"
         android:layout_alignParentBottom="true"
         android:onClick="goToAccount"
         />

@@ -20,13 +20,4 @@
         android:layout_below="@+id/toolbar"
         android:layout_height="wrap_content"
         />
-    <ProgressBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/progress"
-        android:indeterminateOnly="true"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        style="@android:style/Widget.ProgressBar.Large.Inverse"
-        android:layout_below="@+id/toolbar"/>
 </RelativeLayout>

@@ -60,29 +60,6 @@ public class VenueLocal {
         return find;
     }
 
-    public List<Venue> loadSubCategorizedVenues(List<Service> services){
-
-        List venueList = null;
-
-        ParseQuery query = Venue.getQuery();
-
-        query.fromLocalDatastore();
-
-        query.whereContainedIn(VenueAttributes.services, services);
-
-        query.include(VenueAttributes.city);
-
-        try {
-            venueList = query.find();
-
-        } catch (ParseException e) {
-
-            e.printStackTrace();
-        }
-
-        return venueList;
-    }
-
         public List<Venue> loadLikeVenues(String likeWord){
 
         ParseQuery queryName = Venue.getQuery();

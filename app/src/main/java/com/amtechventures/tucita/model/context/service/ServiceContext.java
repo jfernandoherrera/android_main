@@ -26,7 +26,7 @@ public class ServiceContext {
 
         ParseQuery<Service> queryRemote = object.getQuery();
 
-        return serviceRemote.getPricesFrom(subCategory,queryRemote);
+        return serviceRemote.getPricesFrom(subCategory, queryRemote);
     }
 
     public static ServiceContext context(ServiceContext serviceContext) {
@@ -66,15 +66,9 @@ public class ServiceContext {
         return services;
     }
 
-    public List<Service> loadSubCategorizedServices(SubCategory subCategory, ServiceCompletion.ErrorCompletion errorCompletion){
-
-        List<Service> services;
-
-        services = serviceLocal.loadSubCategorizedServices(subCategory);
+    public void loadSubCategorizedServices(SubCategory subCategory, ServiceCompletion.ErrorCompletion errorCompletion){
 
         serviceRemote.loadSubCategorizedServices(subCategory,errorCompletion);
-
-        return services;
     }
 }
 
