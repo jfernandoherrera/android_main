@@ -24,15 +24,10 @@ import java.util.List;
 public class SubCategoryActivity extends AppCompatActivity {
 
     private SubCategoryContext subCategoryContext;
-
     private Category category;
-
     private List <SubCategory> subCategories = new ArrayList<>();
-
     private ListView listView;
-
     private ArrayAdapter<String> adapter;
-
     private CategoryContext categoryContext;
 
     @Override
@@ -104,7 +99,6 @@ public class SubCategoryActivity extends AppCompatActivity {
 
         listView.setAdapter(adapter);
     }
-
 
     private void goToAdvancedSearch(String name) {
 

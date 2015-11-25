@@ -9,8 +9,6 @@ import android.widget.CheckedTextView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
-import com.amtechventures.tucita.activities.venue.adapters.ExpandableListAdapter;
-
 import static android.view.View.MeasureSpec.*;
 
 public class ViewUtils {

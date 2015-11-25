@@ -22,7 +22,6 @@ import java.util.List;
 public class ExpandableListAdapter extends BaseExpandableListAdapter{
 
 
-    private Activity activity;
     private ArrayList<ArrayList> childItems;
     private LayoutInflater inflater;
     private ArrayList<SubCategory> parentItems;
@@ -43,11 +42,9 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter{
         this.listener = listener;
     }
 
-    public void setInflater(LayoutInflater inflater, Activity activity)
+    public void setInflater(LayoutInflater inflater)
     {
         this.inflater = inflater;
-
-        this.activity = activity;
     }
 
     // method getChildView is called automatically for each child view.

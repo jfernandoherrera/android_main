@@ -219,7 +219,7 @@ public class VenueFragment extends Fragment {
 
         fullMenuAdapter = new ExpandableListAdapter(subCategories, services,listViewFullMenu, listener);
 
-        fullMenuAdapter.setInflater(inflater, getActivity());
+        fullMenuAdapter.setInflater(inflater);
 
         listViewFullMenu.setAdapter(fullMenuAdapter);
     }
@@ -255,7 +255,7 @@ public class VenueFragment extends Fragment {
 
             anotherMenuAdapter = new ExpandableListAdapter(arrayList, arrayListServices,listViewAnotherMenu, listener);
 
-            anotherMenuAdapter.setInflater(inflater, getActivity());
+            anotherMenuAdapter.setInflater(inflater);
 
             listViewAnotherMenu.setAdapter(anotherMenuAdapter);
 
