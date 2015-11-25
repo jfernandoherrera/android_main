@@ -70,6 +70,8 @@ public class ServiceRemote {
 
         query.include(ServiceAttributes.subCategory);
 
+        query.orderByAscending(ServiceAttributes.name);
+
         query.findInBackground(new FindCallback<Service>() {
             @Override
             public void done(List<Service> objects, com.parse.ParseException e) {
@@ -103,15 +105,6 @@ public class ServiceRemote {
                  @Override
                  public void done(List<Service> objects, ParseException e) {
 
-                     if(objects != null){
-
-                         try {
-
-                             ParseObject.pinAll(objects);
-
-                         } catch (ParseException pe) {}
-
-                     }
                      AppError appError = e != null ? new AppError(Service.class.toString(), 0, null) : null;
 
                      completion.completion(objects, appError);

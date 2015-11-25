@@ -30,10 +30,9 @@ public class City extends ParseObject {
 
         return location;
     }
+
     public static ParseQuery<City> getQuery() {
 
         return ParseQuery.getQuery(City.class);
     }
-
-
 }

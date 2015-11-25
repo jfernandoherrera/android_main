@@ -41,13 +41,12 @@ public class ServiceContext {
 
     }
 
-    ServiceContext(){
+    private ServiceContext(){
 
         serviceLocal = new ServiceLocal();
 
         serviceRemote = new ServiceRemote();
     }
-
 
     public List<Service> loadServices(Venue venue, ServiceCompletion.ErrorCompletion completion){
 

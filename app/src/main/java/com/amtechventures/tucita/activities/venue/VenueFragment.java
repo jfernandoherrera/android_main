@@ -1,5 +1,6 @@
 package com.amtechventures.tucita.activities.venue;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -59,6 +60,7 @@ public class VenueFragment extends Fragment {
     private ExpandableListView listViewAnotherMenu;
     private OnServiceSelected listener;
     private LayoutInflater inflater;
+    private ProgressDialog progress;
 
     public interface OnServiceSelected{
 
@@ -120,9 +122,18 @@ public class VenueFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
 
-        setup();
-
         super.onActivityCreated(savedInstanceState);
+
+        setup();
+    }
+
+    private void setup(){
+
+        setupDaysInAWeek();
+
+        thisVenue();
+
+        setupVenue();
     }
 
     private void setupDaysInAWeek(){
@@ -135,25 +146,28 @@ public class VenueFragment extends Fragment {
         }
     }
 
-    private void setup(){
+    private void setupVenue(){
 
-        setupDaysInAWeek();
+        if(venue != null) {
 
-        thisVenue();
+            setupPicture();
 
-        setupPicture();
+            setupName();
 
-        setupName();
+            setupDescription();
 
-        setupDescription();
+            setupRating();
 
-        setupRating();
+            setupAddressAndlocation();
 
-        setupAddressAndlocation();
+            setupOpeningHours();
 
-        setupOpeningHours();
+            setupFullMenu();
 
-        setupFullMenu();
+        }else{
+
+            setupProgress();
+        }
     }
 
     private void setupPicture(){
@@ -195,6 +209,12 @@ public class VenueFragment extends Fragment {
                 }
             }
         });
+
+        if (servicesList == null && progress == null){
+
+            setupProgress();
+        }
+
         setStringsArray(servicesList);
 
         fullMenuAdapter = new ExpandableListAdapter(subCategories, services,listViewFullMenu, listener);
@@ -240,15 +260,16 @@ public class VenueFragment extends Fragment {
             listViewAnotherMenu.setAdapter(anotherMenuAdapter);
 
             listViewAnotherMenu.expandGroup(0);
+        }
+        if(progress != null){
 
+            progress.dismiss();
         }
     }
 
-    private ArrayList<String> setStringsArray(List<Service> servicesList){
+    private void setStringsArray(List<Service> servicesList){
 
-        ArrayList<String> stringsServices = new ArrayList<>();
-
-        for( Service service : servicesList){
+       for( Service service : servicesList){
 
             SubCategory subCategory = service.getSubcategory();
 
@@ -269,7 +290,6 @@ public class VenueFragment extends Fragment {
             }
 
         }
-        return stringsServices;
     }
 
     private String setServiceString(Service service){
@@ -465,6 +485,8 @@ public class VenueFragment extends Fragment {
                 if(venuesList != null){
 
                     venue = venuesList.get(0);
+
+                    setupVenue();
                 }
             }
         });
@@ -490,5 +512,12 @@ public class VenueFragment extends Fragment {
         Intent browse = new Intent( Intent.ACTION_VIEW , Uri.parse(inURL) );
 
         startActivity(browse);
+    }
+
+    private void setupProgress(){
+
+        progress = ProgressDialog.show(getContext(), getResources().getString(R.string.dialog_progress_title),
+
+                getResources().getString(R.string.dialog_all_progress_message), true);
     }
 }

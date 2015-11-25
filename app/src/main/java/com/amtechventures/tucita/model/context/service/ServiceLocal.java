@@ -16,6 +16,8 @@ public class ServiceLocal {
 
         servicesLocalQuery.fromLocalDatastore();
 
+        servicesLocalQuery.orderByAscending(ServiceAttributes.name);
+
         List serviceList = null;
 
         try {

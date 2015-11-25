@@ -15,8 +15,6 @@ public class VenueLocal {
 
     public Venue findVenue(String lookThat, String address){
 
-        Venue find = new Venue();
-
         ParseQuery queryName = Venue.getQuery();
 
         queryName.whereEqualTo(VenueAttributes.name, lookThat);
@@ -52,12 +50,7 @@ public class VenueLocal {
             e.printStackTrace();
         }
 
-        if(venue != null){
-
-            find = venue;
-
-            }
-        return find;
+        return venue;
     }
 
         public List<Venue> loadLikeVenues(String likeWord){
@@ -101,6 +94,8 @@ public class VenueLocal {
         query.include(VenueAttributes.city);
 
         query.fromLocalDatastore();
+
+            query.orderByAscending(VenueAttributes.name);
 
         List<Venue> venueList = new ArrayList<>();
 

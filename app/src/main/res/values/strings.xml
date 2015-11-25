@@ -64,5 +64,7 @@
     <string name="about">Acerca de</string>
     <string name="description">Descripciòn: \n</string>
     <string name="dialog_progress_title">Cargando...</string>
+    <string name="dialog_all_progress_message">Espera mientras cargamos la informacion</string>
+
     <string name="dialog_advanced_search_progress_message">Espera mientras encontramos lugares cerca a tì</string>
 </resources>

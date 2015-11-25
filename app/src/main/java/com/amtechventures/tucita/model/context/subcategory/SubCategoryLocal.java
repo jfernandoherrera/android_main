@@ -2,6 +2,7 @@ package com.amtechventures.tucita.model.context.subcategory;
 
 
 import com.amtechventures.tucita.model.domain.category.CategoryAttributes;
+import com.amtechventures.tucita.model.domain.service.ServiceAttributes;
 import com.amtechventures.tucita.model.domain.subcategory.SubCategory;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -13,6 +14,8 @@ public class SubCategoryLocal {
     public List<SubCategory> loadSubCategories(ParseQuery<SubCategory> subCategoryLocalQuery){
 
         subCategoryLocalQuery.fromLocalDatastore();
+
+        subCategoryLocalQuery.orderByAscending(CategoryAttributes.name);
 
         List<SubCategory> subCategoryList = new ArrayList<>();
 
@@ -36,6 +39,8 @@ public class SubCategoryLocal {
         ParseQuery subCategoriesLocalQuery = SubCategory.getQuery();
 
         subCategoriesLocalQuery.fromLocalDatastore();
+
+        subCategoriesLocalQuery.orderByAscending(CategoryAttributes.name);
 
         List<SubCategory> subCategoryList = new ArrayList<>();
 

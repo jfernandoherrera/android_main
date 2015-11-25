@@ -71,7 +71,7 @@ public class VenueRemote {
 
                 AppError appError = e != null ? new AppError(Venue.class.toString(), 0, null) : null;
 
-                completion.completion(objects,appError);
+                completion.completion(objects, appError);
             }
         });
 
@@ -119,6 +119,8 @@ public class VenueRemote {
 
         query.include(VenueAttributes.city);
 
+        query.orderByAscending(VenueAttributes.name);
+
         query.findInBackground(new FindCallback<Venue>() {
             @Override
             public void done(List objects, ParseException e) {
@@ -155,15 +157,6 @@ public class VenueRemote {
             @Override
             public void done(List<Venue> objects, ParseException e) {
 
-                if (objects != null) {
-                    try {
-
-                        ParseObject.pinAll(objects);
-
-                    } catch (ParseException pe) {
-                    }
-
-                }
                 AppError appError = e != null ? new AppError(Venue.class.toString(), 0, null) : null;
 
                 completion.completion(objects, appError);
