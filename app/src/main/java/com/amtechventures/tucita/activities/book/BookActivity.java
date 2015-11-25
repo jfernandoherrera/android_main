@@ -128,6 +128,7 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
     }
 
     public void setSnackbar(){
+
         ImageSpan is = new ImageSpan(this, R.mipmap.ic_launcher);
 
         final Spannable text = new SpannableString("    Had a snack" + " ");
@@ -156,7 +157,6 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
         snackbar.show();
 
     }
-
 
     public void book(View v) {
 
@@ -198,8 +198,6 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
     @Override
     public void onBackPressed() {
-
-        super.onBackPressed();
 
         back();
     }

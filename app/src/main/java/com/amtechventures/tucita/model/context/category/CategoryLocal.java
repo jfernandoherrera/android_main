@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 import com.amtechventures.tucita.model.domain.category.CategoryAttributes;
+import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.amtechventures.tucita.model.domain.category.Category;
 
@@ -16,21 +17,24 @@ public class CategoryLocal {
 
         Category find = null;
 
-        List<Category> categoryList = loadCategories();
+        ParseQuery<Category> query = Category.getQuery().fromLocalDatastore();
 
-        for(Category category : categoryList){
+        query.whereEqualTo(CategoryAttributes.name, name);
 
-            if(category.getName().equals(name)){
+        try {
+            find = query.getFirst();
 
-                find = category;
-            }
+        } catch (ParseException e) {
+
+            e.printStackTrace();
         }
+
         return find;
     }
 
     public List<Category> loadCategories() {
 
-        List<Category> categoryList = new ArrayList<>();
+        List<Category> categories = null;
 
         ParseQuery<Category> query = Category.getQuery().fromLocalDatastore();
 
@@ -38,13 +42,7 @@ public class CategoryLocal {
 
         try {
 
-            List<Category> categories = query.find();
-
-            if (categories != null) {
-
-                categoryList = categories;
-
-            }
+            categories = query.find();
 
         }catch (Exception exception) {
 
@@ -52,8 +50,7 @@ public class CategoryLocal {
 
         }
 
-        return categoryList;
-
+        return categories;
     }
 
 }

@@ -2,6 +2,7 @@ package com.amtechventures.tucita.activities.category;
 
 import java.util.List;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -32,6 +33,7 @@ public class CategoryFragment extends Fragment {
     private RecyclerView.LayoutManager layoutManager;
     private CategoryContext categoryContext;
     private List<Category> categories = new ArrayList<>();
+    private ProgressDialog progress;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -48,12 +50,12 @@ public class CategoryFragment extends Fragment {
 
         recyclerView.setLayoutManager(layoutManager);
 
-        setupGrid(rootView);
+        setupGrid();
 
         return rootView;
     }
 
-    private void setupGrid(final View view) {
+    private void setupGrid() {
 
         List<Category> categoryList = categoryContext.loadCategories(new CategoryCompletion.CategoriesErrorCompletion() {
 
@@ -68,7 +70,11 @@ public class CategoryFragment extends Fragment {
 
                     adapter.notifyDataSetChanged();
 
-                    goneProgressBar(view);
+                    if(progress != null){
+
+                        progress.dismiss();
+                    }
+
                 } else {
 
                     AlertDialogError alertDialogError = new AlertDialogError();
@@ -84,19 +90,19 @@ public class CategoryFragment extends Fragment {
             categories.clear();
 
             categories.addAll(categoryList);
+        }else {
 
-            goneProgressBar(view);
+            setupProgress();
         }
         adapter = new CategoryGridAdapter(categories, categoryContext);
 
         recyclerView.setAdapter(adapter);
     }
 
-    private void goneProgressBar(View view){
+    private void setupProgress(){
 
-        ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.progress);
+        progress = ProgressDialog.show(getContext(), getResources().getString(R.string.dialog_progress_title),
 
-        progressBar.setVisibility(View.GONE);
+                getResources().getString(R.string.dialog_all_progress_message), true);
     }
-
 }

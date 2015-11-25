@@ -35,15 +35,11 @@ public class VenueLocal {
 
         query.fromLocalDatastore();
 
-        List venuesList;
-
         Venue venue = null;
 
         try {
 
-            venuesList = query.find();
-
-            venue = (Venue)venuesList.get(0);
+            venue = (Venue) query.getFirst();
 
         } catch (ParseException e) {
 
