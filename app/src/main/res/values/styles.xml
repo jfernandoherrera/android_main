@@ -39,13 +39,12 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
-    <style name="AppTheme.ExpandableListViewItem" parent="ThemeOverlay.AppCompat.Light">
+    <style name="AppTheme.ExpandableListViewItem" parent="AppTheme.Title">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">@dimen/title</item>
+        <item name="android:layout_height">72dp</item>
         <item name="android:background">@color/colorPrimaryLight</item>
     </style>
-    <style name="AppTheme.ListViewItem" parent="ThemeOverlay.AppCompat.Light">
-        <item name="android:textSize">@dimen/text</item>
+    <style name="AppTheme.ListViewItem" parent="AppTheme.subTitle">
+        <item name="android:layout_height">48dp</item>
     </style>
 </resources>

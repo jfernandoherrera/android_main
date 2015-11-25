@@ -31,6 +31,8 @@ public class SubCategoryRemote {
 
         query = subCategoryRemoteQuery;
 
+        query.orderByAscending(CategoryAttributes.name);
+
         query.findInBackground(new FindCallback<SubCategory>() {
 
             @Override

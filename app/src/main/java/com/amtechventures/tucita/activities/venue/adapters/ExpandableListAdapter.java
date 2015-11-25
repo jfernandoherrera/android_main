@@ -28,7 +28,9 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter{
     private ArrayList<SubCategory> parentItems;
     private ArrayList<String> child;
     private final ExpandableListView expandableListView;
-    VenueFragment.OnServiceSelected listener;
+    private VenueFragment.OnServiceSelected listener;
+
+
     // constructor
     public ExpandableListAdapter(List<SubCategory> parents, List<ArrayList> children, ExpandableListView expandableListView, VenueFragment.OnServiceSelected listener)
     {
@@ -77,7 +79,10 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter{
                 listener.onServiceSelected((String) textView.getText());
             }
         });
-        return convertView;
+
+        textView.setHeight(ViewUtils.childHeight);
+
+        return textView;
     }
 
 
@@ -96,6 +101,8 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter{
         ((CheckedTextView) convertView).setText(parentItems.get(groupPosition).getName());
 
         ((CheckedTextView) convertView).setChecked(isExpanded);
+
+        ((CheckedTextView) convertView).setHeight(ViewUtils.parentHeight);
 
         return convertView;
     }

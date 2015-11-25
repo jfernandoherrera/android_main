@@ -100,7 +100,7 @@ public class SubCategoryActivity extends AppCompatActivity {
 
         subCategories.addAll(subCategoriesList);
 
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, setStringsArray());
+        adapter = new ArrayAdapter<String>(this, R.layout.list_item, setStringsArray());
 
         listView.setAdapter(adapter);
     }
@@ -119,7 +119,9 @@ public class SubCategoryActivity extends AppCompatActivity {
 
     @Override
     protected void onStop() {
+
         super.onStop();
+
         subCategoryContext.cancelQuery();
     }
 }

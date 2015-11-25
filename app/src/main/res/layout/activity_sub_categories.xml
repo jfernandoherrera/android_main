@@ -18,5 +18,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/listViewservices"
         android:layout_below="@+id/image_service"
+        style="@style/AppTheme.subTitle"
    />
 </RelativeLayout>

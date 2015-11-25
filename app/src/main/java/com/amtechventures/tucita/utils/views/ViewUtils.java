@@ -15,6 +15,9 @@ import static android.view.View.MeasureSpec.*;
 
 public class ViewUtils {
 
+    public static final int childHeight = 48;
+    public static final int parentHeight = 72;
+
     public static void setListViewHeightBasedOnChildren(ListView listView) {
 
         ListAdapter listAdapter = listView.getAdapter();
@@ -36,13 +39,12 @@ public class ViewUtils {
 
             if(listItem instanceof CheckedTextView) {
 
-                totalHeight += 41;
+                totalHeight += parentHeight;
             }else {
 
-                totalHeight += 29;
+                totalHeight += childHeight;
             }
 
-            Log.i("nbv", String.valueOf(listItem));
         }
 
         ViewGroup.LayoutParams params = listView.getLayoutParams();
