@@ -23,6 +23,7 @@
 
     <string name="category">categoria</string>
     <string name="action_search">Buscar</string>
+    <string name="action_search_location">Ciudad</string>
     <string name="venues">Lugares</string>
     <string name="treatments">Tratamientos</string>
     <string name="recent_treatments">Tratamientos recientes</string>
@@ -30,7 +31,7 @@
     <string name="typing_advertisement">Escribe al menos 3 letras para conseguir sugerencias</string>
     <string name="near">Lugares cerca de tí</string>
     <string name="dont_remember_password">Olvido la contraseña?</string>
-<string name="no_results">Sin resultados</string>
+    <string name="no_results">Sin resultados</string>
     <string name="error_finding_pinned_categories">Error finding pinned Categories:</string>
     <string name="error_pinning_categories">Error pinning Categories:</string>
     <string name="error">Error</string>

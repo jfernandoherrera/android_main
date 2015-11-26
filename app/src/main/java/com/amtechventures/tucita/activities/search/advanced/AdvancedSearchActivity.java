@@ -5,20 +5,23 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+
 import com.amtechventures.tucita.R;
+import com.amtechventures.tucita.activities.search.advanced.fragments.LocationOptionsFragment;
+import com.amtechventures.tucita.activities.search.advanced.fragments.VenuesResultFragment;
 import com.amtechventures.tucita.model.domain.category.CategoryAttributes;
 
 
-public class AdvancedSearchActivity extends AppCompatActivity {
+public class AdvancedSearchActivity extends AppCompatActivity{
 
 
     private Toolbar toolbar;
     private String name;
     private VenuesResultFragment venuesResultFragment;
-
+    private LocationOptionsFragment locationOptionsFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -30,9 +33,15 @@ public class AdvancedSearchActivity extends AppCompatActivity {
 
         venuesResultFragment = new VenuesResultFragment();
 
+        locationOptionsFragment = new LocationOptionsFragment();
+
+        setLocationOptionsFragment();
+
         setVenuesResultFragment();
 
         showVenuesResultFragment();
+
+        hideLocationOptionsFragment();
 
         setToolbar();
     }
@@ -48,6 +57,17 @@ public class AdvancedSearchActivity extends AppCompatActivity {
         transaction.commit();
     }
 
+    private void setLocationOptionsFragment(){
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+        transaction.add(R.id.myDrawView1, locationOptionsFragment);
+
+        transaction.commit();
+    }
+
     private void showVenuesResultFragment(){
 
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -59,6 +79,38 @@ public class AdvancedSearchActivity extends AppCompatActivity {
         transaction.commit();
     }
 
+    private void hideVenuesResultFragment(){
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+        transaction.hide(venuesResultFragment);
+
+        transaction.commit();
+    }
+
+    private void showLocationOptionsFragment(){
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+        transaction.show(locationOptionsFragment);
+
+        transaction.commit();
+    }
+
+    private void hideLocationOptionsFragment(){
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+        transaction.hide(locationOptionsFragment);
+
+        transaction.commit();
+    }
 
     private void setToolbar(){
 
@@ -86,5 +138,13 @@ public class AdvancedSearchActivity extends AppCompatActivity {
         finish();
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    public void onLocationClicked(View view) {
+
+        showLocationOptionsFragment();
+
+        hideVenuesResultFragment();
     }
 }

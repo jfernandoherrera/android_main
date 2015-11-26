@@ -1,4 +1,4 @@
-package com.amtechventures.tucita.activities.search.advanced;
+package com.amtechventures.tucita.activities.search.advanced.fragments;
 
 
 import android.app.ProgressDialog;
@@ -133,7 +133,7 @@ public class VenuesResultFragment extends Fragment implements GoogleApiClient.On
                     if (venueList != null) {
 
                         if(venueList.isEmpty()){
-                            
+
                             noResults.setVisibility(View.VISIBLE);
                         }
 
