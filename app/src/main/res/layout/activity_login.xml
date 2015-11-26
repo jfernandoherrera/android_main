@@ -87,7 +87,7 @@
             android:id="@+id/textView3"
             android:layout_width="22dp"
             android:layout_height="wrap_content"
-            android:text="@string/o"
+            android:text="@string/or"
             android:gravity="center_horizontal" />
 
         <View
