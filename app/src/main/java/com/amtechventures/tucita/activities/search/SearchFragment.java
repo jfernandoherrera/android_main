@@ -65,9 +65,9 @@ public class SearchFragment extends Fragment {
 
         separator.setVisibility(View.INVISIBLE);
 
-        subCategoriesAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1);
+        subCategoriesAdapter = new ArrayAdapter<>(getContext(), R.layout.list_item);
 
-        venuesAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1);
+        venuesAdapter = new ArrayAdapter<>(getContext(), R.layout.list_item);
 
         listViewTreatments.setAdapter(subCategoriesAdapter);
 

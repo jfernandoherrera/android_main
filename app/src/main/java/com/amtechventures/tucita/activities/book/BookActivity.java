@@ -178,9 +178,9 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        toolbar.inflateMenu((R.menu.menu_back_and_title));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-    return true;
+        return true;
     }
 
     private void back(){

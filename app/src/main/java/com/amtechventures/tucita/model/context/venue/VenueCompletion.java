@@ -9,7 +9,7 @@ public class VenueCompletion {
 
     public interface ErrorCompletion {
 
-        void completion(List<Venue> servicesList, AppError error);
+        void completion(List<Venue> venueList, AppError error);
 
     }
 }

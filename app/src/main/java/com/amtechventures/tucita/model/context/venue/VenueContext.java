@@ -3,6 +3,8 @@ package com.amtechventures.tucita.model.context.venue;
 
 import android.location.Location;
 
+import com.amtechventures.tucita.activities.venue.VenueFragment;
+import com.amtechventures.tucita.model.domain.city.City;
 import com.amtechventures.tucita.model.domain.service.Service;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 
@@ -52,7 +54,12 @@ public class VenueContext {
 
     public void loadSubCategorizedNearVenues(List<Service> services, Location location, VenueCompletion.ErrorCompletion completion) {
 
-        venueRemote.loadSubCategorizedNearVenues(services,location, completion);
+        venueRemote.loadSubCategorizedNearVenues(services, location, completion);
+    }
+
+    public void loadSubCategorizedCityVenues(List<Service> services, City city, VenueCompletion.ErrorCompletion completion){
+
+        venueRemote.loadSubCategorizedCityVenues(services,city, completion);
     }
 
     public void cancelQuery(){

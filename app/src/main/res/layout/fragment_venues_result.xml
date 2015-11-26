@@ -6,7 +6,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="horizontal"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        >
         <ImageView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -15,6 +16,7 @@
         <Button
             android:layout_width="0dp"
             android:layout_weight="9"
+            android:id="@+id/locationOptions"
             android:onClick="onLocationClicked"
             android:text="@string/near"
             android:layout_height="wrap_content" />

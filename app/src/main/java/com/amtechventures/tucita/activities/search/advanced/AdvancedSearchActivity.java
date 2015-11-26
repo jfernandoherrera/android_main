@@ -13,9 +13,10 @@ import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.search.advanced.fragments.LocationOptionsFragment;
 import com.amtechventures.tucita.activities.search.advanced.fragments.VenuesResultFragment;
 import com.amtechventures.tucita.model.domain.category.CategoryAttributes;
+import com.amtechventures.tucita.model.domain.city.City;
 
 
-public class AdvancedSearchActivity extends AppCompatActivity{
+public class AdvancedSearchActivity extends AppCompatActivity implements LocationOptionsFragment.OnCitySelected{
 
 
     private Toolbar toolbar;
@@ -122,6 +123,26 @@ public class AdvancedSearchActivity extends AppCompatActivity{
         }
     }
 
+
+    private void back(){
+
+        if (! venuesResultFragment.isHidden()){
+
+            finish();
+        }else {
+
+            hideLocationOptionsFragment();
+
+           showVenuesResultFragment();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        back();
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -135,7 +156,7 @@ public class AdvancedSearchActivity extends AppCompatActivity{
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        finish();
+        back();
 
         return super.onOptionsItemSelected(item);
     }
@@ -146,5 +167,15 @@ public class AdvancedSearchActivity extends AppCompatActivity{
         showLocationOptionsFragment();
 
         hideVenuesResultFragment();
+    }
+
+    @Override
+    public void onCitySelected(City city) {
+
+        venuesResultFragment.setupGrid(city);
+
+        hideLocationOptionsFragment();
+
+        showVenuesResultFragment();
     }
 }

@@ -141,6 +141,27 @@ public class VenueRemote {
         });
     }
 
+    public void loadSubCategorizedCityVenues(List<Service> services, City city, final VenueCompletion.ErrorCompletion completion){
+
+        setQuery();
+
+        query.include(VenueAttributes.city);
+
+        query.whereContainedIn(VenueAttributes.services, services);
+
+        query.whereEqualTo(VenueAttributes.city, city);
+
+        query.findInBackground(new FindCallback<Venue>() {
+            @Override
+            public void done(List<Venue> objects, ParseException e) {
+
+                AppError appError = e != null ? new AppError(Venue.class.toString(), 0, null) : null;
+
+                completion.completion(objects, appError);
+            }
+        });
+
+    }
     public void loadSubCategorizedNearVenues(List<Service> services, Location location, final VenueCompletion.ErrorCompletion completion )
     {
         ParseGeoPoint point = new ParseGeoPoint(location.getLatitude(), location.getLongitude());

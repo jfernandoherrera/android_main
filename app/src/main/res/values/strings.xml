@@ -20,7 +20,7 @@
     <string name="create_new_account">Crear una cuenta</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."</string>
-
+    <string name="cities">Ciudades</string>
     <string name="category">categoria</string>
     <string name="action_search">Buscar</string>
     <string name="action_search_location">Ciudad</string>

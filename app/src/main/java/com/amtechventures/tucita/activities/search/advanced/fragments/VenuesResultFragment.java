@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.amtechventures.tucita.R;
@@ -25,6 +26,7 @@ import com.amtechventures.tucita.model.context.subcategory.SubCategoryContext;
 import com.amtechventures.tucita.model.context.venue.VenueCompletion;
 import com.amtechventures.tucita.model.context.venue.VenueContext;
 import com.amtechventures.tucita.model.domain.category.CategoryAttributes;
+import com.amtechventures.tucita.model.domain.city.City;
 import com.amtechventures.tucita.model.domain.service.Service;
 import com.amtechventures.tucita.model.domain.subcategory.SubCategory;
 import com.amtechventures.tucita.model.domain.venue.Venue;
@@ -51,6 +53,7 @@ public class VenuesResultFragment extends Fragment implements GoogleApiClient.On
     private ArrayList priceStrings = new ArrayList<>();
     private LocationContext locationContext;
     private TextView noResults;
+
 
     @Nullable
     @Override
@@ -119,7 +122,35 @@ public class VenuesResultFragment extends Fragment implements GoogleApiClient.On
         }
     }
 
-    private void setupVenues(List<Service> services) {
+    private void setupCityVenues(List<Service> services, City city){
+
+        venueContext.loadSubCategorizedCityVenues(services, city, new VenueCompletion.ErrorCompletion() {
+            @Override
+            public void completion(List<Venue> venueList, AppError error) {
+                if (venueList != null) {
+
+                    if(venueList.isEmpty()){
+
+                        noResults.setVisibility(View.VISIBLE);
+                    }
+
+                    venues.clear();
+
+                    venues.addAll(venueList);
+
+                    setupPriceFrom();
+
+                    adapter = new AdvancedSearchAdapter(venues, priceStrings, subCategory.getName());
+
+                    recyclerView.setAdapter(adapter);
+
+                    progress.dismiss();
+                }
+            }
+        });
+    }
+
+    private void setupNearVenues(List<Service> services) {
 
         Location lastLocation = locationContext.getLastLocation();
 
@@ -156,6 +187,39 @@ public class VenuesResultFragment extends Fragment implements GoogleApiClient.On
         }
     }
 
+    private void setCity(String city){
+
+        Button button = (Button) getView().findViewById(R.id.locationOptions);
+
+        button.setText(city);
+    }
+
+    public void setupGrid(final City city) {
+
+        setCity(city.formatedLocation());
+
+        subCategory = subCategoryContext.findSubCategory(name);
+
+        serviceContext.loadSubCategorizedServices(subCategory, new ServiceCompletion.ErrorCompletion() {
+            @Override
+            public void completion(List<Service> servicesList, AppError error) {
+
+                if (servicesList != null) {
+
+                    setupCityVenues(servicesList, city);
+
+                } else {
+
+                    progress.dismiss();
+
+                    AlertDialogError alertDialogError = new AlertDialogError();
+
+                    alertDialogError.noInternetConnectionAlert(getContext());
+                }
+            }
+        });
+    }
+
     private void setupGrid() {
 
         subCategory = subCategoryContext.findSubCategory(name);
@@ -166,7 +230,7 @@ public class VenuesResultFragment extends Fragment implements GoogleApiClient.On
 
                 if (servicesList != null) {
 
-                    setupVenues(servicesList);
+                    setupNearVenues(servicesList);
 
                 } else {
 
