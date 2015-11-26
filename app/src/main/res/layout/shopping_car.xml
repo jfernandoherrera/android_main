@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_gravity="bottom|center"
+    android:layout_width="wrap_content">
+    <ImageView
+        android:id="@+id/car"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:layout_gravity="start"
+        />
+    <com.amtechventures.tucita.utils.views.CircleTextView
+        android:id="@+id/count"
+        android:layout_gravity="start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+    <Button
+        android:id="@+id/bookNow"
+        android:layout_gravity="center"
+        android:text="@string/book_now"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"/>
+</merge>

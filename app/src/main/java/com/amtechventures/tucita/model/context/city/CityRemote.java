@@ -1,18 +1,13 @@
 package com.amtechventures.tucita.model.context.city;
 
 
-import com.amtechventures.tucita.model.context.subcategory.SubCategoryCompletion;
-import com.amtechventures.tucita.model.domain.category.CategoryAttributes;
 import com.amtechventures.tucita.model.domain.city.City;
 import com.amtechventures.tucita.model.domain.city.CityAttributes;
-import com.amtechventures.tucita.model.domain.subcategory.SubCategory;
-import com.amtechventures.tucita.model.domain.venue.VenueAttributes;
 import com.amtechventures.tucita.model.error.AppError;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-
 import java.util.List;
 
 public class CityRemote {

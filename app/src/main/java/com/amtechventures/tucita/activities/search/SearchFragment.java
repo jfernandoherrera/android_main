@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.book.BookActivity;
 import com.amtechventures.tucita.activities.search.advanced.AdvancedSearchActivity;
-import com.amtechventures.tucita.activities.venue.VenueFragment;
 import com.amtechventures.tucita.model.context.subcategory.SubCategoryContext;
 import com.amtechventures.tucita.model.context.subcategory.SubCategoryCompletion;
 import com.amtechventures.tucita.model.context.venue.VenueCompletion;
@@ -23,7 +22,6 @@ import com.amtechventures.tucita.model.domain.subcategory.SubCategory;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.domain.venue.VenueAttributes;
 import com.amtechventures.tucita.model.error.AppError;
-import com.amtechventures.tucita.utils.strings.Strings;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -167,11 +165,11 @@ public class SearchFragment extends Fragment {
             @Override
             public void completion(List<SubCategory> subCategoriesList, AppError error) {
 
-                subCategoriesAdapter.clear();
-
-                subCategories.clear();
-
                 if (subCategoriesList != null && !subCategoriesList.isEmpty()) {
+
+                    subCategoriesAdapter.clear();
+
+                    subCategories.clear();
 
                     textSubCategories();
 
@@ -204,18 +202,17 @@ public class SearchFragment extends Fragment {
 
         textViewVenues.setVisibility(View.INVISIBLE);
 
-
         final List<Venue> venuesList = venueContext.loadLikeVenues(newText, new VenueCompletion.ErrorCompletion() {
                     @Override
                     public void completion(List<Venue> venuesList, AppError error) {
 
-                        venuesAdapter.clear();
-
-                        venues.clear();
-
                         if (venuesList != null && !venuesList.isEmpty()) {
 
                             textVenues();
+
+                            venuesAdapter.clear();
+
+                            venues.clear();
 
                             venues.addAll(venuesList);
 

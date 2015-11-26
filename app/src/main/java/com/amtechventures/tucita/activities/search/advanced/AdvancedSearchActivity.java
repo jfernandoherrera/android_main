@@ -8,21 +8,19 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.search.advanced.fragments.LocationOptionsFragment;
 import com.amtechventures.tucita.activities.search.advanced.fragments.VenuesResultFragment;
 import com.amtechventures.tucita.model.domain.category.CategoryAttributes;
 import com.amtechventures.tucita.model.domain.city.City;
 
-
 public class AdvancedSearchActivity extends AppCompatActivity implements LocationOptionsFragment.OnCitySelected{
-
 
     private Toolbar toolbar;
     private String name;
     private VenuesResultFragment venuesResultFragment;
     private LocationOptionsFragment locationOptionsFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -123,7 +121,6 @@ public class AdvancedSearchActivity extends AppCompatActivity implements Locatio
         }
     }
 
-
     private void back(){
 
         if (! venuesResultFragment.isHidden()){
@@ -160,7 +157,6 @@ public class AdvancedSearchActivity extends AppCompatActivity implements Locatio
 
         return super.onOptionsItemSelected(item);
     }
-
 
     public void onLocationClicked(View view) {
 

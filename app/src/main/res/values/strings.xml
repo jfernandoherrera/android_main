@@ -23,6 +23,7 @@
     <string name="cities">Ciudades</string>
     <string name="category">categoria</string>
     <string name="action_search">Buscar</string>
+    <string name="book_now">Reserva tu cita!</string>
     <string name="action_search_location">Ciudad</string>
     <string name="venues">Lugares</string>
     <string name="treatments">Tratamientos</string>

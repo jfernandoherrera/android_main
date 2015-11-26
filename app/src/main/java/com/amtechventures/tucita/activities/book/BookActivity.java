@@ -145,6 +145,8 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
         snackbarView.setBackgroundColor(Color.YELLOW);
 
+        snackbarView.setMinimumHeight(30);
+
         TextView textView = (TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text);
 
 
@@ -160,11 +162,7 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
     public void book(View v) {
 
-        FloatingActionButton floatingActionButton = (FloatingActionButton) findViewById(R.id.floatingCar);
 
-        floatingActionButton.bringToFront();
-
-        floatingActionButton.setTranslationY(25);
     }
 
     @Override
