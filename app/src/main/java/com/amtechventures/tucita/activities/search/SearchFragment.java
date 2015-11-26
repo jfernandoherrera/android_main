@@ -163,9 +163,7 @@ public class SearchFragment extends Fragment {
 
         textViewTreatments.setVisibility(View.INVISIBLE);
 
-        String capitalized = Strings.capitalize(newText);
-
-        List<SubCategory> subCategoriesList = subCategoryContext.loadLikeSubCategories(capitalized, new SubCategoryCompletion.ErrorCompletion() {
+        List<SubCategory> subCategoriesList = subCategoryContext.loadLikeSubCategories(newText, new SubCategoryCompletion.ErrorCompletion() {
             @Override
             public void completion(List<SubCategory> subCategoriesList, AppError error) {
 
@@ -206,9 +204,8 @@ public class SearchFragment extends Fragment {
 
         textViewVenues.setVisibility(View.INVISIBLE);
 
-        String capitalized = Strings.capitalize(newText);
 
-        final List<Venue> venuesList = venueContext.loadLikeVenues(capitalized, new VenueCompletion.ErrorCompletion() {
+        final List<Venue> venuesList = venueContext.loadLikeVenues(newText, new VenueCompletion.ErrorCompletion() {
                     @Override
                     public void completion(List<Venue> venuesList, AppError error) {
 

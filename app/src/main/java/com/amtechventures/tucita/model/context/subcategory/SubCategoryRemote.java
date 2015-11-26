@@ -2,6 +2,7 @@ package com.amtechventures.tucita.model.context.subcategory;
 
 import com.amtechventures.tucita.model.domain.category.CategoryAttributes;
 import com.amtechventures.tucita.model.domain.subcategory.SubCategory;
+import com.amtechventures.tucita.model.domain.subcategory.SubCategoryAttributes;
 import com.amtechventures.tucita.model.error.AppError;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -62,7 +63,7 @@ public class SubCategoryRemote {
 
         setQuery();
 
-        query.whereContains(CategoryAttributes.name, like).findInBackground(new FindCallback<SubCategory>() {
+        query.whereContains(SubCategoryAttributes.nameToSearch, like).findInBackground(new FindCallback<SubCategory>() {
             @Override
             public void done(List<SubCategory> objects, com.parse.ParseException e) {
 

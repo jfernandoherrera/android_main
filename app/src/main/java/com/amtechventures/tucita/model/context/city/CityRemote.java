@@ -4,6 +4,7 @@ package com.amtechventures.tucita.model.context.city;
 import com.amtechventures.tucita.model.context.subcategory.SubCategoryCompletion;
 import com.amtechventures.tucita.model.domain.category.CategoryAttributes;
 import com.amtechventures.tucita.model.domain.city.City;
+import com.amtechventures.tucita.model.domain.city.CityAttributes;
 import com.amtechventures.tucita.model.domain.subcategory.SubCategory;
 import com.amtechventures.tucita.model.domain.venue.VenueAttributes;
 import com.amtechventures.tucita.model.error.AppError;
@@ -36,7 +37,7 @@ public class CityRemote {
 
         setQuery();
 
-        query.whereContains(VenueAttributes.name, like).findInBackground(new FindCallback<City>() {
+        query.whereContains(CityAttributes.nameToSearch, like).findInBackground(new FindCallback<City>() {
             @Override
             public void done(List<City> objects, com.parse.ParseException e) {
 

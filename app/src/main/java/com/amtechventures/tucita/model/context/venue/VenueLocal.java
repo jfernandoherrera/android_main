@@ -53,15 +53,15 @@ public class VenueLocal {
 
         ParseQuery queryName = Venue.getQuery();
 
-        queryName.whereContains(VenueAttributes.name, likeWord);
+        queryName.whereContains(VenueAttributes.nameToSearch, likeWord);
 
         ParseQuery queryAddress = Venue.getQuery();
 
-        queryAddress.whereContains(VenueAttributes.address, likeWord);
+        queryAddress.whereContains(VenueAttributes.addressToSearch, likeWord);
 
         ParseQuery queryCityName = City.getQuery();
 
-        queryCityName.whereContains(CityAttributes.name, likeWord);
+        queryCityName.whereContains(CityAttributes.nameToSearch, likeWord);
 
         ParseQuery queryVenueCity = Venue.getQuery();
 
@@ -69,7 +69,7 @@ public class VenueLocal {
 
         ParseQuery queryCityDepartment = City.getQuery();
 
-        queryCityDepartment.whereContains(CityAttributes.department, likeWord);
+        queryCityDepartment.whereContains(CityAttributes.departmentToSearch, likeWord);
 
         ParseQuery queryVenueDepartment = Venue.getQuery();
 

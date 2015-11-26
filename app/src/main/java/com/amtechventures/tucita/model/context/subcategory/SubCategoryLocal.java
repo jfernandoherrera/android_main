@@ -4,6 +4,7 @@ package com.amtechventures.tucita.model.context.subcategory;
 import com.amtechventures.tucita.model.domain.category.CategoryAttributes;
 import com.amtechventures.tucita.model.domain.service.ServiceAttributes;
 import com.amtechventures.tucita.model.domain.subcategory.SubCategory;
+import com.amtechventures.tucita.model.domain.subcategory.SubCategoryAttributes;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import java.util.ArrayList;
@@ -45,7 +46,7 @@ public class SubCategoryLocal {
         List<SubCategory> subCategoryList = new ArrayList<>();
 
         try {
-            List subCategories = subCategoriesLocalQuery.whereContains(CategoryAttributes.name,likeWord).find();
+            List subCategories = subCategoriesLocalQuery.whereContains(SubCategoryAttributes.nameToSearch,likeWord).find();
 
             if(subCategories != null) {
 
