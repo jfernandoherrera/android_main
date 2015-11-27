@@ -152,7 +152,7 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
         }
 
         venueFragment.setMarginBottomToShoppingCarVisible();
-        
+
         serviceFragment.setMarginBottomToShoppingCarVisible();
     }
 

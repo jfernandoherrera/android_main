@@ -1,7 +1,6 @@
 package com.amtechventures.tucita.activities.venue.adapters;
 
-import android.app.Activity;
-import android.content.Intent;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,13 +8,10 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckedTextView;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
-import android.widget.Toast;
 import com.amtechventures.tucita.R;
-import com.amtechventures.tucita.activities.book.BookActivity;
 import com.amtechventures.tucita.activities.venue.VenueFragment;
 import com.amtechventures.tucita.model.domain.subcategory.SubCategory;
 import com.amtechventures.tucita.utils.views.ViewUtils;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +34,15 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter{
         this.childItems = (ArrayList<ArrayList>) children;
 
         this.expandableListView = expandableListView;
+
+        if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) {
+
+            this.expandableListView .setIndicatorBounds(expandableListView.getRight()-50,expandableListView.getRight()-10);
+
+        } else {
+
+            this.expandableListView .setIndicatorBoundsRelative(expandableListView.getRight()-50,expandableListView.getRight()-10);
+        }
 
         this.listener = listener;
     }
@@ -81,8 +86,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter{
 
         return textView;
     }
-
-
 
     // method getGroupView is called automatically for each parent item
     // Implement this method as per your requirement

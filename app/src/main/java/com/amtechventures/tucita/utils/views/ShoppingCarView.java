@@ -39,17 +39,15 @@ public class ShoppingCarView extends FrameLayout {
 
         inflater.inflate(R.layout.shopping_car, this);
 
+        setBackgroundResource(R.drawable.shopping_car_border);
+
         car = (ImageView) findViewById(R.id.car);
 
         bookNow = (Button) findViewById(R.id.bookNow);
 
-        bookNow.setBackgroundColor(Color.YELLOW);
-
         circleTextView = (CircleTextView) findViewById(R.id.count);
 
         car.setImageResource(R.mipmap.ic_launcher);
-
-        this.setBackgroundColor(Color.YELLOW);
 
         circleTextView.setText(" 10");
 

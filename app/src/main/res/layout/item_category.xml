@@ -16,9 +16,9 @@
             android:src="@drawable/cantador"
             android:layout_gravity="top|center_horizontal"
             android:padding="5dp"
-            app:border_width="2dp"
+            app:border_width="0dp"
             app:shadow="true"
-            app:shadow_radius="10"
+            app:shadow_radius="5"
             app:civ_border_color="@android:color/transparent"
             />
         <TextView

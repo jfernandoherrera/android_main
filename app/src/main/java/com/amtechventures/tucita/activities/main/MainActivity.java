@@ -1,6 +1,8 @@
 package com.amtechventures.tucita.activities.main;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MenuItemCompat;
@@ -8,6 +10,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
+import android.text.style.TextAppearanceSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -60,17 +67,41 @@ public class MainActivity extends AppCompatActivity {
 
         boolean connected = getIntent().getExtras().getBoolean(UserAttributes.connected);
 
+
+        Button buttonText = (Button) findViewById(R.id.go_to_login);
+
         if (connected){
 
-            Button button = (Button) findViewById(R.id.go_to_login);
-
-            button.setVisibility(View.GONE);
+            buttonText.setVisibility(View.GONE);
 
         }else {
 
             ImageButton button = (ImageButton) findViewById(R.id.account);
 
             button.setVisibility(View.GONE);
+
+            String firstString = getResources().getString(R.string.action_sign_in_short).toUpperCase();
+
+            String secondString = getResources().getString(R.string.or);
+
+            String thirdString = getResources().getString(R.string.action_sign_up).toUpperCase();
+
+            SpannableStringBuilder stringBuilder = new SpannableStringBuilder(firstString +" "+ secondString +" "+ thirdString);
+
+            stringBuilder.setSpan(new TextAppearanceSpan(null, Typeface.NORMAL, 30, null, null), 0, firstString.length(),
+                    Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+
+            stringBuilder.setSpan(new ForegroundColorSpan(Color.rgb(158, 158, 158)), firstString.length() + 1,
+
+                    firstString.length() + secondString.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+
+            stringBuilder.setSpan(new TextAppearanceSpan(null, Typeface.NORMAL, 30, null, null), firstString.length() + secondString.length() + 2,
+
+                    firstString.length() + secondString.length() + thirdString.length() + 2,
+
+                    Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+
+            buttonText.setText(stringBuilder);
         }
     }
 

@@ -32,7 +32,7 @@
     <style name="AppTheme.subCategory" parent="Base.Theme.AppCompat.Light.Dialog.FixedSize" >
     </style>
     <style name="AppTheme.AppBarOverlay" parent="AppTheme.Title" >
-        <item name="android:background">?attr/colorPrimaryDark</item>
+        <item name="android:background">@android:color/transparent</item>
     </style>
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
     <style name="AppTheme.ListView" parent="ThemeOverlay.AppCompat.Light">

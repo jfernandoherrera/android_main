@@ -25,15 +25,17 @@
         android:id="@+id/account"
         style="@style/AppTheme.Button"
         android:layout_alignParentBottom="true"
+        android:background="@drawable/shopping_car_border"
         android:onClick="goToAccount"
         />
     <Button
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:id="@+id/go_to_login"
-        android:text="@string/action_sign_in"
+        android:textAllCaps="false"
         android:onClick="goToLogin"
         android:padding="5dp"
+        android:background="@drawable/log_in_or_signup"
         android:layout_alignParentBottom="true"
         />
 </RelativeLayout>
