@@ -198,7 +198,7 @@ public class VenuesResultFragment extends Fragment implements GoogleApiClient.On
         button.setText(city);
     }
 
-    public void setupGrid(final City city) {
+    public void setupList(final City city) {
 
         setupProgress();
 
@@ -225,7 +225,7 @@ public class VenuesResultFragment extends Fragment implements GoogleApiClient.On
         });
     }
 
-    private void setupGrid() {
+    private void setupList() {
 
         setupProgress();
 
@@ -258,7 +258,7 @@ public class VenuesResultFragment extends Fragment implements GoogleApiClient.On
 
         locationContext.setLocation();
 
-        setupGrid();
+        setupList();
     }
 
     @Override

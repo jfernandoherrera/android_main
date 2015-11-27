@@ -15,17 +15,21 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.ScaleAnimation;
 import android.widget.TextView;
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.service.ServiceFragment;
 import com.amtechventures.tucita.activities.venue.VenueFragment;
+import com.amtechventures.tucita.utils.views.ShoppingCarView;
 
 public class BookActivity extends AppCompatActivity implements VenueFragment.OnServiceSelected {
 
     private VenueFragment venueFragment;
     private ServiceFragment serviceFragment;
     private Toolbar toolbar;
-    private Snackbar snackbar;
+    private ShoppingCarView shoppingCarView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +37,8 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_book);
+
+        shoppingCarView = (ShoppingCarView) findViewById(R.id.shoppingCar);
 
         venueFragment = new VenueFragment();
 
@@ -45,8 +51,6 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
         serviceHide();
 
         setToolbar();
-
-        setSnackbar();
     }
 
     private void setVenueFragment() {
@@ -127,42 +131,50 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
         }
     }
 
-    public void setSnackbar(){
-
-        ImageSpan is = new ImageSpan(this, R.mipmap.ic_launcher);
-
-        final Spannable text = new SpannableString("    Had a snack" + " ");
-
-        text.setSpan(is, 0, 4, 0);
-
-        snackbar = Snackbar
-
-                .make(findViewById(R.id.layout_main), text, Snackbar.LENGTH_INDEFINITE);
-
-        snackbar.setActionTextColor(Color.RED);
-
-        View snackbarView = snackbar.getView();
-
-        snackbarView.setBackgroundColor(Color.YELLOW);
-
-        snackbarView.setMinimumHeight(30);
-
-        TextView textView = (TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text);
-
-
-        textView.setTextColor(Color.BLUE);
-
-    }
-
     public void bookNow(View v) {
 
-        snackbar.show();
+        if(android.os.Build.VERSION.SDK_INT >= 16) {
 
+            shoppingCarView.animate().translationY(shoppingCarView.getHeight()).withEndAction(new Runnable() {
+                @Override
+                public void run() {
+                    shoppingCarView.setVisibility(View.VISIBLE);
+
+                    shoppingCarView.animate().translationY(0).setDuration(1000);
+                }
+            }).setDuration(0);
+
+
+        }else {
+
+            shoppingCarView.setVisibility(View.VISIBLE);
+
+        }
+
+        venueFragment.setMarginBottomToShoppingCarVisible();
+        
+        serviceFragment.setMarginBottomToShoppingCarVisible();
     }
 
     public void book(View v) {
 
+        if(android.os.Build.VERSION.SDK_INT >= 16) {
 
+            shoppingCarView.animate().translationY(shoppingCarView.getHeight()).withEndAction(new Runnable() {
+                @Override
+                public void run() {
+
+                    shoppingCarView.setVisibility(View.GONE);
+                }
+            });
+        }else{
+
+            shoppingCarView.setVisibility(View.GONE);
+        }
+
+        venueFragment.setMarginBottomToShoppingCarGone();
+
+        serviceFragment.setMarginBottomToShoppingCarGone();
     }
 
     @Override

@@ -11,8 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ExpandableListView;
+import android.widget.GridLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.venue.adapters.ExpandableListAdapter;
@@ -61,6 +65,7 @@ public class VenueFragment extends Fragment {
     private OnServiceSelected listener;
     private LayoutInflater inflater;
     private ProgressDialog progress;
+    private ScrollView scrollView;
 
     public interface OnServiceSelected{
 
@@ -99,6 +104,8 @@ public class VenueFragment extends Fragment {
         serviceContext = ServiceContext.context(serviceContext);
 
         openingHourContext = OpeningHourContext.context(openingHourContext);
+
+        scrollView = (ScrollView) rootView.findViewById(R.id.scrollView1);
 
         venuePicture = (ImageView) rootView.findViewById(R.id.imageVenue);
 
@@ -168,6 +175,28 @@ public class VenueFragment extends Fragment {
 
             setupProgress();
         }
+    }
+
+    public void setMarginBottomToShoppingCarVisible(){
+
+        RelativeLayout.LayoutParams params =new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.MATCH_PARENT,
+                RelativeLayout.LayoutParams.MATCH_PARENT
+        );
+        params.setMargins(0, 90, 0, 60);
+
+        scrollView.setLayoutParams(params);
+    }
+
+    public void setMarginBottomToShoppingCarGone(){
+
+        RelativeLayout.LayoutParams params =new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.MATCH_PARENT,
+                RelativeLayout.LayoutParams.MATCH_PARENT
+        );
+        params.setMargins(0, 90, 0, 0);
+
+        scrollView.setLayoutParams(params);
     }
 
     private void setupPicture(){

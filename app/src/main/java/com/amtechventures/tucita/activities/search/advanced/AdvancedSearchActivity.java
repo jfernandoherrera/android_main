@@ -168,7 +168,7 @@ public class AdvancedSearchActivity extends AppCompatActivity implements Locatio
     @Override
     public void onCitySelected(City city) {
 
-        venuesResultFragment.setupGrid(city);
+        venuesResultFragment.setupList(city);
 
         hideLocationOptionsFragment();
 

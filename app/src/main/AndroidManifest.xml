@@ -43,8 +43,6 @@
             android:name=".activities.subcategory.SubCategoryActivity"
             android:theme="@style/AppTheme.subCategory" >
         </activity>
-        <activity android:name=".activities.venue.VenueFragment" >
-        </activity>
         <activity android:name=".activities.search.advanced.AdvancedSearchActivity" >
         </activity>
         <activity android:name=".activities.main.MainActivity" >
