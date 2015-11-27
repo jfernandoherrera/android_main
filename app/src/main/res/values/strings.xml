@@ -37,6 +37,7 @@
     <string name="error_pinning_categories">Error pinning Categories:</string>
     <string name="error">Error</string>
     <string name="no_internet_connection">No hay conexión a internet</string>
+    <string name="no_Location">No se pudo establecer la localizaciòn actual</string>
     <string name="alert">Alerta</string>
     <string name="services">Servicios</string>
     <string name="or">O</string>

@@ -18,6 +18,15 @@ public class AlertDialogError {
         typeMore.show();
     }
 
+    public void noLocationAlert(Context context) {
+
+        Toast typeMore = Toast.makeText(context, R.string.no_Location, Toast.LENGTH_SHORT);
+
+        typeMore.setGravity(Gravity.CENTER | Gravity.LEFT, 0, 0);
+
+        typeMore.show();
+    }
+
     public void noTypedEnough(Context context) {
 
         Toast typeMore = Toast.makeText(context, R.string.typing_advertisement, Toast.LENGTH_SHORT);

@@ -61,8 +61,6 @@ public class VenuesResultFragment extends Fragment implements GoogleApiClient.On
 
         View rootView = inflater.inflate(R.layout.fragment_venues_result, container, false);
 
-        setupProgress();
-
         venueContext = VenueContext.context(venueContext);
 
         subCategoryContext = SubCategoryContext.context(subCategoryContext);
@@ -127,6 +125,7 @@ public class VenuesResultFragment extends Fragment implements GoogleApiClient.On
         venueContext.loadSubCategorizedCityVenues(services, city, new VenueCompletion.ErrorCompletion() {
             @Override
             public void completion(List<Venue> venueList, AppError error) {
+
                 if (venueList != null) {
 
                     if(venueList.isEmpty()){
@@ -185,6 +184,10 @@ public class VenuesResultFragment extends Fragment implements GoogleApiClient.On
 
             });
 
+        }else{
+            AlertDialogError alertDialogError = new AlertDialogError();
+
+            alertDialogError.noLocationAlert(getContext());
         }
     }
 
@@ -197,6 +200,8 @@ public class VenuesResultFragment extends Fragment implements GoogleApiClient.On
 
     public void setupGrid(final City city) {
 
+        setupProgress();
+
         setCity(city.formatedLocation());
 
         subCategory = subCategoryContext.findSubCategory(name);
@@ -204,8 +209,6 @@ public class VenuesResultFragment extends Fragment implements GoogleApiClient.On
         serviceContext.loadSubCategorizedServices(subCategory, new ServiceCompletion.ErrorCompletion() {
             @Override
             public void completion(List<Service> servicesList, AppError error) {
-
-
 
                 if (servicesList != null) {
 
@@ -223,6 +226,8 @@ public class VenuesResultFragment extends Fragment implements GoogleApiClient.On
     }
 
     private void setupGrid() {
+
+        setupProgress();
 
         subCategory = subCategoryContext.findSubCategory(name);
 
@@ -264,5 +269,8 @@ public class VenuesResultFragment extends Fragment implements GoogleApiClient.On
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
 
+        AlertDialogError alertDialogError = new AlertDialogError();
+
+        alertDialogError.noLocationAlert(getContext());
     }
 }
