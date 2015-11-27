@@ -12,7 +12,6 @@ public class CircleTextView extends TextView {
     private static final int PADDING = 15;
     private Paint mCirclePaint;
 
-
     public CircleTextView(Context context, AttributeSet attrs) {
 
         super(context, attrs);
@@ -25,7 +24,6 @@ public class CircleTextView extends TextView {
 
         mCirclePaint.setColor(Color.GREEN);
     }
-
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -42,5 +40,4 @@ public class CircleTextView extends TextView {
         // grow view dimensions to account for circle
         setMeasuredDimension(resolveSize(getMeasuredWidth()+(PADDING*2), widthMeasureSpec), resolveSize(getMeasuredHeight()+(PADDING*2), heightMeasureSpec));
     }
-
 }
