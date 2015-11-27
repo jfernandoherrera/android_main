@@ -161,6 +161,8 @@ public class VenuesResultFragment extends Fragment implements GoogleApiClient.On
                 @Override
                 public void completion(List<Venue> venueList, AppError error) {
 
+                    progress.dismiss();
+
                     if (venueList != null) {
 
                         if(venueList.isEmpty()){
@@ -178,7 +180,6 @@ public class VenuesResultFragment extends Fragment implements GoogleApiClient.On
 
                         recyclerView.setAdapter(adapter);
 
-                        progress.dismiss();
                     }
                 }
 
@@ -204,14 +205,14 @@ public class VenuesResultFragment extends Fragment implements GoogleApiClient.On
             @Override
             public void completion(List<Service> servicesList, AppError error) {
 
-                progress.dismiss();
+
 
                 if (servicesList != null) {
 
                     setupCityVenues(servicesList, city);
 
                 } else {
-
+                    progress.dismiss();
 
                     AlertDialogError alertDialogError = new AlertDialogError();
 
