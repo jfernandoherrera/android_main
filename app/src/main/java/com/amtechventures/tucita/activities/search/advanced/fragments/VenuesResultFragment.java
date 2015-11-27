@@ -204,13 +204,14 @@ public class VenuesResultFragment extends Fragment implements GoogleApiClient.On
             @Override
             public void completion(List<Service> servicesList, AppError error) {
 
+                progress.dismiss();
+
                 if (servicesList != null) {
 
                     setupCityVenues(servicesList, city);
 
                 } else {
 
-                    progress.dismiss();
 
                     AlertDialogError alertDialogError = new AlertDialogError();
 
