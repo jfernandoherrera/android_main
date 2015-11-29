@@ -13,8 +13,8 @@ import static android.view.View.MeasureSpec.*;
 
 public class ViewUtils {
 
-    public static final int childHeight = 48;
-    public static final int parentHeight = 72;
+    public static final int childHeight = 148;
+    public static final int parentHeight = 172;
 
     public static void setListViewHeightBasedOnChildren(ListView listView) {
 

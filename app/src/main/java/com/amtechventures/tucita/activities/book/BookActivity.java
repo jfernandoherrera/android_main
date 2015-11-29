@@ -151,9 +151,9 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
         }
 
-        venueFragment.setMarginBottomToShoppingCarVisible();
+        venueFragment.setMarginBottomToShoppingCarVisible(shoppingCarView.getHeight());
 
-        serviceFragment.setMarginBottomToShoppingCarVisible();
+        serviceFragment.setMarginBottomToShoppingCarVisible( shoppingCarView.getHeight());
     }
 
     public void book(View v) {

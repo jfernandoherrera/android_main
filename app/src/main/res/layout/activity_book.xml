@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimaryDark"/>
     <RelativeLayout
+        android:layout_below="@+id/toolbar"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:id="@+id/layout_main">
@@ -20,6 +21,7 @@
         <com.amtechventures.tucita.utils.views.ShoppingCarView
            android:layout_height="wrap_content"
             android:layout_width="match_parent"
+            style="@style/AppTheme.subTitle"
             android:id="@+id/shoppingCar"
             android:layout_alignParentBottom="true"
             />

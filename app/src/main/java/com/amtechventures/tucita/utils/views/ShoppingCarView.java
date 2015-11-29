@@ -49,6 +49,7 @@ public class ShoppingCarView extends FrameLayout {
 
         car.setImageResource(R.mipmap.ic_launcher);
 
+
         circleTextView.setText(" 10");
 
         circleTextView.setTranslationX(32);

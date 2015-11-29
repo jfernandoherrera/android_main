@@ -27,26 +27,24 @@ public class ServiceFragment extends Fragment {
         return rootView;
     }
 
-    public void setMarginBottomToShoppingCarVisible(){
+    public void setMarginBottomToShoppingCarVisible( int shoppingCarHeight){
 
-        RelativeLayout.LayoutParams params =new RelativeLayout.LayoutParams(
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.MATCH_PARENT,
                 RelativeLayout.LayoutParams.MATCH_PARENT
         );
-
-
-            params.setMargins(0, 90, 0, 60);
+            params.setMargins(0, 0, 0, shoppingCarHeight);
 
         relativeLayout.setLayoutParams(params);
     }
 
     public void setMarginBottomToShoppingCarGone(){
 
-        RelativeLayout.LayoutParams params =new RelativeLayout.LayoutParams(
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.MATCH_PARENT,
                 RelativeLayout.LayoutParams.MATCH_PARENT
         );
-        params.setMargins(0, 90, 0, 0);
+        params.setMargins(0, 0, 0, 0);
 
         relativeLayout.setLayoutParams(params);
     }
