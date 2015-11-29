@@ -1,16 +1,11 @@
 package com.amtechventures.tucita.utils.views;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.util.AttributeSet;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import com.amtechventures.tucita.R;
 
@@ -39,7 +34,7 @@ public class ShoppingCarView extends FrameLayout {
 
         inflater.inflate(R.layout.shopping_car, this);
 
-        setBackgroundResource(R.drawable.shopping_car_border);
+        setBackgroundResource(R.drawable.log_in_or_signup_click_out);
 
         car = (ImageView) findViewById(R.id.car);
 

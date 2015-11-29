@@ -1,6 +1,7 @@
 package com.amtechventures.tucita.activities.main;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v4.app.FragmentManager;
@@ -12,11 +13,10 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
-import android.text.style.ForegroundColorSpan;
-import android.text.style.StyleSpan;
 import android.text.style.TextAppearanceSpan;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         boolean connected = getIntent().getExtras().getBoolean(UserAttributes.connected);
 
 
-        Button buttonText = (Button) findViewById(R.id.go_to_login);
+        final Button buttonText = (Button) findViewById(R.id.go_to_login);
 
         if (connected){
 
@@ -76,33 +76,57 @@ public class MainActivity extends AppCompatActivity {
 
         }else {
 
-            ImageButton button = (ImageButton) findViewById(R.id.account);
+            final ImageButton button = (ImageButton) findViewById(R.id.account);
 
             button.setVisibility(View.GONE);
 
-            String firstString = getResources().getString(R.string.action_sign_in_short).toUpperCase();
+            buttonText.setText(getStringLoginModified());
 
-            String secondString = getResources().getString(R.string.or);
+            buttonText.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
 
-            String thirdString = getResources().getString(R.string.action_sign_up).toUpperCase();
+                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
 
-            SpannableStringBuilder stringBuilder = new SpannableStringBuilder(firstString +" "+ secondString +" "+ thirdString);
+                       buttonText.setBackgroundResource(R.drawable.log_in_or_signup_click_in);
 
-            stringBuilder.setSpan(new TextAppearanceSpan(null, Typeface.NORMAL, 30, null, null), 0, firstString.length(),
-                    Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+                    } else if (event.getAction() == MotionEvent.ACTION_UP) {
 
-            stringBuilder.setSpan(new ForegroundColorSpan(Color.rgb(158, 158, 158)), firstString.length() + 1,
+                        buttonText.setBackgroundResource(R.drawable.log_in_or_signup_click_out);
 
-                    firstString.length() + secondString.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+                        buttonText.callOnClick();
+                    }
+                return true;
+                }
+            });
 
-            stringBuilder.setSpan(new TextAppearanceSpan(null, Typeface.NORMAL, 30, null, null), firstString.length() + secondString.length() + 2,
-
-                    firstString.length() + secondString.length() + thirdString.length() + 2,
-
-                    Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-
-            buttonText.setText(stringBuilder);
         }
+    }
+
+    private SpannableStringBuilder getStringLoginModified(){
+
+        String firstString = getResources().getString(R.string.action_sign_in_short).toUpperCase();
+
+        String secondString = getResources().getString(R.string.or).toLowerCase();
+
+        String thirdString = getResources().getString(R.string.action_sign_up).toUpperCase();
+
+        SpannableStringBuilder stringBuilder = new SpannableStringBuilder(firstString +" "+ secondString +" "+ thirdString);
+
+        stringBuilder.setSpan(new TextAppearanceSpan(Typeface.SANS_SERIF.toString(), Typeface.NORMAL, 45, null, null), 0, firstString.length(),
+                Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+
+        stringBuilder.setSpan(new TextAppearanceSpan( Typeface.SANS_SERIF.toString(), Typeface.NORMAL, 45, ColorStateList.valueOf(Color.rgb(238,238,238)), null), firstString.length() + 1,
+
+                firstString.length() + secondString.length()+1, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+
+        stringBuilder.setSpan(new TextAppearanceSpan(Typeface.SANS_SERIF.toString(), Typeface.NORMAL, 45, null, null), firstString.length() + secondString.length() + 2,
+
+                firstString.length() + secondString.length() + thirdString.length() + 2,
+
+                Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+
+        return stringBuilder;
     }
 
     private void setCategoryFragment(){
