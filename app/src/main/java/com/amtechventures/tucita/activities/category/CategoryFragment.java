@@ -4,9 +4,16 @@ import java.util.List;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.TextAppearanceSpan;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import java.util.ArrayList;
 
@@ -16,8 +23,11 @@ import com.amtechventures.tucita.R;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.GridLayoutManager;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 
+import com.amtechventures.tucita.model.domain.user.UserAttributes;
 import com.amtechventures.tucita.model.error.AppError;
 import com.amtechventures.tucita.model.domain.category.Category;
 import com.amtechventures.tucita.model.context.category.CategoryContext;
@@ -52,9 +62,77 @@ public class CategoryFragment extends Fragment {
 
         setupGrid();
 
+        setupLogged(rootView);
+
         return rootView;
     }
 
+
+    private SpannableStringBuilder getStringLoginModified(){
+
+        String firstString = getResources().getString(R.string.action_sign_in_short).toUpperCase();
+
+        String secondString = getResources().getString(R.string.or).toLowerCase();
+
+        String thirdString = getResources().getString(R.string.action_sign_up).toUpperCase();
+
+        SpannableStringBuilder stringBuilder = new SpannableStringBuilder(firstString +" "+ secondString +" "+ thirdString);
+
+        stringBuilder.setSpan(new TextAppearanceSpan(Typeface.SANS_SERIF.toString(), Typeface.NORMAL, 45, null, null), 0, firstString.length(),
+                Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+
+        stringBuilder.setSpan(new TextAppearanceSpan(Typeface.SANS_SERIF.toString(), Typeface.NORMAL, 45, ColorStateList.valueOf(Color.rgb(238, 238, 238)), null), firstString.length() + 1,
+
+                firstString.length() + secondString.length() + 1, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+
+        stringBuilder.setSpan(new TextAppearanceSpan(Typeface.SANS_SERIF.toString(), Typeface.NORMAL, 45, null, null), firstString.length() + secondString.length() + 2,
+
+                firstString.length() + secondString.length() + thirdString.length() + 2,
+
+                Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+
+        return stringBuilder;
+    }
+
+    private void setupLogged(View view){
+
+        boolean connected = getActivity().getIntent().getExtras().getBoolean(UserAttributes.connected);
+
+
+        final Button buttonText = (Button) view.findViewById(R.id.go_to_login);
+
+        if (connected){
+
+            buttonText.setVisibility(View.GONE);
+
+        }else {
+
+            final ImageButton button = (ImageButton) view.findViewById(R.id.account);
+
+            button.setVisibility(View.GONE);
+
+            buttonText.setText(getStringLoginModified());
+
+            buttonText.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+
+                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
+
+                        buttonText.setBackgroundResource(R.drawable.log_in_or_signup_click_in);
+
+                    } else if (event.getAction() == MotionEvent.ACTION_UP) {
+
+                        buttonText.setBackgroundResource(R.drawable.log_in_or_signup_click_out);
+
+                        buttonText.callOnClick();
+                    }
+                    return true;
+                }
+            });
+
+        }
+    }
     private void setupGrid() {
 
         List<Category> categoryList = categoryContext.loadCategories(new CategoryCompletion.CategoriesErrorCompletion() {

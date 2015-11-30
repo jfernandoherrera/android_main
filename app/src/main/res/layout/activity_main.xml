@@ -19,25 +19,5 @@
         android:id="@+id/layout_main"
         >
     </RelativeLayout>
-    <ImageButton
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:id="@+id/account"
-        android:layout_alignParentBottom="true"
 
-        android:onClick="goToAccount"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        />
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:id="@+id/go_to_login"
-        android:textAllCaps="false"
-        android:onClick="goToLogin"
-        android:layout_alignParentBottom="true"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:background="@drawable/log_in_or_signup_click_out"
-        />
 </RelativeLayout>
