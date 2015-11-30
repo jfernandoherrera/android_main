@@ -49,6 +49,26 @@ public class VenueLocal {
         return venue;
     }
 
+    public List<Venue> loadRecentVenues(){
+
+        ParseQuery queryName = Venue.getQuery();
+
+        queryName.orderByAscending(VenueAttributes.updatedAt);
+
+        queryName.setLimit(10);
+
+        List venues = null;
+
+        try {
+        venues = queryName.find();
+
+        } catch (ParseException e) {
+
+            e.printStackTrace();
+        }
+        return venues;
+    }
+
         public List<Venue> loadLikeVenues(String likeWord){
 
         ParseQuery queryName = Venue.getQuery();

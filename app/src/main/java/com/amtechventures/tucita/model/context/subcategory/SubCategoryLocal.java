@@ -12,6 +12,35 @@ import java.util.List;
 
 public class SubCategoryLocal {
 
+
+    public List<SubCategory> loadRecentSubCategories(){
+
+        ParseQuery subCategoryLocalQuery = SubCategory.getQuery();
+
+        subCategoryLocalQuery.fromLocalDatastore();
+
+        subCategoryLocalQuery.setLimit(10);
+
+        subCategoryLocalQuery.orderByAscending(SubCategoryAttributes.updatedAt);
+
+        List<SubCategory> subCategoryList = new ArrayList<>();
+
+        try {
+            List subCategories = subCategoryLocalQuery.find();
+
+            if(subCategories != null) {
+
+                subCategoryList = subCategories;
+            }
+        } catch (com.parse.ParseException e) {
+
+            e.printStackTrace();
+        }
+
+        return subCategoryList;
+    }
+
+
     public List<SubCategory> loadSubCategories(ParseQuery<SubCategory> subCategoryLocalQuery){
 
         subCategoryLocalQuery.fromLocalDatastore();

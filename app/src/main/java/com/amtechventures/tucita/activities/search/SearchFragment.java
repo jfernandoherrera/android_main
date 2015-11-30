@@ -132,7 +132,6 @@ public class SearchFragment extends Fragment {
         startActivity(intent);
     }
 
-
     private ArrayList<String> setSubCategoriesToStringsArray(){
 
         ArrayList<String> stringsSubCategories = new ArrayList<>();
@@ -157,6 +156,7 @@ public class SearchFragment extends Fragment {
         return stringsVenues;
     }
 
+
     public void setupSubCategoryList(String newText){
 
         textViewTreatments.setVisibility(View.INVISIBLE);
@@ -175,6 +175,8 @@ public class SearchFragment extends Fragment {
 
                     subCategories.addAll(subCategoriesList);
 
+                    subCategoriesAdapter.clear();
+
                     subCategoriesAdapter.addAll(setSubCategoriesToStringsArray());
 
                     subCategoriesAdapter.notifyDataSetChanged();
@@ -190,6 +192,55 @@ public class SearchFragment extends Fragment {
             subCategories.clear();
 
             subCategories.addAll(subCategoriesList);
+
+            subCategoriesAdapter.clear();
+
+            subCategoriesAdapter.addAll(setSubCategoriesToStringsArray());
+
+            subCategoriesAdapter.notifyDataSetChanged();
+
+        }
+    }
+
+    public void setupRecentVenueList(){
+
+        textViewVenues.setVisibility(View.INVISIBLE);
+
+        final List<Venue> venuesList = venueContext.loadRecentVenues();
+
+        if (venuesList != null && !venuesList.isEmpty()) {
+
+            textVenues();
+
+            venues.clear();
+
+            venues.addAll(venuesList);
+
+            venuesAdapter.clear();
+
+            venuesAdapter.addAll(setVenuesToStringsArray());
+
+            venuesAdapter.notifyDataSetChanged();
+
+        }
+
+    }
+
+    public void setupRecentSubCategoryList(){
+
+        textViewTreatments.setVisibility(View.INVISIBLE);
+
+        List<SubCategory> subCategoriesList = subCategoryContext.loadRecentSubcategories();
+
+        if (subCategoriesList != null && !subCategoriesList.isEmpty()) {
+
+            textSubCategories();
+
+            subCategories.clear();
+
+            subCategories.addAll(subCategoriesList);
+
+            subCategoriesAdapter.clear();
 
             subCategoriesAdapter.addAll(setSubCategoriesToStringsArray());
 
@@ -216,6 +267,8 @@ public class SearchFragment extends Fragment {
 
                             venues.addAll(venuesList);
 
+                            venuesAdapter.clear();
+
                             venuesAdapter.addAll(setVenuesToStringsArray());
 
                             venuesAdapter.notifyDataSetChanged();
@@ -232,6 +285,8 @@ public class SearchFragment extends Fragment {
                 venues.clear();
 
                 venues.addAll(venuesList);
+
+                venuesAdapter.clear();
 
                 venuesAdapter.addAll(setVenuesToStringsArray());
 

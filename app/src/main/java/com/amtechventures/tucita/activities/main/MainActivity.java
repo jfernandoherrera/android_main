@@ -166,7 +166,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
 
-                if (newText.length() < minimumToSearch) {
+                if(newText.equals("")){
+
+                    searchFragment.setupRecentVenueList();
+
+                    searchFragment.setupRecentSubCategoryList();
+
+                }else if (newText.length() < minimumToSearch) {
 
                     AlertDialogError alertDialogError = new AlertDialogError();
 
@@ -188,6 +194,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
+        searchFragment.setupRecentSubCategoryList();
+
+        searchFragment.setupRecentVenueList();
 
       searchShow();
 

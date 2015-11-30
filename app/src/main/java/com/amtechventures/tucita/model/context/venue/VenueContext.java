@@ -42,6 +42,12 @@ public class VenueContext {
         return venues;
     }
 
+    public List<Venue> loadRecentVenues(){
+
+        List venues = venueLocal.loadRecentVenues();
+
+        return venues;
+    }
 
     public Venue findVenue(String lookThat, String address, VenueCompletion.ErrorCompletion completion) {
 

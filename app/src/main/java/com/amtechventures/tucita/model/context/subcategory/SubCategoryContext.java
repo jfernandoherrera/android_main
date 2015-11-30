@@ -37,6 +37,13 @@ public class SubCategoryContext {
     subCategoryRemote.cancelQuery();
     }
 
+    public List<SubCategory> loadRecentSubcategories(){
+
+        List subCategories = subCategoryLocal.loadRecentSubCategories();
+
+        return subCategories;
+    }
+
     public List<SubCategory> loadSubCategories(Category category, SubCategoryCompletion.ErrorCompletion completion){
 
       List subCategories;
