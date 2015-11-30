@@ -163,7 +163,7 @@ public class CategoryFragment extends Fragment {
             }
 
         });
-        if (categoryList != null) {
+        if (categoryList != null && ! categoryList.isEmpty()) {
 
             categories.clear();
 

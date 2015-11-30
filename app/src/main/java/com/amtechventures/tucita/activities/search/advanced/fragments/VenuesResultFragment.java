@@ -19,12 +19,15 @@ import android.widget.TextView;
 
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.search.adapters.AdvancedSearchAdapter;
+import com.amtechventures.tucita.model.context.category.CategoryContext;
 import com.amtechventures.tucita.model.context.location.LocationContext;
 import com.amtechventures.tucita.model.context.service.ServiceCompletion;
 import com.amtechventures.tucita.model.context.service.ServiceContext;
+import com.amtechventures.tucita.model.context.subcategory.SubCategoryCompletion;
 import com.amtechventures.tucita.model.context.subcategory.SubCategoryContext;
 import com.amtechventures.tucita.model.context.venue.VenueCompletion;
 import com.amtechventures.tucita.model.context.venue.VenueContext;
+import com.amtechventures.tucita.model.domain.category.Category;
 import com.amtechventures.tucita.model.domain.category.CategoryAttributes;
 import com.amtechventures.tucita.model.domain.city.City;
 import com.amtechventures.tucita.model.domain.service.Service;
@@ -50,10 +53,11 @@ public class VenuesResultFragment extends Fragment implements GoogleApiClient.On
     private SubCategoryContext subCategoryContext;
     private String name;
     private SubCategory subCategory;
+    private boolean category;
     private ArrayList priceStrings = new ArrayList<>();
     private LocationContext locationContext;
     private TextView noResults;
-
+    private CategoryContext categoryContext;
 
     @Nullable
     @Override
@@ -67,9 +71,13 @@ public class VenuesResultFragment extends Fragment implements GoogleApiClient.On
 
         serviceContext = ServiceContext.context(serviceContext);
 
+        categoryContext = CategoryContext.context(categoryContext);
+
         locationContext = LocationContext.context(locationContext, getContext(), this, this);
 
         name = getActivity().getIntent().getStringExtra(CategoryAttributes.name);
+
+        category = getActivity().getIntent().getBooleanExtra(Category.class.getName(), false);
 
         recyclerView = (RecyclerView)rootView.findViewById(R.id.recycler_view);
 
@@ -225,7 +233,55 @@ public class VenuesResultFragment extends Fragment implements GoogleApiClient.On
         });
     }
 
-    private void setupList() {
+    private void setupListFromCategory() {
+
+        setupProgress();
+
+        Category category = categoryContext.findCategory(name);
+
+        subCategoryContext.loadSubCategories(category, new SubCategoryCompletion.ErrorCompletion() {
+            @Override
+            public void completion(List<SubCategory> subCategoriesList, AppError error) {
+
+                if (subCategoriesList != null) {
+
+                    setupCategorizedVenues(subCategoriesList);
+
+                } else {
+
+                    progress.dismiss();
+
+                    AlertDialogError alertDialogError = new AlertDialogError();
+
+                    alertDialogError.noInternetConnectionAlert(getContext());
+                }
+            }
+        });
+    }
+
+    private void setupCategorizedVenues(List<SubCategory> subCategoriesList){
+
+        serviceContext.loadCategorizedServices(subCategoriesList, new ServiceCompletion.ErrorCompletion() {
+            @Override
+            public void completion(List<Service> servicesList, AppError error) {
+
+                if (servicesList != null) {
+
+                    setupNearVenues(servicesList);
+
+                } else {
+
+                    progress.dismiss();
+
+                    AlertDialogError alertDialogError = new AlertDialogError();
+
+                    alertDialogError.noInternetConnectionAlert(getContext());
+                }
+            }
+        });
+    }
+
+    private void setupListFromSubCategory() {
 
         setupProgress();
 
@@ -251,14 +307,19 @@ public class VenuesResultFragment extends Fragment implements GoogleApiClient.On
         });
     }
 
-
-
     @Override
     public void onConnected(Bundle bundle) {
 
         locationContext.setLocation();
+/* future work
+        if(category){
 
-        setupList();
+            setupListFromCategory();
+        }else {
+
+
+        }*/
+        setupListFromSubCategory();
     }
 
     @Override

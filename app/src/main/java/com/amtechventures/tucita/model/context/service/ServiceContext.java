@@ -67,7 +67,12 @@ public class ServiceContext {
 
     public void loadSubCategorizedServices(SubCategory subCategory, ServiceCompletion.ErrorCompletion errorCompletion){
 
-        serviceRemote.loadSubCategorizedServices(subCategory,errorCompletion);
+        serviceRemote.loadSubCategorizedServices(subCategory, errorCompletion);
+    }
+
+    public void loadCategorizedServices(List<SubCategory> subCategories, ServiceCompletion.ErrorCompletion errorCompletion){
+
+        serviceRemote.loadCategorizedServices(subCategories,errorCompletion);
     }
 }
 

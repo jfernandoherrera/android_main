@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -51,11 +52,24 @@ public class SubCategoryActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
 
-                String  name = subCategories.get(position).getName();
+                int others = subCategories.size();
+                
+                if (position == 0) {
 
-                goToAdvancedSearch(name);
+                    String name = category.getName();
+
+                    goToAdvancedSearch(name, true);
+
+                } else if (position == others + 1) {
+
+                } else {
+
+                    String name = subCategories.get(position-1).getName();
+
+                    goToAdvancedSearch(name, false);
+                }
+
             }
-
         });
         setupList();
     }
@@ -64,10 +78,18 @@ public class SubCategoryActivity extends AppCompatActivity {
 
         ArrayList<String> stringsSubCategories = new ArrayList<>();
 
+        String all = getResources().getString(R.string.all);
+
+        stringsSubCategories.add(all + " " + category.getName());
+
         for(ParseObject subCategory : subCategories){
 
             stringsSubCategories.add(subCategory.getString(CategoryAttributes.name));
         }
+
+        String others = getResources().getString(R.string.others);
+
+        stringsSubCategories.add(others);
 
         return stringsSubCategories;
     }
@@ -100,11 +122,13 @@ public class SubCategoryActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
     }
 
-    private void goToAdvancedSearch(String name) {
+    private void goToAdvancedSearch(String name, boolean category) {
 
         Intent intent = new Intent(SubCategoryActivity.this, AdvancedSearchActivity.class);
 
         intent.putExtra(CategoryAttributes.name, name);
+
+        intent.putExtra(Category.class.getName(), category);
 
         startActivity(intent);
 

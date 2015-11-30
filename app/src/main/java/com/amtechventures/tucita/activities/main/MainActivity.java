@@ -51,9 +51,6 @@ public class MainActivity extends AppCompatActivity {
         setToolbar();
     }
 
-
-
-
     private void setCategoryFragment(){
 
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -186,7 +183,6 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 return true;
-
             }
         });
         return true;
@@ -195,13 +191,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        searchFragment.setupRecentSubCategoryList();
+        searchShow();
+
+        categoryHide();
 
         searchFragment.setupRecentVenueList();
 
-      searchShow();
-
-      categoryHide();
+        searchFragment.setupRecentSubCategoryList();
 
         return super.onOptionsItemSelected(item);
     }

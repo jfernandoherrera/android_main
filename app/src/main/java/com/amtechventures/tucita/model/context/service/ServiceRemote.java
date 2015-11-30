@@ -114,4 +114,22 @@ public class ServiceRemote {
 
     }
 
+    public void loadCategorizedServices(List<SubCategory> subCategories, final ServiceCompletion.ErrorCompletion completion){
+
+        setQuery();
+
+        query.whereContainedIn(ServiceAttributes.subCategory, subCategories);
+
+        query.findInBackground(new FindCallback<Service>() {
+            @Override
+            public void done(List<Service> objects, ParseException e) {
+
+                AppError appError = e != null ? new AppError(Service.class.toString(), 0, null) : null;
+
+                completion.completion(objects, appError);
+
+            }
+        });
+
+    }
 }
