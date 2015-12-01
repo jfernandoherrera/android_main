@@ -191,15 +191,20 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        searchShow();
+        goToSearch();
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void goToSearch(){
 
         categoryHide();
+
+        searchShow();
 
         searchFragment.setupRecentVenueList();
 
         searchFragment.setupRecentSubCategoryList();
-
-        return super.onOptionsItemSelected(item);
     }
 
     public void goToLogin(View v) {

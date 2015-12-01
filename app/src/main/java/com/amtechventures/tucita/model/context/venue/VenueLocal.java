@@ -57,6 +57,8 @@ public class VenueLocal {
 
         queryName.setLimit(10);
 
+        queryName.include(VenueAttributes.city);
+
         List venues = null;
 
         try {

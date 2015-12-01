@@ -99,20 +99,15 @@ public class SubCategoryLocal {
 
         query.whereEqualTo(CategoryAttributes.name, name);
 
-        List subCategories = null;
-
         try {
 
-            subCategories = query.find();
+            subCategory = (SubCategory) query.getFirst();
 
         } catch (ParseException e) {
 
             e.printStackTrace();
         }
-        if(subCategories != null){
 
-            subCategory = (SubCategory) subCategories.get(0);
-        }
         return subCategory;
     }
 

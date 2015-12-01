@@ -3,6 +3,8 @@ package com.amtechventures.tucita.activities.search;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.book.BookActivity;
+import com.amtechventures.tucita.activities.search.adapters.SearchAdapter;
 import com.amtechventures.tucita.activities.search.advanced.AdvancedSearchActivity;
 import com.amtechventures.tucita.model.context.subcategory.SubCategoryContext;
 import com.amtechventures.tucita.model.context.subcategory.SubCategoryCompletion;
@@ -27,16 +30,12 @@ import java.util.List;
 
 public class SearchFragment extends Fragment {
 
-    private TextView textViewTreatments;
-    private TextView textViewVenues;
-    private View separator;
-    private ListView listViewTreatments;
-    private ListView listViewVenues;
     private SubCategoryContext subCategoryContext;
     private VenueContext venueContext;
-    private ArrayAdapter<String> subCategoriesAdapter;
-    private ArrayAdapter<String> venuesAdapter;
-    private List <SubCategory> subCategories = new ArrayList<>();
+    private SearchAdapter searchAdapter;
+    private RecyclerView recyclerView;
+    private RecyclerView.LayoutManager layoutManager;
+    private List<SubCategory> subCategories = new ArrayList<>();
     private List <Venue> venues = new ArrayList<>();
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -47,49 +46,32 @@ public class SearchFragment extends Fragment {
 
         venueContext = VenueContext.context(venueContext);
 
-        listViewTreatments = (ListView) rootView.findViewById(R.id.listViewTreatments);
+        searchAdapter = new SearchAdapter(venues,subCategories);
 
-        listViewVenues = (ListView) rootView.findViewById(R.id.listViewVenues);
-
-        textViewTreatments = (TextView) rootView.findViewById(R.id.textViewTreatments);
-
-        textViewVenues = (TextView) rootView.findViewById(R.id.textViewVenues);
-
-        separator = rootView.findViewById(R.id.separator5);
-
-        textViewTreatments.setVisibility(View.INVISIBLE);
-
-        textViewVenues.setVisibility(View.INVISIBLE);
-
-        separator.setVisibility(View.INVISIBLE);
-
-        subCategoriesAdapter = new ArrayAdapter<>(getContext(), R.layout.list_item);
-
-        venuesAdapter = new ArrayAdapter<>(getContext(), R.layout.list_item);
-
-        listViewTreatments.setAdapter(subCategoriesAdapter);
-
-        listViewTreatments.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-
+        searchAdapter.setOnItemClickListener(new SearchAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(View view, int position) {
 
-                advancedSearch(position);
+
+                if(position < subCategories.size()) {
+
+                    advancedSearch(position);
+                }else {
+
+                    position = position - subCategories.size();
+
+                    venue(position);
+                }
+
             }
         });
+        layoutManager = new GridLayoutManager(getContext(), 1);
 
-        listViewVenues.setAdapter(venuesAdapter);
+        recyclerView = (RecyclerView)rootView.findViewById(R.id.recycler_view);
 
-        listViewVenues.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        recyclerView.setLayoutManager(layoutManager);
 
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
-
-            venue(position);
-            }
-
-        });
+        recyclerView.setAdapter(searchAdapter);
 
         return rootView;
     }
@@ -132,34 +114,8 @@ public class SearchFragment extends Fragment {
         startActivity(intent);
     }
 
-    private ArrayList<String> setSubCategoriesToStringsArray(){
-
-        ArrayList<String> stringsSubCategories = new ArrayList<>();
-
-        for(SubCategory subCategory : subCategories){
-
-            stringsSubCategories.add(subCategory.getName());
-        }
-
-        return stringsSubCategories;
-    }
-
-    private ArrayList<String> setVenuesToStringsArray(){
-
-        ArrayList<String> stringsVenues = new ArrayList<>();
-
-        for(Venue venue : venues){
-
-            stringsVenues.add(venue.getName());
-        }
-
-        return stringsVenues;
-    }
-
 
     public void setupSubCategoryList(String newText){
-
-        textViewTreatments.setVisibility(View.INVISIBLE);
 
         List<SubCategory> subCategoriesList = subCategoryContext.loadLikeSubCategories(newText, new SubCategoryCompletion.ErrorCompletion() {
             @Override
@@ -167,19 +123,11 @@ public class SearchFragment extends Fragment {
 
                 if (subCategoriesList != null && !subCategoriesList.isEmpty()) {
 
-                    subCategoriesAdapter.clear();
-
                     subCategories.clear();
-
-                    textSubCategories();
 
                     subCategories.addAll(subCategoriesList);
 
-                    subCategoriesAdapter.clear();
-
-                    subCategoriesAdapter.addAll(setSubCategoriesToStringsArray());
-
-                    subCategoriesAdapter.notifyDataSetChanged();
+                    searchAdapter.notifyDataSetChanged();
                 }
 
             }
@@ -187,71 +135,44 @@ public class SearchFragment extends Fragment {
 
         if (subCategoriesList != null && !subCategoriesList.isEmpty()) {
 
-            textSubCategories();
-
             subCategories.clear();
 
             subCategories.addAll(subCategoriesList);
 
-            subCategoriesAdapter.clear();
-
-            subCategoriesAdapter.addAll(setSubCategoriesToStringsArray());
-
-            subCategoriesAdapter.notifyDataSetChanged();
-
+            searchAdapter.notifyDataSetChanged();
         }
     }
 
     public void setupRecentVenueList(){
 
-        textViewVenues.setVisibility(View.INVISIBLE);
-
         final List<Venue> venuesList = venueContext.loadRecentVenues();
 
         if (venuesList != null && !venuesList.isEmpty()) {
-
-            textVenues();
 
             venues.clear();
 
             venues.addAll(venuesList);
 
-            venuesAdapter.clear();
-
-            venuesAdapter.addAll(setVenuesToStringsArray());
-
-            venuesAdapter.notifyDataSetChanged();
-
+            searchAdapter.notifyDataSetChanged();
         }
 
     }
 
     public void setupRecentSubCategoryList(){
 
-        textViewTreatments.setVisibility(View.INVISIBLE);
-
         List<SubCategory> subCategoriesList = subCategoryContext.loadRecentSubcategories();
 
         if (subCategoriesList != null && !subCategoriesList.isEmpty()) {
-
-            textSubCategories();
 
             subCategories.clear();
 
             subCategories.addAll(subCategoriesList);
 
-            subCategoriesAdapter.clear();
-
-            subCategoriesAdapter.addAll(setSubCategoriesToStringsArray());
-
-            subCategoriesAdapter.notifyDataSetChanged();
-
+            searchAdapter.notifyDataSetChanged();
         }
     }
 
     public void setupVenueList(String newText){
-
-        textViewVenues.setVisibility(View.INVISIBLE);
 
         final List<Venue> venuesList = venueContext.loadLikeVenues(newText, new VenueCompletion.ErrorCompletion() {
                     @Override
@@ -259,20 +180,11 @@ public class SearchFragment extends Fragment {
 
                         if (venuesList != null && !venuesList.isEmpty()) {
 
-                            textVenues();
-
-                            venuesAdapter.clear();
-
                             venues.clear();
 
                             venues.addAll(venuesList);
 
-                            venuesAdapter.clear();
-
-                            venuesAdapter.addAll(setVenuesToStringsArray());
-
-                            venuesAdapter.notifyDataSetChanged();
-
+                            searchAdapter.notifyDataSetChanged();
                         }
                     }
                 }
@@ -280,33 +192,13 @@ public class SearchFragment extends Fragment {
 
             if (venuesList != null && !venuesList.isEmpty()) {
 
-                textVenues();
-
                 venues.clear();
 
                 venues.addAll(venuesList);
 
-                venuesAdapter.clear();
-
-                venuesAdapter.addAll(setVenuesToStringsArray());
-
-                venuesAdapter.notifyDataSetChanged();
-
+                searchAdapter.notifyDataSetChanged();
             }
 
     }
 
-    private void textSubCategories(){
-
-        textViewTreatments.setVisibility(View.VISIBLE);
-
-        textViewTreatments.setText(getResources().getString(R.string.services));
-    }
-
-    private void textVenues(){
-
-        textViewVenues.setVisibility(View.VISIBLE);
-
-        textViewVenues.setText(getResources().getString(R.string.venues));
-    }
 }

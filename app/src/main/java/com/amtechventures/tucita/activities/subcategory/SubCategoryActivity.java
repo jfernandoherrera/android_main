@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import com.amtechventures.tucita.R;
+import com.amtechventures.tucita.activities.main.MainActivity;
 import com.amtechventures.tucita.activities.search.advanced.AdvancedSearchActivity;
 import com.amtechventures.tucita.model.context.category.CategoryContext;
 import com.amtechventures.tucita.model.context.subcategory.SubCategoryContext;
@@ -30,6 +31,7 @@ public class SubCategoryActivity extends AppCompatActivity {
     private ListView listView;
     private ArrayAdapter<String> adapter;
     private CategoryContext categoryContext;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +55,7 @@ public class SubCategoryActivity extends AppCompatActivity {
                                     int position, long id) {
 
                 int others = subCategories.size();
-                
+
                 if (position == 0) {
 
                     String name = category.getName();
@@ -61,6 +63,7 @@ public class SubCategoryActivity extends AppCompatActivity {
                     goToAdvancedSearch(name, true);
 
                 } else if (position == others + 1) {
+
 
                 } else {
 

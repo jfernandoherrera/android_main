@@ -5,33 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.amtechventures.tucita.activities.search.SearchFragment">
-    <TextView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:textSize="25sp"
-        android:id="@+id/textViewTreatments"
-        android:background="@color/com_facebook_button_login_silver_background_color"
+        android:layout_height="wrap_content"
         />
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/listViewTreatments"
-        android:layout_below="@+id/textViewTreatments"/>
-    <View
-        android:id="@+id/separator5"
-        android:layout_width="wrap_content"
-        android:layout_height="1dp"
-        android:layout_marginTop="7dp"
-        android:background="@android:color/darker_gray"
-        android:layout_below="@+id/listViewTreatments"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textViewVenues"
-        android:layout_below="@+id/separator5"/>
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/listViewVenues"
-        android:layout_below="@+id/textViewVenues"/>
 </RelativeLayout>
