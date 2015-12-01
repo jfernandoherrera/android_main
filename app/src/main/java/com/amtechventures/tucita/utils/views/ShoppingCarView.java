@@ -1,8 +1,11 @@
 package com.amtechventures.tucita.utils.views;
 
 import android.content.Context;
+import android.graphics.Point;
 import android.util.AttributeSet;
+import android.view.Display;
 import android.view.LayoutInflater;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -18,6 +21,8 @@ public class ShoppingCarView extends FrameLayout {
     private CircleTextView circleTextView;
 
     private int count = 0;
+
+    private final String init = " 1";
 
     public ShoppingCarView(Context context, AttributeSet attrs) {
 
@@ -44,10 +49,19 @@ public class ShoppingCarView extends FrameLayout {
 
         car.setImageResource(R.mipmap.ic_launcher);
 
+        circleTextView.setText(init);
 
-        circleTextView.setText(" 10");
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 
-        circleTextView.setTranslationX(32);
+        Display display = wm.getDefaultDisplay();
+
+        Point size = new Point();
+
+        display.getSize(size);
+
+        int translation = (int)(size.x * 0.095)/2;
+
+        circleTextView.setTranslationX(translation);
 
         circleTextView.bringToFront();
     }

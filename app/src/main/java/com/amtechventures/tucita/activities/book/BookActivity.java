@@ -1,6 +1,7 @@
 package com.amtechventures.tucita.activities.book;
 
 
+import android.os.Build;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +21,7 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
     private ServiceFragment serviceFragment;
     private Toolbar toolbar;
     private ShoppingCarView shoppingCarView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,15 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
         serviceHide();
 
         setToolbar();
+
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+
+        super.onPostCreate(savedInstanceState);
+
+        book(null);
     }
 
     private void setVenueFragment() {
@@ -98,6 +109,7 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
         transaction.hide(serviceFragment);
 
         transaction.commit();
+
     }
 
     private void serviceShow(){
@@ -123,17 +135,17 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
     public void bookNow(View v) {
 
-        if(android.os.Build.VERSION.SDK_INT >= 16) {
+        if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
 
-            shoppingCarView.animate().translationY(shoppingCarView.getHeight()).withEndAction(new Runnable() {
-                @Override
-                public void run() {
-                    shoppingCarView.setVisibility(View.VISIBLE);
+                    shoppingCarView.animate().translationY(shoppingCarView.getHeight()).withEndAction(new Runnable() {
+                        @Override
+                        public void run() {
 
-                    shoppingCarView.animate().translationY(0).setDuration(1000);
-                }
-            }).setDuration(0);
+                            shoppingCarView.setVisibility(View.VISIBLE);
 
+                            shoppingCarView.animate().translationY(0);
+                        }
+                    });
 
         }else {
 
@@ -148,15 +160,16 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
     public void book(View v) {
 
-        if(android.os.Build.VERSION.SDK_INT >= 16) {
+        if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
 
             shoppingCarView.animate().translationY(shoppingCarView.getHeight()).withEndAction(new Runnable() {
+
                 @Override
                 public void run() {
 
                     shoppingCarView.setVisibility(View.GONE);
                 }
-            });
+            }).setDuration(1000);
         }else{
 
             shoppingCarView.setVisibility(View.GONE);

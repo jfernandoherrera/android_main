@@ -4,31 +4,45 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
+import android.graphics.Point;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.Display;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 public class CircleTextView extends TextView {
 
-    private static final int PADDING = 15;
-    private Paint mCirclePaint;
+    private int padding ;
+    private Paint circlePaint;
 
     public CircleTextView(Context context, AttributeSet attrs) {
 
         super(context, attrs);
 
-        mCirclePaint = new Paint();
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 
-        mCirclePaint.setStyle(Style.FILL);
+        Display display = wm.getDefaultDisplay();
 
-        mCirclePaint.setAntiAlias(true);
+        Point size = new Point();
 
-        mCirclePaint.setColor(Color.GREEN);
+        display.getSize(size);
+
+        padding = (int)(size.x * 0.08)/3;
+
+        circlePaint = new Paint();
+
+        circlePaint.setStyle(Style.FILL);
+
+        circlePaint.setAntiAlias(true);
+
+        circlePaint.setColor(Color.GREEN);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         // draw circle at center of canvas
-        canvas.drawCircle((getMeasuredWidth()/4) + 2, getMeasuredHeight()/4, PADDING, mCirclePaint);
+        canvas.drawCircle((getMeasuredWidth()/4) + 2, getMeasuredHeight()/4, padding, circlePaint);
         
         super.onDraw(canvas);
     }
@@ -38,6 +52,6 @@ public class CircleTextView extends TextView {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
         // grow view dimensions to account for circle
-        setMeasuredDimension(resolveSize(getMeasuredWidth()+(PADDING*2), widthMeasureSpec), resolveSize(getMeasuredHeight()+(PADDING*2), heightMeasureSpec));
+        setMeasuredDimension(resolveSize(getMeasuredWidth()+(padding*2), widthMeasureSpec), resolveSize(getMeasuredHeight()+(padding*2), heightMeasureSpec));
     }
 }
