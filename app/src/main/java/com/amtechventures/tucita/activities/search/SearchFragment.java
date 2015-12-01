@@ -37,6 +37,8 @@ public class SearchFragment extends Fragment {
     private RecyclerView.LayoutManager layoutManager;
     private List<SubCategory> subCategories = new ArrayList<>();
     private List <Venue> venues = new ArrayList<>();
+    private List<SubCategory> recentSubCategories = new ArrayList<>();
+    private List <Venue> recentVenues = new ArrayList<>();
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -145,13 +147,24 @@ public class SearchFragment extends Fragment {
 
     public void setupRecentVenueList(){
 
-        final List<Venue> venuesList = venueContext.loadRecentVenues();
+        if(recentVenues.isEmpty()) {
 
-        if (venuesList != null && !venuesList.isEmpty()) {
+            final List<Venue> venuesList = venueContext.loadRecentVenues();
 
+            if (venuesList != null && !venuesList.isEmpty()) {
+
+                recentVenues.addAll(venuesList);
+
+                venues.clear();
+
+                venues.addAll(recentVenues);
+
+                searchAdapter.notifyDataSetChanged();
+            }
+        }else{
             venues.clear();
 
-            venues.addAll(venuesList);
+            venues.addAll(recentVenues);
 
             searchAdapter.notifyDataSetChanged();
         }
@@ -160,13 +173,24 @@ public class SearchFragment extends Fragment {
 
     public void setupRecentSubCategoryList(){
 
-        List<SubCategory> subCategoriesList = subCategoryContext.loadRecentSubcategories();
+        if(recentSubCategories.isEmpty()) {
 
-        if (subCategoriesList != null && !subCategoriesList.isEmpty()) {
+            List<SubCategory> subCategoriesList = subCategoryContext.loadRecentSubcategories();
 
+            if (subCategoriesList != null && !subCategoriesList.isEmpty()) {
+
+                recentSubCategories.addAll(subCategoriesList);
+
+                subCategories.clear();
+
+                subCategories.addAll(recentSubCategories);
+
+                searchAdapter.notifyDataSetChanged();
+            }
+        }else{
             subCategories.clear();
 
-            subCategories.addAll(subCategoriesList);
+            subCategories.addAll(recentSubCategories);
 
             searchAdapter.notifyDataSetChanged();
         }
