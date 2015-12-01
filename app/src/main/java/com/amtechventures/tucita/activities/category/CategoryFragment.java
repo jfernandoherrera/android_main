@@ -12,6 +12,8 @@ import android.support.v4.app.Fragment;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.TextAppearanceSpan;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -23,6 +25,7 @@ import com.amtechventures.tucita.R;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.GridLayoutManager;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
@@ -70,6 +73,16 @@ public class CategoryFragment extends Fragment {
 
     private SpannableStringBuilder getStringLoginModified(){
 
+        WindowManager wm = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
+
+        DisplayMetrics metrics = new DisplayMetrics();
+
+        wm.getDefaultDisplay().getMetrics(metrics);
+
+        final int initialSize = 15;
+
+        int size = (int)(initialSize * metrics.scaledDensity);
+
         String firstString = getResources().getString(R.string.action_sign_in_short).toUpperCase();
 
         String secondString = getResources().getString(R.string.or).toLowerCase();
@@ -78,14 +91,14 @@ public class CategoryFragment extends Fragment {
 
         SpannableStringBuilder stringBuilder = new SpannableStringBuilder(firstString +" "+ secondString +" "+ thirdString);
 
-        stringBuilder.setSpan(new TextAppearanceSpan(Typeface.SANS_SERIF.toString(), Typeface.NORMAL, 45, null, null), 0, firstString.length(),
+        stringBuilder.setSpan(new TextAppearanceSpan(Typeface.SANS_SERIF.toString(), Typeface.NORMAL, size, null, null), 0, firstString.length(),
                 Spannable.SPAN_INCLUSIVE_INCLUSIVE);
 
-        stringBuilder.setSpan(new TextAppearanceSpan(Typeface.SANS_SERIF.toString(), Typeface.NORMAL, 45, ColorStateList.valueOf(Color.rgb(238, 238, 238)), null), firstString.length() + 1,
+        stringBuilder.setSpan(new TextAppearanceSpan(Typeface.SANS_SERIF.toString(), Typeface.NORMAL, size, ColorStateList.valueOf(Color.rgb(238, 238, 238)), null), firstString.length() + 1,
 
                 firstString.length() + secondString.length() + 1, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
 
-        stringBuilder.setSpan(new TextAppearanceSpan(Typeface.SANS_SERIF.toString(), Typeface.NORMAL, 45, null, null), firstString.length() + secondString.length() + 2,
+        stringBuilder.setSpan(new TextAppearanceSpan(Typeface.SANS_SERIF.toString(), Typeface.NORMAL, size, null, null), firstString.length() + secondString.length() + 2,
 
                 firstString.length() + secondString.length() + thirdString.length() + 2,
 

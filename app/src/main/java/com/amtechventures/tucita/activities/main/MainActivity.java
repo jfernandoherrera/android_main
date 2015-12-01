@@ -44,9 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
         setFragmentToSearch();
 
-        searchFragment.setUserVisibleHint(false);
-
-        fragment.setUserVisibleHint(true);
+        searchHide();
 
         setToolbar();
     }

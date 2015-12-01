@@ -2,9 +2,12 @@ package com.amtechventures.tucita.utils.views;
 
 
 
-import android.util.Log;
+import android.content.Context;
+import android.graphics.Point;
+import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.CheckedTextView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -15,6 +18,10 @@ public class ViewUtils {
 
     public static final int childHeight = 148;
     public static final int parentHeight = 172;
+
+    public ViewUtils(){
+       
+    }
 
     public static void setListViewHeightBasedOnChildren(ListView listView) {
 

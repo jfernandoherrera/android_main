@@ -25,8 +25,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter{
     private final ExpandableListView expandableListView;
     private VenueFragment.OnServiceSelected listener;
 
-
-    // constructor
     public ExpandableListAdapter(List<SubCategory> parents, List<ArrayList> children, ExpandableListView expandableListView, VenueFragment.OnServiceSelected listener)
     {
         this.parentItems = (ArrayList<SubCategory>) parents;
