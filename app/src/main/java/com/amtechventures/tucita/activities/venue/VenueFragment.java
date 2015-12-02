@@ -1,8 +1,10 @@
 package com.amtechventures.tucita.activities.venue;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -73,10 +75,7 @@ public class VenueFragment extends Fragment {
         void onServiceSelected(String serviceName);
     }
 
-    @Override
-    public void onStop() {
-
-        super.onStop();
+    public void cancelQuery(){
 
         openingHourContext.cancelQuery();
 
@@ -223,20 +222,24 @@ public class VenueFragment extends Fragment {
         venueName.setText(venue.getName());
     }
 
-    private void setupDescription(){
+    private void setupDescription() {
 
-        String description = getResources().getString(R.string.description) + venue.getDescription();
+        Activity activity = getActivity();
 
-        venueDescription.setText(description);
+        if (activity != null) {
+
+            String description = activity.getString(R.string.description) + venue.getDescription();
+
+            venueDescription.setText(description);
+        }
     }
-
     private void setupFullMenu(){
 
         List<Service> servicesList = serviceContext.loadServices(venue, new ServiceCompletion.ErrorCompletion() {
             @Override
             public void completion(List<Service> servicesList, AppError error) {
 
-                if (servicesList != null) {
+                if (servicesList != null && !servicesList.isEmpty()) {
 
                     services.clear();
 
@@ -271,51 +274,55 @@ public class VenueFragment extends Fragment {
         listViewFullMenu.setAdapter(fullMenuAdapter);
     }
 
-    private void setupAnotherMenu(){
+    private void setupAnotherMenu() {
 
-        String subCategory = getActivity().getIntent().getStringExtra(ServiceAttributes.subCategory);
+        Activity activity = getActivity();
 
-        if (subCategory != null){
+        if (activity != null) {
 
-            TextView specials = (TextView) getActivity().findViewById(R.id.textViewTop);
+            String subCategory = activity.getIntent().getStringExtra(ServiceAttributes.subCategory);
 
-            String findService = getResources().getString(R.string.find_service);
+            if (subCategory != null) {
 
-            specials.setText(findService);
+                TextView specials = (TextView) getActivity().findViewById(R.id.textViewTop);
 
-            ArrayList<SubCategory> arrayList = new ArrayList();
+                String findService = getResources().getString(R.string.find_service);
 
-            int indexOf = 0;
+                specials.setText(findService);
 
-            ArrayList<ArrayList> arrayListServices = new ArrayList<>();
+                ArrayList<SubCategory> arrayList = new ArrayList();
 
-            for (SubCategory subCategory1 : subCategories) {
+                int indexOf = 0;
 
-                if(subCategory1.getName().equals(subCategory)){
+                ArrayList<ArrayList> arrayListServices = new ArrayList<>();
 
-                    arrayList.add(subCategory1);
+                for (SubCategory subCategory1 : subCategories) {
 
-                    indexOf = subCategories.indexOf(subCategory1);
+                    if (subCategory1.getName().equals(subCategory)) {
+
+                        arrayList.add(subCategory1);
+
+                        indexOf = subCategories.indexOf(subCategory1);
+                    }
                 }
+                arrayListServices.add(services.get(indexOf));
+
+                ViewUtils viewUtils = new ViewUtils(getContext());
+
+                anotherMenuAdapter = new ExpandableListAdapter(arrayList, arrayListServices, viewUtils, listViewAnotherMenu, listener);
+
+                anotherMenuAdapter.setInflater(inflater);
+
+                listViewAnotherMenu.setAdapter(anotherMenuAdapter);
+
+                listViewAnotherMenu.expandGroup(0);
             }
-            arrayListServices.add(services.get(indexOf));
+            if (progress != null) {
 
-            ViewUtils viewUtils = new ViewUtils(getContext());
-
-            anotherMenuAdapter = new ExpandableListAdapter(arrayList, arrayListServices, viewUtils, listViewAnotherMenu, listener);
-
-            anotherMenuAdapter.setInflater(inflater);
-
-            listViewAnotherMenu.setAdapter(anotherMenuAdapter);
-
-            listViewAnotherMenu.expandGroup(0);
-        }
-        if(progress != null){
-
-            progress.dismiss();
+                progress.dismiss();
+            }
         }
     }
-
     private void setStringsArray(List<Service> servicesList){
 
        for( Service service : servicesList){
@@ -392,72 +399,75 @@ public class VenueFragment extends Fragment {
         populateOpeningHours(openingHoursList);
     }
 
-    private OpeningHourView getViewDay(int day){
+    private OpeningHourView getViewDay(int day) {
 
-        OpeningHourView openingHourView;
+        OpeningHourView openingHourView = null;
 
-        switch (day){
+        Activity activity = getActivity();
 
-            case Calendar.MONDAY:
+        if (activity != null) {
 
-                openingHourView = (OpeningHourView) getActivity().findViewById(R.id.radioButton1);
+            switch (day) {
 
-                openingHourView.setDay(getResources().getString(R.string.monday));
+                case Calendar.MONDAY:
 
-                break;
-            case Calendar.TUESDAY:
+                    openingHourView = (OpeningHourView) activity.findViewById(R.id.radioButton1);
 
-                openingHourView = (OpeningHourView) getActivity().findViewById(R.id.radioButton2);
+                    openingHourView.setDay(getResources().getString(R.string.monday));
 
-                openingHourView.setDay(getResources().getString(R.string.tuesday));
+                    break;
+                case Calendar.TUESDAY:
 
-                break;
-            case Calendar.WEDNESDAY:
+                    openingHourView = (OpeningHourView) activity.findViewById(R.id.radioButton2);
 
-                openingHourView = (OpeningHourView) getActivity().findViewById(R.id.radioButton3);
+                    openingHourView.setDay(getResources().getString(R.string.tuesday));
 
-                openingHourView.setDay(getResources().getString(R.string.wednesday));
+                    break;
+                case Calendar.WEDNESDAY:
 
-                break;
-            case Calendar.THURSDAY:
+                    openingHourView = (OpeningHourView) activity.findViewById(R.id.radioButton3);
 
-                openingHourView = (OpeningHourView) getActivity().findViewById(R.id.radioButton4);
+                    openingHourView.setDay(getResources().getString(R.string.wednesday));
 
-                openingHourView.setDay(getResources().getString(R.string.thursday));
+                    break;
+                case Calendar.THURSDAY:
 
-                break;
-            case Calendar.FRIDAY:
+                    openingHourView = (OpeningHourView) activity.findViewById(R.id.radioButton4);
 
-                openingHourView = (OpeningHourView) getActivity().findViewById(R.id.radioButton5);
+                    openingHourView.setDay(getResources().getString(R.string.thursday));
 
-                openingHourView.setDay(getResources().getString(R.string.friday));
+                    break;
+                case Calendar.FRIDAY:
 
-                break;
-            case Calendar.SATURDAY:
+                    openingHourView = (OpeningHourView) activity.findViewById(R.id.radioButton5);
 
-                openingHourView = (OpeningHourView) getActivity().findViewById(R.id.radioButton6);
+                    openingHourView.setDay(getResources().getString(R.string.friday));
 
-                openingHourView.setDay(getResources().getString(R.string.saturday));
+                    break;
+                case Calendar.SATURDAY:
 
-                break;
-            case Calendar.SUNDAY:
+                    openingHourView = (OpeningHourView) activity.findViewById(R.id.radioButton6);
 
-                openingHourView = (OpeningHourView) getActivity().findViewById(R.id.radioButton7);
+                    openingHourView.setDay(getResources().getString(R.string.saturday));
 
-                openingHourView.setDay(getResources().getString(R.string.sunday));
+                    break;
+                case Calendar.SUNDAY:
 
-                break;
-            default:
+                    openingHourView = (OpeningHourView) activity.findViewById(R.id.radioButton7);
 
-                openingHourView = (OpeningHourView) getActivity().findViewById(R.id.radioButton1);
+                    openingHourView.setDay(getResources().getString(R.string.sunday));
 
-                break;
+                    break;
+                default:
+
+                    openingHourView = (OpeningHourView) activity.findViewById(R.id.radioButton1);
+
+                    break;
+            }
+            setupDay(day, openingHourView);
         }
-        setupDay(day, openingHourView);
-
-        return  openingHourView;
+        return openingHourView;
     }
-
     private void populateOpeningHours(List<OpeningHour> openingHours){
 
         for(Integer day : days){
@@ -466,10 +476,13 @@ public class VenueFragment extends Fragment {
 
                 openingHourView = getViewDay(day);
 
+            if(openingHourView != null) {
+
                 String closed = getResources().getString(R.string.closed);
 
                 openingHourView.setClosed(closed);
-         }
+            }
+        }
 
         for(OpeningHour openingHour : openingHours ){
 
@@ -477,13 +490,16 @@ public class VenueFragment extends Fragment {
 
             openingHourView = getViewDay(openingHour.getDay());
 
-            String textOpeningStartHour =  hourFormat(openingHour.getStartHour(), openingHour.getStartMinute());
+            if(openingHourView != null) {
 
-            String textOpeningEndHour = hourFormat(openingHour.getEndHour(), openingHour.getEndMinute());
+                String textOpeningStartHour = hourFormat(openingHour.getStartHour(), openingHour.getStartMinute());
 
-            String textTime =  textOpeningStartHour + "-" + textOpeningEndHour;
+                String textOpeningEndHour = hourFormat(openingHour.getEndHour(), openingHour.getEndMinute());
 
-            openingHourView.setHours(textTime);
+                String textTime = textOpeningStartHour + "-" + textOpeningEndHour;
+
+                openingHourView.setHours(textTime);
+            }
         }
     }
 

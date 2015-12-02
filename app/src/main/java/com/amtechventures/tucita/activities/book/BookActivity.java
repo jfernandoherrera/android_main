@@ -200,6 +200,8 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
         if (! venueFragment.isHidden()){
 
+            venueFragment.cancelQuery();
+
             finish();
         }else {
 

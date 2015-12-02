@@ -23,17 +23,20 @@ public class ViewUtils {
 
     public ViewUtils(Context context){
 
-        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        if( context != null) {
 
-        Display display = wm.getDefaultDisplay();
+            WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 
-        Point size = new Point();
+            Display display = wm.getDefaultDisplay();
 
-        display.getSize(size);
+            Point size = new Point();
 
-        childHeight = (int) (childHeight * (size.y * sizeRatio));
+            display.getSize(size);
 
-        parentHeight = (int) (parentHeight * (size.y * sizeRatio));
+            childHeight = (int) (childHeight * (size.y * sizeRatio));
+
+            parentHeight = (int) (parentHeight * (size.y * sizeRatio));
+        }
     }
 
     public void setListViewHeightBasedOnChildren(ListView listView) {
