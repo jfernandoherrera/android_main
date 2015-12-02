@@ -9,7 +9,7 @@
 
     <ImageView
         android:layout_width="fill_parent"
-        android:layout_height="140dp"
+        android:layout_height="90dp"
         android:id="@+id/image_service"
         android:layout_alignParentLeft="true" />
 

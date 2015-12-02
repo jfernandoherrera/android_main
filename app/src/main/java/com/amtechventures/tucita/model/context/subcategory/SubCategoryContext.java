@@ -50,11 +50,11 @@ public class SubCategoryContext {
 
         ParseRelation object = (ParseRelation) category.get(CategoryAttributes.subCategories);
 
-        ParseQuery<SubCategory> queryLocal = object.getQuery();
+        ParseQuery<SubCategory> queryLocal = object.getQuery().setLimit(6);
 
         subCategories = subCategoryLocal.loadSubCategories(queryLocal);
 
-        ParseQuery<SubCategory> queryRemote = object.getQuery();
+        ParseQuery<SubCategory> queryRemote = object.getQuery().setLimit(6);
 
         subCategoryRemote.loadSubCategories(queryRemote,completion);
 
