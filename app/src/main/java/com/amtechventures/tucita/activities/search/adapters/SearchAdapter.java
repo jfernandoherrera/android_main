@@ -1,5 +1,6 @@
 package com.amtechventures.tucita.activities.search.adapters;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,8 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     OnItemClickListener mItemClickListener;
     private final int typeSubCategory = 0;
     private final int typeVenue = 1;
+    public static final int typeSection = 2;
+    private Context context;
 
     public interface OnItemClickListener {
 
@@ -29,18 +32,27 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         this.mItemClickListener = mItemClickListener;
     }
 
-    public SearchAdapter(List <Venue> venues,List<SubCategory> subCategories){
+    public SearchAdapter(List <Venue> venues,List<SubCategory> subCategories, Context context){
 
         this.venues = venues;
 
         this.subCategories = subCategories;
 
+        this.context = context;
     }
 
     @Override
     public int getItemViewType(int position) {
+        int type;
 
-        int type = position < subCategories.size() ? typeSubCategory : typeVenue;
+        if(position == 0 || position == subCategories.size() + 1){
+
+            type = typeSection;
+
+        }else{
+
+            type = position <= subCategories.size() ? typeSubCategory : typeVenue;
+        }
 
         return type;
     }
@@ -52,7 +64,13 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         RecyclerView.ViewHolder viewHolder;
 
-        if(viewType == typeSubCategory){
+        if(viewType == typeSection){
+
+            v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.section, viewGroup, false);
+
+            viewHolder = new ViewHolderSections(v);
+
+        }else if(viewType == typeSubCategory){
 
             v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_item, viewGroup, false);
 
@@ -70,9 +88,23 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
 
-        if (position < subCategories.size()) {
+        if(position == 0 && subCategories.size() != 0  ){
 
-            SubCategory subCategory = subCategories.get(position);
+                ViewHolderSections sections = (ViewHolderSections) viewHolder;
+
+                sections.name.setText(context.getString(R.string.services));
+
+            }else if(venues.size() != 0 && position == subCategories.size() + 1){
+
+                ViewHolderSections sections = (ViewHolderSections) viewHolder;
+
+                sections.name.setText(context.getString(R.string.venues));
+
+                sections.name.setGravity(0x50);
+
+            }   else if (position <= subCategories.size()) {
+
+            SubCategory subCategory = subCategories.get(position - 1);
 
             ViewHolderSubCategories subCategories = (ViewHolderSubCategories) viewHolder;
 
@@ -80,7 +112,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         }else{
 
-            Venue venue = venues.get(position - subCategories.size());
+            Venue venue = venues.get(position - subCategories.size() - typeSection);
 
             ViewHolderVenues venues = (ViewHolderVenues) viewHolder;
 
@@ -94,11 +126,22 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public int getItemCount() {
 
-        int  size = subCategories.size() + venues.size();
+        int  size = subCategories.size() + venues.size() + typeSection;
 
         return size;
     }
 
+    class ViewHolderSections extends RecyclerView.ViewHolder{
+
+        protected TextView name;
+
+        public ViewHolderSections(View itemView) {
+
+            super(itemView);
+
+            name = (TextView) itemView.findViewById(R.id.text);
+        }
+    }
 
     class ViewHolderVenues extends RecyclerView.ViewHolder implements View.OnClickListener{
 

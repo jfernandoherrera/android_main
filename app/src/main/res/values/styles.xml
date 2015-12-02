@@ -16,6 +16,12 @@
         <item name="android:textSize">@dimen/title</item>
         <item name="android:layout_gravity">bottom|center_horizontal</item>
     </style>
+    <style name="AppTheme.TitleLight" parent="AppTheme">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/blackHintDisabled</item>
+        <item name="android:textSize">@dimen/title</item>
+        <item name="android:layout_gravity">bottom|center_horizontal</item>
+    </style>
     <style name="AppTheme.subTitle" parent="AppTheme">
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/blackSecondary</item>
@@ -25,6 +31,7 @@
     <style name="AppTheme.text" parent="AppTheme">
         <item name="android:textSize">@dimen/text</item>
         <item name="android:textColor">@color/blackSecondary</item>
+        <item name="android:layout_gravity">top|center_horizontal</item>
     </style>
     <style name="AppTheme.Button" parent="AppTheme.Title">
         <item name="android:layout_height">@dimen/button_size</item>

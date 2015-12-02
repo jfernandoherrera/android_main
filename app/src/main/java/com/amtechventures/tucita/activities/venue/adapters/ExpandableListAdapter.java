@@ -24,14 +24,17 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter{
     private ArrayList<String> child;
     private final ExpandableListView expandableListView;
     private VenueFragment.OnServiceSelected listener;
+    private ViewUtils viewUtils;
 
-    public ExpandableListAdapter(List<SubCategory> parents, List<ArrayList> children, ExpandableListView expandableListView, VenueFragment.OnServiceSelected listener)
+    public ExpandableListAdapter(List<SubCategory> parents, List<ArrayList> children, ViewUtils viewUtils, ExpandableListView expandableListView, VenueFragment.OnServiceSelected listener)
     {
         this.parentItems = (ArrayList<SubCategory>) parents;
 
         this.childItems = (ArrayList<ArrayList>) children;
 
         this.expandableListView = expandableListView;
+
+        this.viewUtils = viewUtils;
 
         if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) {
 
@@ -80,7 +83,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter{
             }
         });
 
-        textView.setHeight(ViewUtils.childHeight);
+        textView.setHeight(viewUtils.childHeight);
 
         return textView;
     }
@@ -100,7 +103,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter{
 
         ((CheckedTextView) convertView).setChecked(isExpanded);
 
-        ((CheckedTextView) convertView).setHeight(ViewUtils.parentHeight);
+        ((CheckedTextView) convertView).setHeight(viewUtils.parentHeight);
 
         return convertView;
     }
@@ -140,7 +143,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter{
     {
         super.onGroupCollapsed(groupPosition);
 
-        ViewUtils.setListViewHeightBasedOnChildren(expandableListView);
+        viewUtils.setListViewHeightBasedOnChildren(expandableListView);
     }
 
     @Override
@@ -148,7 +151,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter{
     {
         super.onGroupExpanded(groupPosition);
 
-        ViewUtils.setListViewHeightBasedOnChildren(expandableListView);
+        viewUtils.setListViewHeightBasedOnChildren(expandableListView);
     }
 
     @Override

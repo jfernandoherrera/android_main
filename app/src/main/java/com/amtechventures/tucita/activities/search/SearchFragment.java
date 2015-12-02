@@ -48,14 +48,17 @@ public class SearchFragment extends Fragment {
 
         venueContext = VenueContext.context(venueContext);
 
-        searchAdapter = new SearchAdapter(venues,subCategories);
+        searchAdapter = new SearchAdapter(venues,subCategories, getContext());
 
         searchAdapter.setOnItemClickListener(new SearchAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
 
+        boolean isSubcategoryHeader = position == 0 && ! subCategories.isEmpty() ? true : false;
 
-                if(position < subCategories.size()) {
+        boolean isVenueHeader = position == subCategories.size() + 1 && ! venues.isEmpty() ? true : false;
+
+                if(! isSubcategoryHeader && ! isVenueHeader && position <= subCategories.size()) {
 
                     advancedSearch(position);
                 }else {
@@ -80,7 +83,7 @@ public class SearchFragment extends Fragment {
 
     private void advancedSearch(int position){
 
-        String name = subCategories.get(position).getName();
+        String name = subCategories.get(position - 1).getName();
 
         Class activity = AdvancedSearchActivity.class;
 
@@ -97,11 +100,11 @@ public class SearchFragment extends Fragment {
 
     private void venue(int position){
 
-        String name = venues.get(position).getName();
+        String name = venues.get(position - SearchAdapter.typeSection).getName();
 
         Class activity = BookActivity.class;
 
-        String address = venues.get(position).getAddress();
+        String address = venues.get(position - SearchAdapter.typeSection).getAddress();
 
         Intent intent = new Intent(getContext(), activity);
 

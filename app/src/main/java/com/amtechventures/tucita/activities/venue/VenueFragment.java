@@ -67,9 +67,22 @@ public class VenueFragment extends Fragment {
     private ProgressDialog progress;
     private ScrollView scrollView;
 
+
     public interface OnServiceSelected{
 
         void onServiceSelected(String serviceName);
+    }
+
+    @Override
+    public void onStop() {
+
+        super.onStop();
+
+        openingHourContext.cancelQuery();
+
+        serviceContext.cancelQuery();
+
+        venueContext.cancelQuery();
     }
 
     @Override
@@ -122,6 +135,7 @@ public class VenueFragment extends Fragment {
         listViewAnotherMenu = (ExpandableListView) rootView.findViewById(R.id.listViewTop);
 
         this.inflater = inflater;
+
 
         return rootView;
     }
@@ -230,7 +244,9 @@ public class VenueFragment extends Fragment {
 
                     setStringsArray(servicesList);
 
-                    ViewUtils.setListViewHeightBasedOnChildren(listViewFullMenu);
+                    ViewUtils viewUtils = new ViewUtils(getContext());
+
+                    viewUtils.setListViewHeightBasedOnChildren(listViewFullMenu);
 
                     fullMenuAdapter.notifyDataSetChanged();
 
@@ -246,7 +262,9 @@ public class VenueFragment extends Fragment {
 
         setStringsArray(servicesList);
 
-        fullMenuAdapter = new ExpandableListAdapter(subCategories, services,listViewFullMenu, listener);
+        ViewUtils viewUtils = new ViewUtils(getContext());
+
+        fullMenuAdapter = new ExpandableListAdapter(subCategories, services, viewUtils, listViewFullMenu, listener);
 
         fullMenuAdapter.setInflater(inflater);
 
@@ -282,7 +300,9 @@ public class VenueFragment extends Fragment {
             }
             arrayListServices.add(services.get(indexOf));
 
-            anotherMenuAdapter = new ExpandableListAdapter(arrayList, arrayListServices,listViewAnotherMenu, listener);
+            ViewUtils viewUtils = new ViewUtils(getContext());
+
+            anotherMenuAdapter = new ExpandableListAdapter(arrayList, arrayListServices, viewUtils, listViewAnotherMenu, listener);
 
             anotherMenuAdapter.setInflater(inflater);
 
@@ -361,7 +381,7 @@ public class VenueFragment extends Fragment {
             @Override
             public void completion(List<OpeningHour> openingHoursList, AppError error) {
 
-                if (openingHoursList != null) {
+                if (openingHoursList != null && ! openingHoursList.isEmpty()) {
 
                     populateOpeningHours(openingHoursList);
                 }

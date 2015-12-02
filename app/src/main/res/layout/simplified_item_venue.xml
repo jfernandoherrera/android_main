@@ -6,10 +6,13 @@
 <TextView
     android:layout_width="match_parent"
     android:id="@+id/textName"
-    style="@style/AppTheme.ExpandableListViewItem"/>
-<TextView
-android:layout_width="match_parent"
-android:id="@+id/textLocation"
+    android:gravity="bottom"
+    android:layout_height="72dp"
+    style="@style/AppTheme.Title"/>
+    <TextView
+    android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+    android:id="@+id/textLocation"
     android:layout_below="@+id/textName"
-style="@style/AppTheme.ListViewItem"/>
-</RelativeLayout>
+    style="@style/AppTheme.text"/>
+    </RelativeLayout>

@@ -60,8 +60,6 @@ public class SubCategoryActivity extends AppCompatActivity {
 
                     String name = category.getName();
 
-                    goToAdvancedSearch(name, true);
-
                 } else if (position == others + 1) {
 
 

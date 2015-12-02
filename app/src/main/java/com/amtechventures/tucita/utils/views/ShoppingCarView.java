@@ -24,6 +24,8 @@ public class ShoppingCarView extends FrameLayout {
 
     private final String init = " 1";
 
+    private final double positionRatio = 0.095;
+
     public ShoppingCarView(Context context, AttributeSet attrs) {
 
         super(context, attrs);
@@ -59,7 +61,7 @@ public class ShoppingCarView extends FrameLayout {
 
         display.getSize(size);
 
-        int translation = (int)(size.x * 0.095)/2;
+        int translation = (int)(size.x * positionRatio) / 2;
 
         circleTextView.setTranslationX(translation);
 
