@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,10 +17,11 @@ import com.amtechventures.tucita.activities.account.AccountActivity;
 import com.amtechventures.tucita.activities.category.CategoryFragment;
 import com.amtechventures.tucita.activities.login.LoginActivity;
 import com.amtechventures.tucita.activities.search.SearchFragment;
+import com.amtechventures.tucita.activities.subcategory.SubCategoryFragment;
 import com.amtechventures.tucita.model.context.user.UserContext;
 import com.amtechventures.tucita.utils.views.AlertDialogError;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements CategoryFragment.OnItemClicked, SubCategoryFragment.OnOthersClicked{
 
     private SearchFragment searchFragment;
     private Toolbar toolbar;
@@ -58,6 +60,28 @@ public class MainActivity extends AppCompatActivity {
         transaction.add(R.id.layout_main, fragment);
 
         transaction.commit();
+    }
+
+    private void showSubCategoryFragment(String name){
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+
+        SubCategoryFragment prev = (SubCategoryFragment) fragmentManager.findFragmentByTag(SubCategoryFragment.class.getName());
+
+        if (prev != null) {
+
+            prev.cancelQuery();
+
+            ft.remove(prev);
+        }
+        ft.addToBackStack(null);
+
+        SubCategoryFragment subCategoryFragment = SubCategoryFragment.newInstance(name);
+
+        subCategoryFragment.show(fragmentManager,SubCategoryFragment.class.getName());
+
     }
 
     private void setFragmentToSearch(){
@@ -161,13 +185,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
 
-                if(newText.equals("")){
+                if (newText.equals("")) {
 
                     searchFragment.setupRecentVenueList();
 
                     searchFragment.setupRecentSubCategoryList();
 
-                }else if (newText.length() < minimumToSearch) {
+                } else if (newText.length() < minimumToSearch) {
 
                     AlertDialogError alertDialogError = new AlertDialogError();
 
@@ -230,5 +254,17 @@ public class MainActivity extends AppCompatActivity {
         finish();
         }
 
+    }
+
+    @Override
+    public void onItemClicked(String name) {
+
+            showSubCategoryFragment(name);
+    }
+
+    @Override
+    public void onOthersClicked() {
+
+        goToSearch();
     }
 }

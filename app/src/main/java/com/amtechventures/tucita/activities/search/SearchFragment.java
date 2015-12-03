@@ -40,6 +40,7 @@ public class SearchFragment extends Fragment {
     private List<SubCategory> recentSubCategories = new ArrayList<>();
     private List <Venue> recentVenues = new ArrayList<>();
 
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_search, container, false);

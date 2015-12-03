@@ -7,11 +7,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.TextView;
 import android.view.LayoutInflater;
 import com.amtechventures.tucita.R;
 import android.support.v7.widget.RecyclerView;
-import com.amtechventures.tucita.activities.subcategory.SubCategoryActivity;
+
+import com.amtechventures.tucita.activities.category.CategoryFragment;
+import com.amtechventures.tucita.activities.subcategory.SubCategoryFragment;
 import com.amtechventures.tucita.model.context.category.CategoryContext;
 import com.amtechventures.tucita.model.domain.category.Category;
 import com.mikhaellopez.circularimageview.CircularImageView;
@@ -21,9 +24,11 @@ public class CategoryGridAdapter extends RecyclerView.Adapter<CategoryGridAdapte
 
     List<Category> items;
 
+    CategoryFragment.OnItemClicked onItemClickListener;
+
     CategoryContext categoryContext;
 
-    public CategoryGridAdapter(List<Category> offer, CategoryContext categoryContext) {
+    public CategoryGridAdapter(List<Category> offer, CategoryContext categoryContext, CategoryFragment.OnItemClicked onItemClickListener) {
 
         super();
 
@@ -31,6 +36,12 @@ public class CategoryGridAdapter extends RecyclerView.Adapter<CategoryGridAdapte
 
         items = offer;
 
+        this.onItemClickListener = onItemClickListener;
+    }
+
+    public void cancelQuery(){
+
+        categoryContext.cancelQuery();
     }
 
     @Override
@@ -75,46 +86,36 @@ public class CategoryGridAdapter extends RecyclerView.Adapter<CategoryGridAdapte
 
             categoryIcon.setOnTouchListener(new View.OnTouchListener() {
 
-                @Override
-                public boolean onTouch(View view, MotionEvent event) {
+                                                @Override
+                                                public boolean onTouch(View view, MotionEvent event) {
 
-                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                                                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
 
-                        Animation animation = AnimationUtils.loadAnimation(view.getContext(), R.anim.circular_image_view);
+                                                        Animation animation = AnimationUtils.loadAnimation(view.getContext(), R.anim.circular_image_view);
 
-                        categoryIcon.startAnimation(animation);
+                                                        categoryIcon.startAnimation(animation);
 
-                    } else {
+                                                    } else {
 
-                        if (event.getAction() == MotionEvent.ACTION_UP) {
+                                                        if (event.getAction() == MotionEvent.ACTION_UP) {
 
-                            categoryIcon.callOnClick();
-                        }
-                    }
-                        return true;
-                    }
-                }
-
-                );
-
-                categoryIcon.setOnClickListener(new View.OnClickListener()
-                                                {
-
-                                                    @Override
-                                                    public void onClick(View view) {
-
-                                                        Intent intent = new Intent(view.getContext(), SubCategoryActivity.class);
-
-                                                        intent.putExtra(Category.class.getName(), category.getText());
-
-                                                        view.getContext().startActivity(intent);
-
-                                                        categoryContext.cancelQuery();
+                                                            categoryIcon.callOnClick();
+                                                        }
                                                     }
-
+                                                    return true;
                                                 }
+                                            }
 
-                );
+            );
+
+                categoryIcon.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+
+                        onItemClickListener.onItemClicked((String) category.getText());
+                    }
+                });
 
             }
 

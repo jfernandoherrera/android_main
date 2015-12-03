@@ -26,6 +26,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.GridLayoutManager;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
@@ -47,6 +48,27 @@ public class CategoryFragment extends Fragment {
     private CategoryContext categoryContext;
     private List<Category> categories = new ArrayList<>();
     private ProgressDialog progress;
+    OnItemClicked listener;
+
+    public interface OnItemClicked{
+        void onItemClicked(String name);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+
+        super.onAttach(context);
+
+        listener =  (OnItemClicked) context;
+    }
+
+    @Override
+    public void onDetach() {
+
+        super.onDetach();
+
+        listener = null;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -185,7 +207,7 @@ public class CategoryFragment extends Fragment {
 
             setupProgress();
         }
-        adapter = new CategoryGridAdapter(categories, categoryContext);
+        adapter = new CategoryGridAdapter(categories, categoryContext, (OnItemClicked) getActivity());
 
         recyclerView.setAdapter(adapter);
     }

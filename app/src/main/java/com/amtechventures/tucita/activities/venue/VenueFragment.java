@@ -89,13 +89,8 @@ public class VenueFragment extends Fragment {
 
         super.onAttach(context);
 
-        try {
-
             listener = (OnServiceSelected) context;
 
-        } catch (ClassCastException e) {
-
-        }
     }
 
     @Override

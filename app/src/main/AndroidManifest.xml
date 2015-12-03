@@ -34,15 +34,10 @@
         </activity>
         <activity android:name=".activities.account.AccountActivity" >
         </activity>
-
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="bdc2bab408011afda99f5bc67d47cd792679dd64" />
 
-        <activity
-            android:name=".activities.subcategory.SubCategoryActivity"
-            android:theme="@style/AppTheme.subCategory" >
-        </activity>
         <activity android:name=".activities.search.advanced.AdvancedSearchActivity" >
         </activity>
         <activity android:name=".activities.main.MainActivity" >
