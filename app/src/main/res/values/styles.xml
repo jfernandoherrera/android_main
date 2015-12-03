@@ -33,6 +33,9 @@
         <item name="android:textColor">@color/blackSecondary</item>
         <item name="android:layout_gravity">top|center_horizontal</item>
     </style>
+    <style name="AppTheme.rating" parent="android:Widget.DeviceDefault.Light.RatingBar.Small">
+
+    </style>
     <style name="AppTheme.Button" parent="AppTheme.Title">
         <item name="android:layout_height">@dimen/button_size</item>
     </style>
@@ -43,16 +46,21 @@
         <item name="android:background">@android:color/transparent</item>
     </style>
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
     <style name="AppTheme.ListView" parent="ThemeOverlay.AppCompat.Light">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
-    <style name="AppTheme.ExpandableListViewItem" parent="AppTheme.Title">
+    <style name="AppTheme.ExpandableListViewItem" parent="@android:style/Widget.ExpandableListView">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">72dp</item>
-        <item name="android:background">@color/colorPrimaryLight</item>
+        <item name="android:indicatorRight">250dp</item>
+        <item name="android:indicatorLeft">300dp</item>
+        <item name="android:textColor">@color/blackPrimary</item>
+        <item name="android:textSize">@dimen/title</item>
     </style>
     <style name="AppTheme.ListViewItem" parent="AppTheme.subTitle">
         <item name="android:layout_height">48dp</item>
+        <item name="android:background">@color/colorPrimaryLight</item>
     </style>
 </resources>

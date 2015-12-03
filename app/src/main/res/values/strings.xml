@@ -49,7 +49,6 @@
     <string name="client_parse_id">Fr71FqI5chgnNWBbrDa6d9rhxo3PiL8pngM7MUt4</string>
     <string name="name">name</string>
     <string name="title_activity_main">MainActivity</string>
-
     <string name="find_service">Servicios que puedes estar buscando!</string>
 
 <!-- TODO: Venue -->
@@ -63,13 +62,11 @@
     <string name="sunday">Domingo</string>
     <string name="top_services">Servicios principales</string>
     <string name="from">Desde:</string>
-    <string name="full_menu">Menù completo</string>
-    <string name="ven_title">Beauty 4 Busy Women</string>
+    <string name="full_menu">Menú completo</string>
     <string name="opening_hours">Horario de trabajo</string>
     <string name="about">Acerca de</string>
-    <string name="description">Descripciòn: \n</string>
+    <string name="description">Descripción: \n</string>
     <string name="dialog_progress_title">Cargando...</string>
-    <string name="dialog_all_progress_message">Espera mientras cargamos la informacion</string>
-
-    <string name="dialog_advanced_search_progress_message">Espera mientras encontramos lugares cerca a tì</string>
+    <string name="dialog_all_progress_message">Espera mientras cargamos la información</string>
+    <string name="dialog_advanced_search_progress_message">Espera mientras encontramos lugares cerca de tí</string>
 </resources>

@@ -7,6 +7,7 @@
         android:layout_width="match_parent"
         android:orientation="horizontal"
         android:layout_height="wrap_content"
+        android:background="@drawable/log_in_or_signup_click_out"
         >
         <ImageView
             android:layout_width="0dp"
@@ -19,7 +20,8 @@
             android:id="@+id/locationOptions"
             android:onClick="onLocationClicked"
             android:text="@string/near"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"/>
     </LinearLayout>
     <TextView
         android:layout_width="match_parent"

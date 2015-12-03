@@ -131,7 +131,7 @@ public class VenuesResultFragment extends Fragment implements GoogleApiClient.On
     private void setupCityVenues(List<Service> services, City city){
 
         venueContext.loadSubCategorizedCityVenues(services, city, new VenueCompletion.ErrorCompletion() {
-            @Override
+                @Override
             public void completion(List<Venue> venueList, AppError error) {
 
                 if (venueList != null) {

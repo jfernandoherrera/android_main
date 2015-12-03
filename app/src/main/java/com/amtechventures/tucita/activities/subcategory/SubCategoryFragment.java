@@ -1,6 +1,7 @@
 package com.amtechventures.tucita.activities.subcategory;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -35,6 +36,7 @@ public class SubCategoryFragment extends DialogFragment {
     private CategoryContext categoryContext;
     private String name;
     private OnOthersClicked listener;
+    private ProgressDialog progress;
 
     public interface OnOthersClicked{
 
@@ -48,7 +50,6 @@ public class SubCategoryFragment extends DialogFragment {
 
     listener = (OnOthersClicked) activity;
     }
-
 
     @Override
     public void onDetach() {
@@ -173,11 +174,20 @@ public class SubCategoryFragment extends DialogFragment {
 
                  adapter.notifyDataSetChanged();
              }
+             if(progress != null){
+
+                 progress.dismiss();
+             }
          }
      });
 
-        subCategories.addAll(subCategoriesList);
+        if(subCategoriesList == null) {
 
+            setupProgress();
+        }else {
+
+            subCategories.addAll(subCategoriesList);
+        }
         adapter = new ArrayAdapter<>(getContext(), R.layout.list_item, setStringsArray());
 
         listView.setAdapter(adapter);
@@ -199,5 +209,12 @@ public class SubCategoryFragment extends DialogFragment {
     public void cancelQuery() {
 
         subCategoryContext.cancelQuery();
+    }
+
+    private void setupProgress(){
+
+        progress = ProgressDialog.show(getContext(), getResources().getString(R.string.dialog_progress_title),
+
+                getResources().getString(R.string.dialog_all_progress_message), true);
     }
 }

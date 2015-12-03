@@ -30,7 +30,8 @@
                     android:layout_below="@+id/title_Venue"
                     android:id="@+id/ratingBar"
                     android:layout_centerVertical="true"
-                    style="?android:attr/ratingBarStyleSmall" />
+                    style="@style/AppTheme.rating"
+                    />
                 <TextView
                     android:layout_width="match_parent"
                     android:text="@string/top_services"
@@ -38,10 +39,11 @@
                     android:layout_below="@+id/ratingBar"
                     android:layout_height="wrap_content"
                     android:textSize="25sp"
-                    android:background="@color/com_facebook_button_login_silver_background_color"
+                    android:background="@color/colorPrimaryLight"
                     />
                 <ExpandableListView
-                    style="@style/AppTheme.ListView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_below="@+id/textViewTop"
                     android:id="@+id/listViewTop"
                     />
@@ -55,9 +57,10 @@
                     android:background="@color/com_facebook_button_login_silver_background_color"
                     />
                 <ExpandableListView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:id="@+id/listViewFull"
                     android:layout_below="@+id/textViewFull"
-                    style="@style/AppTheme.ListView"
                     />
                 <TextView
                     android:layout_width="match_parent"
