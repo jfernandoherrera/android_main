@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.search.advanced.fragments.LocationOptionsFragment;
@@ -158,7 +159,7 @@ public class AdvancedSearchActivity extends AppCompatActivity implements Locatio
         return super.onOptionsItemSelected(item);
     }
 
-    public void onLocationClicked(View view) {
+    public void onLocationClicked(final View view) {
 
         showLocationOptionsFragment();
 

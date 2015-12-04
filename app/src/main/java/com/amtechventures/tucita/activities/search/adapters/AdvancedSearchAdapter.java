@@ -1,9 +1,13 @@
 package com.amtechventures.tucita.activities.search.adapters;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -123,7 +127,31 @@ public class AdvancedSearchAdapter extends RecyclerView.Adapter<AdvancedSearchAd
 
             pricesFrom = (TextView) itemView.findViewById(R.id.textPricesFrom);
 
-            from = itemView.getContext().getResources().getString(R.string.from);
+            from = itemView.getContext().getString(R.string.from);
+
+
+            if(android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+
+
+                categoryIcon.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+
+                        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+
+                            categoryIcon.setCardElevation(0);
+
+
+                        } else if (event.getAction() != MotionEvent.ACTION_MOVE) {
+
+                            categoryIcon.setCardElevation(6);
+
+                        }
+
+                        return false;
+                    }
+                });
+            }
 
             categoryIcon.setOnClickListener(new View.OnClickListener() {
 

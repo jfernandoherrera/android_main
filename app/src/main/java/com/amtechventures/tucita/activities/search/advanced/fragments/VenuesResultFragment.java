@@ -2,6 +2,7 @@ package com.amtechventures.tucita.activities.search.advanced.fragments;
 
 
 import android.app.ProgressDialog;
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,9 +13,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.amtechventures.tucita.R;
@@ -58,6 +62,8 @@ public class VenuesResultFragment extends Fragment implements GoogleApiClient.On
     private LocationContext locationContext;
     private TextView noResults;
     private CategoryContext categoryContext;
+    private LinearLayout locationClick;
+    private Button button;
 
     @Nullable
     @Override
@@ -80,6 +86,34 @@ public class VenuesResultFragment extends Fragment implements GoogleApiClient.On
         category = getActivity().getIntent().getBooleanExtra(Category.class.getName(), false);
 
         recyclerView = (RecyclerView)rootView.findViewById(R.id.recycler_view);
+
+        button = (Button) rootView.findViewById(R.id.locationOptions);
+
+        locationClick = (LinearLayout) rootView.findViewById(R.id.locationClick);
+
+        button.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+
+                    locationClick.setBackgroundResource(R.drawable.pressed_application_background_static);
+
+                } else if(event.getAction() != MotionEvent.ACTION_MOVE){
+
+                    locationClick.setBackgroundResource(R.drawable.btn_default_pressed_holo_dark);
+                }
+
+                return false;
+            }
+        });
+
+        locationClick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("dswerfd","·$·");
+            }
+        });
 
         recyclerView.setHasFixedSize(true);
 
@@ -200,8 +234,6 @@ public class VenuesResultFragment extends Fragment implements GoogleApiClient.On
     }
 
     private void setCity(String city){
-
-        Button button = (Button) getView().findViewById(R.id.locationOptions);
 
         button.setText(city);
     }

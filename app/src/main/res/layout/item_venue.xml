@@ -7,13 +7,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     card_view:cardCornerRadius="4dp"
-    android:layout_margin="1dp">
+    android:layout_margin="1dp"
+    card_view:cardElevation="6dp"
+    android:stateListAnimator="@anim/lift_on_touch"
+    >
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="145dp"
         android:id="@+id/imageSearchVenue"
         android:layout_gravity="center_horizontal"
         android:gravity="center"
