@@ -33,9 +33,6 @@
         <item name="android:textColor">@color/blackSecondary</item>
         <item name="android:layout_gravity">top|center_horizontal</item>
     </style>
-    <style name="AppTheme.rating" parent="android:Widget.DeviceDefault.Light.RatingBar.Small">
-
-    </style>
     <style name="AppTheme.Button" parent="AppTheme.Title">
         <item name="android:layout_height">@dimen/button_size</item>
     </style>

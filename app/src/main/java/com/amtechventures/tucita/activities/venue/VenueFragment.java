@@ -67,7 +67,6 @@ public class VenueFragment extends Fragment {
     private ProgressDialog progress;
     private ScrollView scrollView;
 
-
     public interface OnServiceSelected{
 
         void onServiceSelected(String serviceName);
@@ -127,7 +126,6 @@ public class VenueFragment extends Fragment {
         listViewAnotherMenu = (ExpandableListView) rootView.findViewById(R.id.listViewTop);
 
         this.inflater = inflater;
-
 
         return rootView;
     }
