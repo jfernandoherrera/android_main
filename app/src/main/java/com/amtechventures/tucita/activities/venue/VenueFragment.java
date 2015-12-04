@@ -5,10 +5,12 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -69,7 +71,7 @@ public class VenueFragment extends Fragment {
 
     public interface OnServiceSelected{
 
-        void onServiceSelected(String serviceName);
+        void onServiceSelected(String serviceName, View view);
     }
 
     public void cancelQuery(){
@@ -442,6 +444,7 @@ public class VenueFragment extends Fragment {
         }
         return openingHourView;
     }
+
     private void populateOpeningHours(List<OpeningHour> openingHours){
 
         for(Integer day : days){
@@ -497,6 +500,23 @@ public class VenueFragment extends Fragment {
         String address = locationString + " " + venue.getAddress();
 
         location.setText(address);
+
+        location.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+
+                    location.setBackgroundResource(R.drawable.pressed_application_background_static);
+
+                } else if (event.getAction() != MotionEvent.ACTION_MOVE) {
+
+                    location.setBackgroundColor(Color.WHITE);
+                }
+                    return false;
+            }
+        });
 
         location.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -181,11 +181,13 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
     }
 
     @Override
-    public void onServiceSelected(String serviceName) {
+    public void onServiceSelected(String serviceName, View view) {
 
         venueHide();
 
         serviceShow();
+
+        view.setBackgroundColor(getResources().getColor(R.color.colorPrimaryLight));
     }
 
     @Override

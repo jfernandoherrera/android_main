@@ -2,6 +2,7 @@ package com.amtechventures.tucita.activities.venue.adapters;
 
 
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
@@ -97,13 +98,28 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter{
         textDuration.setText(serviceDurationInfo);
 
         textPricesFrom.setText(servicePrice);
+    convertView.setOnTouchListener(new View.OnTouchListener() {
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
 
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+
+           v.setBackgroundResource(R.drawable.pressed_application_background_static);
+
+        } else if (event.getAction() != MotionEvent.ACTION_MOVE) {
+
+        v.setBackgroundColor(v.getResources().getColor(R.color.colorPrimaryLight));
+
+        }
+            return false;
+        }
+    });
         convertView.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
 
-                listener.onServiceSelected((String) textName.getText());
+                listener.onServiceSelected((String) textName.getText(),view);
             }
         });
 
