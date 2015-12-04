@@ -4,4 +4,5 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:id="@+id/textlist"
+        android:background="@android:color/transparent"
         style="@style/AppTheme.ListViewItem"/>

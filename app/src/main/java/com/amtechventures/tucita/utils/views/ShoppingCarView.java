@@ -41,8 +41,6 @@ public class ShoppingCarView extends FrameLayout {
 
         inflater.inflate(R.layout.shopping_car, this);
 
-        setBackgroundResource(R.drawable.log_in_or_signup_click_out);
-
         car = (ImageView) findViewById(R.id.car);
 
         bookNow = (Button) findViewById(R.id.bookNow);

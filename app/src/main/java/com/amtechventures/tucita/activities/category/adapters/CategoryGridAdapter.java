@@ -95,13 +95,11 @@ public class CategoryGridAdapter extends RecyclerView.Adapter<CategoryGridAdapte
 
                                                         categoryIcon.startAnimation(animation);
 
-                                                    } else {
-
-                                                        if (event.getAction() == MotionEvent.ACTION_UP) {
+                                                    } else if (event.getAction() == MotionEvent.ACTION_UP) {
 
                                                             categoryIcon.callOnClick();
                                                         }
-                                                    }
+
                                                     return true;
                                                 }
                                             }

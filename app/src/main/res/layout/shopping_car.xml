@@ -1,25 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
     android:layout_gravity="bottom|center"
-    android:layout_width="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
+    android:background="@drawable/jog_tab_bar_right_end_confirm_yellow">
     <ImageView
         android:id="@+id/car"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="70dp"
         android:scaleType="fitXY"
         android:layout_gravity="start"
         />
     <com.amtechventures.tucita.utils.views.CircleTextView
         android:id="@+id/count"
-        android:layout_gravity="start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         />
     <Button
         android:id="@+id/bookNow"
-        android:layout_gravity="center"
+        android:layout_centerInParent="true"
         android:background="@android:color/transparent"
         android:text="@string/book_now"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"/>
-</merge>
+</RelativeLayout>

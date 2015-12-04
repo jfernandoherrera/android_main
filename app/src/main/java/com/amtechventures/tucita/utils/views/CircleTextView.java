@@ -36,12 +36,12 @@ public class CircleTextView extends TextView {
 
         circlePaint.setAntiAlias(true);
 
-        circlePaint.setColor(Color.GREEN);
+        circlePaint.setColor(Color.rgb(16,215,218));
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-        // draw circle at center of canvas
+
         canvas.drawCircle((getMeasuredWidth()/4) + 2, getMeasuredHeight()/4, padding, circlePaint);
         
         super.onDraw(canvas);

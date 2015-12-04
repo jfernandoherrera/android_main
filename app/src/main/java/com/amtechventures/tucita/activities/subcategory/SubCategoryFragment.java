@@ -3,10 +3,12 @@ package com.amtechventures.tucita.activities.subcategory;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -106,7 +108,6 @@ public class SubCategoryFragment extends DialogFragment {
 
                 if (position == 0) {
 
-
                 } else if (position == others + 1) {
 
                     listener.onOthersClicked();
@@ -114,7 +115,6 @@ public class SubCategoryFragment extends DialogFragment {
                     dismiss();
 
                 } else {
-
                     String name = subCategories.get(position - 1).getName();
 
                     goToAdvancedSearch(name, false);
