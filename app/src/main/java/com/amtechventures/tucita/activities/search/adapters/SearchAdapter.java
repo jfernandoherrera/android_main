@@ -1,8 +1,10 @@
 package com.amtechventures.tucita.activities.search.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -170,6 +172,25 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
             location = (TextView) itemView.findViewById(R.id.textLocation);
 
+
+            itemView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+
+                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
+
+                        itemView.setBackgroundResource(R.drawable.pressed_application_background_static);
+
+                    } else if(event.getAction() != MotionEvent.ACTION_MOVE){
+
+                        itemView.setBackgroundColor(Color.TRANSPARENT);
+
+                    }
+
+                    return false;
+                }
+            });
+
             itemView.setOnClickListener(this);
         }
 
@@ -190,6 +211,24 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             super(itemView);
 
             name = (TextView) itemView.findViewById(R.id.textlist);
+
+            itemView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+
+                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
+
+                        itemView.setBackgroundResource(R.drawable.pressed_application_background_static);
+
+                    } else if(event.getAction() != MotionEvent.ACTION_MOVE){
+
+                        itemView.setBackgroundColor(Color.TRANSPARENT);
+
+                    }
+
+                        return false;
+                }
+            });
 
             itemView.setOnClickListener(this);
         }
