@@ -10,6 +10,7 @@ import android.widget.ExpandableListView;
 import android.widget.TextView;
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.venue.VenueFragment;
+import com.amtechventures.tucita.model.domain.service.Service;
 import com.amtechventures.tucita.model.domain.subcategory.SubCategory;
 import com.amtechventures.tucita.utils.views.ViewUtils;
 import java.util.ArrayList;
@@ -18,19 +19,20 @@ import java.util.List;
 public class ExpandableListAdapter extends BaseExpandableListAdapter{
 
 
-    private ArrayList<ArrayList> childItems;
+    private ArrayList<ArrayList<Service>> childItems;
     private LayoutInflater inflater;
     private ArrayList<SubCategory> parentItems;
-    private ArrayList<String> child;
     private final ExpandableListView expandableListView;
     private VenueFragment.OnServiceSelected listener;
     private ViewUtils viewUtils;
+    private final String shortHour = "hr";
+    private final String shortMinutes = "mins";
 
-    public ExpandableListAdapter(List<SubCategory> parents, List<ArrayList> children, ViewUtils viewUtils, ExpandableListView expandableListView, VenueFragment.OnServiceSelected listener)
+    public ExpandableListAdapter(List<SubCategory> parents, List<ArrayList<Service>> children, ViewUtils viewUtils, ExpandableListView expandableListView, VenueFragment.OnServiceSelected listener)
     {
         this.parentItems = (ArrayList<SubCategory>) parents;
 
-        this.childItems = (ArrayList<ArrayList>) children;
+        this.childItems = (ArrayList<ArrayList<Service>>) children;
 
         this.expandableListView = expandableListView;
 
@@ -53,43 +55,63 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter{
         this.inflater = inflater;
     }
 
-    // method getChildView is called automatically for each child view.
-    //  Implement this method as per your requirement
     @Override
     public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent)
     {
 
-        child = (ArrayList<String>) childItems.get(groupPosition);
+        Service service = childItems.get(groupPosition).get(childPosition);
 
-        final TextView textView;
+        final TextView textName;
+
+        final TextView textDuration;
+
+        final TextView textPricesFrom;
 
         if (convertView == null) {
 
-            convertView = inflater.inflate(R.layout.list_item, null);
+            convertView = inflater.inflate(R.layout.item_service, null);
         }
 
-        // get the textView reference and set the value
-        textView = (TextView) convertView.findViewById(R.id.textlist);
+        String serviceName = service.getName();
 
-        textView.setText(child.get(childPosition));
+        int durationHours = service.getDurationHour();
 
-        // set the ClickListener to handle the click event on child item
+        int durationMinutes = service.getDurationMinutes();
+
+        String serviceDurationHours = durationHours == 0 ? "" : String.valueOf(durationHours) + shortHour;
+
+        String serviceDurationMinutes = durationMinutes == 0 ? "" : String.valueOf(durationMinutes) + shortMinutes;
+
+        String servicePrice = "$" + String.valueOf(service.getPrice());
+
+        String serviceDurationInfo = serviceDurationHours + " " + serviceDurationMinutes;
+
+        textDuration = (TextView) convertView.findViewById(R.id.textDuration);
+
+        textPricesFrom = (TextView) convertView.findViewById(R.id.textPricesFrom);
+
+        textName = (TextView) convertView.findViewById(R.id.textName);
+
+        textName.setText(serviceName);
+
+        textDuration.setText(serviceDurationInfo);
+
+        textPricesFrom.setText(servicePrice);
+
         convertView.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
 
-                listener.onServiceSelected((String) textView.getText());
+                listener.onServiceSelected((String) textName.getText());
             }
         });
 
-        textView.setHeight(viewUtils.childHeight);
+        textName.setHeight(viewUtils.childHeight);
 
-        return textView;
+        return convertView;
     }
 
-    // method getGroupView is called automatically for each parent item
-    // Implement this method as per your requirement
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent)
     {
@@ -123,7 +145,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter{
     @Override
     public int getChildrenCount(int groupPosition)
     {
-        return ((ArrayList<String>) childItems.get(groupPosition)).size();
+        return (childItems.get(groupPosition)).size();
     }
 
     @Override

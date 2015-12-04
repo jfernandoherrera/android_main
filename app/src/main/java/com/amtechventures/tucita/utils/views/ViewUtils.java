@@ -33,7 +33,7 @@ public class ViewUtils {
 
             display.getSize(size);
 
-            childHeight = (int) (childHeight * (size.y * sizeRatio));
+            childHeight = (int) (childHeight * (size.y * sizeRatio)) * 3;
 
             parentHeight = (int) (parentHeight * (size.y * sizeRatio));
         }

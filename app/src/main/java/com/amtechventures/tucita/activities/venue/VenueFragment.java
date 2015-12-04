@@ -47,8 +47,6 @@ public class VenueFragment extends Fragment {
     private final int twelveHoursClock = 12;
     private final int oneDigitNumber = 9;
     private final int daysInAWeek = 7;
-    private final String shortHour = "hr";
-    private final String shortMinutes = "mins";
     private Venue venue;
     private VenueContext venueContext;
     private ServiceContext serviceContext;
@@ -58,7 +56,7 @@ public class VenueFragment extends Fragment {
     private TextView venueDescription;
     private RatingBar ratingBar;
     private Button location;
-    private List<ArrayList> services = new ArrayList<>();
+    private List<ArrayList<Service>> services = new ArrayList<>();
     private List<SubCategory> subCategories = new ArrayList<>();
     private ExpandableListAdapter fullMenuAdapter;
     private ExpandableListView listViewFullMenu;
@@ -289,7 +287,7 @@ public class VenueFragment extends Fragment {
 
                 int indexOf = 0;
 
-                ArrayList<ArrayList> arrayListServices = new ArrayList<>();
+                ArrayList<ArrayList<Service>> arrayListServices = new ArrayList<>();
 
                 for (SubCategory subCategory1 : subCategories) {
 
@@ -318,6 +316,7 @@ public class VenueFragment extends Fragment {
             }
         }
     }
+
     private void setStringsArray(List<Service> servicesList){
 
        for( Service service : servicesList){
@@ -328,14 +327,14 @@ public class VenueFragment extends Fragment {
 
                 int indexOfSubCategory = subCategories.indexOf(subCategory);
 
-                services.get(indexOfSubCategory).add(setServiceString(service));
+                services.get(indexOfSubCategory).add(service);
             }else {
 
                 subCategories.add(subCategory);
 
                 ArrayList subCategoriesString = new ArrayList();
 
-                subCategoriesString.add(setServiceString(service));
+                subCategoriesString.add(service);
 
                 services.add(subCategoriesString);
             }
@@ -343,24 +342,6 @@ public class VenueFragment extends Fragment {
         }
     }
 
-    private String setServiceString(Service service){
-
-        String serviceName = service.getName();
-
-        int durationHours = service.getDurationHour();
-
-        int durationMinutes = service.getDurationMinutes();
-
-        String serviceDurationHours = durationHours == 0 ? "" : String.valueOf(durationHours) + shortHour;
-
-        String serviceDurationMinutes = durationMinutes == 0 ? "" : String.valueOf(durationMinutes) + shortMinutes;
-
-        String servicePrice = "$" + String.valueOf(service.getPrice());
-
-        String serviceInfo = serviceName + " " + serviceDurationHours + " " + serviceDurationMinutes + " " + servicePrice;
-
-        return serviceInfo;
-    }
 
     private void setupRating(){
 
