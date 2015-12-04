@@ -28,6 +28,7 @@ public class VenueContext {
     }
 
     VenueContext() {
+
         venueLocal = new VenueLocal();
 
         venueRemote = new VenueRemote();

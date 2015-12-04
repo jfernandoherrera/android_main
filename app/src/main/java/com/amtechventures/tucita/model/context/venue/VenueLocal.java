@@ -53,6 +53,8 @@ public class VenueLocal {
 
         ParseQuery queryName = Venue.getQuery();
 
+        queryName.fromLocalDatastore();
+
         queryName.orderByAscending(VenueAttributes.updatedAt);
 
         queryName.setLimit(10);

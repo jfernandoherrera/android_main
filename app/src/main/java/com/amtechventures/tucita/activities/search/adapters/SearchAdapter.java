@@ -43,13 +43,20 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public int getItemViewType(int position) {
+
         int type;
 
-        if(position == 0 || position == subCategories.size() + 1){
+        boolean subCategoriesCheck = !subCategories.isEmpty() && position == 0;
+
+        boolean venuesCheck = !venues.isEmpty() && position == 0;
+
+        boolean venuesWithSubCategoriesCheck = position == subCategories.size() + 1;
+
+        if(subCategoriesCheck || venuesWithSubCategoriesCheck || venuesCheck){
 
             type = typeSection;
 
-        }else{
+        } else{
 
             type = position <= subCategories.size() ? typeSubCategory : typeVenue;
         }
@@ -88,13 +95,19 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
 
-        if(position == 0 && subCategories.size() != 0  ){
+        boolean venuesEmpty = ! venues.isEmpty();
+
+        boolean subCategoriesEmpty = ! subCategories.isEmpty();
+
+        boolean venueCheck = (subCategoriesEmpty && position == subCategories.size() + 1) || position == 0;
+
+        if(position == 0 && viewHolder instanceof ViewHolderSections && ! subCategories.isEmpty()){
 
                 ViewHolderSections sections = (ViewHolderSections) viewHolder;
 
                 sections.name.setText(context.getString(R.string.services));
 
-            }else if(venues.size() != 0 && position == subCategories.size() + 1){
+            }else if(venuesEmpty && venueCheck){
 
                 ViewHolderSections sections = (ViewHolderSections) viewHolder;
 
@@ -102,7 +115,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
                 sections.name.setGravity(0x50);
 
-            }   else if (position <= subCategories.size()) {
+            }   else if (subCategoriesEmpty && viewHolder instanceof ViewHolderSubCategories) {
 
             SubCategory subCategory = subCategories.get(position - 1);
 
@@ -110,7 +123,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
             subCategories.name.setText(subCategory.getName());
 
-        }else{
+        }else if(venuesEmpty){
 
             Venue venue = venues.get(position - subCategories.size() - typeSection);
 
