@@ -61,16 +61,21 @@ public class VenueLocal {
 
         queryName.include(VenueAttributes.city);
 
-        List venues = null;
+        List venuesList = new ArrayList();
 
         try {
-        venues = queryName.find();
+        List venues = queryName.find();
+
+            if(venues != null){
+
+                venuesList = venues;
+            }
 
         } catch (ParseException e) {
 
             e.printStackTrace();
         }
-        return venues;
+        return venuesList;
     }
 
         public List<Venue> loadLikeVenues(String likeWord){
