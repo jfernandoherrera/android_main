@@ -1,24 +1,22 @@
 package com.amtechventures.tucita.activities.service;
 
-import android.graphics.Color;
-import android.graphics.PixelFormat;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.design.widget.Snackbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import com.amtechventures.tucita.R;
+import com.amtechventures.tucita.model.domain.service.Service;
 import com.amtechventures.tucita.utils.views.ServiceAddView;
 
 public class ServiceFragment extends Fragment {
 
     private RelativeLayout relativeLayout;
     private ServiceAddView serviceAddView;
+    private Service service;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,6 +46,15 @@ public class ServiceFragment extends Fragment {
         });
 
         return rootView;
+    }
+
+    public void setService(Service service){
+
+        serviceAddView.setName(service.getName());
+
+        serviceAddView.setDuration(service.getDurationInfo());
+
+        serviceAddView.setPrice(service.getPrice());
     }
 
     public void setMarginBottomToShoppingCarVisible( int shoppingCarHeight){

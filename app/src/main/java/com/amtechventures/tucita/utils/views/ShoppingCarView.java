@@ -5,6 +5,7 @@ import android.graphics.Point;
 import android.util.AttributeSet;
 import android.view.Display;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -26,6 +27,14 @@ public class ShoppingCarView extends FrameLayout {
 
     private final double positionRatio = 0.095;
 
+    OnCarClicked listener;
+
+    public interface OnCarClicked{
+
+       void onCarClicked();
+
+    }
+
     public ShoppingCarView(Context context, AttributeSet attrs) {
 
         super(context, attrs);
@@ -41,6 +50,7 @@ public class ShoppingCarView extends FrameLayout {
 
         inflater.inflate(R.layout.shopping_car, this);
 
+        listener = (OnCarClicked) context;
         car = (ImageView) findViewById(R.id.car);
 
         bookNow = (Button) findViewById(R.id.bookNow);
@@ -64,6 +74,14 @@ public class ShoppingCarView extends FrameLayout {
         circleTextView.setTranslationX(translation);
 
         circleTextView.bringToFront();
+
+        car.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                listener.onCarClicked();
+            }
+        });
     }
 
     public void increment(){

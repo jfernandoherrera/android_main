@@ -15,6 +15,7 @@ import com.parse.ParseQuery;
 
 public class Venue extends ParseObject {
 
+
     public void setName(String name){
 
         put(VenueAttributes.name,name );

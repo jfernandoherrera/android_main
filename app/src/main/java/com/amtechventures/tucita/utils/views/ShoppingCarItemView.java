@@ -1,19 +1,15 @@
 package com.amtechventures.tucita.utils.views;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.amtechventures.tucita.R;
 
-public class ServiceAddView extends RelativeLayout{
-
-    ImageView imageView;
-
-    RelativeLayout relativeLayout;
+public class ShoppingCarItemView extends RelativeLayout{
 
     TextView name;
 
@@ -21,11 +17,12 @@ public class ServiceAddView extends RelativeLayout{
 
     TextView price;
 
-    public ServiceAddView(Context context, AttributeSet attrs) {
+    public ShoppingCarItemView(Context context, AttributeSet attrs) {
 
         super(context, attrs);
 
         init(context);
+
     }
 
     private void init(Context context) {
@@ -34,11 +31,7 @@ public class ServiceAddView extends RelativeLayout{
 
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        inflater.inflate(R.layout.item_add_service, this);
-
-        imageView = (ImageView) findViewById(R.id.image);
-
-        relativeLayout = (RelativeLayout) findViewById(R.id.container);
+        inflater.inflate(R.layout.item_basket, this);
 
         name = (TextView) findViewById(R.id.textName);
 
@@ -61,28 +54,6 @@ public class ServiceAddView extends RelativeLayout{
 
         String formattedPrice = "$ " + price;
 
-    this.price.setText(formattedPrice);
+        this.price.setText(formattedPrice);
     }
-
-    public void backgroundClicked(){
-
-        relativeLayout.setBackgroundResource(R.drawable.pressed_application_background_static);
-    }
-
-    public void backgroundNormal(){
-
-        relativeLayout.setBackgroundColor(Color.TRANSPARENT);
-
-    }
-
-    public void plusImage(){
-
-        imageView.setImageResource(R.mipmap.ic_plus);
-    }
-
-    public void checkImage(){
-
-        imageView.setImageResource(R.mipmap.ic_check);
-    }
-
-    }
+}

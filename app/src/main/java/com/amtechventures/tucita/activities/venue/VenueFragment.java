@@ -71,7 +71,7 @@ public class VenueFragment extends Fragment {
 
     public interface OnServiceSelected{
 
-        void onServiceSelected(String serviceName, View view);
+        void onServiceSelected(Service service, View view);
     }
 
     public void cancelQuery(){

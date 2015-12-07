@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/container"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/touched"
+        android:background="@drawable/ab_transparent_light_holo">
+        <TextView
+            android:layout_width="match_parent"
+            android:id="@+id/textName"
+            android:gravity="bottom"
+            style="@style/AppTheme.ListViewItem"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textName">
+            <TextView
+                android:layout_width="wrap_content"
+                android:id="@+id/textDuration"
+                style="@style/AppTheme.ListViewItem"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:id="@+id/textPricesFrom"
+                style="@style/AppTheme.ListViewItem"
+                android:paddingEnd="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                />
+        </RelativeLayout>
+    </RelativeLayout>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/image"
+        android:layout_toEndOf="@+id/touched"
+        android:layout_toRightOf="@+id/touched"
+        android:layout_centerVertical="true"
+        android:background="@mipmap/ic_close"
+        android:contentDescription="@string/content_close" />
+</RelativeLayout>

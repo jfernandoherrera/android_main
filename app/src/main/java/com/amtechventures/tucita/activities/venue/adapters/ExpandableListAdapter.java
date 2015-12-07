@@ -26,8 +26,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter{
     private final ExpandableListView expandableListView;
     private VenueFragment.OnServiceSelected listener;
     private ViewUtils viewUtils;
-    private final String shortHour = "hr";
-    private final String shortMinutes = "mins";
+
 
     public ExpandableListAdapter(List<SubCategory> parents, List<ArrayList<Service>> children, ViewUtils viewUtils, ExpandableListView expandableListView, VenueFragment.OnServiceSelected listener)
     {
@@ -57,7 +56,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter{
     }
 
     @Override
-    public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent)
+    public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent)
     {
 
         Service service = childItems.get(groupPosition).get(childPosition);
@@ -75,17 +74,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter{
 
         String serviceName = service.getName();
 
-        int durationHours = service.getDurationHour();
-
-        int durationMinutes = service.getDurationMinutes();
-
-        String serviceDurationHours = durationHours == 0 ? "" : String.valueOf(durationHours) + shortHour;
-
-        String serviceDurationMinutes = durationMinutes == 0 ? "" : String.valueOf(durationMinutes) + shortMinutes;
-
         String servicePrice = "$" + String.valueOf(service.getPrice());
-
-        String serviceDurationInfo = serviceDurationHours + " " + serviceDurationMinutes;
 
         textDuration = (TextView) convertView.findViewById(R.id.textDuration);
 
@@ -95,10 +84,11 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter{
 
         textName.setText(serviceName);
 
-        textDuration.setText(serviceDurationInfo);
+        textDuration.setText(service.getDurationInfo());
 
         textPricesFrom.setText(servicePrice);
-    convertView.setOnTouchListener(new View.OnTouchListener() {
+
+        convertView.setOnTouchListener(new View.OnTouchListener() {
     @Override
     public boolean onTouch(View v, MotionEvent event) {
 
@@ -119,7 +109,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter{
             @Override
             public void onClick(View view) {
 
-                listener.onServiceSelected((String) textName.getText(), view);
+                listener.onServiceSelected(childItems.get(groupPosition).get(childPosition), view);
             }
         });
 

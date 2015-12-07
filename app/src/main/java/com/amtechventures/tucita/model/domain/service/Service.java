@@ -8,6 +8,24 @@ import com.parse.ParseQuery;
 @ParseClassName("Service")
 public class Service extends ParseObject{
 
+    private final String shortHour = "hr";
+    private final String shortMinutes = "mins";
+
+    public String getDurationInfo(){
+
+        int durationHours = getDurationHour();
+
+        int durationMinutes = getDurationMinutes();
+
+        String serviceDurationHours = durationHours == 0 ? "" : String.valueOf(durationHours) + shortHour;
+
+        String serviceDurationMinutes = durationMinutes == 0 ? "" : String.valueOf(durationMinutes) + shortMinutes;
+
+        String serviceDurationInfo = serviceDurationHours + " " + serviceDurationMinutes;
+
+    return serviceDurationInfo;
+    }
+
     public String getName(){
 
         return getString(ServiceAttributes.name);

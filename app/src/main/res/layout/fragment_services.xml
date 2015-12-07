@@ -4,11 +4,26 @@
     android:layout_height="match_parent"
     android:id="@+id/serviceContainer"
     >
-    <!-- TODO: Update blank fragment layout -->
+    <android.support.v7.widget.SwitchCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/want_eVoucher"
+        android:id="@+id/switch1"
+        android:background="@color/colorPrimaryLight"
+    />
     <com.amtechventures.tucita.utils.views.ServiceAddView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/switch1"
         android:id="@+id/first"
         android:onClick="bookNow"
        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/AppTheme.TitleLight"
+        android:background="@color/colorPrimaryLight"
+        android:layout_below="@id/first"
+        android:text="@string/fine_print"
+        />
 </RelativeLayout>

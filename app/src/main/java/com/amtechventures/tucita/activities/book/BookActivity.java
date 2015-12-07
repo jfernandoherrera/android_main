@@ -7,15 +7,17 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.service.ServiceFragment;
 import com.amtechventures.tucita.activities.venue.VenueFragment;
+import com.amtechventures.tucita.model.domain.service.Service;
 import com.amtechventures.tucita.utils.views.ShoppingCarView;
 
-public class BookActivity extends AppCompatActivity implements VenueFragment.OnServiceSelected {
+public class BookActivity extends AppCompatActivity implements VenueFragment.OnServiceSelected, ShoppingCarView.OnCarClicked {
 
     private VenueFragment venueFragment;
     private ServiceFragment serviceFragment;
@@ -198,7 +200,9 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
     }
 
     @Override
-    public void onServiceSelected(String serviceName, View view) {
+    public void onServiceSelected(Service service, View view) {
+
+        serviceFragment.setService(service);
 
         venueHide();
 
@@ -242,5 +246,10 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
         back();
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onCarClicked() {
+
     }
 }

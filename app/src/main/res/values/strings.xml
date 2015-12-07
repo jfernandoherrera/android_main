@@ -50,7 +50,9 @@
     <string name="name">name</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="find_service">Servicios que puedes estar buscando!</string>
-
+    <string name="want_eVoucher">Lo quiero como eVoucher</string>
+    <string name="fine_print">Letra pequeña</string>
+    <string name="content_close">Imagen para cerrar</string>
 <!-- TODO: Venue -->
     <string name="closed">CERRADO</string>
     <string name="monday">Lunes</string>
