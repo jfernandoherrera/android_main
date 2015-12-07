@@ -119,7 +119,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter{
             @Override
             public void onClick(View view) {
 
-                listener.onServiceSelected((String) textName.getText(),view);
+                listener.onServiceSelected((String) textName.getText(), view);
             }
         });
 

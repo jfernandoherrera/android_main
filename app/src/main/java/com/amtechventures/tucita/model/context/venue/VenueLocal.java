@@ -51,7 +51,7 @@ public class VenueLocal {
 
     public List<Venue> loadRecentVenues(){
 
-        ParseQuery queryName = Venue.getQuery();
+        ParseQuery<Venue> queryName = Venue.getQuery();
 
         queryName.fromLocalDatastore();
 

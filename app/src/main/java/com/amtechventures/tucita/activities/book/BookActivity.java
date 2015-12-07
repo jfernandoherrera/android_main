@@ -21,6 +21,7 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
     private ServiceFragment serviceFragment;
     private Toolbar toolbar;
     private ShoppingCarView shoppingCarView;
+    private boolean plus = false;
 
 
     @Override
@@ -49,9 +50,9 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
 
-        super.onPostCreate(savedInstanceState);
+        book();
 
-        book(null);
+        super.onPostCreate(savedInstanceState);
     }
 
     private void setVenueFragment() {
@@ -135,30 +136,42 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
     public void bookNow(View v) {
 
-        if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+        if(!plus) {
 
-                    shoppingCarView.animate().translationY(shoppingCarView.getHeight()).withEndAction(new Runnable() {
-                        @Override
-                        public void run() {
+            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
 
-                            shoppingCarView.setVisibility(View.VISIBLE);
+                shoppingCarView.animate().translationY(shoppingCarView.getHeight()).withEndAction(new Runnable() {
+                    @Override
+                    public void run() {
 
-                            shoppingCarView.animate().translationY(0);
-                        }
-                    });
+                        shoppingCarView.setVisibility(View.VISIBLE);
 
-        }else {
+                        shoppingCarView.animate().translationY(0);
+                    }
+                });
 
-            shoppingCarView.setVisibility(View.VISIBLE);
+            } else {
 
+                shoppingCarView.setVisibility(View.VISIBLE);
+
+            }
+
+            serviceFragment.checkImage();
+
+            venueFragment.setMarginBottomToShoppingCarVisible(shoppingCarView.getHeight());
+
+            serviceFragment.setMarginBottomToShoppingCarVisible(shoppingCarView.getHeight());
+
+            plus = true;
+
+        }else{
+
+            book();
         }
 
-        venueFragment.setMarginBottomToShoppingCarVisible(shoppingCarView.getHeight());
-
-        serviceFragment.setMarginBottomToShoppingCarVisible( shoppingCarView.getHeight());
     }
 
-    public void book(View v) {
+    public void book() {
 
         if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
 
@@ -169,15 +182,19 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
                     shoppingCarView.setVisibility(View.GONE);
                 }
-            }).setDuration(1000);
+            });
         }else{
 
             shoppingCarView.setVisibility(View.GONE);
         }
 
+        serviceFragment.plusImage();
+
         venueFragment.setMarginBottomToShoppingCarGone();
 
         serviceFragment.setMarginBottomToShoppingCarGone();
+
+        plus = false;
     }
 
     @Override
