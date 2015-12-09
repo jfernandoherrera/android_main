@@ -11,21 +11,33 @@ import com.amtechventures.tucita.R;
 
 public class ServiceAddView extends RelativeLayout{
 
-    ImageView imageView;
+    private ImageView imageView;
 
-    RelativeLayout relativeLayout;
+    private RelativeLayout relativeLayout;
 
-    TextView name;
+    private TextView name;
 
-    TextView duration;
+    private TextView duration;
 
-    TextView price;
+    private TextView price;
+
+    private boolean plus = false;
 
     public ServiceAddView(Context context, AttributeSet attrs) {
 
         super(context, attrs);
 
         init(context);
+    }
+
+    public void setPlus(boolean value){
+
+        plus = value;
+    }
+
+    public boolean getPlus(){
+
+        return plus;
     }
 
     private void init(Context context) {
@@ -75,12 +87,23 @@ public class ServiceAddView extends RelativeLayout{
 
     }
 
-    public void plusImage(){
+    public void setImageView(){
+
+        if(plus){
+
+            plusImage();
+        }else{
+
+            checkImage();
+        }
+    }
+
+    private void plusImage(){
 
         imageView.setImageResource(R.mipmap.ic_plus);
     }
 
-    public void checkImage(){
+    private void checkImage(){
 
         imageView.setImageResource(R.mipmap.ic_check);
     }

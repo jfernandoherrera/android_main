@@ -45,7 +45,7 @@ public class CategoryGridAdapter extends RecyclerView.Adapter<CategoryGridAdapte
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
 
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_category, viewGroup, false);
 

@@ -12,19 +12,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import com.amtechventures.tucita.R;
+import com.amtechventures.tucita.activities.book.fragments.ShoppingCarFragment;
 import com.amtechventures.tucita.activities.service.ServiceFragment;
+import com.amtechventures.tucita.activities.subcategory.SubCategoryFragment;
 import com.amtechventures.tucita.activities.venue.VenueFragment;
 import com.amtechventures.tucita.model.domain.service.Service;
 import com.amtechventures.tucita.utils.views.ShoppingCarView;
 
-public class BookActivity extends AppCompatActivity implements VenueFragment.OnServiceSelected, ShoppingCarView.OnCarClicked {
+public class BookActivity extends AppCompatActivity implements VenueFragment.OnServiceSelected, ServiceFragment.OnServiceSelected, ShoppingCarView.OnCarClicked {
 
+    private ShoppingCarFragment shoppingCarFragment;
     private VenueFragment venueFragment;
     private ServiceFragment serviceFragment;
     private Toolbar toolbar;
     private ShoppingCarView shoppingCarView;
-    private boolean plus = false;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +40,8 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
         serviceFragment = new ServiceFragment();
 
+        shoppingCarFragment = new ShoppingCarFragment();
+
         setVenueFragment();
 
         setServiceFragment();
@@ -52,9 +55,20 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
 
-        book();
+       unBook();
 
         super.onPostCreate(savedInstanceState);
+    }
+
+    private void showShoppingCarFragment(){
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+
+            shoppingCarFragment.show(fragmentManager, ShoppingCarFragment.class.getName());
+
+        ft.addToBackStack(null);
     }
 
     private void setVenueFragment() {
@@ -79,7 +93,6 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
         transaction.commit();
     }
 
-
     private void venueHide(){
 
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -101,7 +114,6 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
         transaction.commit();
     }
-
 
     private void serviceHide(){
 
@@ -136,27 +148,15 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
         }
     }
 
-    public void bookNow(View v) {
+    public void book(View v) {
 
-        if(!plus) {
+        boolean plus = serviceFragment.getServiceState();
 
-            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+        if(plus) {
 
-                shoppingCarView.animate().translationY(shoppingCarView.getHeight()).withEndAction(new Runnable() {
-                    @Override
-                    public void run() {
+            serviceFragment.setServiceState(false);
 
-                        shoppingCarView.setVisibility(View.VISIBLE);
-
-                        shoppingCarView.animate().translationY(0);
-                    }
-                });
-
-            } else {
-
-                shoppingCarView.setVisibility(View.VISIBLE);
-
-            }
+            shoppingCarView.increment();
 
             serviceFragment.checkImage();
 
@@ -164,45 +164,32 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
             serviceFragment.setMarginBottomToShoppingCarVisible(shoppingCarView.getHeight());
 
-            plus = true;
-
         }else{
 
-            book();
+            unBook();
         }
 
     }
 
-    public void book() {
+    private void unBook(){
 
-        if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+        serviceFragment.setServiceState(true);
 
-            shoppingCarView.animate().translationY(shoppingCarView.getHeight()).withEndAction(new Runnable() {
+        shoppingCarView.decrement();
 
-                @Override
-                public void run() {
-
-                    shoppingCarView.setVisibility(View.GONE);
-                }
-            });
-        }else{
-
-            shoppingCarView.setVisibility(View.GONE);
-        }
-
-        serviceFragment.plusImage();
+        serviceFragment.checkImage();
 
         venueFragment.setMarginBottomToShoppingCarGone();
 
         serviceFragment.setMarginBottomToShoppingCarGone();
-
-        plus = false;
     }
 
     @Override
     public void onServiceSelected(Service service, View view) {
 
-        serviceFragment.setService(service);
+        boolean exists = shoppingCarFragment.alreadyExistsService(service);
+
+        serviceFragment.setService(service, exists);
 
         venueHide();
 
@@ -250,6 +237,15 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
     @Override
     public void onCarClicked() {
+
+    showShoppingCarFragment();
+
+    }
+
+    @Override
+    public void onServiceBook(Service service) {
+
+        shoppingCarFragment.addService(service);
 
     }
 }

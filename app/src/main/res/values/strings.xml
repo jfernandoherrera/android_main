@@ -53,6 +53,8 @@
     <string name="want_eVoucher">Lo quiero como eVoucher</string>
     <string name="fine_print">Letra pequeña</string>
     <string name="content_close">Imagen para cerrar</string>
+    <string name="basket">Tu canasta</string>
+    <string name="add_more_services">Mas servicios</string>
 <!-- TODO: Venue -->
     <string name="closed">CERRADO</string>
     <string name="monday">Lunes</string>

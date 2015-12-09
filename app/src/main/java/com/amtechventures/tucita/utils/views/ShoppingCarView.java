@@ -2,6 +2,7 @@ package com.amtechventures.tucita.utils.views;
 
 import android.content.Context;
 import android.graphics.Point;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -21,7 +22,7 @@ public class ShoppingCarView extends FrameLayout {
 
     private CircleTextView circleTextView;
 
-    private int count = 0;
+    private int count = 1;
 
     private final String init = " 1";
 
@@ -51,6 +52,7 @@ public class ShoppingCarView extends FrameLayout {
         inflater.inflate(R.layout.shopping_car, this);
 
         listener = (OnCarClicked) context;
+
         car = (ImageView) findViewById(R.id.car);
 
         bookNow = (Button) findViewById(R.id.bookNow);
@@ -84,17 +86,66 @@ public class ShoppingCarView extends FrameLayout {
         });
     }
 
+    public void showView(){
+
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+
+            animate().translationY(getHeight()).withEndAction(new Runnable() {
+                @Override
+                public void run() {
+
+                    setVisibility(View.VISIBLE);
+
+                    animate().translationY(0);
+                }
+            });
+
+        } else {
+
+        setVisibility(View.VISIBLE);
+
+        }
+    }
+
+    public void hideView() {
+
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+
+            animate().translationY(getHeight()).withEndAction(new Runnable() {
+
+                @Override
+                public void run() {
+
+                    setVisibility(View.GONE);
+                }
+            });
+        } else {
+
+            setVisibility(View.GONE);
+        }
+    }
+
     public void increment(){
 
         count++;
 
         circleTextView.setText(" " + count);
+
+        if(count == 1){
+
+            showView();
+        }
     }
 
     public void decrement(){
         count--;
 
         circleTextView.setText(" " + count);
+
+        if(count == 0){
+
+            hideView();
+        }
     }
 
     public void setOnClick(OnClickListener onClickListener){

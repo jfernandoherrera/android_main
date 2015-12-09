@@ -141,7 +141,16 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public int getItemCount() {
 
-        int  size = subCategories.size() + venues.size() + typeSection;
+        int  size = 0;
+
+        if(!subCategories.isEmpty() && !venues.isEmpty()){
+
+            size = subCategories.size() + venues.size() + typeSection;
+
+        }else if(! (subCategories.isEmpty() && venues.isEmpty())){
+
+            size = subCategories.size() + venues.size() + 1;
+        }
 
         return size;
     }

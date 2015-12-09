@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/switch1"
         android:id="@+id/first"
-        android:onClick="bookNow"
+        android:onClick="book"
        />
     <TextView
         android:layout_width="match_parent"

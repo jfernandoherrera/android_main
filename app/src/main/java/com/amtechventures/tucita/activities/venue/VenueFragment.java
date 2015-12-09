@@ -319,29 +319,31 @@ public class VenueFragment extends Fragment {
 
     private void setStringsArray(List<Service> servicesList){
 
-       for( Service service : servicesList){
+        if(servicesList != null) {
 
-            SubCategory subCategory = service.getSubcategory();
+            for (Service service : servicesList) {
 
-            if(subCategories.contains(subCategory)){
+                SubCategory subCategory = service.getSubcategory();
 
-                int indexOfSubCategory = subCategories.indexOf(subCategory);
+                if (subCategories.contains(subCategory)) {
 
-                services.get(indexOfSubCategory).add(service);
-            }else {
+                    int indexOfSubCategory = subCategories.indexOf(subCategory);
 
-                subCategories.add(subCategory);
+                    services.get(indexOfSubCategory).add(service);
+                } else {
 
-                ArrayList subCategoriesString = new ArrayList();
+                    subCategories.add(subCategory);
 
-                subCategoriesString.add(service);
+                    ArrayList subCategoriesString = new ArrayList();
 
-                services.add(subCategoriesString);
+                    subCategoriesString.add(service);
+
+                    services.add(subCategoriesString);
+                }
+
             }
-
         }
     }
-
 
     private void setupRating(){
 
