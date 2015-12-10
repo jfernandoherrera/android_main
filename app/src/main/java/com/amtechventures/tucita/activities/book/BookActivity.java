@@ -19,7 +19,7 @@ import com.amtechventures.tucita.activities.venue.VenueFragment;
 import com.amtechventures.tucita.model.domain.service.Service;
 import com.amtechventures.tucita.utils.views.ShoppingCarView;
 
-public class BookActivity extends AppCompatActivity implements VenueFragment.OnServiceSelected, ServiceFragment.OnServiceSelected, ShoppingCarView.OnCarClicked {
+public class BookActivity extends AppCompatActivity implements VenueFragment.OnServiceSelected, ServiceFragment.OnServiceSelected, ShoppingCarView.OnCarClicked, ShoppingCarFragment.OnItemClosed, ShoppingCarFragment.OnAddMoreServices {
 
     private ShoppingCarFragment shoppingCarFragment;
     private VenueFragment venueFragment;
@@ -179,9 +179,12 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
         serviceFragment.checkImage();
 
-        venueFragment.setMarginBottomToShoppingCarGone();
+        if(shoppingCarView.isEmpty()){
 
-        serviceFragment.setMarginBottomToShoppingCarGone();
+            venueFragment.setMarginBottomToShoppingCarGone();
+
+            serviceFragment.setMarginBottomToShoppingCarGone();
+        }
     }
 
     @Override
@@ -238,7 +241,10 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
     @Override
     public void onCarClicked() {
 
-    showShoppingCarFragment();
+        if(!shoppingCarFragment.isAdded()) {
+
+            showShoppingCarFragment();
+        }
 
     }
 
@@ -247,5 +253,19 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
         shoppingCarFragment.addService(service);
 
+    }
+
+    @Override
+    public void onItemClosed() {
+
+        unBook();
+    }
+
+    @Override
+    public void onAddMoreServices() {
+
+        serviceHide();
+
+        venueShow();
     }
 }

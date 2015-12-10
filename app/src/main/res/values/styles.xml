@@ -36,6 +36,9 @@
     <style name="AppTheme.Button" parent="AppTheme.Title">
         <item name="android:layout_height">@dimen/button_size</item>
     </style>
+    <style name="AppTheme.Button.ButtonBasket">
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
     <style name="AppTheme.subCategory" parent="Base.Theme.AppCompat.Light.Dialog.FixedSize" >
         <item name="windowNoTitle">true</item>
     </style>

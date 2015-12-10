@@ -3,21 +3,28 @@
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:padding="@dimen/high_margin"
     xmlns:android="http://schemas.android.com/apk/res/android">
 <TextView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:text="@string/basket"
-    android:id="@+id/title"/>
+    android:id="@+id/title"
+    style="@style/AppTheme.Title"/>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_below="@+id/title"
         android:layout_width="wrap_content"
-        android:layout_height="400dp"
+        android:layout_height="330dp"
         />
 <Button
     android:layout_width="wrap_content"
-    android:layout_height="60dp"
+    android:layout_height="50dp"
+    android:id="@+id/moreServices"
     android:text="@string/add_more_services"
-    android:layout_below="@+id/recycler_view"/>
+    android:gravity="bottom"
+    android:layout_below="@+id/recycler_view"
+    android:layout_alignParentRight="true"
+    android:layout_alignParentEnd="true"
+    style="@style/AppTheme.Button.ButtonBasket"/>
 </RelativeLayout>

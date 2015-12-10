@@ -137,7 +137,14 @@ public class ShoppingCarView extends FrameLayout {
         }
     }
 
+    public boolean isEmpty(){
+
+        boolean isEmpty = count == 0;
+
+        return isEmpty;
+    }
     public void decrement(){
+
         count--;
 
         circleTextView.setText(" " + count);
