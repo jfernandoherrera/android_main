@@ -62,11 +62,11 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
     private void showShoppingCarFragment(){
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentManager fragmentManager =  getSupportFragmentManager();
 
         FragmentTransaction ft = fragmentManager.beginTransaction();
 
-            shoppingCarFragment.show(fragmentManager, ShoppingCarFragment.class.getName());
+        shoppingCarFragment.show(fragmentManager, ShoppingCarFragment.class.getName());
 
         ft.addToBackStack(null);
     }
@@ -241,9 +241,13 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
     @Override
     public void onCarClicked() {
 
+
         if(!shoppingCarFragment.isAdded()) {
 
             showShoppingCarFragment();
+        }else {
+
+            shoppingCarFragment.dismiss();
         }
 
     }

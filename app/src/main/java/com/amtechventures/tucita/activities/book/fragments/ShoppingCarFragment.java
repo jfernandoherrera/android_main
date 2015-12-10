@@ -16,8 +16,6 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.RelativeLayout;
-
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.book.adapters.ServicesToBookAdapter;
 import com.amtechventures.tucita.model.domain.service.Service;
@@ -95,7 +93,7 @@ public class ShoppingCarFragment extends DialogFragment implements ServicesToBoo
                 }
 
 
-                    return false;
+                return false;
             }
         });
 
@@ -111,6 +109,7 @@ public class ShoppingCarFragment extends DialogFragment implements ServicesToBoo
                     }
                 }
         );
+
         return rootView;
 
     }
@@ -175,10 +174,9 @@ public class ShoppingCarFragment extends DialogFragment implements ServicesToBoo
 
         WindowManager.LayoutParams windowParams = window.getAttributes();
 
-        windowParams.dimAmount = 0.01f;
+        windowParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL;
 
         window.setAttributes(windowParams);
-
 
     }
 
