@@ -2,6 +2,7 @@ package com.amtechventures.tucita.activities.book.adapters;
 
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -46,7 +47,7 @@ public class ServicesToBookAdapter extends RecyclerView.Adapter<ServicesToBookAd
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         final Service service = serviceList.get(position);
-
+        
         holder.textName.setText(service.getName());
 
         holder.textDuration.setText(service.getDurationInfo());

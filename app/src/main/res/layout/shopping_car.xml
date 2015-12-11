@@ -1,6 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/high_margin"
+        android:id="@+id/listContainer"
+        android:layout_marginLeft="@dimen/high_margin"
+        android:layout_marginRight="@dimen/high_margin"
+        android:layout_marginTop="@dimen/high_margin"
+        android:layout_marginBottom="80dp"
+        android:background="@android:color/white"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/basket"
+            android:id="@+id/title"
+            style="@style/AppTheme.Title"/>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_below="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="330dp"
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:id="@+id/moreServices"
+            android:text="@string/add_more_services"
+            android:gravity="bottom"
+            android:layout_below="@+id/recycler_view"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            style="@style/AppTheme.Button.ButtonBasket"/>
+    </RelativeLayout>
+<RelativeLayout
+    android:id="@+id/containerShoppingView"
     android:layout_gravity="bottom|center"
     android:layout_width="match_parent"
     android:layout_height="60dp"
@@ -27,3 +64,4 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"/>
 </RelativeLayout>
+</merge>

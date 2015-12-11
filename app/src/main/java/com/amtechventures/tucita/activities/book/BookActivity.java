@@ -1,27 +1,22 @@
 package com.amtechventures.tucita.activities.book;
 
 
-import android.os.Build;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import com.amtechventures.tucita.R;
-import com.amtechventures.tucita.activities.book.fragments.ShoppingCarFragment;
 import com.amtechventures.tucita.activities.service.ServiceFragment;
-import com.amtechventures.tucita.activities.subcategory.SubCategoryFragment;
 import com.amtechventures.tucita.activities.venue.VenueFragment;
 import com.amtechventures.tucita.model.domain.service.Service;
 import com.amtechventures.tucita.utils.views.ShoppingCarView;
 
-public class BookActivity extends AppCompatActivity implements VenueFragment.OnServiceSelected, ServiceFragment.OnServiceSelected, ShoppingCarView.OnCarClicked, ShoppingCarFragment.OnItemClosed, ShoppingCarFragment.OnAddMoreServices {
+public class BookActivity extends AppCompatActivity implements VenueFragment.OnServiceSelected, ServiceFragment.OnServiceSelected, ShoppingCarView.OnItemClosed, ShoppingCarView.OnMoreServices{
 
-    private ShoppingCarFragment shoppingCarFragment;
     private VenueFragment venueFragment;
     private ServiceFragment serviceFragment;
     private Toolbar toolbar;
@@ -40,7 +35,7 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
         serviceFragment = new ServiceFragment();
 
-        shoppingCarFragment = new ShoppingCarFragment();
+        shoppingCarView.hideList();
 
         setVenueFragment();
 
@@ -60,16 +55,6 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
         super.onPostCreate(savedInstanceState);
     }
 
-    private void showShoppingCarFragment(){
-
-        FragmentManager fragmentManager =  getSupportFragmentManager();
-
-        FragmentTransaction ft = fragmentManager.beginTransaction();
-
-        shoppingCarFragment.show(fragmentManager, ShoppingCarFragment.class.getName());
-
-        ft.addToBackStack(null);
-    }
 
     private void setVenueFragment() {
 
@@ -190,7 +175,7 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
     @Override
     public void onServiceSelected(Service service, View view) {
 
-        boolean exists = shoppingCarFragment.alreadyExistsService(service);
+        boolean exists = shoppingCarView.alreadyExistsService(service);
 
         serviceFragment.setService(service, exists);
 
@@ -211,7 +196,11 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
     private void back(){
 
-        if (! venueFragment.isHidden()){
+        if(shoppingCarView.listIsVisible()){
+
+            shoppingCarView.hideList();
+
+        }else if (! venueFragment.isHidden()){
 
             venueFragment.cancelQuery();
 
@@ -239,37 +228,32 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
     }
 
     @Override
-    public void onCarClicked() {
-
-
-        if(!shoppingCarFragment.isAdded()) {
-
-            showShoppingCarFragment();
-        }else {
-
-            shoppingCarFragment.dismiss();
-        }
-
-    }
-
-    @Override
     public void onServiceBook(Service service) {
 
-        shoppingCarFragment.addService(service);
+        shoppingCarView.addService(service);
 
     }
 
     @Override
-    public void onItemClosed() {
+    public void onItemClosed(Service service) {
 
-        unBook();
+        if(!serviceFragment.isHidden() && serviceFragment.getService().equals(service)){
+
+            serviceFragment.setServiceState(true);
+
+            serviceFragment.checkImage();
+        }
     }
 
     @Override
-    public void onAddMoreServices() {
+    public void onMoreServices() {
 
-        serviceHide();
+        if(!serviceFragment.isHidden()) {
 
-        venueShow();
+            serviceHide();
+
+            venueShow();
+        }
+
     }
 }

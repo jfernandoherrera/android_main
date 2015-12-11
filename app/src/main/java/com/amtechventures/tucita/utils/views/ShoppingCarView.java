@@ -1,44 +1,60 @@
 package com.amtechventures.tucita.utils.views;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Build;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.Display;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-
+import android.widget.RelativeLayout;
 import com.amtechventures.tucita.R;
+import com.amtechventures.tucita.activities.book.adapters.ServicesToBookAdapter;
+import com.amtechventures.tucita.model.domain.service.Service;
+import java.util.ArrayList;
 
-public class ShoppingCarView extends FrameLayout {
+public class ShoppingCarView extends FrameLayout implements ServicesToBookAdapter.OnItemClosed{
 
     private ImageView car;
-
     private Button bookNow;
-
     private CircleTextView circleTextView;
-
     private int count = 1;
-
     private final String init = " 1";
-
     private final double positionRatio = 0.095;
+    private ArrayList<Service> servicesToBook;
+    private RecyclerView recyclerView;
+    private ServicesToBookAdapter adapter;
+    private RecyclerView.LayoutManager layoutManager;
+    private OnItemClosed listenerItemRemove;
+    private OnMoreServices listener;
+    private RelativeLayout shoppingCar;
+    private RelativeLayout shoppingCarList;
 
-    OnCarClicked listener;
+    public interface OnMoreServices{
 
-    public interface OnCarClicked{
+        void onMoreServices();
+    }
 
-       void onCarClicked();
+    public interface OnItemClosed{
 
+        void onItemClosed(Service service);
     }
 
     public ShoppingCarView(Context context, AttributeSet attrs) {
 
         super(context, attrs);
+
+        listenerItemRemove = (OnItemClosed) context;
+
+        listener = (OnMoreServices) context;
 
         init(context);
     }
@@ -51,13 +67,64 @@ public class ShoppingCarView extends FrameLayout {
 
         inflater.inflate(R.layout.shopping_car, this);
 
-        listener = (OnCarClicked) context;
-
         car = (ImageView) findViewById(R.id.car);
 
         bookNow = (Button) findViewById(R.id.bookNow);
 
-        circleTextView = (CircleTextView) findViewById(R.id.count);
+        shoppingCar = (RelativeLayout) findViewById(R.id.containerShoppingView);
+
+        shoppingCarList = (RelativeLayout) findViewById(R.id.listContainer);
+
+        servicesToBook = new ArrayList<>();
+
+        adapter = new ServicesToBookAdapter(servicesToBook, this);
+
+        recyclerView = (RecyclerView)findViewById(R.id.recycler_view);
+
+        layoutManager = new LinearLayoutManager(getContext());
+
+        recyclerView.setLayoutManager(layoutManager);
+
+        recyclerView.setAdapter(adapter);
+
+        final Button button = (Button) findViewById(R.id.moreServices);
+
+        button.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+
+                    button.setBackgroundResource(R.drawable.pressed_application_background_static);
+
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+
+                    button.setBackgroundColor(Color.TRANSPARENT);
+                }
+
+                return false;
+            }
+        });
+
+        button.setOnClickListener(
+
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        if(listIsVisible()){
+
+                        hideList();
+                        }
+
+                        listener.onMoreServices();
+                    }
+                }
+        );
+
+
+                        circleTextView = (CircleTextView) findViewById(R.id.count);
 
         car.setImageResource(R.mipmap.ic_launcher);
 
@@ -81,49 +148,111 @@ public class ShoppingCarView extends FrameLayout {
             @Override
             public void onClick(View v) {
 
-                listener.onCarClicked();
+                if (listIsVisible()){
+
+                    hideList();
+                }else{
+
+                    showList();
+                }
+
             }
         });
+    }
+
+    public boolean listIsVisible(){
+
+        boolean isVisible = shoppingCarList.getVisibility() == VISIBLE;
+
+        return isVisible;
     }
 
     public void showView(){
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
 
-            animate().translationY(getHeight()).withEndAction(new Runnable() {
+            shoppingCar.animate().translationY(getHeight()).withEndAction(new Runnable() {
                 @Override
                 public void run() {
 
-                    setVisibility(View.VISIBLE);
+                    shoppingCar.setVisibility(VISIBLE);
 
-                    animate().translationY(0);
+                    shoppingCar.animate().translationY(0);
                 }
             });
 
         } else {
 
-        setVisibility(View.VISIBLE);
+            shoppingCar.setVisibility(VISIBLE);
 
         }
+    }
+
+
+    public void showList(){
+
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+
+            shoppingCarList.animate().translationY(shoppingCarList.getHeight()).withEndAction(new Runnable() {
+                @Override
+                public void run() {
+
+                    shoppingCarList.animate().translationY(0);
+
+                    shoppingCarList.setVisibility(View.VISIBLE);
+                }
+            });
+
+        } else {
+
+            shoppingCarList.setVisibility(View.VISIBLE);
+
+        }
+        setBackgroundColor(getResources().getColor(R.color.dialogColor));
+
     }
 
     public void hideView() {
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
 
-            animate().translationY(getHeight()).withEndAction(new Runnable() {
+            shoppingCar.animate().translationY(getHeight()).withEndAction(new Runnable() {
 
                 @Override
                 public void run() {
 
-                    setVisibility(View.GONE);
+                    shoppingCar.setVisibility(View.GONE);
                 }
             });
         } else {
 
-            setVisibility(View.GONE);
+            shoppingCar.setVisibility(View.GONE);
         }
+
+
     }
+
+
+
+    public void hideList() {
+
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+
+            shoppingCarList.animate().translationY(getHeight()).withEndAction(new Runnable() {
+
+                @Override
+                public void run() {
+
+                    shoppingCarList.setVisibility(View.GONE);
+                }
+            });
+        } else {
+
+            shoppingCarList.setVisibility(View.GONE);
+        }
+        setBackgroundColor(Color.TRANSPARENT);
+    }
+
 
     public void increment(){
 
@@ -143,6 +272,7 @@ public class ShoppingCarView extends FrameLayout {
 
         return isEmpty;
     }
+
     public void decrement(){
 
         count--;
@@ -152,11 +282,67 @@ public class ShoppingCarView extends FrameLayout {
         if(count == 0){
 
             hideView();
+
+            hideList();
         }
     }
 
-    public void setOnClick(OnClickListener onClickListener){
 
-        bookNow.setOnClickListener(onClickListener);
+    public boolean alreadyExistsService(Service service){
+
+        boolean exists = false;
+
+        if(servicesToBook != null) {
+
+            for (Service service1 : servicesToBook) {
+
+                if (service1.getName().equals(service.getName())) {
+
+                    exists = true;
+                }
+            }
+        }
+        return exists;
     }
+
+    public void addService(Service service) {
+
+        if(servicesToBook == null){
+
+            servicesToBook = new ArrayList<>();
+
+            servicesToBook.add(service);
+
+        }else if(alreadyExistsService(service)){
+
+            removeService(service);
+        }else{
+
+            servicesToBook.add(service);
+        }
+
+        if (adapter != null) {
+
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+    public void removeService(Service service){
+
+        servicesToBook.remove(service);
+    }
+
+    @Override
+    public void onItemClosed(Service service) {
+
+        decrement();
+
+        servicesToBook.remove(service);
+
+        adapter.notifyDataSetChanged();
+
+        listenerItemRemove.onItemClosed(service);
+
+    }
+
 }

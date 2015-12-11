@@ -25,6 +25,11 @@ public class ServiceFragment extends Fragment {
         void onServiceBook(Service service);
     }
 
+    public Service getService(){
+
+        return service;
+    }
+
     @Override
     public void onAttach(Context context) {
 
