@@ -28,6 +28,7 @@
     <string name="book_now">Reserva tu cita!</string>
     <string name="action_search_location">Ciudad</string>
     <string name="venues">Lugares</string>
+    <string name="venue">Negocio</string>
     <string name="treatments">Tratamientos</string>
     <string name="recent_treatments">Tratamientos recientes</string>
     <string name="recent_venues">Lugares recientes</string>

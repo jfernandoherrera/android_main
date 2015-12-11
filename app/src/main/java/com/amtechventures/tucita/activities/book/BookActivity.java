@@ -41,18 +41,17 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
         shoppingCarView.hideList();
 
-        setVenueFragment();
+        setToolbar();
 
         setServiceFragment();
 
         setSelectDateFragment();
 
+        setVenueFragment();
+
         serviceHide();
 
         selectDateHide();
-
-        setToolbar();
-
     }
 
     @Override
@@ -73,6 +72,8 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
         transaction.add(R.id.layout_main, venueFragment);
 
         transaction.commit();
+
+        venueTitle();
     }
 
     private void setServiceFragment() {
@@ -117,6 +118,15 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
         transaction.show(venueFragment);
 
         transaction.commit();
+
+        venueTitle();
+    }
+
+    private void venueTitle(){
+
+        String venue = getString(R.string.venue);
+
+        getSupportActionBar().setTitle(venue);
     }
 
     private void serviceHide() {
@@ -140,6 +150,10 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
         transaction.show(serviceFragment);
 
         transaction.commit();
+
+        String serviceName = serviceFragment.getService().getName();
+
+        getSupportActionBar().setTitle(serviceName);
     }
 
     private void selectDateHide() {
@@ -163,6 +177,8 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
         transaction.show(selectDateFragment);
 
         transaction.commit();
+
+        selectDateFragment.setupDateViews();
     }
 
     private void setToolbar() {

@@ -15,23 +15,22 @@ import java.util.Calendar;
 public class SelectDayFragment extends Fragment{
 
     private final int daysInAWeek = 7;
+    private Calendar calendar;
+    private TabLayout tabLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_select_date, container, false);
 
-        TabLayout tabLayout = (TabLayout) rootView.findViewById(R.id.tabs);
-
-        setupDateViews(tabLayout);
-
+        tabLayout = (TabLayout) rootView.findViewById(R.id.tabs);
 
         return rootView;
     }
 
-    private void setupDateViews(TabLayout tabLayout){
+    public void setupDateViews(){
 
-        Calendar calendar = Calendar.getInstance();
+        calendar = Calendar.getInstance();
 
         int currentDay = calendar.get(Calendar.DAY_OF_MONTH);
 
