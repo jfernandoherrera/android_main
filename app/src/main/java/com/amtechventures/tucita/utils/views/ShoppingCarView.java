@@ -35,8 +35,14 @@ public class ShoppingCarView extends FrameLayout implements ServicesToBookAdapte
     private RecyclerView.LayoutManager layoutManager;
     private OnItemClosed listenerItemRemove;
     private OnMoreServices listener;
+    private OnBookNow listenerBookNow;
     private RelativeLayout shoppingCar;
     private RelativeLayout shoppingCarList;
+
+    public interface OnBookNow{
+
+        void onBookNow();
+    }
 
     public interface OnMoreServices{
 
@@ -53,6 +59,8 @@ public class ShoppingCarView extends FrameLayout implements ServicesToBookAdapte
         super(context, attrs);
 
         listenerItemRemove = (OnItemClosed) context;
+
+        listenerBookNow = (OnBookNow) context;
 
         listener = (OnMoreServices) context;
 
@@ -148,14 +156,22 @@ public class ShoppingCarView extends FrameLayout implements ServicesToBookAdapte
             @Override
             public void onClick(View v) {
 
-                if (listIsVisible()){
+                if (listIsVisible()) {
 
                     hideList();
-                }else{
+                } else {
 
                     showList();
                 }
 
+            }
+        });
+
+        bookNow.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                listenerBookNow.onBookNow();
             }
         });
     }

@@ -555,11 +555,11 @@ public class VenueFragment extends Fragment {
 
     private void setupDay(int day,  OpeningHourView openingHourView) {
 
-        Calendar c = Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance();
 
-        int dayCurrent = c.get(Calendar.DAY_OF_WEEK);
+        int currentDay = calendar.get(Calendar.DAY_OF_WEEK);
 
-        if (day == dayCurrent) {
+        if (day == currentDay) {
 
             openingHourView.setState_drawable(true);
         } else {
