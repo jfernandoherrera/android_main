@@ -3,20 +3,26 @@ package com.amtechventures.tucita.activities.date.select;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.amtechventures.tucita.R;
+import com.amtechventures.tucita.activities.date.select.adapters.PagerSelectHourAdapter;
 
 import java.util.Calendar;
+import java.util.Date;
+
 
 public class SelectDayFragment extends Fragment{
 
-    private final int daysInAWeek = 7;
-    private Calendar calendar;
+
     private TabLayout tabLayout;
+    private ViewPager viewPager;
+    private PagerSelectHourAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -25,23 +31,51 @@ public class SelectDayFragment extends Fragment{
 
         tabLayout = (TabLayout) rootView.findViewById(R.id.tabs);
 
+        viewPager = (ViewPager) rootView.findViewById(R.id.container);
+
+        adapter = new PagerSelectHourAdapter(getChildFragmentManager());
+
+        viewPager.setAdapter(adapter);
+
+        tabLayout.setupWithViewPager(viewPager);
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                position = position + 1;
+
+                if(position <= adapter.getLastDayOfMonth(0)){
+
+                    setupDateViews(adapter.calendar);
+
+                }else if(position <= (adapter.getLastDayOfMonth(0) + adapter.getLastDayOfMonth(1))){
+
+                    setupDateViews(adapter.calendarOneMonthMore);
+
+                }else{
+
+                    setupDateViews(adapter.calendarTwoMonthMore);
+                }
+
+                Log.i(String.valueOf(position) ,"feede");
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
         return rootView;
     }
+    public void setupDateViews(Calendar calendar){
 
-    public void setupDateViews(){
-
-        calendar = Calendar.getInstance();
-
-        int currentDay = calendar.get(Calendar.DAY_OF_MONTH);
-
-        for(int count = 0; count < daysInAWeek; count++ ){
-
-            tabLayout.addTab(tabLayout.newTab().setText(String.valueOf(currentDay)));
-
-            currentDay ++;
-        }
-
-        String month = setCurrentMonth(calendar.get(Calendar.MONTH));
+        String month = setCurrentMonth(calendar.getTime());
 
         String year = setCurrentYear(calendar.get(Calendar.YEAR));
 
@@ -49,12 +83,15 @@ public class SelectDayFragment extends Fragment{
 
         AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
 
+        Log.i(String.valueOf(calendar.get(Calendar.MONTH)),"feede");
+
         appCompatActivity.getSupportActionBar().setTitle(title);
     }
 
-    private String setCurrentMonth(int currentMonth){
+    private String setCurrentMonth(Date date){
 
-        String month =  new java.text.SimpleDateFormat("MMMM").format(currentMonth);
+
+        String month =  new java.text.SimpleDateFormat("MMMM").format(date);
 
         return month;
     }
@@ -64,4 +101,10 @@ public class SelectDayFragment extends Fragment{
         return String.valueOf(currentYear);
     }
 
+    private void setupDaysObjects(){
+
+
+        }
     }
+
+

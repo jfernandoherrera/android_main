@@ -179,8 +179,6 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
         transaction.show(selectDateFragment);
 
         transaction.commit();
-
-        selectDateFragment.setupDateViews();
     }
 
     private void setToolbar() {

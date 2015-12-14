@@ -200,7 +200,7 @@ public class ShoppingCarView extends FrameLayout implements ServicesToBookAdapte
 
         }
     }
-    
+
     public void showList(){
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
