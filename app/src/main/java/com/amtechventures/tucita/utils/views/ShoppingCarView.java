@@ -200,8 +200,7 @@ public class ShoppingCarView extends FrameLayout implements ServicesToBookAdapte
 
         }
     }
-
-
+    
     public void showList(){
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
@@ -234,12 +233,12 @@ public class ShoppingCarView extends FrameLayout implements ServicesToBookAdapte
                 @Override
                 public void run() {
 
-                    shoppingCar.setVisibility(View.GONE);
+                    shoppingCar.setVisibility(View.INVISIBLE);
                 }
             });
         } else {
 
-            shoppingCar.setVisibility(View.GONE);
+            shoppingCar.setVisibility(View.INVISIBLE);
         }
 
 

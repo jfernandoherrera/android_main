@@ -270,10 +270,7 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
             serviceFragment.checkImage();
 
-            venueFragment.setMarginBottomToShoppingCarVisible(shoppingCarView.getHeight());
-
-            serviceFragment.setMarginBottomToShoppingCarVisible(shoppingCarView.getHeight());
-
+            marginCame();
         } else {
 
             shoppingCarView.removeService(service);
@@ -287,6 +284,18 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
         serviceFragment.setServiceState(true);
 
         serviceFragment.checkImage();
+
+        marginGone();
+    }
+
+    private void marginCame(){
+
+        venueFragment.setMarginBottomToShoppingCarVisible(shoppingCarView.getHeight());
+
+        serviceFragment.setMarginBottomToShoppingCarVisible(shoppingCarView.getHeight());
+    }
+
+    private void marginGone(){
 
         if (shoppingCarView.isEmpty()) {
 
@@ -305,6 +314,7 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
             serviceFragment.checkImage();
         }
+        marginGone();
     }
 
     @Override
@@ -316,7 +326,6 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
             venueShow();
         }
-
     }
 
     @Override

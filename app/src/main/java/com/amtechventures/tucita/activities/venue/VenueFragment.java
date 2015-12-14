@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
@@ -15,9 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ExpandableListView;
-import android.widget.GridLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -171,7 +168,7 @@ public class VenueFragment extends Fragment {
 
             setupRating();
 
-            setupAddressAndlocation();
+            setupAddressAndLocation();
 
             setupOpeningHours();
 
@@ -495,7 +492,7 @@ public class VenueFragment extends Fragment {
         return hourString;
     }
 
-    private void setupAddressAndlocation(){
+    private void setupAddressAndLocation(){
 
         String locationString = venue.getCity().formatedLocation();
 
