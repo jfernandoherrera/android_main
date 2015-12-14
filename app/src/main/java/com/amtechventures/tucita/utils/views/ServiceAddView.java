@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -28,6 +30,23 @@ public class ServiceAddView extends RelativeLayout{
         super(context, attrs);
 
         init(context);
+
+        setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+
+                backgroundClicked();
+
+                } else if(event.getAction() == MotionEvent.ACTION_UP){
+
+                backgroundNormal();
+                }
+                return false;
+            }
+        });
+
     }
 
     public void setPlus(boolean value){

@@ -26,8 +26,6 @@ public class ShoppingCarView extends FrameLayout implements ServicesToBookAdapte
     private ImageView car;
     private Button bookNow;
     private CircleTextView circleTextView;
-    private int count = 1;
-    private final String init = " 1";
     private final double positionRatio = 0.095;
     private ArrayList<Service> servicesToBook;
     private RecyclerView recyclerView;
@@ -101,7 +99,6 @@ public class ShoppingCarView extends FrameLayout implements ServicesToBookAdapte
             @Override
             public boolean onTouch(View v, MotionEvent event) {
 
-
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
 
                     button.setBackgroundResource(R.drawable.pressed_application_background_static);
@@ -136,7 +133,7 @@ public class ShoppingCarView extends FrameLayout implements ServicesToBookAdapte
 
         car.setImageResource(R.mipmap.ic_launcher);
 
-        circleTextView.setText(init);
+        circleTextView.setText(" " + String.valueOf(servicesToBook.size()));
 
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 
@@ -248,8 +245,6 @@ public class ShoppingCarView extends FrameLayout implements ServicesToBookAdapte
 
     }
 
-
-
     public void hideList() {
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
@@ -270,39 +265,28 @@ public class ShoppingCarView extends FrameLayout implements ServicesToBookAdapte
     }
 
 
-    public void increment(){
+    public void setCount(){
 
-        count++;
+        circleTextView.setText(" " + String.valueOf(servicesToBook.size()));
 
-        circleTextView.setText(" " + count);
-
-        if(count == 1){
+        if(servicesToBook.size() == 1){
 
             showView();
+
+        }else if(servicesToBook.isEmpty()){
+
+            hideList();
+
+            hideView();
         }
     }
 
     public boolean isEmpty(){
 
-        boolean isEmpty = count == 0;
+        boolean isEmpty = servicesToBook.isEmpty();
 
         return isEmpty;
     }
-
-    public void decrement(){
-
-        count--;
-
-        circleTextView.setText(" " + count);
-
-        if(count == 0){
-
-            hideView();
-
-            hideList();
-        }
-    }
-
 
     public boolean alreadyExistsService(Service service){
 
@@ -341,19 +325,20 @@ public class ShoppingCarView extends FrameLayout implements ServicesToBookAdapte
 
             adapter.notifyDataSetChanged();
         }
+        setCount();
     }
 
     public void removeService(Service service){
 
         servicesToBook.remove(service);
+
+        setCount();
     }
 
     @Override
     public void onItemClosed(Service service) {
 
-        decrement();
-
-        servicesToBook.remove(service);
+        removeService(service);
 
         adapter.notifyDataSetChanged();
 

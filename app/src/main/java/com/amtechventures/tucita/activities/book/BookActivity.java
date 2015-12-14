@@ -52,6 +52,8 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
         serviceHide();
 
         selectDateHide();
+
+        shoppingCarView.hideView();
     }
 
     @Override
@@ -191,44 +193,6 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
         }
     }
 
-    public void book(View v) {
-
-        boolean plus = serviceFragment.getServiceState();
-
-        if (plus) {
-
-            serviceFragment.setServiceState(false);
-
-            shoppingCarView.increment();
-
-            serviceFragment.checkImage();
-
-            venueFragment.setMarginBottomToShoppingCarVisible(shoppingCarView.getHeight());
-
-            serviceFragment.setMarginBottomToShoppingCarVisible(shoppingCarView.getHeight());
-
-        } else {
-
-            unBook();
-        }
-
-    }
-
-    private void unBook() {
-
-        serviceFragment.setServiceState(true);
-
-        shoppingCarView.decrement();
-
-        serviceFragment.checkImage();
-
-        if (shoppingCarView.isEmpty()) {
-
-            venueFragment.setMarginBottomToShoppingCarGone();
-
-            serviceFragment.setMarginBottomToShoppingCarGone();
-        }
-    }
 
     @Override
     public void onServiceSelected(Service service, View view) {
@@ -298,6 +262,36 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
         shoppingCarView.addService(service);
 
+        boolean plus = serviceFragment.getServiceState();
+
+        if (plus) {
+
+            serviceFragment.setServiceState(false);
+
+            serviceFragment.checkImage();
+
+            venueFragment.setMarginBottomToShoppingCarVisible(shoppingCarView.getHeight());
+
+            serviceFragment.setMarginBottomToShoppingCarVisible(shoppingCarView.getHeight());
+
+        } else {
+
+            unBook();
+        }
+    }
+
+    private void unBook() {
+
+        serviceFragment.setServiceState(true);
+
+        serviceFragment.checkImage();
+
+        if (shoppingCarView.isEmpty()) {
+
+            venueFragment.setMarginBottomToShoppingCarGone();
+
+            serviceFragment.setMarginBottomToShoppingCarGone();
+        }
     }
 
     @Override

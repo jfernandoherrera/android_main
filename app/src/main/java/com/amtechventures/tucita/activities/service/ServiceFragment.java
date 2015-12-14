@@ -57,22 +57,11 @@ public class ServiceFragment extends Fragment {
 
         serviceAddView = (ServiceAddView) rootView.findViewById(R.id.first);
 
-        serviceAddView.setOnTouchListener(new View.OnTouchListener() {
+        serviceAddView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
+            public void onClick(View v) {
 
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-
-                    backgroundClicked();
-
-                    listener.onServiceBook(service);
-
-                }else if(event.getAction() == MotionEvent.ACTION_UP){
-
-                    backgroundNormal();
-                }
-
-                return false;
+                listener.onServiceBook(service);
             }
         });
 
@@ -134,15 +123,5 @@ public class ServiceFragment extends Fragment {
     public void checkImage(){
 
         serviceAddView.setImageView();
-    }
-
-    public void backgroundNormal(){
-
-        serviceAddView.backgroundNormal();
-    }
-
-    public void backgroundClicked(){
-
-        serviceAddView.backgroundClicked();
     }
 }
