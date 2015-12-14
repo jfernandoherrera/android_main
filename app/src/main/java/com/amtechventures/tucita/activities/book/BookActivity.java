@@ -260,11 +260,11 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
     @Override
     public void onServiceBook(Service service) {
 
-        shoppingCarView.addService(service);
-
         boolean plus = serviceFragment.getServiceState();
 
         if (plus) {
+
+            shoppingCarView.addService(service);
 
             serviceFragment.setServiceState(false);
 
@@ -275,6 +275,8 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
             serviceFragment.setMarginBottomToShoppingCarVisible(shoppingCarView.getHeight());
 
         } else {
+
+            shoppingCarView.removeService(service);
 
             unBook();
         }

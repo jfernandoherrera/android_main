@@ -269,7 +269,7 @@ public class ShoppingCarView extends FrameLayout implements ServicesToBookAdapte
 
         circleTextView.setText(" " + String.valueOf(servicesToBook.size()));
 
-        if(servicesToBook.size() == 1){
+        if(servicesToBook.size() == 1 && shoppingCar.getVisibility() != VISIBLE){
 
             showView();
 
@@ -307,19 +307,7 @@ public class ShoppingCarView extends FrameLayout implements ServicesToBookAdapte
 
     public void addService(Service service) {
 
-        if(servicesToBook == null){
-
-            servicesToBook = new ArrayList<>();
-
-            servicesToBook.add(service);
-
-        }else if(alreadyExistsService(service)){
-
-            removeService(service);
-        }else{
-
-            servicesToBook.add(service);
-        }
+        servicesToBook.add(service);
 
         if (adapter != null) {
 
@@ -331,6 +319,11 @@ public class ShoppingCarView extends FrameLayout implements ServicesToBookAdapte
     public void removeService(Service service){
 
         servicesToBook.remove(service);
+
+        if (adapter != null) {
+
+            adapter.notifyDataSetChanged();
+        }
 
         setCount();
     }
