@@ -71,6 +71,11 @@ public class VenueFragment extends Fragment {
         void onServiceSelected(Service service, View view);
     }
 
+    public Venue getVenue(){
+
+        return venue;
+    }
+
     public void cancelQuery(){
 
         openingHourContext.cancelQuery();

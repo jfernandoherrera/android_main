@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.date.select.adapters.PagerSelectHourAdapter;
+import com.amtechventures.tucita.model.domain.venue.Venue;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -42,7 +43,8 @@ public class SelectDayFragment extends Fragment{
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                position = position + 1;
+
+                position = position + adapter.getCurrentDay();
 
                 if(position <= adapter.getLastDayOfMonth(0)){
 
@@ -56,8 +58,6 @@ public class SelectDayFragment extends Fragment{
 
                     setupDateViews(adapter.calendarTwoMonthMore);
                 }
-
-                Log.i(String.valueOf(position) ,"feede");
             }
 
             @Override
@@ -73,6 +73,12 @@ public class SelectDayFragment extends Fragment{
 
         return rootView;
     }
+
+    public void setVenue(Venue venue) {
+
+       adapter.setVenue(venue);
+    }
+
     public void setupDateViews(Calendar calendar){
 
         String month = setCurrentMonth(calendar.getTime());
@@ -83,13 +89,10 @@ public class SelectDayFragment extends Fragment{
 
         AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
 
-        Log.i(String.valueOf(calendar.get(Calendar.MONTH)),"feede");
-
         appCompatActivity.getSupportActionBar().setTitle(title);
     }
 
     private String setCurrentMonth(Date date){
-
 
         String month =  new java.text.SimpleDateFormat("MMMM").format(date);
 
@@ -102,8 +105,7 @@ public class SelectDayFragment extends Fragment{
     }
 
     private void setupDaysObjects(){
-
-
+        
         }
     }
 
