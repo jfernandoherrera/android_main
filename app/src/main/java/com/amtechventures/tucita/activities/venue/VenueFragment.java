@@ -43,8 +43,6 @@ import java.util.List;
 public class VenueFragment extends Fragment {
 
     private ArrayList<Integer> days;
-    private final int twelveHoursClock = 12;
-    private final int oneDigitNumber = 9;
     private final int daysInAWeek = 7;
     private Venue venue;
     private VenueContext venueContext;
@@ -473,9 +471,11 @@ public class VenueFragment extends Fragment {
 
             if(openingHourView != null) {
 
-                String textOpeningStartHour = hourFormat(openingHour.getStartHour(), openingHour.getStartMinute());
+                ViewUtils viewUtils = new ViewUtils(getContext());
 
-                String textOpeningEndHour = hourFormat(openingHour.getEndHour(), openingHour.getEndMinute());
+                String textOpeningStartHour = viewUtils.hourFormat(openingHour.getStartHour(), openingHour.getStartMinute());
+
+                String textOpeningEndHour = viewUtils.hourFormat(openingHour.getEndHour(), openingHour.getEndMinute());
 
                 String textTime = textOpeningStartHour + "-" + textOpeningEndHour;
 
@@ -484,18 +484,6 @@ public class VenueFragment extends Fragment {
         }
     }
 
-    private String hourFormat(int hour, int minute){
-
-        String amPm = hour <= twelveHoursClock ? "AM" : "PM";
-
-        String minuteString = minute <= oneDigitNumber ?  "0" + String.valueOf(minute) :  String.valueOf(minute);
-
-        hour = hour <= twelveHoursClock ? hour : hour - twelveHoursClock;
-
-        String hourString = " " + String.valueOf(hour) + ":" + minuteString + amPm + " ";
-
-        return hourString;
-    }
 
     private void setupAddressAndLocation(){
 
