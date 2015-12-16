@@ -22,6 +22,8 @@ public class PagerSelectHourAdapter extends FragmentPagerAdapter{
     private int currentDay;
     private int daysToEndMonth;
     private Venue venue;
+    int durationHours;
+    int durationMinutes;
 
     public PagerSelectHourAdapter(FragmentManager fm) {
 
@@ -82,12 +84,21 @@ public class PagerSelectHourAdapter extends FragmentPagerAdapter{
 
             selectHourFragment.setVenue(venue);
 
+            selectHourFragment.setDuration(durationHours, durationMinutes);
+
             if(position == 0){
 
                 selectHourFragment.setIsFirst(true);
             }
 
             return selectHourFragment;
+    }
+
+    public void setDuration(int durationHours, int durationMinutes){
+
+        this.durationHours = durationHours;
+
+        this.durationMinutes = durationMinutes;
     }
 
     public Date getFragmentDay(int position){

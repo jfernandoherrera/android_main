@@ -79,6 +79,11 @@ public class SelectDayFragment extends Fragment{
        adapter.setVenue(venue);
     }
 
+    public void setDuration(int durationHour, int durationMinutes){
+
+        adapter.setDuration(durationHour, durationMinutes);
+    }
+
     public void setupDateViews(Calendar calendar){
 
         String month = setCurrentMonth(calendar.getTime());

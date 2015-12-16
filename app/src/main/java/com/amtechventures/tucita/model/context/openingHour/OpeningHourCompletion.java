@@ -1,7 +1,6 @@
 package com.amtechventures.tucita.model.context.openingHour;
 
 
-import com.amtechventures.tucita.model.domain.category.Category;
 import com.amtechventures.tucita.model.domain.openingHour.OpeningHour;
 import com.amtechventures.tucita.model.error.AppError;
 

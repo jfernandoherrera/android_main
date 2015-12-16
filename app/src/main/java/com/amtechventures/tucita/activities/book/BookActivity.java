@@ -345,8 +345,16 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
         selectDateFragment.setVenue(venueFragment.getVenue());
 
+       // selectDateFragment.setDuration();
+
         selectDateShow();
 
         shoppingCarView.hideView();
+    }
+
+    private int[] getDuration(){
+
+      //  shoppingCarView.
+        return null;
     }
 }

@@ -11,13 +11,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.date.select.adapters.SelectHourAdapter;
+import com.amtechventures.tucita.model.context.appointment.AppointmentContext;
 import com.amtechventures.tucita.model.context.openingHour.OpeningHourCompletion;
 import com.amtechventures.tucita.model.context.openingHour.OpeningHourContext;
 import com.amtechventures.tucita.model.domain.openingHour.OpeningHour;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.error.AppError;
 import com.amtechventures.tucita.utils.views.ViewUtils;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -34,8 +34,11 @@ public class SelectHourFragment extends Fragment{
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     List<String> slots;
+    int durationHours;
+    int durationMinutes;
     int price = 0;
     boolean isFirst = false;
+    AppointmentContext appointmentContext;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -43,6 +46,8 @@ public class SelectHourFragment extends Fragment{
         final View rootView = inflater.inflate(R.layout.fragment_select_hour, container, false);
 
         context = OpeningHourContext.context(context);
+
+        appointmentContext = AppointmentContext.context(appointmentContext);
 
         recyclerView = (RecyclerView)rootView.findViewById(R.id.recycler_view);
 
@@ -79,6 +84,13 @@ public class SelectHourFragment extends Fragment{
         this.price = price;
     }
 
+    public void setDuration(int durationHours, int durationMinutes){
+
+        this.durationHours = durationHours;
+
+        this.durationMinutes = durationMinutes;
+    }
+
     public void setIsFirst(boolean first){
 
         isFirst = first;
@@ -94,23 +106,28 @@ public class SelectHourFragment extends Fragment{
         this.date = date;
     }
 
+    private void setupNoSlots(View view){
+
+        TextView textView = (TextView) view.findViewById(R.id.closed);
+
+        textView.setVisibility(View.VISIBLE);
+
+        String test = textView.getText() + " " + date.getDate()  + " " + date.getMonth()+ " " + date.getYear() + " " ;
+
+        textView.setText(test);
+
+        recyclerView.setVisibility(View.GONE);
+    }
+
     public void setup(List<OpeningHour> openingHoursDay, View view){
 
         if(openingHoursDay == null || openingHoursDay.isEmpty()){
 
-            TextView textView = (TextView) view.findViewById(R.id.closed);
-
-            textView.setVisibility(View.VISIBLE);
-
-            String test = textView.getText() + " " + date.getDate()  + " " + date.getMonth()+ " " + date.getYear() + " " ;
-
-            textView.setText(test);
-
-            recyclerView.setVisibility(View.GONE);
+           setupNoSlots(view);
 
         }else if(isFirst) {
 
-            setupSlotsFirst(openingHoursDay);
+            setupSlotsFirst(openingHoursDay, view);
         }else{
 
             setupSlots(openingHoursDay);
@@ -147,7 +164,7 @@ public class SelectHourFragment extends Fragment{
         adapter.notifyDataSetChanged();
     }
 
-    private void setupSlotsFirst(List<OpeningHour> openingHours){
+    private void setupSlotsFirst(List<OpeningHour> openingHours, View view){
 
         for (OpeningHour openingHour : openingHours){
 
@@ -176,7 +193,13 @@ public class SelectHourFragment extends Fragment{
                 minutes = time[1];
             }
         }
-        adapter.notifyDataSetChanged();
+        if(slots.isEmpty()){
+
+            setupNoSlots(view);
+        }else {
+
+            adapter.notifyDataSetChanged();
+        }
     }
 
     private int[] sixtyMinutes(int hour, int minutes){
@@ -199,4 +222,5 @@ public class SelectHourFragment extends Fragment{
 
         return time;
     }
+
 }

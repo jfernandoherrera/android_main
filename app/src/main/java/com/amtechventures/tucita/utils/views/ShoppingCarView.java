@@ -42,6 +42,25 @@ public class ShoppingCarView extends FrameLayout implements ServicesToBookAdapte
         void onBookNow();
     }
 
+    public int[] getDuration(){
+
+        int hours = 0;
+
+        int minutes = 0;
+
+        for(Service service : servicesToBook){
+
+            hours += service.getDurationHour();
+
+            minutes+= service.getDurationMinutes();
+        }
+
+        if(minutes > 59){
+
+        }
+        return new int[]{hours, minutes};
+    }
+
     public interface OnMoreServices{
 
         void onMoreServices();
