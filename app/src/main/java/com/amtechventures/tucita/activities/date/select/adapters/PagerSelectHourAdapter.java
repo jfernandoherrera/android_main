@@ -7,8 +7,11 @@ import android.support.v4.app.FragmentPagerAdapter;
 import com.amtechventures.tucita.activities.date.select.SelectHourFragment;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
 
 public class PagerSelectHourAdapter extends FragmentPagerAdapter{
@@ -79,6 +82,11 @@ public class PagerSelectHourAdapter extends FragmentPagerAdapter{
 
             selectHourFragment.setVenue(venue);
 
+            if(position == 0){
+
+                selectHourFragment.setIsFirst(true);
+            }
+
             return selectHourFragment;
     }
 
@@ -119,8 +127,19 @@ public class PagerSelectHourAdapter extends FragmentPagerAdapter{
     public CharSequence getPageTitle(int position) {
 
         String title;
+        TimeZone timezone = TimeZone.getDefault();
 
-        title = String.valueOf(getFragmentDay(position).getDate() );
+        Calendar calendar = new GregorianCalendar(timezone);
+
+        Date date = getFragmentDay(position);
+
+        calendar.set(date.getYear(), date. getMonth(), date.getDate());
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EEE");
+
+        dateFormat.setTimeZone(calendar.getTimeZone());
+
+        title = dateFormat.format(calendar.getTime()) + "\n" + String.valueOf(date.getDate());
 
         return title;
     }

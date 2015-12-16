@@ -63,6 +63,7 @@ public class SelectHourAdapter extends RecyclerView.Adapter<SelectHourAdapter.Vi
 
             textPricesFrom = (TextView) itemView.findViewById(R.id.textPrice);
 
+            textPricesFrom.setVisibility(View.GONE);
         }
     }
 }

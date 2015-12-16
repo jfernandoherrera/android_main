@@ -35,11 +35,12 @@ public class SelectHourFragment extends Fragment{
     private RecyclerView.LayoutManager layoutManager;
     List<String> slots;
     int price = 0;
+    boolean isFirst = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_select_hour, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_select_hour, container, false);
 
         context = OpeningHourContext.context(context);
 
@@ -55,7 +56,32 @@ public class SelectHourFragment extends Fragment{
 
         recyclerView.setAdapter(adapter);
 
+        TimeZone timezone = TimeZone.getDefault();
+
+        Calendar calendar = new GregorianCalendar(timezone);
+
+        calendar.set(date.getYear(), date. getMonth(), date.getDate());
+
+        int day = calendar.get(Calendar.DAY_OF_WEEK);
+
+        context.loadDayOpeningHours(venue, day, new OpeningHourCompletion.OpeningHourErrorCompletion() {
+            @Override
+            public void completion(List<OpeningHour> openingHourList, AppError error) {
+
+                setup(openingHourList, rootView);
+            }
+        });
         return rootView;
+    }
+
+    public void setPrice(int price){
+
+        this.price = price;
+    }
+
+    public void setIsFirst(boolean first){
+
+        isFirst = first;
     }
 
     public void setVenue(Venue another){
@@ -63,39 +89,16 @@ public class SelectHourFragment extends Fragment{
         venue = another;
     }
 
-    @Override
-    public void onStart() {
-
-        super.onStart();
-
-        TimeZone timezone = TimeZone.getDefault();
-
-        Calendar calendar = new GregorianCalendar(timezone);
-
-        calendar.set(date.getYear(), date. getMonth(), date.getDate());
-
-       int day = calendar.get(Calendar.DAY_OF_WEEK);
-
-        context.loadDayOpeningHours(venue, day, new OpeningHourCompletion.OpeningHourErrorCompletion() {
-            @Override
-            public void completion(List<OpeningHour> openingHourList, AppError error) {
-
-                setup(openingHourList);
-            }
-        });
-
-    }
-
     public void setDate(Date date){
 
         this.date = date;
     }
 
-    public void setup(List<OpeningHour> openingHoursDay){
+    public void setup(List<OpeningHour> openingHoursDay, View view){
 
         if(openingHoursDay == null || openingHoursDay.isEmpty()){
 
-            TextView textView = (TextView) getView().findViewById(R.id.closed);
+            TextView textView = (TextView) view.findViewById(R.id.closed);
 
             textView.setVisibility(View.VISIBLE);
 
@@ -104,7 +107,11 @@ public class SelectHourFragment extends Fragment{
             textView.setText(test);
 
             recyclerView.setVisibility(View.GONE);
-        }else {
+
+        }else if(isFirst) {
+
+            setupSlotsFirst(openingHoursDay);
+        }else{
 
             setupSlots(openingHoursDay);
         }
@@ -136,6 +143,38 @@ public class SelectHourFragment extends Fragment{
 
                 minutes = time[1];
           }
+        }
+        adapter.notifyDataSetChanged();
+    }
+
+    private void setupSlotsFirst(List<OpeningHour> openingHours){
+
+        for (OpeningHour openingHour : openingHours){
+
+            Calendar calendar = Calendar.getInstance();
+
+            int startPoint = calendar.get(Calendar.HOUR_OF_DAY) ;
+
+            int endPoint = openingHour.getEndHour();
+
+            int minutes = openingHour.getStartMinute();
+
+            while (startPoint < endPoint){
+
+                ViewUtils viewUtils = new ViewUtils(getContext());
+
+                String slot = viewUtils.hourFormat(startPoint, minutes) ;
+
+                slots.add(slot);
+
+                minutes += 30;
+
+                int[] time = sixtyMinutes(startPoint, minutes);
+
+                startPoint = time[0];
+
+                minutes = time[1];
+            }
         }
         adapter.notifyDataSetChanged();
     }
