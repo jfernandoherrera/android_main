@@ -7,10 +7,8 @@ import android.view.MenuItem;
 import android.content.Intent;
 import com.amtechventures.tucita.R;
 import android.support.v7.app.AppCompatActivity;
-
 import com.amtechventures.tucita.activities.main.MainActivity;
 import com.amtechventures.tucita.model.context.user.UserContext;
-import com.amtechventures.tucita.activities.category.CategoryFragment;
 import com.amtechventures.tucita.model.domain.user.UserAttributes;
 
 public class AccountActivity extends AppCompatActivity {

@@ -1,20 +1,16 @@
 package com.amtechventures.tucita.activities.category.adapters;
 
 import java.util.List;
-import android.content.Intent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
 import android.widget.TextView;
 import android.view.LayoutInflater;
 import com.amtechventures.tucita.R;
 import android.support.v7.widget.RecyclerView;
-
 import com.amtechventures.tucita.activities.category.CategoryFragment;
-import com.amtechventures.tucita.activities.subcategory.SubCategoryFragment;
 import com.amtechventures.tucita.model.context.category.CategoryContext;
 import com.amtechventures.tucita.model.domain.category.Category;
 import com.mikhaellopez.circularimageview.CircularImageView;

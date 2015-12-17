@@ -92,7 +92,6 @@ public class CategoryFragment extends Fragment {
         return rootView;
     }
 
-
     private SpannableStringBuilder getStringLoginModified(){
 
         WindowManager wm = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);

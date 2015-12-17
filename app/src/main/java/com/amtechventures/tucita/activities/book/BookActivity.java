@@ -191,7 +191,6 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
         }
     }
 
-
     @Override
     public void onServiceSelected(Service service, View view) {
 
@@ -328,6 +327,7 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
     @Override
     public void onBookNow() {
+
         if (!serviceFragment.isHidden()) {
 
             serviceHide();
@@ -347,14 +347,10 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
         selectDateFragment.setDuration(shoppingCarView.getDuration());
 
+        selectDateFragment.reload();
+
         selectDateShow();
 
         shoppingCarView.hideView();
-    }
-
-    private int[] getDuration(){
-
-      //  shoppingCarView.
-        return null;
     }
 }

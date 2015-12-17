@@ -61,11 +61,23 @@ public class SelectHourFragment extends Fragment{
 
         recyclerView.setAdapter(adapter);
 
+        loadDay(rootView);
+
+        return rootView;
+    }
+
+    public void setPrice(int price){
+
+        this.price = price;
+    }
+
+    public void loadDay(final View rootView) {
+
         TimeZone timezone = TimeZone.getDefault();
 
         Calendar calendar = new GregorianCalendar(timezone);
 
-        calendar.set(date.getYear(), date. getMonth(), date.getDate());
+        calendar.set(date.getYear(), date.getMonth(), date.getDate());
 
         int day = calendar.get(Calendar.DAY_OF_WEEK);
 
@@ -76,12 +88,6 @@ public class SelectHourFragment extends Fragment{
                 setup(openingHourList, rootView);
             }
         });
-        return rootView;
-    }
-
-    public void setPrice(int price){
-
-        this.price = price;
     }
 
     public void setDuration(int durationHours, int durationMinutes){
@@ -112,7 +118,11 @@ public class SelectHourFragment extends Fragment{
 
         textView.setVisibility(View.VISIBLE);
 
-        String test = textView.getText() + " " + date.getDate()  + " " + date.getMonth()+ " " + date.getYear() + " " ;
+        String sorry = view.getResources().getString(R.string.sorry_there_are_no);
+
+        String please = view.getResources().getString(R.string.pls_select_another_day);
+
+        String test = sorry + " " + date.getDate()  + " " + date.getMonth()+ " " + date.getYear() + " " + please;
 
         textView.setText(test);
 
@@ -127,7 +137,8 @@ public class SelectHourFragment extends Fragment{
 
         }else if(isFirst) {
 
-            setupSlotsFirst(openingHoursDay, view);
+            setupNoSlots(view);
+           // setupSlotsFirst(openingHoursDay, view);
         }else{
 
             setupSlots(openingHoursDay);
@@ -188,6 +199,7 @@ public class SelectHourFragment extends Fragment{
         }
         adapter.notifyDataSetChanged();
     }
+
 
     private void setupSlotsFirst(List<OpeningHour> openingHours, View view){
 

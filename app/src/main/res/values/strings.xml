@@ -35,6 +35,8 @@
     <string name="typing_advertisement">Escribe al menos 3 letras para conseguir sugerencias</string>
     <string name="near">Lugares cerca de tí</string>
     <string name="dont_remember_password">Olvido la contraseña?</string>
+    <string name="sorry_there_are_no">Lo sentimos, no hay espacios disponibles para la fecha </string>
+    <string name="pls_select_another_day">Por favor seleccione otro día</string>
     <string name="no_results">Sin resultados</string>
     <string name="error_finding_pinned_categories">Error finding pinned Categories:</string>
     <string name="error_pinning_categories">Error pinning Categories:</string>

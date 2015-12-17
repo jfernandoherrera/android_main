@@ -46,6 +46,8 @@ public class MainActivity extends AppCompatActivity implements CategoryFragment.
 
         setFragmentToSearch();
 
+        categoryShow();
+
         searchHide();
 
         setToolbar();

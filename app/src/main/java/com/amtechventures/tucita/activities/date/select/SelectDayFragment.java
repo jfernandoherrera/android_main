@@ -9,11 +9,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.date.select.adapters.PagerSelectHourAdapter;
 import com.amtechventures.tucita.model.domain.venue.Venue;
-
 import java.util.Calendar;
 import java.util.Date;
 
@@ -79,11 +77,6 @@ public class SelectDayFragment extends Fragment{
        adapter.setVenue(venue);
     }
 
-    public void setDuration(int durationHour, int durationMinutes){
-
-        adapter.setDuration(durationHour, durationMinutes);
-    }
-
     public void setupDateViews(Calendar calendar){
 
         String month = setCurrentMonth(calendar.getTime());
@@ -109,13 +102,15 @@ public class SelectDayFragment extends Fragment{
         return String.valueOf(currentYear);
     }
 
-    private void setupDaysObjects(){
-        
+    public void reload(){
+
+        adapter.notifyDataSetChanged();
         }
 
     public void setDuration(int[] duration) {
 
         adapter.setDuration(duration[0], duration[1]);
+
     }
 }
 

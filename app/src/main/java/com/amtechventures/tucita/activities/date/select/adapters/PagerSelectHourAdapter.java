@@ -4,6 +4,9 @@ package com.amtechventures.tucita.activities.date.select.adapters;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.view.ViewGroup;
+
 import com.amtechventures.tucita.activities.date.select.SelectHourFragment;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 
@@ -14,7 +17,7 @@ import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
 
-public class PagerSelectHourAdapter extends FragmentPagerAdapter{
+public class PagerSelectHourAdapter extends FragmentStatePagerAdapter {
 
     public final Calendar calendar = Calendar.getInstance();
     public Calendar calendarOneMonthMore = Calendar.getInstance();
@@ -48,6 +51,11 @@ public class PagerSelectHourAdapter extends FragmentPagerAdapter{
         return currentDay;
     }
 
+    @Override
+    public int getItemPosition(Object object) {
+        return POSITION_NONE;
+    }
+
     public int getLastDayOfMonth(int month){
 
         int lastDay = 0;
@@ -74,6 +82,8 @@ public class PagerSelectHourAdapter extends FragmentPagerAdapter{
         }
         return lastDay;
     }
+
+
 
     @Override
     public Fragment getItem(int position) {
