@@ -112,6 +112,11 @@ public class SelectDayFragment extends Fragment{
     private void setupDaysObjects(){
         
         }
+
+    public void setDuration(int[] duration) {
+
+        adapter.setDuration(duration[0], duration[1]);
     }
+}
 
 

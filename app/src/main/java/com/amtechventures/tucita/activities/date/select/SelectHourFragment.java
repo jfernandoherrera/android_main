@@ -144,22 +144,47 @@ public class SelectHourFragment extends Fragment{
 
           int minutes = openingHour.getStartMinute();
 
-          while (startPoint < endPoint){
+            int increment = 30;
 
-                ViewUtils viewUtils = new ViewUtils(getContext());
+            ViewUtils viewUtils = new ViewUtils(getContext());
 
-                String slot = viewUtils.hourFormat(startPoint, minutes) ;
+            if(durationMinutes == 0) {
+
+                while (!(startPoint == (endPoint - durationHours) && minutes ==  increment)){
+
+                    String slot = viewUtils.hourFormat(startPoint, minutes) ;
+
+                    slots.add(slot);
+
+                    minutes += increment;
+
+                    int[] time = sixtyMinutes(startPoint, minutes);
+
+                    startPoint = time[0];
+
+                    minutes = time[1];
+                }
+            }else{
+
+                while (!(startPoint == (endPoint - durationHours - 1) && minutes ==  increment) ){
+
+                    String slot = viewUtils.hourFormat(startPoint, minutes);
+
+                    slots.add(slot);
+
+                    minutes += increment;
+
+                    int[] time = sixtyMinutes(startPoint, minutes);
+
+                    startPoint = time[0];
+
+                    minutes = time[1];
+                }
+                String slot = viewUtils.hourFormat(startPoint, (60 - durationMinutes));
 
                 slots.add(slot);
+            }
 
-                minutes += 30;
-
-                int[] time = sixtyMinutes(startPoint, minutes);
-
-                startPoint = time[0];
-
-                minutes = time[1];
-          }
         }
         adapter.notifyDataSetChanged();
     }
@@ -170,28 +195,65 @@ public class SelectHourFragment extends Fragment{
 
             Calendar calendar = Calendar.getInstance();
 
-            int startPoint = calendar.get(Calendar.HOUR_OF_DAY) ;
+            int startPoint = calendar.get(Calendar.HOUR_OF_DAY) + 1;
 
             int endPoint = openingHour.getEndHour();
 
             int minutes = openingHour.getStartMinute();
 
-            while (startPoint < endPoint){
+            int increment = 30;
 
-                ViewUtils viewUtils = new ViewUtils(getContext());
+            ViewUtils viewUtils = new ViewUtils(getContext());
 
-                String slot = viewUtils.hourFormat(startPoint, minutes) ;
+            if(durationMinutes == 0) {
+
+                if(! (startPoint <= endPoint)){
+
+                while (!(startPoint == (endPoint - durationHours) && minutes ==  increment)){
+
+                    String slot = viewUtils.hourFormat(startPoint, minutes) ;
+
+                    slots.add(slot);
+
+                    minutes += increment;
+
+                    int[] time = sixtyMinutes(startPoint, minutes);
+
+                    startPoint = time[0];
+
+                    minutes = time[1];
+                    }
+                }else {
+
+                    setupNoSlots(view);
+                }
+            }else{
+                if(! (startPoint <= endPoint)){
+
+                while (!(startPoint == (endPoint - durationHours - 1) && minutes ==  increment) ){
+
+                    String slot = viewUtils.hourFormat(startPoint, minutes);
+
+                    slots.add(slot);
+
+                    minutes += increment;
+
+                    int[] time = sixtyMinutes(startPoint, minutes);
+
+                    startPoint = time[0];
+
+                    minutes = time[1];
+                }
+                String slot = viewUtils.hourFormat(startPoint, (60 - durationMinutes));
 
                 slots.add(slot);
 
-                minutes += 30;
+                }else {
 
-                int[] time = sixtyMinutes(startPoint, minutes);
-
-                startPoint = time[0];
-
-                minutes = time[1];
+                    setupNoSlots(view);
+                }
             }
+
         }
         if(slots.isEmpty()){
 
