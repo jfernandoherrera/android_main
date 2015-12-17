@@ -38,15 +38,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter{
 
         this.viewUtils = viewUtils;
 
-        if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) {
-
-            this.expandableListView .setIndicatorBounds(expandableListView.getRight()-50,expandableListView.getRight()-10);
-
-        } else {
-
-            this.expandableListView .setIndicatorBoundsRelative(expandableListView.getRight()-50,expandableListView.getRight()-10);
-        }
-
         this.listener = listener;
     }
 
