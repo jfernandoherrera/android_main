@@ -1,7 +1,5 @@
 package com.amtechventures.tucita.model.context.appointment;
 
-
-import com.amtechventures.tucita.model.domain.appointment.Appointment;
 import com.amtechventures.tucita.model.domain.service.Service;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 
@@ -27,8 +25,8 @@ public class AppointmentContext {
         appointmentRemote = new AppointmentRemote();
     }
 
-    public void loadAppointmentsDateVenue(List<Service> services, Date date, AppointmentCompletion.AppointmentErrorCompletion completion){
+    public void loadAppointmentsDateVenue(Venue venue, Date date, AppointmentCompletion.AppointmentErrorCompletion completion){
 
-        appointmentRemote.loadAppointmentsDateVenue(services, date, completion);
+        appointmentRemote.loadAppointmentsDateVenue(venue, date, completion);
     }
 }

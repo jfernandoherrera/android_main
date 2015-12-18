@@ -11,12 +11,15 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.date.select.adapters.SelectHourAdapter;
+import com.amtechventures.tucita.model.context.appointment.AppointmentCompletion;
 import com.amtechventures.tucita.model.context.appointment.AppointmentContext;
 import com.amtechventures.tucita.model.context.openingHour.OpeningHourCompletion;
 import com.amtechventures.tucita.model.context.openingHour.OpeningHourContext;
+import com.amtechventures.tucita.model.domain.appointment.Appointment;
 import com.amtechventures.tucita.model.domain.openingHour.OpeningHour;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.error.AppError;
+import com.amtechventures.tucita.utils.strings.Slot;
 import com.amtechventures.tucita.utils.views.ViewUtils;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -33,7 +36,7 @@ public class SelectHourFragment extends Fragment{
     private SelectHourAdapter adapter;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
-    List<String> slots;
+    List<Slot> slots;
     int durationHours;
     int durationMinutes;
     int price = 0;
@@ -143,6 +146,36 @@ public class SelectHourFragment extends Fragment{
 
             setupSlots(openingHoursDay);
         }
+        appointmentContext.loadAppointmentsDateVenue(venue, date, new AppointmentCompletion.AppointmentErrorCompletion() {
+            @Override
+            public void completion(List<Appointment> appointmentList, AppError error) {
+
+                if(appointmentList == null || appointmentList.isEmpty()){
+
+                }else {
+
+                    for(Appointment appointment : appointmentList){
+
+                        Date fragmentDay = appointment.getDate();
+
+                        int startHour = fragmentDay.getHours();
+
+                        int startMinute = fragmentDay.getMinutes();
+
+                        int duration = appointment.getDuration();
+
+                        for(Slot slot : slots){
+
+                            if(slot.getStartHour() >= startHour && slot.getStartMinute() >= startMinute){
+
+
+                            }
+
+                        }
+                    }
+                }
+            }
+        });
     }
 
     private void setupSlots(List<OpeningHour> openingHours){
@@ -163,7 +196,9 @@ public class SelectHourFragment extends Fragment{
 
                 while (!(startPoint == (endPoint - durationHours) && minutes ==  increment)){
 
-                    String slot = viewUtils.hourFormat(startPoint, minutes) ;
+                    String slotString = viewUtils.hourFormat(startPoint, minutes) ;
+
+                    Slot slot = new Slot(minutes, startPoint, increment, slotString);
 
                     slots.add(slot);
 
@@ -179,7 +214,9 @@ public class SelectHourFragment extends Fragment{
 
                 while (!(startPoint == (endPoint - durationHours - 1) && minutes ==  increment) ){
 
-                    String slot = viewUtils.hourFormat(startPoint, minutes);
+                    String slotString  = viewUtils.hourFormat(startPoint, minutes);
+
+                    Slot slot = new Slot(minutes, startPoint, increment, slotString);
 
                     slots.add(slot);
 
@@ -191,7 +228,9 @@ public class SelectHourFragment extends Fragment{
 
                     minutes = time[1];
                 }
-                String slot = viewUtils.hourFormat(startPoint, (60 - durationMinutes));
+                String slotString  = viewUtils.hourFormat(startPoint, (60 - durationMinutes));
+
+                Slot slot = new Slot(minutes, startPoint, increment, slotString);
 
                 slots.add(slot);
             }
@@ -223,7 +262,9 @@ public class SelectHourFragment extends Fragment{
 
                 while (!(startPoint == (endPoint - durationHours) && minutes ==  increment)){
 
-                    String slot = viewUtils.hourFormat(startPoint, minutes) ;
+                    String slotString = viewUtils.hourFormat(startPoint, minutes) ;
+
+                    Slot slot = new Slot(minutes, startPoint, increment, slotString);
 
                     slots.add(slot);
 
@@ -244,7 +285,9 @@ public class SelectHourFragment extends Fragment{
 
                 while (!(startPoint == (endPoint - durationHours - 1) && minutes ==  increment) ){
 
-                    String slot = viewUtils.hourFormat(startPoint, minutes);
+                    String slotString = viewUtils.hourFormat(startPoint, minutes);
+
+                    Slot slot = new Slot(minutes, startPoint, increment, slotString);
 
                     slots.add(slot);
 
@@ -256,9 +299,11 @@ public class SelectHourFragment extends Fragment{
 
                     minutes = time[1];
                 }
-                String slot = viewUtils.hourFormat(startPoint, (60 - durationMinutes));
+                String slotString = viewUtils.hourFormat(startPoint, (60 - durationMinutes));
 
-                slots.add(slot);
+                    Slot slot = new Slot(minutes, startPoint, increment, slotString);
+
+                    slots.add(slot);
 
                 }else {
 
@@ -295,6 +340,10 @@ public class SelectHourFragment extends Fragment{
         }
 
         return time;
+    }
+
+    private void removeAppointmentSlots(){
+
     }
 
 }

@@ -8,15 +8,16 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.amtechventures.tucita.R;
+import com.amtechventures.tucita.utils.strings.Slot;
 
 import java.util.List;
 
 public class SelectHourAdapter extends RecyclerView.Adapter<SelectHourAdapter.ViewHolder>{
 
-    private List<String> slots;
+    private List<Slot> slots;
     private int price;
 
-    public SelectHourAdapter(int price, List<String> slots){
+    public SelectHourAdapter(int price, List<Slot> slots){
 
         this.slots = slots;
 
@@ -38,7 +39,7 @@ public class SelectHourAdapter extends RecyclerView.Adapter<SelectHourAdapter.Vi
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        holder.textHour.setText(slots.get(position));
+        holder.textHour.setText(slots.get(position).getFormmatedHour());
 
         holder.textPricesFrom.setText(String.valueOf(price));
     }

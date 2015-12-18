@@ -148,8 +148,9 @@ public class VenuesResultFragment extends Fragment implements LocationCompletion
             locationContext.onStart();
 
         }else {
+            AlertDialogError alertDialogError = new AlertDialogError();
 
-            //muestre un error
+            alertDialogError.noLocationAlert(getContext());
 
         }
 
@@ -372,7 +373,7 @@ public class VenuesResultFragment extends Fragment implements LocationCompletion
 
             lastLocation = location;
 
-            setupListFromCategory();
+            setupListFromSubCategory();
 
         }
 
