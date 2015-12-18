@@ -24,6 +24,7 @@ import android.widget.TextView;
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.search.adapters.AdvancedSearchAdapter;
 import com.amtechventures.tucita.model.context.category.CategoryContext;
+import com.amtechventures.tucita.model.context.location.LocationCompletion;
 import com.amtechventures.tucita.model.context.location.LocationContext;
 import com.amtechventures.tucita.model.context.service.ServiceCompletion;
 import com.amtechventures.tucita.model.context.service.ServiceContext;
@@ -45,7 +46,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VenuesResultFragment extends Fragment implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
+public class VenuesResultFragment extends Fragment implements LocationCompletion.LocationErrorCompletion {
 
     private ProgressDialog progress;
     private RecyclerView.LayoutManager layoutManager;
@@ -64,6 +65,7 @@ public class VenuesResultFragment extends Fragment implements GoogleApiClient.On
     private CategoryContext categoryContext;
     private LinearLayout locationClick;
     private Button button;
+    private Location lastLocation;
 
     @Nullable
     @Override
@@ -79,7 +81,7 @@ public class VenuesResultFragment extends Fragment implements GoogleApiClient.On
 
         categoryContext = CategoryContext.context(categoryContext);
 
-        locationContext = LocationContext.context(locationContext, getContext(), this, this);
+        locationContext = LocationContext.context(locationContext, getContext(), this);
 
         name = getActivity().getIntent().getStringExtra(CategoryAttributes.name);
 
@@ -137,6 +139,23 @@ public class VenuesResultFragment extends Fragment implements GoogleApiClient.On
 
 
     @Override
+    public void onStart() {
+
+        super.onStart();
+
+        if (locationContext.checkPlayServices()) {
+
+            locationContext.onStart();
+
+        }else {
+
+            //muestre un error
+
+        }
+
+    }
+
+    @Override
     public void onPause() {
 
         super.onPause();
@@ -148,6 +167,14 @@ public class VenuesResultFragment extends Fragment implements GoogleApiClient.On
         venueContext.cancelQuery();
     }
 
+    @Override
+    public void onStop() {
+
+        super.onStop();
+
+        locationContext.onStop();
+
+    }
 
     private void setupPriceFrom(){
 
@@ -165,12 +192,12 @@ public class VenuesResultFragment extends Fragment implements GoogleApiClient.On
     private void setupCityVenues(List<Service> services, City city){
 
         venueContext.loadSubCategorizedCityVenues(services, city, new VenueCompletion.ErrorCompletion() {
-                @Override
+            @Override
             public void completion(List<Venue> venueList, AppError error) {
 
                 if (venueList != null) {
 
-                    if(venueList.isEmpty()){
+                    if (venueList.isEmpty()) {
 
                         noResults.setVisibility(View.VISIBLE);
                     }
@@ -192,8 +219,6 @@ public class VenuesResultFragment extends Fragment implements GoogleApiClient.On
     }
 
     private void setupNearVenues(List<Service> services) {
-
-        Location lastLocation = locationContext.getLastLocation();
 
         if (lastLocation != null) {
 
@@ -250,12 +275,13 @@ public class VenuesResultFragment extends Fragment implements GoogleApiClient.On
             @Override
             public void completion(List<Service> servicesList, AppError error) {
 
+                progress.dismiss();
+
                 if (servicesList != null) {
 
                     setupCityVenues(servicesList, city);
 
                 } else {
-                    progress.dismiss();
 
                     AlertDialogError alertDialogError = new AlertDialogError();
 
@@ -297,13 +323,13 @@ public class VenuesResultFragment extends Fragment implements GoogleApiClient.On
             @Override
             public void completion(List<Service> servicesList, AppError error) {
 
+                progress.dismiss();
+
                 if (servicesList != null) {
 
                     setupNearVenues(servicesList);
 
                 } else {
-
-                    progress.dismiss();
 
                     AlertDialogError alertDialogError = new AlertDialogError();
 
@@ -323,13 +349,13 @@ public class VenuesResultFragment extends Fragment implements GoogleApiClient.On
             @Override
             public void completion(List<Service> servicesList, AppError error) {
 
+                progress.dismiss();
+
                 if (servicesList != null) {
 
                     setupNearVenues(servicesList);
 
                 } else {
-
-                    progress.dismiss();
 
                     AlertDialogError alertDialogError = new AlertDialogError();
 
@@ -339,31 +365,17 @@ public class VenuesResultFragment extends Fragment implements GoogleApiClient.On
         });
     }
 
-    @Override
-    public void onConnected(Bundle bundle) {
 
-        locationContext.setLocation();
-/* future work
-        if(category){
+    public void locationCompletion(Location location, AppError error) {
+
+        if (location != null) {
+
+            lastLocation = location;
 
             setupListFromCategory();
-        }else {
 
-
-        }*/
-        setupListFromSubCategory();
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
+        }
 
     }
 
-    @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
-
-        AlertDialogError alertDialogError = new AlertDialogError();
-
-        alertDialogError.noLocationAlert(getContext());
-    }
 }
