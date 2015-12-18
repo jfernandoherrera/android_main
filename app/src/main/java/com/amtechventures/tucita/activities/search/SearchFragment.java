@@ -1,6 +1,7 @@
 package com.amtechventures.tucita.activities.search;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -39,7 +40,7 @@ public class SearchFragment extends Fragment {
     private List <Venue> venues = new ArrayList<>();
     private List<SubCategory> recentSubCategories = new ArrayList<>();
     private List <Venue> recentVenues = new ArrayList<>();
-
+    private Typeface roboto;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -49,7 +50,10 @@ public class SearchFragment extends Fragment {
 
         venueContext = VenueContext.context(venueContext);
 
-        searchAdapter = new SearchAdapter(venues,subCategories, getContext());
+
+        roboto = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Roboto-Light.ttf");
+
+        searchAdapter = new SearchAdapter(venues, subCategories, getContext(), roboto);
 
         searchAdapter.setOnItemClickListener(new SearchAdapter.OnItemClickListener() {
             @Override

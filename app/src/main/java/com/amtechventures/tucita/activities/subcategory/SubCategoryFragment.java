@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.search.advanced.AdvancedSearchActivity;
+import com.amtechventures.tucita.activities.subcategory.adapters.SubCategoryAdapter;
 import com.amtechventures.tucita.model.context.category.CategoryContext;
 import com.amtechventures.tucita.model.context.subcategory.SubCategoryContext;
 import com.amtechventures.tucita.model.context.subcategory.SubCategoryCompletion;
@@ -34,11 +36,12 @@ public class SubCategoryFragment extends DialogFragment {
     private Category category;
     private List <SubCategory> subCategories = new ArrayList<>();
     private ListView listView;
-    private ArrayAdapter<String> adapter;
+    private SubCategoryAdapter adapter;
     private CategoryContext categoryContext;
     private String name;
     private OnOthersClicked listener;
     private ProgressDialog progress;
+    private Typeface roboto;
 
     public interface OnOthersClicked{
 
@@ -50,7 +53,9 @@ public class SubCategoryFragment extends DialogFragment {
 
         super.onAttach(activity);
 
-    listener = (OnOthersClicked) activity;
+        listener = (OnOthersClicked) activity;
+
+        roboto = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Roboto-Light.ttf");
     }
 
     @Override
@@ -70,15 +75,15 @@ public class SubCategoryFragment extends DialogFragment {
 
     public static SubCategoryFragment newInstance(String name) {
 
-        SubCategoryFragment f = new SubCategoryFragment();
+        SubCategoryFragment fragment = new SubCategoryFragment();
 
         Bundle args = new Bundle();
 
         args.putString(CategoryAttributes.name, name);
 
-        f.setArguments(args);
+        fragment.setArguments(args);
 
-        return f;
+        return fragment;
     }
 
     @Override
@@ -188,7 +193,7 @@ public class SubCategoryFragment extends DialogFragment {
 
             subCategories.addAll(subCategoriesList);
         }
-        adapter = new ArrayAdapter<>(getContext(), R.layout.list_item, setStringsArray());
+        adapter = new SubCategoryAdapter(getContext(), R.layout.item_sub_category, setStringsArray(), roboto);
 
         listView.setAdapter(adapter);
     }

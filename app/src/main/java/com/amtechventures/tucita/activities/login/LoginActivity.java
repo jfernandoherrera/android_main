@@ -21,7 +21,6 @@ import com.amtechventures.tucita.model.domain.user.User;
 import com.amtechventures.tucita.model.context.user.UserContext;
 import com.amtechventures.tucita.activities.signup.SignUpActivity;
 import com.amtechventures.tucita.model.context.user.UserCompletion;
-import com.amtechventures.tucita.activities.category.CategoryFragment;
 
 public class LoginActivity extends AppCompatActivity {
 

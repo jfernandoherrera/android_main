@@ -16,7 +16,7 @@ import com.amtechventures.tucita.model.error.AppError;
 import com.amtechventures.tucita.model.domain.user.User;
 import com.amtechventures.tucita.model.context.user.UserContext;
 import com.amtechventures.tucita.model.context.user.UserCompletion;
-import com.amtechventures.tucita.activities.category.CategoryFragment;
+import com.amtechventures.tucita.activities.main.category.CategoryFragment;
 
 public class SignUpActivity extends AppCompatActivity {
 

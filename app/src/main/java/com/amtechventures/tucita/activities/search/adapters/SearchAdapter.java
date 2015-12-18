@@ -2,6 +2,7 @@ package com.amtechventures.tucita.activities.search.adapters;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -23,6 +24,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private final int typeVenue = 1;
     public static final int typeSection = 2;
     private Context context;
+    protected Typeface roboto;
 
     public interface OnItemClickListener {
 
@@ -34,7 +36,9 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         this.mItemClickListener = mItemClickListener;
     }
 
-    public SearchAdapter(List <Venue> venues,List<SubCategory> subCategories, Context context){
+    public SearchAdapter(List <Venue> venues,List<SubCategory> subCategories, Context context, Typeface typeface){
+
+        roboto = typeface;
 
         this.venues = venues;
 
@@ -164,6 +168,8 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             super(itemView);
 
             name = (TextView) itemView.findViewById(R.id.text);
+
+            name.setTypeface(roboto, Typeface.BOLD);
         }
     }
 
@@ -181,6 +187,9 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
             location = (TextView) itemView.findViewById(R.id.textLocation);
 
+            name.setTypeface(roboto, Typeface.BOLD);
+
+            location.setTypeface(roboto, Typeface.BOLD);
 
             itemView.setOnTouchListener(new View.OnTouchListener() {
                 @Override
@@ -219,7 +228,9 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
             super(itemView);
 
-            name = (TextView) itemView.findViewById(R.id.textlist);
+            name = (TextView) itemView.findViewById(R.id.textList);
+
+            name.setTypeface(roboto, Typeface.BOLD);
 
             itemView.setOnTouchListener(new View.OnTouchListener() {
                 @Override

@@ -3,22 +3,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
     tools:context="com.amtechventures.tucita.activities.subcategory.SubCategoryFragment">
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:id="@+id/image_service"
-        android:layout_alignParentLeft="true" />
-
+        android:layout_height="160dp"
+        android:src="@drawable/cantador"
+        android:id="@+id/image_service" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_below="@+id/image_service"
+        android:layout_marginTop="@dimen/high_margin"
+        android:layout_marginStart="@dimen/high_margin"
+        android:layout_marginLeft="@dimen/high_margin"
+        android:layout_height="wrap_content">
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/listViewservices"
-        android:layout_below="@+id/image_service"
         android:divider="@android:color/transparent"
         style="@style/AppTheme.subTitle"
    />
+    </RelativeLayout>
 </RelativeLayout>

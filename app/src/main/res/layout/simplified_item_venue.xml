@@ -7,12 +7,16 @@
     android:layout_width="match_parent"
     android:id="@+id/textName"
     android:gravity="bottom"
-    android:layout_height="72dp"
+    android:layout_marginLeft="@dimen/high_margin"
+    android:layout_marginStart="@dimen/high_margin"
+    android:layout_height="50dp"
     style="@style/AppTheme.Title"/>
-    <TextView
-    android:layout_width="match_parent"
+        <TextView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-    android:id="@+id/textLocation"
-    android:layout_below="@+id/textName"
-    style="@style/AppTheme.text"/>
-    </RelativeLayout>
+        android:layout_marginLeft="@dimen/high_margin"
+        android:layout_marginStart="@dimen/high_margin"
+        android:id="@+id/textLocation"
+        android:layout_below="@+id/textName"
+        style="@style/AppTheme.text"/>
+        </RelativeLayout>

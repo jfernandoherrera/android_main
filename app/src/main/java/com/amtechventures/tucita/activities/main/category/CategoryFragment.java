@@ -1,4 +1,4 @@
-package com.amtechventures.tucita.activities.category;
+package com.amtechventures.tucita.activities.main.category;
 
 import java.util.List;
 
@@ -11,9 +11,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
-import android.text.style.TextAppearanceSpan;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -22,22 +20,21 @@ import java.util.ArrayList;
 import android.view.ViewGroup;
 
 import com.amtechventures.tucita.R;
-import android.support.v7.app.AlertDialog;
+
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.GridLayoutManager;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ProgressBar;
 
 import com.amtechventures.tucita.model.domain.user.UserAttributes;
 import com.amtechventures.tucita.model.error.AppError;
 import com.amtechventures.tucita.model.domain.category.Category;
 import com.amtechventures.tucita.model.context.category.CategoryContext;
 import com.amtechventures.tucita.model.context.category.CategoryCompletion;
-import com.amtechventures.tucita.activities.category.adapters.CategoryGridAdapter;
+import com.amtechventures.tucita.activities.main.category.adapters.CategoryGridAdapter;
 import com.amtechventures.tucita.utils.views.AlertDialogError;
+import com.amtechventures.tucita.utils.views.CustomSpanTypeface;
 
 public class CategoryFragment extends Fragment {
 
@@ -49,7 +46,7 @@ public class CategoryFragment extends Fragment {
     private List<Category> categories = new ArrayList<>();
     private ProgressDialog progress;
     OnItemClicked listener;
-
+    Typeface roboto;
     public interface OnItemClicked{
         void onItemClicked(String name);
     }
@@ -60,6 +57,8 @@ public class CategoryFragment extends Fragment {
         super.onAttach(context);
 
         listener =  (OnItemClicked) context;
+
+        roboto = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Roboto-Light.ttf");
     }
 
     @Override
@@ -100,7 +99,7 @@ public class CategoryFragment extends Fragment {
 
         wm.getDefaultDisplay().getMetrics(metrics);
 
-        final int initialSize = 15;
+        final int initialSize = 18;
 
         int size = (int)(initialSize * metrics.scaledDensity);
 
@@ -112,14 +111,14 @@ public class CategoryFragment extends Fragment {
 
         SpannableStringBuilder stringBuilder = new SpannableStringBuilder(firstString +" "+ secondString +" "+ thirdString);
 
-        stringBuilder.setSpan(new TextAppearanceSpan(Typeface.SANS_SERIF.toString(), Typeface.NORMAL, size, null, null), 0, firstString.length(),
+        stringBuilder.setSpan(new CustomSpanTypeface(null, Typeface.BOLD, size, null, null, roboto), 0, firstString.length(),
                 Spannable.SPAN_INCLUSIVE_INCLUSIVE);
 
-        stringBuilder.setSpan(new TextAppearanceSpan(Typeface.SANS_SERIF.toString(), Typeface.NORMAL, size, ColorStateList.valueOf(Color.rgb(238, 238, 238)), null), firstString.length() + 1,
+        stringBuilder.setSpan(new CustomSpanTypeface(null, Typeface.BOLD, size, ColorStateList.valueOf(Color.rgb(223, 223, 223)), null, roboto), firstString.length() + 1,
 
                 firstString.length() + secondString.length() + 1, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
 
-        stringBuilder.setSpan(new TextAppearanceSpan(Typeface.SANS_SERIF.toString(), Typeface.NORMAL, size, null, null), firstString.length() + secondString.length() + 2,
+        stringBuilder.setSpan(new CustomSpanTypeface(null, Typeface.BOLD, size, null, null, roboto), firstString.length() + secondString.length() + 2,
 
                 firstString.length() + secondString.length() + thirdString.length() + 2,
 
@@ -206,7 +205,7 @@ public class CategoryFragment extends Fragment {
 
             setupProgress();
         }
-        adapter = new CategoryGridAdapter(categories, categoryContext, (OnItemClicked) getActivity());
+        adapter = new CategoryGridAdapter(categories, categoryContext, roboto, (OnItemClicked) getActivity());
 
         recyclerView.setAdapter(adapter);
     }

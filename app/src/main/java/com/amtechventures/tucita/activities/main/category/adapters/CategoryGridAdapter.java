@@ -1,6 +1,8 @@
-package com.amtechventures.tucita.activities.category.adapters;
+package com.amtechventures.tucita.activities.main.category.adapters;
 
 import java.util.List;
+
+import android.graphics.Typeface;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +12,7 @@ import android.widget.TextView;
 import android.view.LayoutInflater;
 import com.amtechventures.tucita.R;
 import android.support.v7.widget.RecyclerView;
-import com.amtechventures.tucita.activities.category.CategoryFragment;
+import com.amtechventures.tucita.activities.main.category.CategoryFragment;
 import com.amtechventures.tucita.model.context.category.CategoryContext;
 import com.amtechventures.tucita.model.domain.category.Category;
 import com.mikhaellopez.circularimageview.CircularImageView;
@@ -19,14 +21,15 @@ import com.mikhaellopez.circularimageview.CircularImageView;
 public class CategoryGridAdapter extends RecyclerView.Adapter<CategoryGridAdapter.ViewHolder> {
 
     List<Category> items;
-
     CategoryFragment.OnItemClicked onItemClickListener;
-
+    Typeface typeface;
     CategoryContext categoryContext;
 
-    public CategoryGridAdapter(List<Category> offer, CategoryContext categoryContext, CategoryFragment.OnItemClicked onItemClickListener) {
+    public CategoryGridAdapter(List<Category> offer, CategoryContext categoryContext, Typeface typeface, CategoryFragment.OnItemClicked onItemClickListener) {
 
         super();
+
+        this.typeface = typeface;
 
         this.categoryContext = categoryContext;
 
@@ -77,6 +80,8 @@ public class CategoryGridAdapter extends RecyclerView.Adapter<CategoryGridAdapte
             super(itemView);
 
             category = (TextView)itemView.findViewById(R.id.textCategory);
+
+            category.setTypeface(typeface, Typeface.BOLD);
 
             categoryIcon = (CircularImageView)itemView.findViewById(R.id.imageButtonCategory);
 

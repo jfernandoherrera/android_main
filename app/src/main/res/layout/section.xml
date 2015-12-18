@@ -2,6 +2,8 @@
 <TextView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
+    android:layout_height="50dp"
+    android:layout_marginLeft="@dimen/high_margin"
+    android:layout_marginStart="@dimen/high_margin"
     android:id="@+id/text"
     style="@style/AppTheme.TitleLight"/>
