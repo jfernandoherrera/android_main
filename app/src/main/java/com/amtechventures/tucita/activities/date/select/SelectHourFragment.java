@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,7 @@ public class SelectHourFragment extends Fragment{
 
     Date date;
     OpeningHourContext context;
+    int test = 0;
     Venue venue;
     private SelectHourAdapter adapter;
     private RecyclerView recyclerView;
@@ -42,6 +44,8 @@ public class SelectHourFragment extends Fragment{
     int price = 0;
     boolean isFirst = false;
     AppointmentContext appointmentContext;
+    int increment = 30;
+    boolean finishSlots = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -80,7 +84,9 @@ public class SelectHourFragment extends Fragment{
 
         Calendar calendar = new GregorianCalendar(timezone);
 
-        calendar.set(date.getYear(), date.getMonth(), date.getDate());
+        int issueDate = 1900 + date.getYear();
+
+        calendar.set(issueDate, date.getMonth(), date.getDate());
 
         int day = calendar.get(Calendar.DAY_OF_WEEK);
 
@@ -146,97 +152,153 @@ public class SelectHourFragment extends Fragment{
 
             setupSlots(openingHoursDay);
         }
-        appointmentContext.loadAppointmentsDateVenue(venue, date, new AppointmentCompletion.AppointmentErrorCompletion() {
-            @Override
-            public void completion(List<Appointment> appointmentList, AppError error) {
-
-                if(appointmentList == null || appointmentList.isEmpty()){
-
-                }else {
-
-                    for(Appointment appointment : appointmentList){
-
-                        Date fragmentDay = appointment.getDate();
-
-                        int startHour = fragmentDay.getHours();
-
-                        int startMinute = fragmentDay.getMinutes();
-
-                        int duration = appointment.getDuration();
-
-                        for(Slot slot : slots){
-
-                            if(slot.getStartHour() >= startHour && slot.getStartMinute() >= startMinute){
-
-
-                            }
-
-                        }
-                    }
-                }
-            }
-        });
     }
 
     private void setupSlots(List<OpeningHour> openingHours){
 
-        for (OpeningHour openingHour : openingHours){
+    for (OpeningHour openingHour : openingHours) {
 
-          int startPoint =  openingHour.getStartHour();
+        int startPoint = openingHour.getStartHour();
 
-          int endPoint = openingHour.getEndHour();
+        int endPoint = openingHour.getEndHour();
 
-          int minutes = openingHour.getStartMinute();
+        int minutes = openingHour.getStartMinute();
 
-            int increment = 30;
+        final int increment = 30;
 
-            ViewUtils viewUtils = new ViewUtils(getContext());
+        ViewUtils viewUtils = new ViewUtils(getContext());
 
-            if(durationMinutes == 0) {
+        if (durationMinutes == 0) {
 
-                while (!(startPoint == (endPoint - durationHours) && minutes ==  increment)){
+            while (!(startPoint == (endPoint - durationHours) && minutes == increment)) {
 
-                    String slotString = viewUtils.hourFormat(startPoint, minutes) ;
-
-                    Slot slot = new Slot(minutes, startPoint, increment, slotString);
-
-                    slots.add(slot);
-
-                    minutes += increment;
-
-                    int[] time = sixtyMinutes(startPoint, minutes);
-
-                    startPoint = time[0];
-
-                    minutes = time[1];
-                }
-            }else{
-
-                while (!(startPoint == (endPoint - durationHours - 1) && minutes ==  increment) ){
-
-                    String slotString  = viewUtils.hourFormat(startPoint, minutes);
-
-                    Slot slot = new Slot(minutes, startPoint, increment, slotString);
-
-                    slots.add(slot);
-
-                    minutes += increment;
-
-                    int[] time = sixtyMinutes(startPoint, minutes);
-
-                    startPoint = time[0];
-
-                    minutes = time[1];
-                }
-                String slotString  = viewUtils.hourFormat(startPoint, (60 - durationMinutes));
+                String slotString = viewUtils.hourFormat(startPoint, minutes);
 
                 Slot slot = new Slot(minutes, startPoint, increment, slotString);
 
                 slots.add(slot);
+
+                minutes += increment;
+
+                int[] time = sixtyMinutes(startPoint, minutes);
+
+                startPoint = time[0];
+
+                minutes = time[1];
             }
+        } else {
+
+            while (!(startPoint == (endPoint - durationHours - 1) && minutes == increment)) {
+
+                String slotString = viewUtils.hourFormat(startPoint, minutes);
+
+                Slot slot = new Slot(minutes, startPoint, increment, slotString);
+
+                slots.add(slot);
+
+                minutes += increment;
+
+                int[] time = sixtyMinutes(startPoint, minutes);
+
+                startPoint = time[0];
+
+                minutes = time[1];
+            }
+            String slotString = viewUtils.hourFormat(startPoint, (60 - durationMinutes));
+
+            Slot slot = new Slot(minutes, startPoint, increment, slotString);
+
+            slots.add(slot);
 
         }
-        adapter.notifyDataSetChanged();
+    }
+        fromAppointment();
+}
+
+    private void fromAppointment(){
+        Log.i("veenue", String.valueOf(test));
+        test++;
+        appointmentContext.loadAppointmentsDateVenue(venue, date, new AppointmentCompletion.AppointmentErrorCompletion() {
+            @Override
+            public void completion(List<Appointment> appointmentList, AppError error) {
+
+                if (appointmentList == null || appointmentList.isEmpty()) {
+
+                } else {
+
+                    for (Appointment appointment : appointmentList) {
+
+                        TimeZone timezone = TimeZone.getDefault();
+
+                        Calendar calendar = new GregorianCalendar(timezone);
+
+                        Date appointmentDate = appointment.getDate();
+
+                        Log.i("apdate", String.valueOf(appointmentDate.getHours()));
+
+                        int startHour = appointmentDate.getHours();
+
+                        int startMinute = appointmentDate.getMinutes();
+
+                        Log.i(String.valueOf(startHour), String.valueOf(startMinute));
+
+                        int [] duration = appointment.getDuration();
+
+                        boolean isEqualHour;
+
+                        boolean slotMinutesSmallerOrEqualThanAppointmentMinutes;
+
+                        boolean slotMinutesPlusIncrementGreaterThanAppointmentMinutes;
+
+                        boolean slotMinutesSmallerThanAppointmentMinutesPlusDuration;
+
+                        boolean slotMinutesPlusIncrementGreaterThanAppointmentMinutesPlusDuration;
+
+                        List<Slot> toRemove = new ArrayList<>();
+
+                        for (Slot slot : slots) {
+
+                            isEqualHour = slot.getStartHour() == startHour;
+
+                            slotMinutesSmallerOrEqualThanAppointmentMinutes = slot.getStartMinute() <= startMinute;
+
+                            slotMinutesPlusIncrementGreaterThanAppointmentMinutes = slot.getStartMinute() + increment > startMinute;
+
+                            if(duration[0] == 0) {
+
+                                slotMinutesSmallerThanAppointmentMinutesPlusDuration = slot.getStartMinute() < startMinute + duration[1];
+
+                                slotMinutesPlusIncrementGreaterThanAppointmentMinutesPlusDuration = slot.getStartMinute() + increment >= startMinute + duration[1];
+
+                                if (isEqualHour && ((slotMinutesSmallerOrEqualThanAppointmentMinutes && slotMinutesPlusIncrementGreaterThanAppointmentMinutes) || (slotMinutesSmallerThanAppointmentMinutesPlusDuration && slotMinutesPlusIncrementGreaterThanAppointmentMinutesPlusDuration))) {
+
+                                    toRemove.add(slot);
+                                }
+                            }else{
+
+                                boolean isEqualHourPlusDuration = (startHour + duration[0]) == slot.getStartHour();
+
+                                boolean isThere = slotMinutesSmallerOrEqualThanAppointmentMinutes && slotMinutesPlusIncrementGreaterThanAppointmentMinutes;
+
+                                boolean isGreater = (slot.getStartHour() > startHour ) || (slot.getStartHour() == startHour)&& (slot.getStartMinute() > startMinute);
+
+                                boolean isSmallerThanAppointmentPlusDuration = ((slot.getStartHour() < (appointment.getDateEnd().getHours())) && slot.getStartHour() > startHour) || (slot.getEndHour() == appointment.getDateEnd().getHours() && slot.getEndMinute() < appointment.getDateEnd().getMinutes());
+
+                                boolean contained = isGreater && isSmallerThanAppointmentPlusDuration;
+
+                                if((isEqualHour && isThere) || (isEqualHourPlusDuration && isThere ) || contained){
+
+                                    toRemove.add(slot);
+                                }
+                            }
+                        }
+                        slots.removeAll(toRemove);
+
+                        adapter.notifyDataSetChanged();
+                    }
+                }
+            }
+        });
     }
 
 

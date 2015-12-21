@@ -113,54 +113,51 @@ public class PagerSelectHourAdapter extends FragmentStatePagerAdapter {
 
     public Date getFragmentDay(int position){
 
-       Date date = new Date();
+        TimeZone timezone = TimeZone.getDefault();
+
+        Calendar calendar = new GregorianCalendar(timezone);
 
          position += currentDay;
 
-        if(position <= getLastDayOfMonth(0)){
+        if(position < getLastDayOfMonth(0)){
 
-            date.setYear(calendar.get(Calendar.YEAR));
-
-            date.setMonth(calendar.get(Calendar.MONTH));
-
-            date.setDate(position);
+            calendar.set(Calendar.DAY_OF_MONTH, position);
 
         }else if(position <= (getLastDayOfMonth(0) + getLastDayOfMonth(1))){
 
-            date.setYear(calendarOneMonthMore.get(Calendar.YEAR));
+            calendar.set(Calendar.YEAR, calendarOneMonthMore.get(Calendar.YEAR));
 
-            date.setMonth(calendarOneMonthMore.get(Calendar.MONTH));
+            calendar.set(Calendar.MONTH, calendarOneMonthMore.get(Calendar.MONTH));
 
-            date.setDate(position - getLastDayOfMonth(0));
+            calendar.set(Calendar.DAY_OF_MONTH, position - getLastDayOfMonth(0));
 
         }else{
-            date.setYear(calendarTwoMonthMore.get(Calendar.YEAR));
+            calendar.set(Calendar.YEAR, calendarTwoMonthMore.get(Calendar.YEAR));
 
-            date.setMonth(calendarTwoMonthMore.get(Calendar.MONTH));
+            calendar.set(Calendar.MONTH, calendarTwoMonthMore.get(Calendar.MONTH));
 
-            date.setDate(position - (getLastDayOfMonth(0) + getLastDayOfMonth(1)));
-
+            calendar.set(Calendar.DAY_OF_MONTH, position - (getLastDayOfMonth(0) + getLastDayOfMonth(1)));
         }
-        return date;
+
+        calendar.set(Calendar.HOUR_OF_DAY, 1);
+
+        calendar.set(Calendar.MINUTE,1);
+
+        return calendar.getTime();
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
 
         String title;
-        TimeZone timezone = TimeZone.getDefault();
-
-        Calendar calendar = new GregorianCalendar(timezone);
 
         Date date = getFragmentDay(position);
-
-        calendar.set(date.getYear(), date. getMonth(), date.getDate());
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("EEE");
 
         dateFormat.setTimeZone(calendar.getTimeZone());
 
-        title = dateFormat.format(calendar.getTime()) + "\n" + String.valueOf(date.getDate());
+        title = dateFormat.format(date) + "\n" + String.valueOf(date.getDate());
 
         return title;
     }

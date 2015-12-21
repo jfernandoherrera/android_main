@@ -1,6 +1,8 @@
 package com.amtechventures.tucita.model.context.appointment;
 
 
+import android.util.Log;
+
 import com.amtechventures.tucita.model.domain.appointment.Appointment;
 import com.amtechventures.tucita.model.domain.appointment.AppointmentAttributes;
 import com.amtechventures.tucita.model.domain.venue.Venue;
@@ -11,9 +13,14 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.TimeZone;
 
 public class AppointmentRemote {
+
+    final int issueDate = 1900;
+
 
     ParseQuery<Appointment> query;
 
@@ -36,21 +43,27 @@ public class AppointmentRemote {
 
         query.whereGreaterThan(AppointmentAttributes.date, date);
 
-        Calendar calendar = Calendar.getInstance();
+        TimeZone timezone = TimeZone.getDefault();
 
-        calendar.set(date.getYear(), date.getMonth(), date.getDay());
+        Calendar calendar = new GregorianCalendar(timezone);
 
-        calendar.add(Calendar.DATE, 1);
+        calendar.set(date.getYear() + issueDate, date.getMonth(), date.getDate(), 1, 1);
+
+        calendar.add(Calendar.DAY_OF_MONTH, 1);
 
         Date oneMoreDay = calendar.getTime();
 
+        Log.i("onemore", date.toString() + oneMoreDay.toString());
         query.whereLessThan(AppointmentAttributes.date, oneMoreDay);
 
-        query.whereEqualTo(AppointmentAttributes.venue, venue);
+
+        //query.whereEqualTo(AppointmentAttributes.venue, venue.getObjectId());
 
         query.findInBackground(new FindCallback<Appointment>() {
             @Override
             public void done(List<Appointment> objects, ParseException e) {
+
+                Log.i("derss", String.valueOf(objects.size()));
 
                 AppError appError = e != null ? new AppError(Appointment.class.toString(), 0, null) : null;
 

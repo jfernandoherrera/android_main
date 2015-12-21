@@ -15,11 +15,29 @@ public class Slot {
         this.formmatedHour = formmatedHour;
     }
 
-    public int getIncrement() {
+    public int getEndHour() {
 
-        return increment;
+        int endHour = startHour;
+
+        if(startMinute + increment >= 60){
+
+            endHour ++;
+        }
+        return endHour;
     }
 
+    public int getEndMinute(){
+
+        int minute = startMinute;
+
+        int incremented = startMinute + increment;
+
+        if(incremented >= 60){
+
+            minute = incremented - 60;
+        }
+        return minute;
+    }
     public int getStartMinute() {
 
         return startMinute;
