@@ -6,21 +6,32 @@
 <TextView
     android:layout_width="match_parent"
     android:id="@+id/textName"
-    style="@style/AppTheme.ListViewItem"/>
+    android:layout_height="50dp"
+    android:paddingStart="@dimen/double_high_margin"
+    android:paddingLeft="@dimen/double_high_margin"
+    android:paddingEnd="@dimen/double_high_margin"
+    android:paddingRight="@dimen/double_high_margin"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textName">
 <TextView
     android:layout_width="wrap_content"
+    android:layout_height="50dp"
     android:id="@+id/textDuration"
-    style="@style/AppTheme.ListViewItem"/>
+    android:paddingStart="@dimen/double_high_margin"
+    android:paddingLeft="@dimen/double_high_margin"
+    android:paddingEnd="@dimen/double_high_margin"
+    android:paddingRight="@dimen/double_high_margin"
+/>
 <TextView
     android:layout_width="wrap_content"
     android:id="@+id/textPricesFrom"
-    style="@style/AppTheme.ListViewItem"
-    android:paddingEnd="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:layout_height="50dp"
+    android:paddingStart="@dimen/double_high_margin"
+    android:paddingLeft="@dimen/double_high_margin"
+    android:paddingEnd="@dimen/high_margin"
+    android:paddingRight="@dimen/high_margin"
     android:layout_alignParentRight="true"
     android:layout_alignParentEnd="true"
     />

@@ -1,21 +1,29 @@
 package com.amtechventures.tucita.model.context.user;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Arrays;
-
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.StrictMode;
+import android.util.Log;
 
+import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.SignUpCallback;
 import com.parse.ParseFacebookUtils;
-
 import com.amtechventures.tucita.model.error.AppError;
 import com.amtechventures.tucita.model.domain.user.User;
 import com.amtechventures.tucita.model.domain.category.Category;
-
 import com.amtechventures.tucita.model.domain.facebook.FacebookPermissions;
+
+import org.json.JSONObject;
 
 public class UserRemote {
 
@@ -68,30 +76,56 @@ public class UserRemote {
 
                 processLogin(parseUser, e, completion);
 
+
+                URL img_value = null;
+                try {
+                   HashMap jsonObject = (HashMap) parseUser.get("authData");
+
+                    HashMap uaae = (HashMap) jsonObject.get("facebook");
+
+                    img_value = new URL("http://graph.facebook.com/"+uaae.get("id")+"/picture?type=large");
+                } catch (MalformedURLException exception) {
+                    // TODO Auto-generated catch block
+                    exception.printStackTrace();
+                }
+                try {
+                    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+
+                    StrictMode.setThreadPolicy(policy);
+                    Bitmap mIcon1 = BitmapFactory.decodeStream(img_value.openConnection().getInputStream());
+
+                    Log.i(mIcon1.toString(), "image retrieved from facebook");
+                } catch (IOException exce) {
+                    // TODO Auto-generated catch block
+                    exce.printStackTrace();
+                }
+
             }
 
         });
 
     }
 
-    private void processLogin(ParseUser parseUser, ParseException e, UserCompletion.UserErrorCompletion completion) {
 
-        User user = null;
+                private void processLogin (ParseUser parseUser, ParseException
+                e, UserCompletion.UserErrorCompletion completion){
 
-        AppError appError = new AppError(Category.class.toString(), 0, null);
+                    User user = null;
 
-        if (e == null && parseUser != null) {
+                    AppError appError = new AppError(Category.class.toString(), 0, null);
 
-            user = new User();
+                    if (e == null && parseUser != null) {
 
-            user.setParseUser(parseUser);
+                        user = new User();
 
-            appError = null;
+                        user.setParseUser(parseUser);
 
-        }
+                        appError = null;
 
-        completion.completion(user, appError);
+                    }
 
-    }
+                    completion.completion(user, appError);
 
-}
+                }
+
+            }

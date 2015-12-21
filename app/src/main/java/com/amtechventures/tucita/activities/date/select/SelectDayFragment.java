@@ -1,5 +1,6 @@
 package com.amtechventures.tucita.activities.date.select;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.date.select.adapters.PagerSelectHourAdapter;
+import com.amtechventures.tucita.activities.date.select.adapters.SelectHourAdapter;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 import java.util.Calendar;
 import java.util.Date;
@@ -22,6 +24,24 @@ public class SelectDayFragment extends Fragment{
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private PagerSelectHourAdapter adapter;
+    SelectHourAdapter.OnSlotSelected listener;
+
+    @Override
+    public void onAttach(Context context) {
+
+        super.onAttach(context);
+
+        listener = (SelectHourAdapter.OnSlotSelected) context;
+
+    }
+
+    @Override
+    public void onDetach() {
+
+        super.onDetach();
+
+        listener = null;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -32,7 +52,7 @@ public class SelectDayFragment extends Fragment{
 
         viewPager = (ViewPager) rootView.findViewById(R.id.container);
 
-        adapter = new PagerSelectHourAdapter(getChildFragmentManager());
+        adapter = new PagerSelectHourAdapter(getChildFragmentManager(), listener);
 
         viewPager.setAdapter(adapter);
 

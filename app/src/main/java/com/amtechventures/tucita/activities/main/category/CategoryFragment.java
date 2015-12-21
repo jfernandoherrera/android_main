@@ -131,7 +131,6 @@ public class CategoryFragment extends Fragment {
 
         boolean connected = getActivity().getIntent().getExtras().getBoolean(UserAttributes.connected);
 
-
         final Button buttonText = (Button) view.findViewById(R.id.go_to_login);
 
         if (connected){

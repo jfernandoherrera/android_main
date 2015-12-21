@@ -85,9 +85,10 @@ public class OpeningHourView extends LinearLayout {
 
         requestLayout();
     }
+
     public void setClosed(String closed){
 
-        this.closed = closed;
+        this.closed = " " + closed;
 
         this.hours.setText(" " + closed);
 

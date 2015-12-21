@@ -27,10 +27,13 @@ public class PagerSelectHourAdapter extends FragmentStatePagerAdapter {
     private Venue venue;
     int durationHours;
     int durationMinutes;
+    SelectHourAdapter.OnSlotSelected listener;
 
-    public PagerSelectHourAdapter(FragmentManager fm) {
+    public PagerSelectHourAdapter(FragmentManager fm, SelectHourAdapter.OnSlotSelected listener) {
 
         super(fm);
+
+        this.listener = listener;
 
         calendarOneMonthMore.add(Calendar.MONTH, 1);
 
@@ -83,12 +86,12 @@ public class PagerSelectHourAdapter extends FragmentStatePagerAdapter {
         return lastDay;
     }
 
-
-
     @Override
     public Fragment getItem(int position) {
 
             SelectHourFragment selectHourFragment = new SelectHourFragment();
+
+            selectHourFragment.setListener(listener);
 
             selectHourFragment.setDate(getFragmentDay(position));
 

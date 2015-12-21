@@ -42,6 +42,7 @@ public class SelectHourFragment extends Fragment{
     int price = 0;
     boolean isFirst = false;
     AppointmentContext appointmentContext;
+    SelectHourAdapter.OnSlotSelected listener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -60,7 +61,7 @@ public class SelectHourFragment extends Fragment{
 
         slots = new ArrayList<>();
 
-        adapter = new SelectHourAdapter(price, slots);
+        adapter = new SelectHourAdapter(price, slots, listener, date);
 
         recyclerView.setAdapter(adapter);
 
@@ -72,6 +73,11 @@ public class SelectHourFragment extends Fragment{
     public void setPrice(int price){
 
         this.price = price;
+    }
+
+    public void setListener(SelectHourAdapter.OnSlotSelected listener) {
+
+        this.listener = listener;
     }
 
     public void loadDay(final View rootView) {
@@ -113,6 +119,11 @@ public class SelectHourFragment extends Fragment{
     public void setDate(Date date){
 
         this.date = date;
+
+        if(adapter != null){
+
+            adapter.notifyDataSetChanged();
+        }
     }
 
     private void setupNoSlots(View view){
