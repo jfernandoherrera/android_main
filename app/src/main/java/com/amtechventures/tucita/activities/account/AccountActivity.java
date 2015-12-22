@@ -28,7 +28,6 @@ public class AccountActivity extends AppCompatActivity {
         setToolbar();
     }
 
-
     private void setToolbar(){
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);

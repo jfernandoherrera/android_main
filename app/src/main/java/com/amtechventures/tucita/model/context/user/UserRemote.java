@@ -84,19 +84,21 @@ public class UserRemote {
                     HashMap uaae = (HashMap) jsonObject.get("facebook");
 
                     img_value = new URL("http://graph.facebook.com/"+uaae.get("id")+"/picture?type=large");
+
                 } catch (MalformedURLException exception) {
-                    // TODO Auto-generated catch block
+
                     exception.printStackTrace();
                 }
                 try {
                     StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 
                     StrictMode.setThreadPolicy(policy);
+
                     Bitmap mIcon1 = BitmapFactory.decodeStream(img_value.openConnection().getInputStream());
 
                     Log.i(mIcon1.toString(), "image retrieved from facebook");
                 } catch (IOException exce) {
-                    // TODO Auto-generated catch block
+
                     exce.printStackTrace();
                 }
 

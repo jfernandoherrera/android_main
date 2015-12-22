@@ -278,7 +278,7 @@ public class SelectHourFragment extends Fragment{
             index--;
 
             int needed = slotsForDuration();
-            
+
             while (index >= 0 && needed != 0) {
 
                 int indexInt = index;

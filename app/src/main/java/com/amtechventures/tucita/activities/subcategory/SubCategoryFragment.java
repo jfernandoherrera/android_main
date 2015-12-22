@@ -209,6 +209,8 @@ public class SubCategoryFragment extends DialogFragment {
         startActivity(intent);
 
         subCategoryContext.cancelQuery();
+
+        dismiss();
     }
 
     public void cancelQuery() {
