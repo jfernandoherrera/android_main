@@ -227,6 +227,8 @@ public class SelectHourFragment extends Fragment{
 
                     List<Slot> toRemove = new ArrayList<>();
 
+                    ArrayList<Integer> indexFirst = new ArrayList<>();
+
                     for (Appointment appointment : appointmentList) {
 
                         Date appointmentDate = appointment.getDate();
@@ -235,9 +237,9 @@ public class SelectHourFragment extends Fragment{
 
                         int startMinute = appointmentDate.getMinutes();
 
-                        int [] duration = appointment.getDuration();
+                        int[] duration = appointment.getDuration();
 
-                        int [] endTime = sixtyMinutes(startHour + duration[0], startMinute + duration[1]);
+                        int[] endTime = sixtyMinutes(startHour + duration[0], startMinute + duration[1]);
 
                         for (Slot slot : slots) {
 
@@ -247,22 +249,73 @@ public class SelectHourFragment extends Fragment{
 
                             boolean isLast = slot.isSmaller(endTime[0], endTime[1]) && slot.endIsGreaterOrEqual(endTime[0], endTime[1]);
 
-                            if( isFirst || contained || isLast){
+                            if (isFirst || contained || isLast) {
 
-                                    toRemove.add(slot);
+                                if (isFirst) {
+
+                                    indexFirst.add(slots.indexOf(slot));
                                 }
+                                toRemove.add(slot);
+                            }
 
                         }
                     }
-                    Log.i("isssfirst", String.valueOf(slots.size()));
+
+                    removeSlotsForDuration(indexFirst);
+
                     slots.removeAll(toRemove);
-                    Log.i("isssfirst", String.valueOf(slots.size()));
+
                     adapter.notifyDataSetChanged();
                 }
             }
         });
     }
 
+    private void removeSlotsForDuration(List<Integer> indexList){
+
+        for(Integer index : indexList) {
+
+            index--;
+
+            int needed = slotsForDuration();
+            
+            while (index >= 0 && needed != 0) {
+
+                int indexInt = index;
+
+                slots.remove(indexInt);
+
+                index--;
+
+                needed--;
+            }
+        }
+
+    }
+
+    private int slotsForDuration(){
+
+        int numSlots = 0;
+
+        if(durationMinutes > 0) {
+
+            if (durationMinutes <= 30) {
+
+                numSlots++;
+
+            } else {
+
+                numSlots += 2;
+            }
+        }
+        if(durationHours > 0) {
+
+            numSlots += durationHours * 2;
+
+            numSlots --;
+        }
+        return numSlots;
+    }
 
     private void setupSlotsFirst(List<OpeningHour> openingHours, View view){
 
