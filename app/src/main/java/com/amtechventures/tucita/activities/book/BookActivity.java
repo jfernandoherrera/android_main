@@ -433,7 +433,10 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
             secureCheckoutFragment.setServices(shoppingCarView.getServicesToBook());
 
-            setSecureCheckoutFragment();
+            if(! secureCheckoutFragment.isAdded()){
+
+                setSecureCheckoutFragment();
+            }
 
             secureCheckoutShow();
         }
