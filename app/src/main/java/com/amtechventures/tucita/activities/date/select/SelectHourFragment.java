@@ -65,7 +65,6 @@ public class SelectHourFragment extends Fragment{
 
         slots = new ArrayList<>();
 
-        adapter = new SelectHourAdapter(price, slots);
         adapter = new SelectHourAdapter(price, slots, listener, date);
 
         recyclerView.setAdapter(adapter);
