@@ -46,9 +46,7 @@ public class AppointmentRemote {
 
         Date oneMoreDay = date.getTime();
 
-        Log.i("onemore",oneMoreDay.toString());
         query.whereLessThan(AppointmentAttributes.date, oneMoreDay);
-
 
         //query.whereEqualTo(AppointmentAttributes.venue, venue.getObjectId());
 
@@ -56,13 +54,12 @@ public class AppointmentRemote {
             @Override
             public void done(List<Appointment> objects, ParseException e) {
 
-                Log.i("derss", String.valueOf(objects.size()));
-
                 AppError appError = e != null ? new AppError(Appointment.class.toString(), 0, null) : null;
 
                 completion.completion(objects, appError);
             }
         });
+        date.add(Calendar.DATE, -1);
     }
 
     public void placeOrder(Appointment appointment, final  AppointmentCompletion.AppointmentErrorCompletion completion){

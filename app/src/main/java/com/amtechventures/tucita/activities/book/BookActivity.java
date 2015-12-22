@@ -424,7 +424,7 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
             selectDateHide();
 
-           // secureCheckoutFragment.setDate(date);
+            secureCheckoutFragment.setDate(date);
 
             secureCheckoutFragment.setDuration(shoppingCarView.getDurationInMinutes());
 

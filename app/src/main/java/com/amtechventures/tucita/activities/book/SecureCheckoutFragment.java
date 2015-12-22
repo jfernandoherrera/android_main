@@ -22,6 +22,7 @@ import com.amtechventures.tucita.utils.views.AlertDialogError;
 import com.amtechventures.tucita.utils.views.AppointmentView;
 import com.parse.ParseUser;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class SecureCheckoutFragment extends Fragment{
     Venue venue;
     List<Service> services;
     int duration;
-    Date date;
+    Calendar date;
     User user;
     TextView textClientName;
     TextView textEmail;
@@ -69,7 +70,7 @@ public class SecureCheckoutFragment extends Fragment{
 
         appointmentView.setTextName(venue.getName());
 
-        appointmentView.setTextDate(date.toLocaleString());
+        appointmentView.setTextDate(date.getTime().toLocaleString());
 
         Button button = (Button) rootView.findViewById(R.id.placeOrder);
 
@@ -119,7 +120,7 @@ public class SecureCheckoutFragment extends Fragment{
         this.venue = venue;
     }
 
-    public void setDate(Date date) {
+    public void setDate(Calendar date) {
 
         this.date = date;
     }

@@ -60,9 +60,9 @@ public class Appointment extends ParseObject{
         return getDate(AppointmentAttributes.date);
     }
 
-    public void setDate(Date date){
+    public void setDate(Calendar date){
 
-        put(AppointmentAttributes.date, date);
+        put(AppointmentAttributes.date, date.getTime());
     }
 
     public void setDuration(int duration){
