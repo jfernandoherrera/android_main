@@ -21,9 +21,6 @@ import java.util.TimeZone;
 
 public class AppointmentRemote {
 
-    final int issueDate = 1900;
-
-
     ParseQuery<Appointment> query;
 
     private void setQuery(){
@@ -39,23 +36,17 @@ public class AppointmentRemote {
         }
     }
 
-    public void loadAppointmentsDateVenue(Venue venue, Date date, final AppointmentCompletion.AppointmentErrorCompletion completion){
+    public void loadAppointmentsDateVenue(Venue venue, Calendar date, final AppointmentCompletion.AppointmentErrorCompletion completion){
 
         setQuery();
 
-        query.whereGreaterThan(AppointmentAttributes.date, date);
+        query.whereGreaterThan(AppointmentAttributes.date, date.getTime());
 
-        TimeZone timezone = TimeZone.getDefault();
+        date.add(Calendar.DATE, 1);
 
-        Calendar calendar = new GregorianCalendar(timezone);
+        Date oneMoreDay = date.getTime();
 
-        calendar.set(date.getYear() + issueDate, date.getMonth(), date.getDate(), 1, 1);
-
-        calendar.add(Calendar.DAY_OF_MONTH, 1);
-
-        Date oneMoreDay = calendar.getTime();
-
-        Log.i("onemore", date.toString() + oneMoreDay.toString());
+        Log.i("onemore",oneMoreDay.toString());
         query.whereLessThan(AppointmentAttributes.date, oneMoreDay);
 
 

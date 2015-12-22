@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.utils.strings.Slot;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -20,14 +21,14 @@ public class SelectHourAdapter extends RecyclerView.Adapter<SelectHourAdapter.Vi
     private List<Slot> slots;
     private int price;
     private OnSlotSelected listener;
-    private Date date;
+    private Calendar date;
 
     public interface OnSlotSelected{
 
-        void onSlotSelected(Date date);
+        void onSlotSelected(Calendar date);
     }
 
-    public SelectHourAdapter(int price, List<Slot> slots, OnSlotSelected listener, Date date){
+    public SelectHourAdapter(int price, List<Slot> slots, OnSlotSelected listener, Calendar date){
 
         this.date = date;
 
@@ -108,11 +109,11 @@ public class SelectHourAdapter extends RecyclerView.Adapter<SelectHourAdapter.Vi
                                                 @Override
                                                 public void onClick(View v) {
 
-                                                    date.setHours(slots.get(position).getStartHour());
+                                                    date.set(Calendar.HOUR_OF_DAY, slots.get(position).getStartHour());
 
-                                                    date.setMinutes(slots.get(position).getStartMinute());
+                                                    date.set(Calendar.MINUTE, slots.get(position).getStartMinute());
 
-                                                    date.setSeconds(0);
+                                                    date.set(Calendar.SECOND, 0);
 
                                                     listener.onSlotSelected(date);
                                                 }

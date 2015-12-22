@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 import java.util.TimeZone;
 
 
@@ -114,7 +115,7 @@ public class PagerSelectHourAdapter extends FragmentStatePagerAdapter {
         this.durationMinutes = durationMinutes;
     }
 
-    public Date getFragmentDay(int position){
+    public Calendar getFragmentDay(int position){
 
         TimeZone timezone = TimeZone.getDefault();
 
@@ -123,6 +124,8 @@ public class PagerSelectHourAdapter extends FragmentStatePagerAdapter {
          position += currentDay;
 
         if(position < getLastDayOfMonth(0)){
+
+            calendar.set(Calendar.YEAR, this.calendar.get(Calendar.YEAR));
 
             calendar.set(Calendar.DAY_OF_MONTH, position);
 
@@ -146,7 +149,7 @@ public class PagerSelectHourAdapter extends FragmentStatePagerAdapter {
 
         calendar.set(Calendar.MINUTE,1);
 
-        return calendar.getTime();
+        return calendar;
     }
 
     @Override
@@ -154,13 +157,11 @@ public class PagerSelectHourAdapter extends FragmentStatePagerAdapter {
 
         String title;
 
-        Date date = getFragmentDay(position);
+        Calendar date = getFragmentDay(position);
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("EEE");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EEE", Locale.getDefault());
 
-        dateFormat.setTimeZone(calendar.getTimeZone());
-
-        title = dateFormat.format(date) + "\n" + String.valueOf(date.getDate());
+        title = dateFormat.format(date.getTime()) + "\n" + String.valueOf(date.get(Calendar.DAY_OF_MONTH));
 
         return title;
     }

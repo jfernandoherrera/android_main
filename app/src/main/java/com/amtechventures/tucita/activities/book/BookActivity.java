@@ -21,6 +21,7 @@ import com.amtechventures.tucita.utils.strings.Slot;
 import com.amtechventures.tucita.utils.views.ShoppingCarView;
 import com.parse.ParseUser;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class BookActivity extends AppCompatActivity implements VenueFragment.OnServiceSelected,
@@ -413,7 +414,7 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
     }
 
     @Override
-    public void onSlotSelected(Date date) {
+    public void onSlotSelected(Calendar date) {
 
         if (ParseUser.getCurrentUser() == null) {
 
@@ -423,7 +424,7 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
             selectDateHide();
 
-            secureCheckoutFragment.setDate(date);
+           // secureCheckoutFragment.setDate(date);
 
             secureCheckoutFragment.setDuration(shoppingCarView.getDurationInMinutes());
 

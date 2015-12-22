@@ -31,9 +31,8 @@ import java.util.TimeZone;
 
 public class SelectHourFragment extends Fragment{
 
-    Date date;
+    Calendar date;
     OpeningHourContext context;
-    int test = 0;
     Venue venue;
     private SelectHourAdapter adapter;
     private RecyclerView recyclerView;
@@ -44,8 +43,6 @@ public class SelectHourFragment extends Fragment{
     int price = 0;
     boolean isFirst = false;
     AppointmentContext appointmentContext;
-    int increment = 30;
-    boolean finishSlots = false;
     SelectHourAdapter.OnSlotSelected listener;
 
     @Override
@@ -86,15 +83,7 @@ public class SelectHourFragment extends Fragment{
 
     public void loadDay(final View rootView) {
 
-        TimeZone timezone = TimeZone.getDefault();
-
-        Calendar calendar = new GregorianCalendar(timezone);
-
-        int issueDate = 1900 + date.getYear();
-
-        calendar.set(issueDate, date.getMonth(), date.getDate());
-
-        int day = calendar.get(Calendar.DAY_OF_WEEK);
+        int day = date.get(Calendar.DAY_OF_WEEK);
 
         context.loadDayOpeningHours(venue, day, new OpeningHourCompletion.OpeningHourErrorCompletion() {
             @Override
@@ -122,7 +111,7 @@ public class SelectHourFragment extends Fragment{
         venue = another;
     }
 
-    public void setDate(Date date){
+    public void setDate(Calendar date){
 
         this.date = date;
 
@@ -142,7 +131,7 @@ public class SelectHourFragment extends Fragment{
 
         String please = view.getResources().getString(R.string.pls_select_another_day);
 
-        String test = sorry + " " + date.getDate()  + " " + date.getMonth()+ " " + date.getYear() + " " + please;
+        String test = sorry + " " + date.get(Calendar.DAY_OF_MONTH)  + " " + date.get(Calendar.MONTH)+ " " + date.get(Calendar.YEAR) + " " + please;
 
         textView.setText(test);
 
@@ -227,8 +216,7 @@ public class SelectHourFragment extends Fragment{
 }
 
     private void fromAppointment(){
-        Log.i("veenue", String.valueOf(test));
-        test++;
+
         appointmentContext.loadAppointmentsDateVenue(venue, date, new AppointmentCompletion.AppointmentErrorCompletion() {
             @Override
             public void completion(List<Appointment> appointmentList, AppError error) {
@@ -237,76 +225,39 @@ public class SelectHourFragment extends Fragment{
 
                 } else {
 
+                    List<Slot> toRemove = new ArrayList<>();
+
                     for (Appointment appointment : appointmentList) {
 
-                        TimeZone timezone = TimeZone.getDefault();
-
-                        Calendar calendar = new GregorianCalendar(timezone);
-
                         Date appointmentDate = appointment.getDate();
-
-                        Log.i("apdate", String.valueOf(appointmentDate.getHours()));
 
                         int startHour = appointmentDate.getHours();
 
                         int startMinute = appointmentDate.getMinutes();
 
-                        Log.i(String.valueOf(startHour), String.valueOf(startMinute));
-
                         int [] duration = appointment.getDuration();
 
-                        boolean isEqualHour;
-
-                        boolean slotMinutesSmallerOrEqualThanAppointmentMinutes;
-
-                        boolean slotMinutesPlusIncrementGreaterThanAppointmentMinutes;
-
-                        boolean slotMinutesSmallerThanAppointmentMinutesPlusDuration;
-
-                        boolean slotMinutesPlusIncrementGreaterThanAppointmentMinutesPlusDuration;
-
-                        List<Slot> toRemove = new ArrayList<>();
+                        int [] endTime = sixtyMinutes(startHour + duration[0], startMinute + duration[1]);
 
                         for (Slot slot : slots) {
 
-                            isEqualHour = slot.getStartHour() == startHour;
+                            boolean isFirst = slot.isSmallerOrEqual(startHour, startMinute) && slot.endIsGreater(startHour, startMinute);
 
-                            slotMinutesSmallerOrEqualThanAppointmentMinutes = slot.getStartMinute() <= startMinute;
+                            boolean contained = slot.isGreater(startHour, startMinute) && slot.endIsSmaller(endTime[0], endTime[1]);
 
-                            slotMinutesPlusIncrementGreaterThanAppointmentMinutes = slot.getStartMinute() + increment > startMinute;
+                            boolean isLast = slot.isSmaller(endTime[0], endTime[1]) && slot.endIsGreaterOrEqual(endTime[0], endTime[1]);
 
-                            if(duration[0] == 0) {
-
-                                slotMinutesSmallerThanAppointmentMinutesPlusDuration = slot.getStartMinute() < startMinute + duration[1];
-
-                                slotMinutesPlusIncrementGreaterThanAppointmentMinutesPlusDuration = slot.getStartMinute() + increment >= startMinute + duration[1];
-
-                                if (isEqualHour && ((slotMinutesSmallerOrEqualThanAppointmentMinutes && slotMinutesPlusIncrementGreaterThanAppointmentMinutes) || (slotMinutesSmallerThanAppointmentMinutesPlusDuration && slotMinutesPlusIncrementGreaterThanAppointmentMinutesPlusDuration))) {
+                            if( isFirst || contained || isLast){
 
                                     toRemove.add(slot);
                                 }
-                            }else{
 
-                                boolean isEqualHourPlusDuration = (startHour + duration[0]) == slot.getStartHour();
-
-                                boolean isThere = slotMinutesSmallerOrEqualThanAppointmentMinutes && slotMinutesPlusIncrementGreaterThanAppointmentMinutes;
-
-                                boolean isGreater = (slot.getStartHour() > startHour ) || (slot.getStartHour() == startHour)&& (slot.getStartMinute() > startMinute);
-
-                                boolean isSmallerThanAppointmentPlusDuration = ((slot.getStartHour() < (appointment.getDateEnd().getHours())) && slot.getStartHour() > startHour) || (slot.getEndHour() == appointment.getDateEnd().getHours() && slot.getEndMinute() < appointment.getDateEnd().getMinutes());
-
-                                boolean contained = isGreater && isSmallerThanAppointmentPlusDuration;
-
-                                if((isEqualHour && isThere) || (isEqualHourPlusDuration && isThere ) || contained){
-
-                                    toRemove.add(slot);
-                                }
-                            }
                         }
-                        slots.removeAll(toRemove);
-
-                        adapter.notifyDataSetChanged();
                     }
+                    Log.i("isssfirst", String.valueOf(slots.size()));
+                    slots.removeAll(toRemove);
+                    Log.i("isssfirst", String.valueOf(slots.size()));
+                    adapter.notifyDataSetChanged();
                 }
             }
         });
@@ -414,9 +365,4 @@ public class SelectHourFragment extends Fragment{
 
         return time;
     }
-
-    private void removeAppointmentSlots(){
-
-    }
-
 }
