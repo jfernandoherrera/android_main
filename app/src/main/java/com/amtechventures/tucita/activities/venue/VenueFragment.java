@@ -281,6 +281,8 @@ public class VenueFragment extends Fragment {
 
                 String findService = getResources().getString(R.string.find_service);
 
+                specials.setVisibility(View.VISIBLE);
+
                 specials.setText(findService);
 
                 ArrayList<SubCategory> arrayList = new ArrayList();

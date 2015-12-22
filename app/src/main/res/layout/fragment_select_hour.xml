@@ -10,6 +10,10 @@
         android:layout_height="wrap_content"
         android:text="@string/closed"
         android:visibility="gone"
+        android:paddingStart="@dimen/high_margin"
+        android:paddingLeft="@dimen/high_margin"
+        android:paddingRight="@dimen/high_margin"
+        android:paddingEnd="@dimen/high_margin"
         android:id="@+id/closed"/>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"

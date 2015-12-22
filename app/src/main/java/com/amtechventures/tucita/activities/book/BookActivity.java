@@ -405,6 +405,7 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
         shoppingCarView.hideView();
     }
+
     public void goToLogin() {
 
         Intent intent = new Intent(BookActivity.this, LoginActivity.class);

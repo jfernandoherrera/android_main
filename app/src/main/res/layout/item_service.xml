@@ -10,6 +10,7 @@
     android:paddingStart="@dimen/double_high_margin"
     android:paddingLeft="@dimen/double_high_margin"
     android:paddingEnd="@dimen/double_high_margin"
+    android:gravity="center_vertical"
     android:paddingRight="@dimen/double_high_margin"/>
     <RelativeLayout
         android:layout_width="match_parent"
@@ -23,6 +24,7 @@
     android:paddingLeft="@dimen/double_high_margin"
     android:paddingEnd="@dimen/double_high_margin"
     android:paddingRight="@dimen/double_high_margin"
+    android:gravity="center_vertical"
 />
 <TextView
     android:layout_width="wrap_content"
@@ -31,6 +33,7 @@
     android:paddingStart="@dimen/double_high_margin"
     android:paddingLeft="@dimen/double_high_margin"
     android:paddingEnd="@dimen/high_margin"
+    android:gravity="center_vertical"
     android:paddingRight="@dimen/high_margin"
     android:layout_alignParentRight="true"
     android:layout_alignParentEnd="true"
