@@ -35,4 +35,13 @@ public class AlertDialogError {
 
         typeMore.show();
     }
+
+    public void noAvailableSlot(Context context) {
+
+        Toast typeMore = Toast.makeText(context, R.string.no_internet_connection, Toast.LENGTH_SHORT);
+
+        typeMore.setGravity(Gravity.CENTER | Gravity.LEFT, 0, 0);
+
+        typeMore.show();
+    }
 }

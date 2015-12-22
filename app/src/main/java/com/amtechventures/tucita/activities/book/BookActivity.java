@@ -1,6 +1,7 @@
 package com.amtechventures.tucita.activities.book;
 
 
+import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -11,16 +12,25 @@ import android.view.MenuItem;
 import android.view.View;
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.date.select.SelectDayFragment;
+import com.amtechventures.tucita.activities.date.select.adapters.SelectHourAdapter;
+import com.amtechventures.tucita.activities.login.LoginActivity;
 import com.amtechventures.tucita.activities.service.ServiceFragment;
 import com.amtechventures.tucita.activities.venue.VenueFragment;
 import com.amtechventures.tucita.model.domain.service.Service;
+import com.amtechventures.tucita.utils.strings.Slot;
 import com.amtechventures.tucita.utils.views.ShoppingCarView;
+import com.parse.ParseUser;
 
-public class BookActivity extends AppCompatActivity implements VenueFragment.OnServiceSelected, ServiceFragment.OnServiceSelected, ShoppingCarView.OnItemClosed, ShoppingCarView.OnMoreServices, ShoppingCarView.OnBookNow {
+import java.util.Date;
+
+public class BookActivity extends AppCompatActivity implements VenueFragment.OnServiceSelected,
+        ServiceFragment.OnServiceSelected, ShoppingCarView.OnItemClosed,
+        ShoppingCarView.OnMoreServices, ShoppingCarView.OnBookNow, SelectHourAdapter.OnSlotSelected{
 
     private VenueFragment venueFragment;
     private ServiceFragment serviceFragment;
     private SelectDayFragment selectDateFragment;
+    private SecureCheckoutFragment secureCheckoutFragment;
     private Toolbar toolbar;
     private ShoppingCarView shoppingCarView;
 
@@ -38,6 +48,8 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
         serviceFragment = new ServiceFragment();
 
         selectDateFragment = new SelectDayFragment();
+
+        secureCheckoutFragment = new SecureCheckoutFragment();
 
         shoppingCarView.hideList();
 
@@ -89,6 +101,17 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
         transaction.commit();
     }
 
+    private void setSecureCheckoutFragment() {
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+        transaction.add(R.id.layout_main, secureCheckoutFragment);
+
+        transaction.commit();
+    }
+
     private void setSelectDateFragment() {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -107,6 +130,28 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
         FragmentTransaction transaction = fragmentManager.beginTransaction();
 
         transaction.hide(venueFragment);
+
+        transaction.commit();
+    }
+
+    private void secureCheckoutHide() {
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+        transaction.hide(secureCheckoutFragment);
+
+        transaction.commit();
+    }
+
+    private void secureCheckoutShow() {
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+        transaction.show(secureCheckoutFragment);
 
         transaction.commit();
     }
@@ -215,7 +260,7 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
     private void back() {
 
-        if (shoppingCarView.listIsVisible()) {
+       if (shoppingCarView.listIsVisible()) {
 
             shoppingCarView.hideList();
 
@@ -230,14 +275,20 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
             serviceHide();
 
             venueShow();
-        }else {
+        }else if(! selectDateFragment.isHidden()){
 
             shoppingCarView.showView();
 
             selectDateHide();
 
             venueShow();
-        }
+        }else  if(! secureCheckoutFragment.isHidden()){
+
+           secureCheckoutHide();
+
+           selectDateShow();
+
+       }
     }
 
     @Override
@@ -352,5 +403,37 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
         selectDateShow();
 
         shoppingCarView.hideView();
+    }
+    public void goToLogin() {
+
+        Intent intent = new Intent(BookActivity.this, LoginActivity.class);
+
+        startActivity(intent);
+
+    }
+
+    @Override
+    public void onSlotSelected(Date date) {
+
+        if (ParseUser.getCurrentUser() == null) {
+
+            goToLogin();
+
+        } else {
+
+            selectDateHide();
+
+            secureCheckoutFragment.setDate(date);
+
+            secureCheckoutFragment.setDuration(shoppingCarView.getDurationInMinutes());
+
+            secureCheckoutFragment.setVenue(venueFragment.getVenue());
+
+            secureCheckoutFragment.setServices(shoppingCarView.getServicesToBook());
+
+            setSecureCheckoutFragment();
+
+            secureCheckoutShow();
+        }
     }
 }

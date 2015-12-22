@@ -1,8 +1,10 @@
 package com.amtechventures.tucita.activities.date.select.adapters;
 
 
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -10,14 +12,26 @@ import android.widget.TextView;
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.utils.strings.Slot;
 
+import java.util.Date;
 import java.util.List;
 
 public class SelectHourAdapter extends RecyclerView.Adapter<SelectHourAdapter.ViewHolder>{
 
     private List<Slot> slots;
     private int price;
+    private OnSlotSelected listener;
+    private Date date;
 
-    public SelectHourAdapter(int price, List<Slot> slots){
+    public interface OnSlotSelected{
+
+        void onSlotSelected(Date date);
+    }
+
+    public SelectHourAdapter(int price, List<Slot> slots, OnSlotSelected listener, Date date){
+
+        this.date = date;
+
+        this.listener = listener;
 
         this.slots = slots;
 
@@ -39,6 +53,8 @@ public class SelectHourAdapter extends RecyclerView.Adapter<SelectHourAdapter.Vi
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
+        holder.position = position;
+
         holder.textHour.setText(slots.get(position).getFormmatedHour());
 
         holder.textPricesFrom.setText(String.valueOf(price));
@@ -56,6 +72,8 @@ public class SelectHourAdapter extends RecyclerView.Adapter<SelectHourAdapter.Vi
 
         protected TextView textPricesFrom;
 
+        protected int position;
+
         public ViewHolder(View itemView) {
 
             super(itemView);
@@ -65,6 +83,42 @@ public class SelectHourAdapter extends RecyclerView.Adapter<SelectHourAdapter.Vi
             textPricesFrom = (TextView) itemView.findViewById(R.id.textPrice);
 
             textPricesFrom.setVisibility(View.GONE);
+
+            itemView.setOnTouchListener(new View.OnTouchListener() {
+                                            @Override
+                                            public boolean onTouch(View v, MotionEvent event) {
+
+                                                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+
+                                                    v.setBackgroundResource(R.drawable.pressed_application_background_static);
+
+                                                } else if (event.getAction() != MotionEvent.ACTION_MOVE) {
+
+                                                    v.setBackgroundColor(Color.TRANSPARENT);
+                                                }
+                                                return false;
+                                            }
+                                        }
+
+            );
+
+                itemView.setOnClickListener(new View.OnClickListener()
+
+                                            {
+                                                @Override
+                                                public void onClick(View v) {
+
+                                                    date.setHours(slots.get(position).getStartHour());
+
+                                                    date.setMinutes(slots.get(position).getStartMinute());
+
+                                                    date.setSeconds(0);
+
+                                                    listener.onSlotSelected(date);
+                                                }
+                                            }
+
+                );
+            }
         }
-    }
 }

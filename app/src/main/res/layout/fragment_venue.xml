@@ -18,6 +18,8 @@
                     android:textSize="25sp"
                     android:layout_gravity="center_horizontal"
                     android:layout_below="@+id/imageVenue"
+                    android:layout_marginStart="@dimen/high_margin"
+                    android:layout_marginLeft="@dimen/high_margin"
                     android:id="@+id/title_Venue"/>
                 <RatingBar
                     android:layout_width="wrap_content"
@@ -27,7 +29,7 @@
                     android:id="@+id/ratingBar"
                     android:scaleX="0.5"
                     android:scaleY="0.5"
-                    android:translationX="-37dp"
+                    android:translationX="-20dp"
                     android:translationY="-5dp"
                     android:progressDrawable="@drawable/btn_star_big_on_pressed"
                     />
@@ -39,13 +41,17 @@
                     android:layout_height="wrap_content"
                     android:textSize="25sp"
                     android:background="@color/colorPrimaryLight"
+                    android:paddingStart="@dimen/high_margin"
+                    android:paddingLeft="@dimen/high_margin"
+                    android:paddingEnd="@dimen/high_margin"
+                    android:paddingRight="@dimen/high_margin"
                     />
                 <ExpandableListView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/textViewTop"
-                    android:indicatorLeft="310dp"
-                    android:indicatorRight="345dp"
+                    android:indicatorLeft="294dp"
+                    android:indicatorRight="329dp"
                     android:id="@+id/listViewTop"
                     />
                 <TextView
@@ -55,14 +61,18 @@
                     android:textSize="25sp"
                     android:layout_below="@+id/listViewTop"
                     android:id="@+id/textViewFull"
+                    android:paddingStart="@dimen/high_margin"
+                    android:paddingLeft="@dimen/high_margin"
+                    android:paddingEnd="@dimen/high_margin"
+                    android:paddingRight="@dimen/high_margin"
                     android:background="@color/com_facebook_button_login_silver_background_color"
                     />
                 <ExpandableListView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/listViewFull"
-                    android:indicatorLeft="310dp"
-                    android:indicatorRight="345dp"
+                    android:indicatorLeft="294dp"
+                    android:indicatorRight="329dp"
                     android:layout_below="@+id/textViewFull"
                     />
                 <TextView
@@ -72,18 +82,30 @@
                     android:layout_below="@+id/listViewFull"
                     android:id="@+id/textViewAbout"
                     android:textSize="25sp"
+                    android:paddingStart="@dimen/high_margin"
+                    android:paddingLeft="@dimen/high_margin"
+                    android:paddingEnd="@dimen/high_margin"
+                    android:paddingRight="@dimen/high_margin"
                     android:background="@color/com_facebook_button_login_silver_background_color"
                     />
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/textViewDescription"
-                    android:layout_below="@+id/textViewAbout"/>
+                    android:layout_marginStart="@dimen/high_margin"
+                    android:layout_marginLeft="@dimen/high_margin"
+                    android:layout_below="@+id/textViewAbout"
+                    android:layout_marginBottom="@dimen/high_margin"
+                    android:layout_marginEnd="@dimen/high_margin"
+                    android:layout_marginRight="@dimen/high_margin"
+                    />
                 <View
                     android:layout_width = "wrap_content"
                     android:layout_height = "1dp"
                     android:layout_marginTop = "7dp"
                     android:id="@+id/separator3"
+                    android:layout_marginStart="@dimen/high_margin"
+                    android:layout_marginLeft="@dimen/high_margin"
                     android:layout_below = "@+id/textViewDescription"
                     android:background = "@android:color/darker_gray" />
                 <Button
@@ -99,6 +121,10 @@
                     android:layout_below="@+id/watch_location"
                     android:layout_height="35dp"
                     android:textSize="25sp"
+                    android:paddingStart="@dimen/high_margin"
+                    android:paddingLeft="@dimen/high_margin"
+                    android:paddingEnd="@dimen/high_margin"
+                    android:paddingRight="@dimen/high_margin"
                     android:background="@color/com_facebook_button_login_silver_background_color"
                     />
                 <com.amtechventures.tucita.utils.views.OpeningHourView

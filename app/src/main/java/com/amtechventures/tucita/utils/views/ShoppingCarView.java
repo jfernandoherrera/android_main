@@ -282,6 +282,21 @@ public class ShoppingCarView extends FrameLayout implements ServicesToBookAdapte
         setBackgroundColor(Color.TRANSPARENT);
     }
 
+    public ArrayList<Service> getServicesToBook() {
+
+        return servicesToBook;
+    }
+
+    public int getDurationInMinutes(){
+
+        int duration = 0;
+
+        for(Service service : servicesToBook){
+
+            duration = duration + (service.getDurationHour() * 60) + service.getDurationMinutes();
+        }
+        return duration;
+    }
 
     public void setCount(){
 

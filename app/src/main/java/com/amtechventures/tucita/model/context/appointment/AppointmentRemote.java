@@ -11,6 +11,8 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.SaveCallback;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -68,6 +70,19 @@ public class AppointmentRemote {
                 AppError appError = e != null ? new AppError(Appointment.class.toString(), 0, null) : null;
 
                 completion.completion(objects, appError);
+            }
+        });
+    }
+
+    public void placeOrder(Appointment appointment, final  AppointmentCompletion.AppointmentErrorCompletion completion){
+
+        appointment.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+
+                AppError appError = e != null ? new AppError(Appointment.class.toString(), 0, null) : null;
+
+                completion.completion(null, appError);
             }
         });
     }

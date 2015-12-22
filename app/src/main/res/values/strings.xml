@@ -20,6 +20,8 @@
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
     <string name="create_new_account">Crear una cuenta</string>
+    <string name="client_details">Detalles del cliente</string>
+    <string name="place_order">Realizar pedido</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."</string>
     <string name="cities">Ciudades</string>
@@ -42,6 +44,7 @@
     <string name="error_pinning_categories">Error pinning Categories:</string>
     <string name="error">Error</string>
     <string name="no_internet_connection">No hay conexión a internet</string>
+    <string name="cant_place_order">Lo sentimos el espacio ya ha sido tomado</string>
     <string name="no_Location">No se pudo establecer la localizaciòn actual</string>
     <string name="alert">Alerta</string>
     <string name="services">Servicios</string>
