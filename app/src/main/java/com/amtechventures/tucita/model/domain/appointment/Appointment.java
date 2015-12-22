@@ -17,7 +17,9 @@ public class Appointment extends ParseObject{
     public int[] getDuration(){
 
         int[] duration = new int[2];
+
         int durationHours = 0;
+
         int durationMinutes = getInt(AppointmentAttributes.duration);
 
         if(durationMinutes >= 60){
@@ -26,7 +28,6 @@ public class Appointment extends ParseObject{
 
             durationMinutes = durationMinutes - (60 * durationHours);
         }
-
         duration[0] = durationHours;
 
         duration[1] = durationMinutes;

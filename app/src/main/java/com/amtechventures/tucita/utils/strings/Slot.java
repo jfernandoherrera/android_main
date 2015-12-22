@@ -1,20 +1,18 @@
 package com.amtechventures.tucita.utils.strings;
 
 
-import android.util.Log;
-
 public class Slot {
 
     private int startMinute;
     private int startHour;
     private int increment;
-    private String formmatedHour;
+    private String formattedHour;
 
-    public Slot(int startMinute, int startHour, int increment, String formmatedHour) {
+    public Slot(int startMinute, int startHour, int increment, String formattedHour) {
         this.startMinute = startMinute;
         this.startHour = startHour;
         this.increment = increment;
-        this.formmatedHour = formmatedHour;
+        this.formattedHour = formattedHour;
     }
 
     public int getEndHour() {
@@ -48,9 +46,9 @@ public class Slot {
         return startMinute;
     }
 
-    public String getFormmatedHour() {
+    public String getFormattedHour() {
 
-        return formmatedHour;
+        return formattedHour;
     }
 
     public int getStartHour() {

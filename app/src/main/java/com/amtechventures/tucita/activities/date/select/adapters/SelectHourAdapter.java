@@ -13,7 +13,6 @@ import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.utils.strings.Slot;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 public class SelectHourAdapter extends RecyclerView.Adapter<SelectHourAdapter.ViewHolder>{
@@ -56,7 +55,7 @@ public class SelectHourAdapter extends RecyclerView.Adapter<SelectHourAdapter.Vi
 
         holder.position = position;
 
-        holder.textHour.setText(slots.get(position).getFormmatedHour());
+        holder.textHour.setText(slots.get(position).getFormattedHour());
 
         holder.textPricesFrom.setText(String.valueOf(price));
     }

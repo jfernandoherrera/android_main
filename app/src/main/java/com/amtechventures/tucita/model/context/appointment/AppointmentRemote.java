@@ -1,23 +1,16 @@
 package com.amtechventures.tucita.model.context.appointment;
 
-
-import android.util.Log;
-
 import com.amtechventures.tucita.model.domain.appointment.Appointment;
 import com.amtechventures.tucita.model.domain.appointment.AppointmentAttributes;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.error.AppError;
 import com.parse.FindCallback;
 import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.SaveCallback;
-
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.TimeZone;
 
 public class AppointmentRemote {
 
@@ -48,7 +41,7 @@ public class AppointmentRemote {
 
         query.whereLessThan(AppointmentAttributes.date, oneMoreDay);
 
-        //query.whereEqualTo(AppointmentAttributes.venue, venue.getObjectId());
+        query.whereEqualTo(AppointmentAttributes.venue, venue);
 
         query.findInBackground(new FindCallback<Appointment>() {
             @Override

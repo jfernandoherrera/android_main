@@ -16,4 +16,5 @@ public class VenueAttributes {
     public static final String city = "city";
     public static final String linkToLocation = "http://maps.google.com/?q=";
     public static final String updatedAt = "updatedAt";
+    public static final String slots = "slots";
 }
