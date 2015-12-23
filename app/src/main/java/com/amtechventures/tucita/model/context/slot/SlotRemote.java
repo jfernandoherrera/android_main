@@ -1,6 +1,7 @@
 package com.amtechventures.tucita.model.context.slot;
 
 import com.amtechventures.tucita.model.domain.slot.Slot;
+import com.amtechventures.tucita.model.domain.slot.SlotAttributes;
 import com.amtechventures.tucita.model.error.AppError;
 import com.parse.FindCallback;
 import com.parse.ParseQuery;
@@ -24,9 +25,13 @@ public class SlotRemote {
         }
     }
 
-    public void loadSlots(ParseQuery<Slot> slotParseQuery, final SlotCompletion.SlotErrorCompletion completion) {
+    public void loadDaySlots(ParseQuery<Slot> slotParseQuery, int day, final SlotCompletion.SlotErrorCompletion completion) {
 
         query = slotParseQuery;
+
+        query.whereEqualTo(SlotAttributes.day, day);
+
+        query.orderByAscending(SlotAttributes.startHour + "," + SlotAttributes.startMinute);
 
         query.findInBackground(new FindCallback<Slot>() {
             @Override

@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/textViewGroupName"
     android:layout_height="72dp"
+    android:gravity="center_vertical"
     android:layout_width="match_parent"
     android:paddingStart="@dimen/high_margin"
     android:paddingLeft="@dimen/high_margin"

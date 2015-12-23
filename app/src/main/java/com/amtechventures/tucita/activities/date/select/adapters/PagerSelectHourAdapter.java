@@ -55,11 +55,6 @@ public class PagerSelectHourAdapter extends FragmentStatePagerAdapter {
         return currentDay;
     }
 
-    @Override
-    public int getItemPosition(Object object) {
-        return POSITION_NONE;
-    }
-
     public int getLastDayOfMonth(int month){
 
         int lastDay = 0;

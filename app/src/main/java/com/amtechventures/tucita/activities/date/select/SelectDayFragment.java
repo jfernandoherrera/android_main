@@ -32,7 +32,6 @@ public class SelectDayFragment extends Fragment{
         super.onAttach(context);
 
         listener = (SelectHourAdapter.OnSlotSelected) context;
-
     }
 
     @Override
@@ -124,8 +123,8 @@ public class SelectDayFragment extends Fragment{
 
     public void reload(){
 
-        adapter.notifyDataSetChanged();
-        }
+    adapter.notifyDataSetChanged();
+    }
 
     public void setDuration(int[] duration) {
 

@@ -14,26 +14,22 @@ import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.date.select.adapters.SelectHourAdapter;
 import com.amtechventures.tucita.model.context.appointment.AppointmentCompletion;
 import com.amtechventures.tucita.model.context.appointment.AppointmentContext;
-import com.amtechventures.tucita.model.context.openingHour.OpeningHourCompletion;
-import com.amtechventures.tucita.model.context.openingHour.OpeningHourContext;
+import com.amtechventures.tucita.model.context.slot.SlotCompletion;
+import com.amtechventures.tucita.model.context.slot.SlotContext;
 import com.amtechventures.tucita.model.domain.appointment.Appointment;
-import com.amtechventures.tucita.model.domain.openingHour.OpeningHour;
+import com.amtechventures.tucita.model.domain.slot.Slot;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.error.AppError;
-import com.amtechventures.tucita.utils.strings.Slot;
-import com.amtechventures.tucita.utils.views.ViewUtils;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.TimeZone;
 
 public class SelectHourFragment extends Fragment{
 
     Calendar date;
-    OpeningHourContext context;
     Venue venue;
+    private SlotContext slotContext;
     private SelectHourAdapter adapter;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
@@ -50,7 +46,7 @@ public class SelectHourFragment extends Fragment{
 
         final View rootView = inflater.inflate(R.layout.fragment_select_hour, container, false);
 
-        context = OpeningHourContext.context(context);
+        slotContext = SlotContext.context(slotContext);
 
         appointmentContext = AppointmentContext.context(appointmentContext);
 
@@ -85,13 +81,15 @@ public class SelectHourFragment extends Fragment{
 
         int day = date.get(Calendar.DAY_OF_WEEK);
 
-        context.loadDayOpeningHours(venue, day, new OpeningHourCompletion.OpeningHourErrorCompletion() {
-            @Override
-            public void completion(List<OpeningHour> openingHourList, AppError error) {
+        slotContext.loadDaySlots(venue, day, new SlotCompletion.SlotErrorCompletion() {
+                    @Override
+                    public void completion(List<Slot> slotList, AppError error) {
 
-                setup(openingHourList, rootView);
+                        setup(slotList, rootView);
+                    }
+
             }
-        });
+        );
     }
 
     public void setDuration(int durationHours, int durationMinutes){
@@ -138,84 +136,42 @@ public class SelectHourFragment extends Fragment{
         recyclerView.setVisibility(View.GONE);
     }
 
-    public void setup(List<OpeningHour> openingHoursDay, View view){
+    public void setup(List<Slot> slotsDay, View view){
 
-        if(openingHoursDay == null || openingHoursDay.isEmpty()){
+        if(slotsDay == null || slotsDay.isEmpty()){
 
            setupNoSlots(view);
 
         }else if(isFirst) {
 
             setupNoSlots(view);
-           // setupSlotsFirst(openingHoursDay, view);
+
         }else{
 
-            setupSlots(openingHoursDay);
+            slots.clear();
+
+            slots.addAll(slotsDay);
+
+            slots();
+
+            setupSlots();
         }
     }
 
-    private void setupSlots(List<OpeningHour> openingHours){
+    private void slots(){
 
-    for (OpeningHour openingHour : openingHours) {
+        for(Slot slot : slots){
 
-        int startPoint = openingHour.getStartHour();
-
-        int endPoint = openingHour.getEndHour();
-
-        int minutes = openingHour.getStartMinute();
-
-        final int increment = 30;
-
-        ViewUtils viewUtils = new ViewUtils(getContext());
-
-        if (durationMinutes == 0) {
-
-            while (!(startPoint == (endPoint - durationHours) && minutes == increment)) {
-
-                String slotString = viewUtils.hourFormat(startPoint, minutes);
-
-                Slot slot = new Slot(minutes, startPoint, increment, slotString);
-
-                slots.add(slot);
-
-                minutes += increment;
-
-                int[] time = sixtyMinutes(startPoint, minutes);
-
-                startPoint = time[0];
-
-                minutes = time[1];
-            }
-        } else {
-
-            while (!(startPoint == (endPoint - durationHours - 1) && minutes == increment)) {
-
-                String slotString = viewUtils.hourFormat(startPoint, minutes);
-
-                Slot slot = new Slot(minutes, startPoint, increment, slotString);
-
-                slots.add(slot);
-
-                minutes += increment;
-
-                int[] time = sixtyMinutes(startPoint, minutes);
-
-                startPoint = time[0];
-
-                minutes = time[1];
-            }
-            String slotString = viewUtils.hourFormat(startPoint, (60 - durationMinutes));
-
-            Slot slot = new Slot(minutes, startPoint, increment, slotString);
-
-            slots.add(slot);
-
+            slot.setAmount();
         }
     }
-        fromAppointment();
-}
+    private void setupSlots(){
 
-    private void fromAppointment(){
+        removeSlots();
+
+    }
+
+    private void removeSlots(){
 
         appointmentContext.loadAppointmentsDateVenue(venue, date, new AppointmentCompletion.AppointmentErrorCompletion() {
             @Override
@@ -255,17 +211,27 @@ public class SelectHourFragment extends Fragment{
 
                                     indexFirst.add(slots.indexOf(slot));
                                 }
-                                toRemove.add(slot);
+
+                                slot.decrementAmount();
+
+                                if(slot.getAmount() <= 0) {
+
+                                    toRemove.add(slot);
+                                }
                             }
 
                         }
                     }
-
                     removeSlotsForDuration(indexFirst);
 
                     slots.removeAll(toRemove);
 
                     adapter.notifyDataSetChanged();
+
+                    if(slots.isEmpty()){
+
+                        setupNoSlots(getView());
+                    }
                 }
             }
         });
@@ -275,127 +241,31 @@ public class SelectHourFragment extends Fragment{
 
         for(Integer index : indexList) {
 
-            index--;
+            index --;
 
-            int needed = slotsForDuration();
+           int durationHoursToRemove =  durationHours;
 
-            while (index >= 0 && needed != 0) {
+            int durationMinutesToRemove = durationMinutes;
+
+            while (index >= 0 && ! (durationHoursToRemove <= 0 && durationMinutesToRemove <= 0) ) {
 
                 int indexInt = index;
 
-                slots.remove(indexInt);
+                durationHoursToRemove -= slots.get(indexInt).getDuration()[0];
 
-                index--;
+                durationMinutesToRemove -= slots.get(indexInt).getDuration()[1];
 
-                needed--;
+                slots.get(indexInt).decrementAmount();
+
+                if(slots.get(indexInt).getAmount() <= 0) {
+
+                    slots.remove(indexInt);
+                }
+
+                index --;
             }
         }
 
-    }
-
-    private int slotsForDuration(){
-
-        int numSlots = 0;
-
-        if(durationMinutes > 0) {
-
-            if (durationMinutes <= 30) {
-
-                numSlots++;
-
-            } else {
-
-                numSlots += 2;
-            }
-        }
-        if(durationHours > 0) {
-
-            numSlots += durationHours * 2;
-
-            numSlots --;
-        }
-        return numSlots;
-    }
-
-    private void setupSlotsFirst(List<OpeningHour> openingHours, View view){
-
-        for (OpeningHour openingHour : openingHours){
-
-            Calendar calendar = Calendar.getInstance();
-
-            int startPoint = calendar.get(Calendar.HOUR_OF_DAY) + 1;
-
-            int endPoint = openingHour.getEndHour();
-
-            int minutes = openingHour.getStartMinute();
-
-            int increment = 30;
-
-            ViewUtils viewUtils = new ViewUtils(getContext());
-
-            if(durationMinutes == 0) {
-
-                if(! (startPoint <= endPoint)){
-
-                while (!(startPoint == (endPoint - durationHours) && minutes ==  increment)){
-
-                    String slotString = viewUtils.hourFormat(startPoint, minutes) ;
-
-                    Slot slot = new Slot(minutes, startPoint, increment, slotString);
-
-                    slots.add(slot);
-
-                    minutes += increment;
-
-                    int[] time = sixtyMinutes(startPoint, minutes);
-
-                    startPoint = time[0];
-
-                    minutes = time[1];
-                    }
-                }else {
-
-                    setupNoSlots(view);
-                }
-            }else{
-                if(! (startPoint <= endPoint)){
-
-                while (!(startPoint == (endPoint - durationHours - 1) && minutes ==  increment) ){
-
-                    String slotString = viewUtils.hourFormat(startPoint, minutes);
-
-                    Slot slot = new Slot(minutes, startPoint, increment, slotString);
-
-                    slots.add(slot);
-
-                    minutes += increment;
-
-                    int[] time = sixtyMinutes(startPoint, minutes);
-
-                    startPoint = time[0];
-
-                    minutes = time[1];
-                }
-                String slotString = viewUtils.hourFormat(startPoint, (60 - durationMinutes));
-
-                    Slot slot = new Slot(minutes, startPoint, increment, slotString);
-
-                    slots.add(slot);
-
-                }else {
-
-                    setupNoSlots(view);
-                }
-            }
-
-        }
-        if(slots.isEmpty()){
-
-            setupNoSlots(view);
-        }else {
-
-            adapter.notifyDataSetChanged();
-        }
     }
 
     private int[] sixtyMinutes(int hour, int minutes){

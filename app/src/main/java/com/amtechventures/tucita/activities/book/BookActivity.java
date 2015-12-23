@@ -17,12 +17,10 @@ import com.amtechventures.tucita.activities.login.LoginActivity;
 import com.amtechventures.tucita.activities.service.ServiceFragment;
 import com.amtechventures.tucita.activities.venue.VenueFragment;
 import com.amtechventures.tucita.model.domain.service.Service;
-import com.amtechventures.tucita.utils.strings.Slot;
 import com.amtechventures.tucita.utils.views.ShoppingCarView;
 import com.parse.ParseUser;
 
 import java.util.Calendar;
-import java.util.Date;
 
 public class BookActivity extends AppCompatActivity implements VenueFragment.OnServiceSelected,
         ServiceFragment.OnServiceSelected, ShoppingCarView.OnItemClosed,
@@ -436,6 +434,9 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
             if(! secureCheckoutFragment.isAdded()){
 
                 setSecureCheckoutFragment();
+            }else{
+
+                secureCheckoutFragment.setupAppointmentView();
             }
 
             secureCheckoutShow();

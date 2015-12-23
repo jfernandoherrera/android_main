@@ -40,6 +40,7 @@ public class SecureCheckoutFragment extends Fragment{
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
 
         appointmentContext = AppointmentContext.context(appointmentContext);
@@ -68,10 +69,6 @@ public class SecureCheckoutFragment extends Fragment{
             textEmail.setText(user.getEmail());
         }
 
-        appointmentView.setTextName(venue.getName());
-
-        appointmentView.setTextDate(date.getTime().toLocaleString());
-
         Button button = (Button) rootView.findViewById(R.id.placeOrder);
 
         button.setOnClickListener(new View.OnClickListener() {
@@ -83,6 +80,22 @@ public class SecureCheckoutFragment extends Fragment{
         });
 
         return rootView;
+    }
+
+
+    @Override
+    public void onResume() {
+
+        super.onResume();
+
+        setupAppointmentView();
+    }
+
+    public void setupAppointmentView(){
+
+        appointmentView.setTextName(venue.getName());
+
+        appointmentView.setTextDate(date.getTime().toLocaleString());
     }
 
     private void placeOrder(){

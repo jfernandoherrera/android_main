@@ -33,7 +33,6 @@ public class OpeningHourContext {
         }
 
         return  openingHourContext;
-
     }
 
     public void loadDayOpeningHours(Venue venue, int day, OpeningHourCompletion.OpeningHourErrorCompletion completion){

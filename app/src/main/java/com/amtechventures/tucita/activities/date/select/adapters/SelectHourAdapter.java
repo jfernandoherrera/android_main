@@ -8,10 +8,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.amtechventures.tucita.R;
-import com.amtechventures.tucita.utils.strings.Slot;
-
+import com.amtechventures.tucita.model.domain.slot.Slot;
 import java.util.Calendar;
 import java.util.List;
 

@@ -14,13 +14,23 @@ public class SlotContext {
 
         slotRemote = new SlotRemote();
     }
+    public static SlotContext context(SlotContext slotContext) {
 
-    public void loadSlots(Venue venue, SlotCompletion.SlotErrorCompletion completion){
+        if (slotContext == null) {
+
+            slotContext = new SlotContext();
+
+        }
+
+        return  slotContext;
+    }
+
+    public void loadDaySlots(Venue venue, int day, SlotCompletion.SlotErrorCompletion completion){
 
         ParseRelation object = (ParseRelation) venue.get(VenueAttributes.slots);
 
         ParseQuery<Slot> queryLocal = object.getQuery();
 
-        slotRemote.loadSlots(queryLocal, completion);
+        slotRemote.loadDaySlots(queryLocal, day, completion);
     }
 }

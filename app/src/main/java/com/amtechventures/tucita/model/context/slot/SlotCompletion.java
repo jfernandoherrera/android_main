@@ -10,7 +10,7 @@ public class SlotCompletion {
 
     public interface SlotErrorCompletion {
 
-        void completion(List<Slot> SlotList, AppError error);
+        void completion(List<Slot> slotList, AppError error);
 
     }
 }
