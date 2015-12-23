@@ -123,7 +123,7 @@ public class SelectDayFragment extends Fragment{
 
     public void reload(){
 
-    adapter.notifyDataSetChanged();
+        adapter.notifyDataSetChanged();
     }
 
     public void setDuration(int[] duration) {

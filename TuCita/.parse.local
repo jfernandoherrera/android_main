@@ -1,0 +1,10 @@
+{
+  "applications": {
+    "TuCita": {
+      "applicationId": "EazCp42Fw4yJTEGCuZ9ofl75izJY7a49nw2xufH6"
+    },
+    "_default": {
+      "link": "TuCita"
+    }
+  }
+}

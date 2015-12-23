@@ -15,6 +15,7 @@ import com.amtechventures.tucita.model.context.appointment.AppointmentContext;
 import com.amtechventures.tucita.model.domain.appointment.Appointment;
 import com.amtechventures.tucita.model.domain.appointment.AppointmentAttributes;
 import com.amtechventures.tucita.model.domain.service.Service;
+import com.amtechventures.tucita.model.domain.slot.Slot;
 import com.amtechventures.tucita.model.domain.user.User;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.error.AppError;
@@ -96,6 +97,11 @@ public class SecureCheckoutFragment extends Fragment{
         appointmentView.setTextName(venue.getName());
 
         appointmentView.setTextDate(date.getTime().toLocaleString());
+    }
+
+    private void lockSlot(Slot slot){
+
+
     }
 
     private void placeOrder(){

@@ -419,7 +419,7 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
             goToLogin();
 
-        } else {
+        }else {
 
             selectDateHide();
 
@@ -443,3 +443,4 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
         }
     }
 }
+
