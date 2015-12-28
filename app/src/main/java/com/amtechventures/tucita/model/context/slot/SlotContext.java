@@ -5,6 +5,7 @@ import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.domain.venue.VenueAttributes;
 import com.parse.ParseQuery;
 import com.parse.ParseRelation;
+import com.parse.SaveCallback;
 
 public class SlotContext {
 
@@ -32,5 +33,15 @@ public class SlotContext {
         ParseQuery<Slot> queryLocal = object.getQuery();
 
         slotRemote.loadDaySlots(queryLocal, day, completion);
+    }
+
+    public void lockSlot(Slot slot, SaveCallback callback){
+
+        slotRemote.lockSlot(slot, callback);
+    }
+
+    public boolean isLocked(Slot slot){
+
+      return slotRemote.isLocked(slot);
     }
 }

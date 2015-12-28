@@ -22,7 +22,7 @@ public class SelectHourAdapter extends RecyclerView.Adapter<SelectHourAdapter.Vi
 
     public interface OnSlotSelected{
 
-        void onSlotSelected(Calendar date);
+        void onSlotSelected(Slot slot);
     }
 
     public SelectHourAdapter(int price, List<Slot> slots, OnSlotSelected listener, Calendar date){
@@ -112,7 +112,9 @@ public class SelectHourAdapter extends RecyclerView.Adapter<SelectHourAdapter.Vi
 
                                                     date.set(Calendar.SECOND, 0);
 
-                                                    listener.onSlotSelected(date);
+                                                    slots.get(position).setDate(date);
+
+                                                    listener.onSlotSelected(slots.get(position));
                                                 }
                                             }
 

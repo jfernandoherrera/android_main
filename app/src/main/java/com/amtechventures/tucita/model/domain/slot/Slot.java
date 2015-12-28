@@ -5,14 +5,28 @@ import com.parse.ParseClassName;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import java.util.Calendar;
+import java.util.Date;
+
 @ParseClassName("Slot")
 public class Slot extends ParseObject{
 
     private int amount;
+    private Calendar date;
 
     public int getDay(){
 
         return getInt(SlotAttributes.day);
+    }
+
+    public Calendar getDate() {
+
+        return date;
+    }
+
+    public void setDate(Calendar date) {
+
+        this.date = date;
     }
 
     public int[] getDuration(){

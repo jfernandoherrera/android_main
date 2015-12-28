@@ -16,15 +16,19 @@ import com.amtechventures.tucita.activities.date.select.adapters.SelectHourAdapt
 import com.amtechventures.tucita.activities.login.LoginActivity;
 import com.amtechventures.tucita.activities.service.ServiceFragment;
 import com.amtechventures.tucita.activities.venue.VenueFragment;
+import com.amtechventures.tucita.model.context.slot.SlotContext;
 import com.amtechventures.tucita.model.domain.service.Service;
+import com.amtechventures.tucita.model.domain.slot.Slot;
 import com.amtechventures.tucita.utils.views.ShoppingCarView;
+import com.parse.ParseException;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.Calendar;
 
 public class BookActivity extends AppCompatActivity implements VenueFragment.OnServiceSelected,
         ServiceFragment.OnServiceSelected, ShoppingCarView.OnItemClosed,
-        ShoppingCarView.OnMoreServices, ShoppingCarView.OnBookNow, SelectHourAdapter.OnSlotSelected{
+        ShoppingCarView.OnMoreServices, ShoppingCarView.OnBookNow, SelectHourAdapter.OnSlotSelected, SecureCheckoutFragment.OnPlaceOrder{
 
     private VenueFragment venueFragment;
     private ServiceFragment serviceFragment;
@@ -32,6 +36,8 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
     private SecureCheckoutFragment secureCheckoutFragment;
     private Toolbar toolbar;
     private ShoppingCarView shoppingCarView;
+    private Slot toLock;
+    private SlotContext slotContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +55,8 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
         selectDateFragment = new SelectDayFragment();
 
         secureCheckoutFragment = new SecureCheckoutFragment();
+
+        slotContext = SlotContext.context(slotContext);
 
         shoppingCarView.hideList();
 
@@ -412,18 +420,35 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
     }
 
+    private void setLockSlot(Slot slot){
+
+        toLock = slot;
+
+        slotContext.lockSlot(slot, new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+
+                if(e == null){
+
+                    secureCheckoutShow();
+                }
+            }
+        });
+
+    }
+
     @Override
-    public void onSlotSelected(Calendar date) {
+    public void onSlotSelected(Slot slot) {
 
         if (ParseUser.getCurrentUser() == null) {
 
             goToLogin();
 
-        }else {
+        } else {
 
             selectDateHide();
 
-            secureCheckoutFragment.setDate(date);
+            secureCheckoutFragment.setDate(slot.getDate());
 
             secureCheckoutFragment.setDuration(shoppingCarView.getDurationInMinutes());
 
@@ -439,7 +464,19 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
                 secureCheckoutFragment.setupAppointmentView();
             }
 
-            secureCheckoutShow();
+            setLockSlot(slot);
+        }
+    }
+
+    @Override
+    public void onPlaceOrder() {
+
+        if(slotContext.isLocked(toLock)){
+
+            secureCheckoutFragment.placeOrder();
+        }else{
+
+            back();
         }
     }
 }

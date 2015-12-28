@@ -1,10 +1,16 @@
 package com.amtechventures.tucita.model.context.slot;
 
+import android.util.Log;
+
 import com.amtechventures.tucita.model.domain.slot.Slot;
 import com.amtechventures.tucita.model.domain.slot.SlotAttributes;
 import com.amtechventures.tucita.model.error.AppError;
 import com.parse.FindCallback;
+import com.parse.ParseACL;
+import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.List;
 
@@ -43,5 +49,40 @@ public class SlotRemote {
             }
 
         });
+    }
+
+    public void lockSlot(Slot slot, final SaveCallback callback){
+
+        ParseACL acl = slot.getACL();
+
+        ParseUser user = ParseUser.getCurrentUser();
+
+        acl.setPublicReadAccess(false);
+
+        acl.setReadAccess(user, true);
+
+        acl.setWriteAccess(user, true);
+
+        slot.setACL(acl);
+
+        slot.saveEventually(callback);
+    }
+
+    public boolean isLocked(Slot slot){
+
+        boolean locked = false;
+
+        try {
+
+            ParseACL acl = slot.fetch().getACL();
+
+            locked = acl.getReadAccess(ParseUser.getCurrentUser()) && ! acl.getPublicReadAccess();
+
+        } catch (ParseException e) {
+
+            e.printStackTrace();
+        }
+
+        return locked;
     }
 }

@@ -1,6 +1,7 @@
 package com.amtechventures.tucita.activities.book;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.model.context.appointment.AppointmentCompletion;
 import com.amtechventures.tucita.model.context.appointment.AppointmentContext;
+import com.amtechventures.tucita.model.context.slot.SlotContext;
 import com.amtechventures.tucita.model.domain.appointment.Appointment;
 import com.amtechventures.tucita.model.domain.appointment.AppointmentAttributes;
 import com.amtechventures.tucita.model.domain.service.Service;
@@ -38,6 +40,29 @@ public class SecureCheckoutFragment extends Fragment{
     TextView textClientName;
     TextView textEmail;
     AppointmentContext appointmentContext;
+    OnPlaceOrder listener;
+
+    public interface OnPlaceOrder{
+
+        void onPlaceOrder();
+    }
+
+    @Override
+    public void onAttach(Context context) {
+
+        super.onAttach(context);
+
+        listener = (OnPlaceOrder) context;
+
+    }
+
+    @Override
+    public void onDetach() {
+
+        super.onDetach();
+
+        listener = null;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,6 +70,7 @@ public class SecureCheckoutFragment extends Fragment{
         super.onCreate(savedInstanceState);
 
         appointmentContext = AppointmentContext.context(appointmentContext);
+
     }
 
     @Override
@@ -76,7 +102,7 @@ public class SecureCheckoutFragment extends Fragment{
             @Override
             public void onClick(View v) {
 
-                placeOrder();
+              listener.onPlaceOrder();
             }
         });
 
@@ -99,12 +125,7 @@ public class SecureCheckoutFragment extends Fragment{
         appointmentView.setTextDate(date.getTime().toLocaleString());
     }
 
-    private void lockSlot(Slot slot){
-
-
-    }
-
-    private void placeOrder(){
+    public void placeOrder(){
 
     Appointment appointment = new Appointment();
 

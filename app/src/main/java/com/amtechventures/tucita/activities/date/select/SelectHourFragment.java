@@ -222,11 +222,7 @@ public class SelectHourFragment extends Fragment{
 
                         }
                     }
-                    removeSlotsForDuration(indexFirst);
-
-                    slots.removeAll(toRemove);
-
-                    adapter.notifyDataSetChanged();
+                    removeSlotsForDuration(indexFirst, toRemove);
 
                     if(slots.isEmpty()){
 
@@ -237,13 +233,13 @@ public class SelectHourFragment extends Fragment{
         });
     }
 
-    private void removeSlotsForDuration(List<Integer> indexList){
+    private void removeSlotsForDuration(List<Integer> indexList, List<Slot> toRemove){
 
         for(Integer index : indexList) {
 
             index --;
 
-           int durationHoursToRemove =  durationHours;
+            int durationHoursToRemove =  durationHours;
 
             int durationMinutesToRemove = durationMinutes;
 
@@ -259,12 +255,16 @@ public class SelectHourFragment extends Fragment{
 
                 if(slots.get(indexInt).getAmount() <= 0) {
 
-                    slots.remove(indexInt);
+                    toRemove.add(slots.get(indexInt));
                 }
 
                 index --;
             }
+
         }
+        slots.removeAll(toRemove);
+
+        adapter.notifyDataSetChanged();
 
     }
 
