@@ -59,6 +59,8 @@ public class SlotRemote {
 
         acl.setPublicReadAccess(false);
 
+        acl.setPublicWriteAccess(false);
+
         acl.setReadAccess(user, true);
 
         acl.setWriteAccess(user, true);

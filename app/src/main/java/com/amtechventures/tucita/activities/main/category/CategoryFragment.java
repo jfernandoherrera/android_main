@@ -5,6 +5,7 @@ import java.util.List;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 
+import com.amtechventures.tucita.activities.account.UserImageView;
 import com.amtechventures.tucita.model.domain.user.UserAttributes;
 import com.amtechventures.tucita.model.error.AppError;
 import com.amtechventures.tucita.model.domain.category.Category;
@@ -47,8 +49,14 @@ public class CategoryFragment extends Fragment {
     private ProgressDialog progress;
     OnItemClicked listener;
     Typeface roboto;
+    private UserImageView picture;
     public interface OnItemClicked{
         void onItemClicked(String name);
+    }
+
+    public void setPicture(UserImageView picture) {
+
+        this.picture = picture;
     }
 
     @Override
@@ -133,13 +141,16 @@ public class CategoryFragment extends Fragment {
 
         final Button buttonText = (Button) view.findViewById(R.id.go_to_login);
 
+        final ImageButton button = (ImageButton) view.findViewById(R.id.account);
+
         if (connected){
+
+            button.setImageDrawable(picture);
 
             buttonText.setVisibility(View.GONE);
 
         }else {
 
-            final ImageButton button = (ImageButton) view.findViewById(R.id.account);
 
             button.setVisibility(View.GONE);
 

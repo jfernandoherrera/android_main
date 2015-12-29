@@ -1,6 +1,7 @@
 package com.amtechventures.tucita.activities.login;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 import android.view.Gravity;
@@ -10,6 +11,9 @@ import android.widget.TextView;
 
 import com.amtechventures.tucita.activities.main.MainActivity;
 import com.amtechventures.tucita.model.domain.user.UserAttributes;
+import com.facebook.AccessToken;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.parse.ParseFacebookUtils;
 
 import android.widget.AutoCompleteTextView;
@@ -21,6 +25,8 @@ import com.amtechventures.tucita.model.domain.user.User;
 import com.amtechventures.tucita.model.context.user.UserContext;
 import com.amtechventures.tucita.activities.signup.SignUpActivity;
 import com.amtechventures.tucita.model.context.user.UserCompletion;
+
+import org.json.JSONObject;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -91,6 +97,25 @@ public class LoginActivity extends AppCompatActivity {
 
                 } else {
 
+
+
+                    GraphRequest request = GraphRequest.newMeRequest(
+                            AccessToken.getCurrentAccessToken() ,
+                            new GraphRequest.GraphJSONObjectCallback() {
+                                @Override
+                                public void onCompleted(
+                                        JSONObject object,
+                                        GraphResponse response) {
+
+                                    Log.i(response.toString(), "222222");
+                                    // Application code
+                                }
+                            });
+                    Bundle parameters = new Bundle();
+                    parameters.putString("fields", "name");
+                    request.setParameters(parameters);
+                    request.executeAsync();
+
                     processLoggedUser();
 
                 }
@@ -119,6 +144,9 @@ public class LoginActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         super.onActivityResult(requestCode, resultCode, data);
+
+
+        Log.i(String.valueOf(AccessToken.getCurrentAccessToken()), "222222");
 
         ParseFacebookUtils.onActivityResult(requestCode, resultCode, data);
 

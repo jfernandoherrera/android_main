@@ -46,11 +46,11 @@ public class Application extends android.app.Application {
 
         ParseObject.registerSubclass(Slot.class);
 
-        Parse.initialize(this, app_parse_id, app_client_parse_id);
+        FacebookSdk.sdkInitialize(this.getApplicationContext());
 
-        ParseFacebookUtils.initialize(this);
+        Parse.initialize(this.getApplicationContext(), app_parse_id, app_client_parse_id);
 
-        FacebookSdk.sdkInitialize(this);
+        ParseFacebookUtils.initialize(this.getApplicationContext());
 
     }
 

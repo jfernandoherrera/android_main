@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.account.AccountActivity;
+import com.amtechventures.tucita.activities.account.UserImageView;
 import com.amtechventures.tucita.activities.main.category.CategoryFragment;
 import com.amtechventures.tucita.activities.login.LoginActivity;
 import com.amtechventures.tucita.activities.search.SearchFragment;
@@ -40,6 +41,10 @@ public class MainActivity extends AppCompatActivity implements CategoryFragment.
         searchFragment = new SearchFragment();
 
         userContext = UserContext.context(userContext);
+
+        UserImageView picture = new UserImageView(userContext.getPicture());
+
+        fragment.setPicture(picture);
 
         setCategoryFragment();
 

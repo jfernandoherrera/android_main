@@ -44,4 +44,5 @@ public class AlertDialogError {
 
         typeMore.show();
     }
+
 }

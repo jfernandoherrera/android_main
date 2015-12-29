@@ -1,5 +1,6 @@
 package com.amtechventures.tucita.activities.account;
 
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
@@ -18,8 +19,13 @@ public class UserImageView extends Drawable {
     private int TEXT_SIZE = 25;
     private int TEXT_X = 122;
     private int TEXT_Y = 40;
-
+    private Bitmap picture;
     private UserContext userContext = new UserContext();
+
+    public UserImageView(Bitmap picture){
+
+        this.picture = picture;
+    }
 
     @Override
     public void draw(Canvas canvas) {

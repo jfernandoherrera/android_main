@@ -1,6 +1,7 @@
 package com.amtechventures.tucita.model.context.user;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
@@ -9,9 +10,13 @@ import java.util.Arrays;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
 
+import com.facebook.AccessToken;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.LogInCallback;
@@ -73,34 +78,9 @@ public class UserRemote {
 
             @Override
             public void done(ParseUser parseUser, ParseException e) {
+                Log.i(String.valueOf(AccessToken.getCurrentAccessToken()), "2222h22");
 
                 processLogin(parseUser, e, completion);
-
-
-                URL img_value = null;
-                try {
-                   HashMap jsonObject = (HashMap) parseUser.get("authData");
-
-                    HashMap uaae = (HashMap) jsonObject.get("facebook");
-
-                    img_value = new URL("http://graph.facebook.com/"+uaae.get("id")+"/picture?type=large");
-
-                } catch (MalformedURLException exception) {
-
-                    exception.printStackTrace();
-                }
-                try {
-                    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-
-                    StrictMode.setThreadPolicy(policy);
-
-                    Bitmap mIcon1 = BitmapFactory.decodeStream(img_value.openConnection().getInputStream());
-
-                    Log.i(mIcon1.toString(), "image retrieved from facebook");
-                } catch (IOException exce) {
-
-                    exce.printStackTrace();
-                }
 
             }
 
@@ -108,6 +88,34 @@ public class UserRemote {
 
     }
 
+    public Bitmap getPicture(ParseUser parseUser){
+
+        Bitmap icon = null;
+        URL img_value = null;
+        try {
+            HashMap jsonObject = (HashMap) parseUser.get("authData");
+
+            HashMap uaae = (HashMap) jsonObject.get("facebook");
+
+            img_value = new URL("https://graph.facebook.com/"+uaae.get("id")+"/picture?type=large");
+
+        } catch (MalformedURLException exception) {
+
+            exception.printStackTrace();
+        }
+        try {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+
+            StrictMode.setThreadPolicy(policy);
+
+            icon = BitmapFactory.decodeStream((InputStream) img_value.getContent());
+
+        } catch (IOException exce) {
+
+            exce.printStackTrace();
+        }
+    return icon;
+    }
 
                 private void processLogin (ParseUser parseUser, ParseException
                 e, UserCompletion.UserErrorCompletion completion){
