@@ -1,5 +1,7 @@
 package com.amtechventures.tucita.activities.login;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -26,6 +28,7 @@ import com.amtechventures.tucita.model.context.user.UserContext;
 import com.amtechventures.tucita.activities.signup.SignUpActivity;
 import com.amtechventures.tucita.model.context.user.UserCompletion;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class LoginActivity extends AppCompatActivity {
@@ -85,7 +88,7 @@ public class LoginActivity extends AppCompatActivity {
         userContext.loginWithFacebook(this, new UserCompletion.UserErrorCompletion() {
 
             @Override
-            public void completion(User user, AppError error) {
+            public void completion(final User user, AppError error) {
 
                 if (error != null) {
 
@@ -98,32 +101,11 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
 
 
-
-                    GraphRequest request = GraphRequest.newMeRequest(
-                            AccessToken.getCurrentAccessToken() ,
-                            new GraphRequest.GraphJSONObjectCallback() {
-                                @Override
-                                public void onCompleted(
-                                        JSONObject object,
-                                        GraphResponse response) {
-
-                                    Log.i(response.toString(), "222222");
-                                    // Application code
-                                }
-                            });
-                    Bundle parameters = new Bundle();
-                    parameters.putString("fields", "name");
-                    request.setParameters(parameters);
-                    request.executeAsync();
-
                     processLoggedUser();
-
                 }
-
             }
 
         });
-
     }
 
     private void processLoggedUser() {
@@ -145,10 +127,15 @@ public class LoginActivity extends AppCompatActivity {
 
         super.onActivityResult(requestCode, resultCode, data);
 
-
-        Log.i(String.valueOf(AccessToken.getCurrentAccessToken()), "222222");
-
         ParseFacebookUtils.onActivityResult(requestCode, resultCode, data);
+
+    }
+
+    public static void goToLogin(Context context) {
+
+        Intent intent = new Intent(context, LoginActivity.class);
+
+        context.startActivity(intent);
 
     }
 

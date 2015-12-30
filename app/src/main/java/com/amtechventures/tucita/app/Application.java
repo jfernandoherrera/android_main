@@ -24,9 +24,6 @@ public class Application extends android.app.Application {
         
         Fabric.with(this, new Crashlytics());
 
-        String app_parse_id = Strings.APP_PARSE_ID;
-
-        String app_client_parse_id = Strings.CLIENT_PARSE_ID;
 
         Parse.enableLocalDatastore(this);
 
@@ -46,12 +43,14 @@ public class Application extends android.app.Application {
 
         ParseObject.registerSubclass(Slot.class);
 
-        FacebookSdk.sdkInitialize(this.getApplicationContext());
+        FacebookSdk.sdkInitialize(this);
 
-        Parse.initialize(this.getApplicationContext(), app_parse_id, app_client_parse_id);
+        Parse.initialize(this);
 
-        ParseFacebookUtils.initialize(this.getApplicationContext());
+        ParseFacebookUtils.initialize(this);
 
     }
+
+
 
 }

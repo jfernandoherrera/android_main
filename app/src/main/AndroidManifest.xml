@@ -16,7 +16,12 @@
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
-
+        <meta-data
+       android:name="com.parse.APPLICATION_ID"
+            android:value="@string/app_parse_id" />
+        <meta-data
+         android:name="com.parse.CLIENT_KEY"
+         android:value="@string/client_parse_id" />
         <activity android:name=".activities.splash.SplashActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

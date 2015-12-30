@@ -36,6 +36,17 @@ public class User {
 
     }
 
+    public void setName(String name){
+
+        parseUser.put(UserAttributes.name, name);
+
+    }
+
+    public String getName(){
+
+      return parseUser.getString(UserAttributes.name);
+    }
+
     public String getEmail(){
 
       return  parseUser.getString(UserAttributes.email);

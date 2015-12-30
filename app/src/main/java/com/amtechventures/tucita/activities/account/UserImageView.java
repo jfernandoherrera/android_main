@@ -8,17 +8,21 @@ import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 
 import com.amtechventures.tucita.model.context.user.UserContext;
+import com.amtechventures.tucita.model.domain.user.User;
 
 public class UserImageView extends Drawable {
 
     private Paint paint = new Paint();
-    private int POSITION_ZERO = 0;
-    private int MAX_WIDTH = 550;
-    private int HEIGHT = 90;
+    private final int POSITION_ZERO = 0;
+    private final int MAX_WIDTH = 50;
+    private final int HEIGHT = 90;
     private int ALPHA_TRANSPARENCY = 125;
-    private int TEXT_SIZE = 25;
-    private int TEXT_X = 122;
-    private int TEXT_Y = 40;
+    private final int TEXT_SIZE = 25;
+    private final int TEXT_X = 105;
+    private final int TEXT_Y = 60;
+    private final int PICTURE_Y = 20;
+    private final int PICTURE_X = 20;
+
     private Bitmap picture;
     private UserContext userContext = new UserContext();
 
@@ -32,23 +36,28 @@ public class UserImageView extends Drawable {
 
         paint.setColor(Color.GRAY);
 
-        canvas.drawRect(POSITION_ZERO, POSITION_ZERO, MAX_WIDTH, HEIGHT, paint);
+        //paint.setAlpha(ALPHA_TRANSPARENCY);
 
-        paint.setColor(Color.BLUE);
+        picture = Bitmap.createScaledBitmap(picture, 60,60,false);
 
-        paint.setAlpha(ALPHA_TRANSPARENCY);
+        canvas.drawBitmap(picture, PICTURE_X, PICTURE_Y, paint);
+
+        User user = userContext.currentUser();
 
         paint.setFakeBoldText(true);
 
         paint.setTextSize(TEXT_SIZE);
 
-        String email = userContext.currentUser().getEmail();
+        if(user != null) {
 
-        if (email != null) {
+            String name = user.getName();
 
-            canvas.drawText(email, TEXT_X, TEXT_Y, paint);
+            if (name != null) {
 
+                canvas.drawText(name, TEXT_X, TEXT_Y, paint);
+            }
         }
+
 
     }
 

@@ -2,9 +2,7 @@ package com.amtechventures.tucita.model.context.user;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
-
 import com.amtechventures.tucita.model.domain.user.User;
-import com.parse.ParseUser;
 
 public class UserContext {
 
@@ -20,7 +18,6 @@ public class UserContext {
         }
 
         return userContext;
-
     }
 
     public UserContext() {

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Arrays;
@@ -14,6 +15,8 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
 
+import com.amtechventures.tucita.R;
+import com.amtechventures.tucita.model.domain.user.UserAttributes;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
@@ -28,6 +31,7 @@ import com.amtechventures.tucita.model.domain.user.User;
 import com.amtechventures.tucita.model.domain.category.Category;
 import com.amtechventures.tucita.model.domain.facebook.FacebookPermissions;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class UserRemote {
@@ -78,10 +82,49 @@ public class UserRemote {
 
             @Override
             public void done(ParseUser parseUser, ParseException e) {
-                Log.i(String.valueOf(AccessToken.getCurrentAccessToken()), "2222h22");
+
+                if (parseUser != null && parseUser.isNew()) {
+
+                        final User user = new User();
+
+                        user.setParseUser(parseUser);
+
+                        GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(),new GraphRequest.GraphJSONObjectCallback() {
+                            @Override
+                            public void onCompleted(JSONObject object, GraphResponse response) {
+
+                                String name = null;
+
+                                String email = null;
+
+                                try {
+                                    name = object.getString(UserAttributes.name);
+
+                                    email = object.getString(UserAttributes.email);
+
+                                } catch (JSONException e) {
+
+                                    e.printStackTrace();
+                                }
+                                user.setEmail(email);
+
+                                user.setName(name);
+
+                                saveUser(user);
+                            }
+                        });
+                        Bundle parameters = new Bundle();
+
+                        String fields = "fields";
+
+                        parameters.putString(fields, UserAttributes.name + "," + UserAttributes.email);
+
+                        request.setParameters(parameters);
+
+                        request.executeAsync();
+                }
 
                 processLogin(parseUser, e, completion);
-
             }
 
         });
@@ -92,12 +135,13 @@ public class UserRemote {
 
         Bitmap icon = null;
         URL img_value = null;
+
         try {
-            HashMap jsonObject = (HashMap) parseUser.get("authData");
+            HashMap authData = (HashMap) parseUser.get("authData");
 
-            HashMap uaae = (HashMap) jsonObject.get("facebook");
+            HashMap facebook = (HashMap) authData.get("facebook");
 
-            img_value = new URL("https://graph.facebook.com/"+uaae.get("id")+"/picture?type=large");
+            img_value = new URL("https://graph.facebook.com/" + facebook.get("id") + "/picture?type=square");
 
         } catch (MalformedURLException exception) {
 
@@ -138,4 +182,19 @@ public class UserRemote {
 
                 }
 
-            }
+    public void saveUser(User user){
+
+        List users = new ArrayList();
+
+        users.add(user.getParseUser());
+
+        try {
+
+            ParseObject.saveAll(users);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+}

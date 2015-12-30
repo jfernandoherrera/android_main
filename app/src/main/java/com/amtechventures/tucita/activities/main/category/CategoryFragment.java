@@ -143,14 +143,33 @@ public class CategoryFragment extends Fragment {
 
         final ImageButton button = (ImageButton) view.findViewById(R.id.account);
 
+        button.setBackgroundResource(R.drawable.log_in_or_signup_click_out);
+
         if (connected){
 
             button.setImageDrawable(picture);
 
             buttonText.setVisibility(View.GONE);
 
-        }else {
+            button.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
 
+                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
+
+                        button.setBackgroundResource(R.drawable.log_in_or_signup_click_in);
+
+                    } else if (event.getAction() == MotionEvent.ACTION_UP) {
+
+                        button.setBackgroundResource(R.drawable.log_in_or_signup_click_out);
+
+                        button.callOnClick();
+                    }
+                    return true;
+                }
+            });
+
+        }else {
 
             button.setVisibility(View.GONE);
 

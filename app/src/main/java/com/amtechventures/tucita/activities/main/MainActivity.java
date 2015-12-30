@@ -233,9 +233,9 @@ public class MainActivity extends AppCompatActivity implements CategoryFragment.
 
     public void goToLogin(View v) {
 
-        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        LoginActivity.goToLogin(this);
 
-        startActivity(intent);
+        finish();
 
     }
 
