@@ -1,5 +1,6 @@
 package com.amtechventures.tucita.activities.account;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -61,6 +62,15 @@ public class AccountActivity extends AppCompatActivity {
         });
 
         return true;
+
+    }
+
+
+    public static void goToAccount(Context context) {
+
+        Intent intent = new Intent(context, AccountActivity.class);
+
+        context.startActivity(intent);
 
     }
 

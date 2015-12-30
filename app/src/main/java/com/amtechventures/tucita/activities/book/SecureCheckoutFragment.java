@@ -91,7 +91,7 @@ public class SecureCheckoutFragment extends Fragment{
 
             user.setParseUser(ParseUser.getCurrentUser());
 
-            textClientName.setText(user.getUserName());
+            textClientName.setText(user.getName());
 
             textEmail.setText(user.getEmail());
         }
@@ -166,10 +166,12 @@ public class SecureCheckoutFragment extends Fragment{
     }
 
     public void setDuration(int duration) {
+
         this.duration = duration;
     }
 
     public void setServices(List<Service> services) {
+
         this.services = services;
     }
 

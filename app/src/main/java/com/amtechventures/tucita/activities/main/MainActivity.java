@@ -241,9 +241,9 @@ public class MainActivity extends AppCompatActivity implements CategoryFragment.
 
     public void goToAccount(View v) {
 
-        Intent intent = new Intent(MainActivity.this, AccountActivity.class);
+        AccountActivity.goToAccount(this);
 
-        startActivity(intent);
+        finish();
     }
 
     @Override

@@ -13,9 +13,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.util.Log;
-
-import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.model.domain.user.UserAttributes;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
@@ -30,7 +27,6 @@ import com.amtechventures.tucita.model.error.AppError;
 import com.amtechventures.tucita.model.domain.user.User;
 import com.amtechventures.tucita.model.domain.category.Category;
 import com.amtechventures.tucita.model.domain.facebook.FacebookPermissions;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
