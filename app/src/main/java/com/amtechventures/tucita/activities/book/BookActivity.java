@@ -11,11 +11,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import com.amtechventures.tucita.R;
-import com.amtechventures.tucita.activities.date.select.SelectDayFragment;
-import com.amtechventures.tucita.activities.date.select.adapters.SelectHourAdapter;
+import com.amtechventures.tucita.activities.book.fragments.checkout.SecureCheckoutFragment;
+import com.amtechventures.tucita.activities.book.fragments.select.SelectDayFragment;
+import com.amtechventures.tucita.activities.book.fragments.adapters.SelectHourAdapter;
 import com.amtechventures.tucita.activities.login.LoginActivity;
-import com.amtechventures.tucita.activities.service.ServiceFragment;
-import com.amtechventures.tucita.activities.venue.VenueFragment;
+import com.amtechventures.tucita.activities.book.fragments.service.ServiceFragment;
+import com.amtechventures.tucita.activities.book.fragments.venue.VenueFragment;
 import com.amtechventures.tucita.model.context.slot.SlotContext;
 import com.amtechventures.tucita.model.domain.service.Service;
 import com.amtechventures.tucita.model.domain.slot.Slot;
@@ -23,8 +24,6 @@ import com.amtechventures.tucita.utils.views.ShoppingCarView;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
-
-import java.util.Calendar;
 
 public class BookActivity extends AppCompatActivity implements VenueFragment.OnServiceSelected,
         ServiceFragment.OnServiceSelected, ShoppingCarView.OnItemClosed,

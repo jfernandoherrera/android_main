@@ -1,6 +1,5 @@
 package com.amtechventures.tucita.activities.main;
 
-import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MenuItemCompat;
@@ -14,14 +13,13 @@ import android.view.View;
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.account.AccountActivity;
 import com.amtechventures.tucita.activities.account.UserImageView;
-import com.amtechventures.tucita.activities.main.category.CategoryFragment;
+import com.amtechventures.tucita.activities.main.fragments.category.CategoryFragment;
 import com.amtechventures.tucita.activities.login.LoginActivity;
-import com.amtechventures.tucita.activities.search.SearchFragment;
-import com.amtechventures.tucita.activities.subcategory.SubCategoryFragment;
+import com.amtechventures.tucita.activities.main.fragments.search.SearchFragment;
+import com.amtechventures.tucita.activities.main.fragments.subcategory.SubCategoryFragment;
 import com.amtechventures.tucita.model.context.user.UserContext;
 import com.amtechventures.tucita.model.domain.user.User;
 import com.amtechventures.tucita.utils.views.AlertDialogError;
-import com.parse.ParseUser;
 
 public class MainActivity extends AppCompatActivity implements CategoryFragment.OnItemClicked, SubCategoryFragment.OnOthersClicked{
 

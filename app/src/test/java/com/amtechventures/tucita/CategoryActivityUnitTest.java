@@ -3,7 +3,7 @@ package com.amtechventures.tucita;
 
 
 
-import com.amtechventures.tucita.activities.main.category.CategoryFragment;
+import com.amtechventures.tucita.activities.main.fragments.category.CategoryFragment;
 import org.junit.Before;
 import org.junit.Test;
 import org.robolectric.Robolectric;

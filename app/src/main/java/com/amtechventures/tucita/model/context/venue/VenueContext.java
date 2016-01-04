@@ -3,7 +3,6 @@ package com.amtechventures.tucita.model.context.venue;
 
 import android.location.Location;
 
-import com.amtechventures.tucita.activities.venue.VenueFragment;
 import com.amtechventures.tucita.model.domain.city.City;
 import com.amtechventures.tucita.model.domain.service.Service;
 import com.amtechventures.tucita.model.domain.venue.Venue;

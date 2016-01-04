@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.amtechventures.tucita.activities.subcategory.SubCategoryFragment">
+    tools:context="com.amtechventures.tucita.activities.main.fragments.subcategory.SubCategoryFragment">
 
     <ImageView
         android:layout_width="match_parent"
