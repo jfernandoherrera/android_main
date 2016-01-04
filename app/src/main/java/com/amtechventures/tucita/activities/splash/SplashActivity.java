@@ -7,6 +7,7 @@ import android.os.Bundle;
 import java.util.TimerTask;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.MotionEvent;
 
 import com.amtechventures.tucita.R;
@@ -97,6 +98,7 @@ public class SplashActivity extends AppCompatActivity {
 
         } else {
 
+            Log.i("fderdsd", userContext.currentUser().getUserName());
             processLoggedUser();
 
         }

@@ -13,6 +13,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.util.Log;
+
 import com.amtechventures.tucita.model.domain.user.UserAttributes;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
@@ -47,7 +49,7 @@ public class UserRemote {
 
     }
 
-    public void signup(String email, String password, final UserCompletion.UserErrorCompletion completion) {
+    public void signup(String email, String password, String name, final UserCompletion.UserErrorCompletion completion) {
 
         final ParseUser parseUser = new ParseUser();
 
@@ -56,6 +58,8 @@ public class UserRemote {
         parseUser.setUsername(email);
 
         parseUser.setPassword(password);
+        
+        parseUser.put(UserAttributes.name, name);
 
         parseUser.signUpInBackground(new SignUpCallback() {
 
@@ -78,6 +82,8 @@ public class UserRemote {
 
             @Override
             public void done(ParseUser parseUser, ParseException e) {
+
+
 
                 if (parseUser != null && parseUser.isNew()) {
 

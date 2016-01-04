@@ -19,7 +19,9 @@ import com.amtechventures.tucita.activities.login.LoginActivity;
 import com.amtechventures.tucita.activities.search.SearchFragment;
 import com.amtechventures.tucita.activities.subcategory.SubCategoryFragment;
 import com.amtechventures.tucita.model.context.user.UserContext;
+import com.amtechventures.tucita.model.domain.user.User;
 import com.amtechventures.tucita.utils.views.AlertDialogError;
+import com.parse.ParseUser;
 
 public class MainActivity extends AppCompatActivity implements CategoryFragment.OnItemClicked, SubCategoryFragment.OnOthersClicked{
 
@@ -42,9 +44,23 @@ public class MainActivity extends AppCompatActivity implements CategoryFragment.
 
         userContext = UserContext.context(userContext);
 
-        UserImageView picture = new UserImageView(userContext.getPicture());
+        User current = userContext.currentUser();
 
-        fragment.setPicture(picture);
+        if(current != null){
+
+            UserImageView picture;
+
+            if(userContext.IsFacebook(current.getParseUser())) {
+
+            picture = new UserImageView(userContext.getPicture());
+
+            }else {
+
+                picture = new UserImageView(null);
+            }
+
+            fragment.setPicture(picture);
+        }
 
         setCategoryFragment();
 

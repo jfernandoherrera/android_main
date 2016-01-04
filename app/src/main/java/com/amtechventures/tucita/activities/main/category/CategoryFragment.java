@@ -135,7 +135,7 @@ public class CategoryFragment extends Fragment {
         return stringBuilder;
     }
 
-    private void setupLogged(View view){
+    private void setupLogged(View view) {
 
         boolean connected = getActivity().getIntent().getExtras().getBoolean(UserAttributes.connected);
 
@@ -145,7 +145,7 @@ public class CategoryFragment extends Fragment {
 
         button.setBackgroundResource(R.drawable.log_in_or_signup_click_out);
 
-        if (connected){
+        if (connected) {
 
             button.setImageDrawable(picture);
 
@@ -169,7 +169,7 @@ public class CategoryFragment extends Fragment {
                 }
             });
 
-        }else {
+        } else {
 
             button.setVisibility(View.GONE);
 

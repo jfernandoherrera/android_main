@@ -38,9 +38,12 @@ public class UserImageView extends Drawable {
 
         //paint.setAlpha(ALPHA_TRANSPARENCY);
 
-        picture = Bitmap.createScaledBitmap(picture, 60,60,false);
+        if(picture != null) {
 
-        canvas.drawBitmap(picture, PICTURE_X, PICTURE_Y, paint);
+            picture = Bitmap.createScaledBitmap(picture, 60, 60, false);
+
+            canvas.drawBitmap(picture, PICTURE_X, PICTURE_Y, paint);
+        }
 
         User user = userContext.currentUser();
 

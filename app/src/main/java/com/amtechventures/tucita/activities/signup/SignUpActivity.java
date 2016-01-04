@@ -12,6 +12,8 @@ import com.amtechventures.tucita.R;
 import android.widget.AutoCompleteTextView;
 import android.support.v7.app.AppCompatActivity;
 
+import com.amtechventures.tucita.activities.main.MainActivity;
+import com.amtechventures.tucita.model.domain.user.UserAttributes;
 import com.amtechventures.tucita.model.error.AppError;
 import com.amtechventures.tucita.model.domain.user.User;
 import com.amtechventures.tucita.model.context.user.UserContext;
@@ -21,6 +23,7 @@ import com.amtechventures.tucita.activities.main.category.CategoryFragment;
 public class SignUpActivity extends AppCompatActivity {
 
     private TextView emailView;
+    private TextView nameView;
     private EditText passwordView;
     private UserContext userContext;
 
@@ -36,6 +39,8 @@ public class SignUpActivity extends AppCompatActivity {
         passwordView = (EditText)findViewById(R.id.password);
 
         emailView = (AutoCompleteTextView)findViewById(R.id.email);
+
+        nameView = (TextView)findViewById(R.id.name);
 
         Button singUpButton = (Button)findViewById(R.id.buttonSignUp);
 
@@ -58,7 +63,9 @@ public class SignUpActivity extends AppCompatActivity {
 
         String password = passwordView.getText().toString();
 
-        userContext.signup(email, password, new UserCompletion.UserErrorCompletion() {
+        String name = nameView.getText().toString();
+
+        userContext.signup(email, password, name, new UserCompletion.UserErrorCompletion() {
 
             @Override
             public void completion(User user, AppError error) {
@@ -85,9 +92,11 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void processLoggedUser() {
 
-        Intent intent = new Intent(this, CategoryFragment.class);
+        Intent intent = new Intent(this, MainActivity.class);
 
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+        intent.putExtra(UserAttributes.connected, true);
 
         startActivity(intent);
 

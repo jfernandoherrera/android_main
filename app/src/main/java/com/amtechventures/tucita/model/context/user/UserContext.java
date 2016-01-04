@@ -3,6 +3,8 @@ package com.amtechventures.tucita.model.context.user;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import com.amtechventures.tucita.model.domain.user.User;
+import com.parse.ParseFacebookUtils;
+import com.parse.ParseUser;
 
 public class UserContext {
 
@@ -34,9 +36,9 @@ public class UserContext {
 
     }
 
-    public void signup(String email, String password, UserCompletion.UserErrorCompletion completion) {
+    public void signup(String email, String password, String name, UserCompletion.UserErrorCompletion completion) {
 
-        remote.signup(email, password, completion);
+        remote.signup(email, password, name, completion);
 
     }
 
@@ -50,6 +52,11 @@ public class UserContext {
 
         return local.currentUser();
 
+    }
+
+    public boolean IsFacebook(ParseUser parseUser){
+
+       return ParseFacebookUtils.isLinked(parseUser);
     }
 
     public Bitmap getPicture(){
