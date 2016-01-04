@@ -1,6 +1,5 @@
 package com.amtechventures.tucita.model.context.user;
 
-import com.facebook.login.LoginManager;
 import com.parse.ParseUser;
 import com.amtechventures.tucita.model.domain.user.User;
 
@@ -27,8 +26,6 @@ public class UserLocal {
     public void logout() {
 
         ParseUser.logOut();
-
-        LoginManager.getInstance().logOut();
     }
 
 }

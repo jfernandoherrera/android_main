@@ -18,6 +18,15 @@
         android:layout_below="@+id/switch1"
         android:id="@+id/first"
        />
+    <ExpandableListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/first"
+        android:divider="@android:color/transparent"
+        android:indicatorLeft="294dp"
+        android:indicatorRight="329dp"
+        android:id="@+id/listViewDescription"
+        />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

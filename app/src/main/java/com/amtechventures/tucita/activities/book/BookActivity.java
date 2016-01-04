@@ -13,7 +13,7 @@ import android.view.View;
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.book.fragments.checkout.SecureCheckoutFragment;
 import com.amtechventures.tucita.activities.book.fragments.select.SelectDayFragment;
-import com.amtechventures.tucita.activities.book.fragments.adapters.SelectHourAdapter;
+import com.amtechventures.tucita.activities.book.fragments.select.adapters.SelectHourAdapter;
 import com.amtechventures.tucita.activities.login.LoginActivity;
 import com.amtechventures.tucita.activities.book.fragments.service.ServiceFragment;
 import com.amtechventures.tucita.activities.book.fragments.venue.VenueFragment;
@@ -205,6 +205,8 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
         transaction.commit();
 
         String serviceName = serviceFragment.getService().getName();
+
+        serviceFragment.setup();
 
         getSupportActionBar().setTitle(serviceName);
     }

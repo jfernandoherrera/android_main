@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.amtechventures.tucita.R;
-import com.amtechventures.tucita.activities.book.fragments.adapters.SelectHourAdapter;
+import com.amtechventures.tucita.activities.book.fragments.select.adapters.SelectHourAdapter;
 import com.amtechventures.tucita.model.context.appointment.AppointmentCompletion;
 import com.amtechventures.tucita.model.context.appointment.AppointmentContext;
 import com.amtechventures.tucita.model.context.slot.SlotCompletion;

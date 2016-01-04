@@ -2,7 +2,9 @@ package com.amtechventures.tucita.activities.account;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.content.Intent;
@@ -27,6 +29,13 @@ public class AccountActivity extends AppCompatActivity {
         setContentView(R.layout.activity_account);
 
         setToolbar();
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.bookings));
+
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.venues));
+
     }
 
     private void setToolbar(){
@@ -42,6 +51,8 @@ public class AccountActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         getMenuInflater().inflate(R.menu.menu_logout, menu);
 
         MenuItem logoutItem = menu.findItem(R.id.action_logout);
@@ -53,7 +64,7 @@ public class AccountActivity extends AppCompatActivity {
 
                 userContext.logout();
 
-                goToCategories();
+                goToCategoriesFromLogout();
 
                 return true;
 
@@ -66,6 +77,22 @@ public class AccountActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        goToCategories();
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        goToCategories();
+
+        super.onBackPressed();
+    }
+
     public static void goToAccount(Context context) {
 
         Intent intent = new Intent(context, AccountActivity.class);
@@ -74,11 +101,22 @@ public class AccountActivity extends AppCompatActivity {
 
     }
 
-    public void goToCategories(){
+    public void goToCategoriesFromLogout(){
 
         Intent intent = new Intent(this, MainActivity.class);
 
         intent.putExtra(UserAttributes.connected, false);
+
+        startActivity(intent);
+
+        finish();
+    }
+
+    public void goToCategories(){
+
+        Intent intent = new Intent(this, MainActivity.class);
+
+        intent.putExtra(UserAttributes.connected, true);
 
         startActivity(intent);
 

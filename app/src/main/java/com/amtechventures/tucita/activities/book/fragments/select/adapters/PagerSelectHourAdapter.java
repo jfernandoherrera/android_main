@@ -1,4 +1,4 @@
-package com.amtechventures.tucita.activities.book.fragments.adapters;
+package com.amtechventures.tucita.activities.book.fragments.select.adapters;
 
 
 import android.support.v4.app.Fragment;

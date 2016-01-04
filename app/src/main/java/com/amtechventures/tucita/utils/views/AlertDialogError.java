@@ -11,11 +11,14 @@ public class AlertDialogError {
 
     public void noInternetConnectionAlert(Context context) {
 
-        Toast typeMore = Toast.makeText(context, R.string.no_internet_connection, Toast.LENGTH_SHORT);
+        if(context != null) {
 
-        typeMore.setGravity(Gravity.CENTER | Gravity.LEFT, 0, 0);
+            Toast typeMore = Toast.makeText(context, R.string.no_internet_connection, Toast.LENGTH_SHORT);
 
-        typeMore.show();
+            typeMore.setGravity(Gravity.CENTER | Gravity.LEFT, 0, 0);
+
+            typeMore.show();
+        }
     }
 
     public void noLocationAlert(Context context) {

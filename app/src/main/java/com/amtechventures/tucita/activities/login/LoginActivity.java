@@ -1,9 +1,7 @@
 package com.amtechventures.tucita.activities.login;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 import android.view.Gravity;
@@ -13,9 +11,6 @@ import android.widget.TextView;
 
 import com.amtechventures.tucita.activities.main.MainActivity;
 import com.amtechventures.tucita.model.domain.user.UserAttributes;
-import com.facebook.AccessToken;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
 import com.parse.ParseFacebookUtils;
 
 import android.widget.AutoCompleteTextView;
@@ -27,9 +22,6 @@ import com.amtechventures.tucita.model.domain.user.User;
 import com.amtechventures.tucita.model.context.user.UserContext;
 import com.amtechventures.tucita.activities.signup.SignUpActivity;
 import com.amtechventures.tucita.model.context.user.UserCompletion;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -122,6 +114,20 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    private void processUncloggedUser() {
+
+        Intent intent = new Intent(this, MainActivity.class);
+
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+        intent.putExtra(UserAttributes.connected, false);
+
+        startActivity(intent);
+
+        finish();
+
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -149,4 +155,11 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+
+        processUncloggedUser();
+
+        super.onBackPressed();
+    }
 }

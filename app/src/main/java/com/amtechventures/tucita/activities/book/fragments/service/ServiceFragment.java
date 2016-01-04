@@ -7,16 +7,22 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ExpandableListView;
 import android.widget.RelativeLayout;
 import com.amtechventures.tucita.R;
+import com.amtechventures.tucita.activities.book.fragments.venue.adapters.ExpandableListAdapter;
 import com.amtechventures.tucita.model.domain.service.Service;
+import com.amtechventures.tucita.utils.views.ExpandableParentAdapter;
 import com.amtechventures.tucita.utils.views.ServiceAddView;
 
 public class ServiceFragment extends Fragment {
 
     private RelativeLayout relativeLayout;
     private ServiceAddView serviceAddView;
+    private ExpandableParentAdapter parentAdapter;
+    private ExpandableListView listViewParent;
     private Service service;
+    private LayoutInflater inflater;
     private OnServiceSelected listener;
 
     public interface OnServiceSelected{
@@ -35,7 +41,6 @@ public class ServiceFragment extends Fragment {
         super.onAttach(context);
 
         listener = (OnServiceSelected) context;
-
     }
 
     @Override
@@ -56,6 +61,8 @@ public class ServiceFragment extends Fragment {
 
         serviceAddView = (ServiceAddView) rootView.findViewById(R.id.first);
 
+        listViewParent = (ExpandableListView) rootView.findViewById(R.id.listViewDescription);
+
         serviceAddView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,9 +71,35 @@ public class ServiceFragment extends Fragment {
             }
         });
 
+        this.inflater = inflater;
+
         return rootView;
     }
 
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+
+        super.onActivityCreated(savedInstanceState);
+    }
+
+    public void setup() {
+
+        String description = service.getDescription();
+
+        if (description != null) {
+
+            parentAdapter = new ExpandableParentAdapter(R.layout.list_item, null, description);
+
+            parentAdapter.setInflater(inflater);
+
+            listViewParent.setAdapter(parentAdapter);
+
+        }else {
+
+            listViewParent.setVisibility(View.GONE);
+        }
+    }
     public void setService(Service service, boolean added){
 
         this.service = service;
