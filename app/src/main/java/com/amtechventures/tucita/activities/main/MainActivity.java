@@ -1,5 +1,6 @@
 package com.amtechventures.tucita.activities.main;
 
+import android.graphics.Typeface;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MenuItemCompat;
@@ -12,7 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.account.AccountActivity;
-import com.amtechventures.tucita.activities.account.UserImageView;
+import com.amtechventures.tucita.utils.views.UserImageView;
 import com.amtechventures.tucita.activities.main.fragments.category.CategoryFragment;
 import com.amtechventures.tucita.activities.login.LoginActivity;
 import com.amtechventures.tucita.activities.main.fragments.search.SearchFragment;
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements CategoryFragment.
     private UserContext userContext;
     private final int minimumToSearch = 3;
     private CategoryFragment fragment;
+    Typeface roboto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,8 @@ public class MainActivity extends AppCompatActivity implements CategoryFragment.
 
         userContext = UserContext.context(userContext);
 
+        roboto = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Light.ttf");
+
         User current = userContext.currentUser();
 
         if(current != null){
@@ -50,11 +54,11 @@ public class MainActivity extends AppCompatActivity implements CategoryFragment.
 
             if(userContext.IsFacebook(current.getParseUser())) {
 
-            picture = new UserImageView(userContext.getPicture());
+            picture = new UserImageView(userContext.getPicture(), roboto);
 
             }else {
 
-                picture = new UserImageView(null);
+                picture = new UserImageView(null, roboto);
             }
 
             fragment.setPicture(picture);

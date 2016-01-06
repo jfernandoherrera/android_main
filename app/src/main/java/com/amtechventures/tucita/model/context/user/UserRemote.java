@@ -143,7 +143,7 @@ public class UserRemote {
 
             HashMap facebook = (HashMap) authData.get("facebook");
 
-            img_value = new URL("https://graph.facebook.com/" + facebook.get("id") + "/picture?type=square");
+            img_value = new URL("https://graph.facebook.com/" + facebook.get("id") + "/picture?type=normal");
 
         } catch (MalformedURLException exception) {
 

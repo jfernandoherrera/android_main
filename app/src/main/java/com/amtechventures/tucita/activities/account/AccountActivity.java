@@ -3,6 +3,8 @@ package com.amtechventures.tucita.activities.account;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -10,15 +12,21 @@ import android.view.MenuItem;
 import android.content.Intent;
 import com.amtechventures.tucita.R;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+
+import com.amtechventures.tucita.activities.account.adapters.PagerAccountAdapter;
 import com.amtechventures.tucita.activities.main.MainActivity;
 import com.amtechventures.tucita.model.context.user.UserContext;
+import com.amtechventures.tucita.model.domain.user.User;
 import com.amtechventures.tucita.model.domain.user.UserAttributes;
+import com.mikhaellopez.circularimageview.CircularImageView;
 
 public class AccountActivity extends AppCompatActivity {
 
     private UserContext userContext;
     private Toolbar toolbar;
-
+    private ViewPager viewPager;
+    private CircularImageView circularImageView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -32,10 +40,40 @@ public class AccountActivity extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
 
+        circularImageView = (CircularImageView) findViewById(R.id.imageUser);
+
         tabLayout.addTab(tabLayout.newTab().setText(R.string.bookings));
 
         tabLayout.addTab(tabLayout.newTab().setText(R.string.venues));
 
+        viewPager = (ViewPager) findViewById(R.id.container);
+
+        PagerAccountAdapter pagerAccountAdapter = new PagerAccountAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+
+        viewPager.setAdapter(pagerAccountAdapter);
+
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+    @Override
+    public void onTabSelected(TabLayout.Tab tab) {
+
+    viewPager.setCurrentItem(tab.getPosition());
+    }
+
+    @Override
+    public void onTabUnselected(TabLayout.Tab tab) {
+
+    }
+
+    @Override
+    public void onTabReselected(TabLayout.Tab tab) {
+
+    }
+
+    });
+
+        setImageUser();
     }
 
     private void setToolbar(){
@@ -48,6 +86,20 @@ public class AccountActivity extends AppCompatActivity {
         }
     }
 
+    private void setImageUser(){
+
+        User user = userContext.currentUser();
+
+        if(userContext.IsFacebook(user.getParseUser())) {
+
+            circularImageView.setImageBitmap(userContext.getPicture());
+
+        }else{
+
+            circularImageView.setVisibility(View.GONE);
+        }
+
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 

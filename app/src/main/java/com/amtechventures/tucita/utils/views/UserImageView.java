@@ -1,10 +1,11 @@
-package com.amtechventures.tucita.activities.account;
+package com.amtechventures.tucita.utils.views;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 
 import com.amtechventures.tucita.model.context.user.UserContext;
@@ -25,10 +26,13 @@ public class UserImageView extends Drawable {
 
     private Bitmap picture;
     private UserContext userContext = new UserContext();
+    private Typeface typeface;
 
-    public UserImageView(Bitmap picture){
+    public UserImageView(Bitmap picture, Typeface typeface){
 
         this.picture = picture;
+
+        this.typeface = typeface;
     }
 
     @Override
@@ -48,6 +52,8 @@ public class UserImageView extends Drawable {
         User user = userContext.currentUser();
 
         paint.setFakeBoldText(true);
+
+        paint.setTypeface(typeface);
 
         paint.setTextSize(TEXT_SIZE);
 

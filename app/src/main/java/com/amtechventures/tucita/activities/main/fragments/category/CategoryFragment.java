@@ -27,7 +27,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 
-import com.amtechventures.tucita.activities.account.UserImageView;
+import com.amtechventures.tucita.utils.views.UserImageView;
 import com.amtechventures.tucita.model.domain.user.UserAttributes;
 import com.amtechventures.tucita.model.error.AppError;
 import com.amtechventures.tucita.model.domain.category.Category;

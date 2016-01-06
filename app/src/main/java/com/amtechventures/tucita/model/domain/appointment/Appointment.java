@@ -61,6 +61,11 @@ public class Appointment extends ParseObject{
         return getDate(AppointmentAttributes.date);
     }
 
+    public Venue getVenue(){
+
+        return (Venue) get(AppointmentAttributes.venue);
+    }
+
     public void setDate(Calendar date){
 
         put(AppointmentAttributes.date, date.getTime());

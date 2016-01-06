@@ -104,13 +104,6 @@ public class VenuesResultFragment extends Fragment implements LocationCompletion
             }
         });
 
-        locationClick.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.i("dswerfd","·$·");
-            }
-        });
-
         recyclerView.setHasFixedSize(true);
 
         noResults = (TextView) rootView.findViewById(R.id.noResults);
