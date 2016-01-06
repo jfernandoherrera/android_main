@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         style="@style/AppTheme.TitleLight"
         android:background="@color/colorPrimaryLight"
-        android:layout_below="@id/first"
+        android:layout_below="@id/listViewDescription"
         android:text="@string/fine_print"
         android:visibility="gone"
         />

@@ -206,8 +206,6 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
         String serviceName = serviceFragment.getService().getName();
 
-        serviceFragment.setup();
-
         getSupportActionBar().setTitle(serviceName);
     }
 
@@ -249,7 +247,7 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
         boolean exists = shoppingCarView.alreadyExistsService(service);
 
-        serviceFragment.setService(service, exists);
+        serviceFragment.setup(service, exists);
 
         venueHide();
 

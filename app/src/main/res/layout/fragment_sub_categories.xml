@@ -13,14 +13,11 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_below="@+id/image_service"
-        android:layout_marginTop="@dimen/high_margin"
-        android:layout_marginStart="@dimen/high_margin"
-        android:layout_marginLeft="@dimen/high_margin"
         android:layout_height="wrap_content">
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/listViewservices"
+        android:id="@+id/listViewServices"
         android:divider="@android:color/transparent"
         style="@style/AppTheme.subTitle"
    />

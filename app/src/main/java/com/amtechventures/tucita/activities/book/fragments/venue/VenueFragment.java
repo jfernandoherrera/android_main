@@ -6,8 +6,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
+import android.support.annotation.UiThread;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -34,6 +36,7 @@ import com.amtechventures.tucita.model.domain.subcategory.SubCategory;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.domain.venue.VenueAttributes;
 import com.amtechventures.tucita.model.error.AppError;
+import com.amtechventures.tucita.utils.views.ExpandableParentAdapter;
 import com.amtechventures.tucita.utils.views.OpeningHourView;
 import com.amtechventures.tucita.utils.views.ViewUtils;
 import java.util.ArrayList;
@@ -50,7 +53,8 @@ public class VenueFragment extends Fragment {
     private OpeningHourContext openingHourContext;
     private ImageView venuePicture;
     private TextView venueName;
-    private TextView venueDescription;
+    private ExpandableListView venueDescription;
+    private ExpandableParentAdapter parentAdapter;
     private RatingBar ratingBar;
     private Button location;
     private List<ArrayList<Service>> services = new ArrayList<>();
@@ -62,6 +66,7 @@ public class VenueFragment extends Fragment {
     private OnServiceSelected listener;
     private LayoutInflater inflater;
     private ProgressDialog progress;
+    ViewUtils viewUtils;
     private ScrollView scrollView;
 
     public interface OnServiceSelected{
@@ -101,6 +106,14 @@ public class VenueFragment extends Fragment {
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+
+        viewUtils = new ViewUtils(getContext());
+
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_venue, container, false);
@@ -117,7 +130,7 @@ public class VenueFragment extends Fragment {
 
         venueName = (TextView) rootView.findViewById(R.id.title_Venue);
 
-        venueDescription = (TextView) rootView.findViewById(R.id.textViewDescription);
+        venueDescription = (ExpandableListView)rootView.findViewById(R.id.listViewDescription);
 
         ratingBar = (RatingBar) rootView.findViewById(R.id.ratingBar);
 
@@ -167,13 +180,13 @@ public class VenueFragment extends Fragment {
 
             setupName();
 
-            setupDescription();
-
             setupRating();
 
             setupAddressAndLocation();
 
             setupOpeningHours();
+
+            setupDescription();
 
             setupFullMenu();
 
@@ -221,11 +234,18 @@ public class VenueFragment extends Fragment {
 
         if (activity != null) {
 
-            String description = activity.getString(R.string.description) + venue.getDescription();
+            String description = venue.getDescription();
 
-            venueDescription.setText(description);
+            parentAdapter = new ExpandableParentAdapter(description, venueDescription, viewUtils);
+
+            parentAdapter.setInflater(inflater);
+
+            venueDescription.setAdapter(parentAdapter);
+
+            venueDescription.expandGroup(0);
         }
     }
+
     private void setupFullMenu(){
 
         List<Service> servicesList = serviceContext.loadServices(venue, new ServiceCompletion.ErrorCompletion() {
@@ -239,8 +259,6 @@ public class VenueFragment extends Fragment {
                     subCategories.clear();
 
                     setStringsArray(servicesList);
-
-                    ViewUtils viewUtils = new ViewUtils(getContext());
 
                     viewUtils.setListViewHeightBasedOnChildren(listViewFullMenu);
 
@@ -257,8 +275,6 @@ public class VenueFragment extends Fragment {
         }
 
         setStringsArray(servicesList);
-
-        ViewUtils viewUtils = new ViewUtils(getContext());
 
         fullMenuAdapter = new ExpandableListAdapter(subCategories, services, viewUtils, listViewFullMenu, listener);
 
@@ -301,8 +317,6 @@ public class VenueFragment extends Fragment {
                     }
                 }
                 arrayListServices.add(services.get(indexOf));
-
-                ViewUtils viewUtils = new ViewUtils(getContext());
 
                 anotherMenuAdapter = new ExpandableListAdapter(arrayList, arrayListServices, viewUtils, listViewAnotherMenu, listener);
 
@@ -506,7 +520,7 @@ public class VenueFragment extends Fragment {
 
                 } else if (event.getAction() != MotionEvent.ACTION_MOVE) {
 
-                    location.setBackgroundColor(Color.WHITE);
+                    location.setBackgroundResource(R.drawable.log_in_or_signup_click_out);
                 }
                     return false;
             }

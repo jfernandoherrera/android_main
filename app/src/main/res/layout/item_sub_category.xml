@@ -6,5 +6,9 @@
     android:id="@+id/textList"
     android:layout_height="45dp"
     android:gravity="center_vertical"
+    android:paddingStart="@dimen/high_margin"
+    android:paddingLeft="@dimen/high_margin"
+    android:paddingEnd="@dimen/high_margin"
+    android:paddingRight="@dimen/high_margin"
     android:background="@android:color/transparent"
     />

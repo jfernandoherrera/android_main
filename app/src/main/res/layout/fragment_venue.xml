@@ -89,32 +89,23 @@
                     android:paddingRight="@dimen/high_margin"
                     android:background="@color/com_facebook_button_login_silver_background_color"
                     />
-                <TextView
+                <ExpandableListView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textViewDescription"
-                    android:layout_marginStart="@dimen/high_margin"
-                    android:layout_marginLeft="@dimen/high_margin"
+                    android:id="@+id/listViewDescription"
+                    android:indicatorLeft="294dp"
+                    android:indicatorRight="329dp"
                     android:layout_below="@+id/textViewAbout"
-                    android:layout_marginBottom="@dimen/high_margin"
-                    android:layout_marginEnd="@dimen/high_margin"
-                    android:layout_marginRight="@dimen/high_margin"
+                    android:foregroundGravity="bottom"
+                    android:divider="@android:color/holo_red_dark"
                     />
-                <View
-                    android:layout_width = "wrap_content"
-                    android:layout_height = "1dp"
-                    android:layout_marginTop = "7dp"
-                    android:id="@+id/separator3"
-                    android:layout_marginStart="@dimen/high_margin"
-                    android:layout_marginLeft="@dimen/high_margin"
-                    android:layout_below = "@+id/textViewDescription"
-                    android:background = "@android:color/darker_gray" />
+
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:layout_below = "@+id/separator3"
+                    android:layout_below = "@+id/listViewDescription"
                     android:id="@+id/watch_location"
-                    android:background="#ffffff" />
+                    android:background="@drawable/log_in_or_signup_click_out" />
                 <TextView
                     android:layout_width="match_parent"
                     android:text="@string/opening_hours"

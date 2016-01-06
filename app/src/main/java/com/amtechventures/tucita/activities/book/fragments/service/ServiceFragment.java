@@ -14,6 +14,7 @@ import com.amtechventures.tucita.activities.book.fragments.venue.adapters.Expand
 import com.amtechventures.tucita.model.domain.service.Service;
 import com.amtechventures.tucita.utils.views.ExpandableParentAdapter;
 import com.amtechventures.tucita.utils.views.ServiceAddView;
+import com.amtechventures.tucita.utils.views.ViewUtils;
 
 public class ServiceFragment extends Fragment {
 
@@ -83,13 +84,24 @@ public class ServiceFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
     }
 
-    public void setup() {
+    public void setup(Service service, boolean added) {
+
+        setService(service, added);
+
+        setDescription();
+    }
+
+    private void setDescription(){
 
         String description = service.getDescription();
 
         if (description != null) {
 
-            parentAdapter = new ExpandableParentAdapter(R.layout.list_item, null, description);
+            listViewParent.setVisibility(View.VISIBLE);
+
+            ViewUtils viewUtils = new ViewUtils(getContext());
+
+            parentAdapter = new ExpandableParentAdapter( description, listViewParent, viewUtils);
 
             parentAdapter.setInflater(inflater);
 
@@ -100,6 +112,7 @@ public class ServiceFragment extends Fragment {
             listViewParent.setVisibility(View.GONE);
         }
     }
+
     public void setService(Service service, boolean added){
 
         this.service = service;

@@ -96,7 +96,7 @@ public class SubCategoryFragment extends DialogFragment {
 
         View rootView = inflater.inflate(R.layout.fragment_sub_categories, container, false);
 
-        listView = (ListView) rootView.findViewById(R.id.listViewservices);
+        listView = (ListView) rootView.findViewById(R.id.listViewServices);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 

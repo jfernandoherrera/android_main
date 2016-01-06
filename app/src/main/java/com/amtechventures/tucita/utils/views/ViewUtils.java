@@ -6,12 +6,14 @@ import android.content.Context;
 import android.graphics.Point;
 import android.util.Log;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.CheckedTextView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import static android.view.View.MeasureSpec.*;
 
@@ -80,6 +82,48 @@ public class ViewUtils {
 
         listView.requestLayout();
     }
+
+
+    public void setListViewHeightBasedOnChildrenCountLines(ListView listView, int height) {
+
+        ListAdapter listAdapter = listView.getAdapter();
+
+        Log.i("holas", String.valueOf(listAdapter.getCount()));
+        if (listAdapter == null) {
+            // pre-condition
+            return;
+        }
+
+        int totalHeight = 0;
+
+        int desiredWidth = makeMeasureSpec(listView.getWidth(), AT_MOST);
+
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+
+            View listItem = listAdapter.getView(i, null, listView);
+
+            listItem.measure(desiredWidth, UNSPECIFIED);
+
+            if(listItem instanceof CheckedTextView) {
+
+                totalHeight += parentHeight;
+            }else {
+
+                totalHeight += height;
+            }
+
+        }
+
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+
+        params.height = totalHeight;
+
+        listView.setLayoutParams(params);
+
+        listView.requestLayout();
+
+    }
+
 
     public String hourFormat(int hour, int minute){
 

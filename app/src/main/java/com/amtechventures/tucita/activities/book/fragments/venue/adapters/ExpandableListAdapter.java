@@ -120,8 +120,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter{
 
         ((CheckedTextView) convertView).setText(parentItems.get(groupPosition).getName());
 
-        ((CheckedTextView) convertView).setChecked(isExpanded);
-
         ((CheckedTextView) convertView).setHeight(viewUtils.parentHeight);
 
         return convertView;
