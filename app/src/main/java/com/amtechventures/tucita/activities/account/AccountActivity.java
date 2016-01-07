@@ -13,6 +13,7 @@ import android.content.Intent;
 import com.amtechventures.tucita.R;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.TextView;
 
 import com.amtechventures.tucita.activities.account.adapters.PagerAccountAdapter;
 import com.amtechventures.tucita.activities.main.MainActivity;
@@ -27,6 +28,8 @@ public class AccountActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private ViewPager viewPager;
     private CircularImageView circularImageView;
+    private TextView textName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -42,9 +45,27 @@ public class AccountActivity extends AppCompatActivity {
 
         circularImageView = (CircularImageView) findViewById(R.id.imageUser);
 
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.bookings));
+        textName = (TextView) findViewById(R.id.textName);
 
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.venues));
+        TabLayout.Tab tab = tabLayout.newTab();
+
+        tab.setCustomView(R.layout.item_tab);
+
+        TextView tabText = (TextView) tab.getCustomView();
+
+        tabText.setText(R.string.bookings);
+
+        TabLayout.Tab tab1 = tabLayout.newTab();
+
+        tab1.setCustomView(R.layout.item_tab);
+
+        TextView tabText1 = (TextView) tab1.getCustomView();
+
+        tabText1.setText(R.string.venues);
+
+        tabLayout.addTab(tab);
+
+        tabLayout.addTab(tab1);
 
         viewPager = (ViewPager) findViewById(R.id.container);
 
@@ -86,6 +107,11 @@ public class AccountActivity extends AppCompatActivity {
         }
     }
 
+    private void setNameUser(User user){
+
+        textName.setText(user.getName());
+    }
+
     private void setImageUser(){
 
         User user = userContext.currentUser();
@@ -99,7 +125,10 @@ public class AccountActivity extends AppCompatActivity {
             circularImageView.setVisibility(View.GONE);
         }
 
+        setNameUser(user);
+
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -127,7 +156,6 @@ public class AccountActivity extends AppCompatActivity {
         return true;
 
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
