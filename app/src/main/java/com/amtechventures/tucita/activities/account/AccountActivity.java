@@ -1,6 +1,7 @@
 package com.amtechventures.tucita.activities.account;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
@@ -29,6 +30,7 @@ public class AccountActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private CircularImageView circularImageView;
     private TextView textName;
+    Typeface roboto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,10 @@ public class AccountActivity extends AppCompatActivity {
 
         textName = (TextView) findViewById(R.id.textName);
 
+        roboto = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Light.ttf");
+
+        textName.setTypeface(roboto);
+
         TabLayout.Tab tab = tabLayout.newTab();
 
         tab.setCustomView(R.layout.item_tab);
@@ -55,11 +61,15 @@ public class AccountActivity extends AppCompatActivity {
 
         tabText.setText(R.string.bookings);
 
+        tabText.setTypeface(roboto);
+
         TabLayout.Tab tab1 = tabLayout.newTab();
 
         tab1.setCustomView(R.layout.item_tab);
 
         TextView tabText1 = (TextView) tab1.getCustomView();
+
+        tabText1.setTypeface(roboto);
 
         tabText1.setText(R.string.venues);
 
@@ -79,12 +89,19 @@ public class AccountActivity extends AppCompatActivity {
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
 
-    viewPager.setCurrentItem(tab.getPosition());
+        TextView tabText = (TextView) tab.getCustomView();
+
+        viewPager.setCurrentItem(tab.getPosition());
+
+        tabText.setTypeface(roboto, Typeface.BOLD);
     }
 
     @Override
     public void onTabUnselected(TabLayout.Tab tab) {
 
+        TextView tabText = (TextView) tab.getCustomView();
+
+        tabText.setTypeface(roboto, Typeface.NORMAL);
     }
 
     @Override

@@ -43,7 +43,6 @@ public class AppointmentsAdapter extends RecyclerView.Adapter<AppointmentsAdapte
         String formattedDate = appointment.getDate().toLocaleString();
 
         viewHolder.date.setText(formattedDate);
-
     }
 
     @Override

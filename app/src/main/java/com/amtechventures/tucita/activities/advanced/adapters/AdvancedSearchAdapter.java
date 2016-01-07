@@ -1,4 +1,4 @@
-package com.amtechventures.tucita.activities.main.fragments.search.adapters;
+package com.amtechventures.tucita.activities.advanced.adapters;
 
 import android.content.Intent;
 import android.os.Build;

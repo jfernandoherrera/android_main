@@ -24,23 +24,47 @@ public class ViewUtils {
     private final double sizeRatio = 0.0012;
     private final int twelveHoursClock = 12;
     private final int oneDigitNumber = 9;
+    private Context context;
 
     public ViewUtils(Context context){
 
+        this.context = context;
+
         if( context != null) {
 
-            WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        setupHeights();
 
-            Display display = wm.getDefaultDisplay();
-
-            Point size = new Point();
-
-            display.getSize(size);
-
-            childHeight = (int) (childHeight * (size.y * sizeRatio)) * 3;
-
-            parentHeight = (int) (parentHeight * (size.y * sizeRatio));
         }
+    }
+
+    private void setupHeights(){
+
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+
+        Display display = wm.getDefaultDisplay();
+
+        Point size = new Point();
+
+        display.getSize(size);
+
+        childHeight = (int) (childHeight * (size.y * sizeRatio)) * 3;
+
+        parentHeight = (int) (parentHeight * (size.y * sizeRatio));
+    }
+
+    private void setupHeights(int childHeight, int parentHeight){
+
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+
+        Display display = wm.getDefaultDisplay();
+
+        Point size = new Point();
+
+        display.getSize(size);
+
+        this.childHeight = (int) (childHeight * (size.y * sizeRatio)) * 3;
+
+        this.parentHeight = (int) (parentHeight * (size.y * sizeRatio));
     }
 
     public void setListViewHeightBasedOnChildren(ListView listView) {
@@ -83,12 +107,18 @@ public class ViewUtils {
         listView.requestLayout();
     }
 
+    public void setListViewHeightBasedOnChildren(ListView listView, int childHeight, int parentHeight) {
+
+        setupHeights(childHeight, parentHeight);
+
+        setListViewHeightBasedOnChildren(listView);
+    }
+
 
     public void setListViewHeightBasedOnChildrenCountLines(ListView listView, int height) {
 
         ListAdapter listAdapter = listView.getAdapter();
 
-        Log.i("holas", String.valueOf(listAdapter.getCount()));
         if (listAdapter == null) {
             // pre-condition
             return;

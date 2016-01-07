@@ -44,7 +44,7 @@
             android:name="io.fabric.ApiKey"
             android:value="bdc2bab408011afda99f5bc67d47cd792679dd64" />
 
-        <activity android:name=".activities.main.fragments.search.advanced.AdvancedSearchActivity" >
+        <activity android:name=".activities.advanced.AdvancedSearchActivity" >
         </activity>
         <activity android:name=".activities.main.MainActivity" >
         </activity>

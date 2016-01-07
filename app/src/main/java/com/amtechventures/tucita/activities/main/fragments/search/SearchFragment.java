@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.book.BookActivity;
 import com.amtechventures.tucita.activities.main.fragments.search.adapters.SearchAdapter;
-import com.amtechventures.tucita.activities.main.fragments.search.advanced.AdvancedSearchActivity;
+import com.amtechventures.tucita.activities.advanced.AdvancedSearchActivity;
 import com.amtechventures.tucita.model.context.subcategory.SubCategoryContext;
 import com.amtechventures.tucita.model.context.subcategory.SubCategoryCompletion;
 import com.amtechventures.tucita.model.context.venue.VenueCompletion;

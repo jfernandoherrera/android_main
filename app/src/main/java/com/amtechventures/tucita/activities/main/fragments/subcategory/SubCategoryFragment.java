@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import com.amtechventures.tucita.R;
-import com.amtechventures.tucita.activities.main.fragments.search.advanced.AdvancedSearchActivity;
+import com.amtechventures.tucita.activities.advanced.AdvancedSearchActivity;
 import com.amtechventures.tucita.activities.main.fragments.subcategory.adapters.SubCategoryAdapter;
 import com.amtechventures.tucita.model.context.category.CategoryContext;
 import com.amtechventures.tucita.model.context.subcategory.SubCategoryContext;

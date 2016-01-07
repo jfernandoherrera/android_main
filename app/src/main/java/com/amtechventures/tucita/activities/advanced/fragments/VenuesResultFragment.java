@@ -1,4 +1,4 @@
-package com.amtechventures.tucita.activities.main.fragments.search.advanced.fragments;
+package com.amtechventures.tucita.activities.advanced.fragments;
 
 
 import android.app.ProgressDialog;
@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,7 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.amtechventures.tucita.R;
-import com.amtechventures.tucita.activities.main.fragments.search.adapters.AdvancedSearchAdapter;
+import com.amtechventures.tucita.activities.advanced.adapters.AdvancedSearchAdapter;
 import com.amtechventures.tucita.model.context.category.CategoryContext;
 import com.amtechventures.tucita.model.context.location.LocationCompletion;
 import com.amtechventures.tucita.model.context.location.LocationContext;

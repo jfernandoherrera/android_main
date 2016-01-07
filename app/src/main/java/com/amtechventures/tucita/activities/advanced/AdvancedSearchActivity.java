@@ -1,4 +1,4 @@
-package com.amtechventures.tucita.activities.main.fragments.search.advanced;
+package com.amtechventures.tucita.activities.advanced;
 
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -9,8 +9,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import com.amtechventures.tucita.R;
-import com.amtechventures.tucita.activities.main.fragments.search.advanced.fragments.LocationOptionsFragment;
-import com.amtechventures.tucita.activities.main.fragments.search.advanced.fragments.VenuesResultFragment;
+import com.amtechventures.tucita.activities.advanced.fragments.LocationOptionsFragment;
+import com.amtechventures.tucita.activities.advanced.fragments.VenuesResultFragment;
 import com.amtechventures.tucita.model.domain.category.CategoryAttributes;
 import com.amtechventures.tucita.model.domain.city.City;
 

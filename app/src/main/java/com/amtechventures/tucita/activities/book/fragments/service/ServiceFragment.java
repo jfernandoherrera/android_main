@@ -10,9 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.RelativeLayout;
 import com.amtechventures.tucita.R;
-import com.amtechventures.tucita.activities.book.fragments.venue.adapters.ExpandableListAdapter;
 import com.amtechventures.tucita.model.domain.service.Service;
-import com.amtechventures.tucita.utils.views.ExpandableParentAdapter;
+import com.amtechventures.tucita.activities.book.adapters.ExpandableParentAdapter;
 import com.amtechventures.tucita.utils.views.ServiceAddView;
 import com.amtechventures.tucita.utils.views.ViewUtils;
 

@@ -1,4 +1,4 @@
-package com.amtechventures.tucita.activities.main.fragments.search.advanced.fragments;
+package com.amtechventures.tucita.activities.advanced.fragments;
 
 
 import android.content.Context;

@@ -4,13 +4,17 @@ package com.amtechventures.tucita.activities.book.fragments.checkout;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 import com.amtechventures.tucita.R;
+import com.amtechventures.tucita.activities.book.adapters.ExpandableWithoutParentAdapter;
+import com.amtechventures.tucita.activities.book.fragments.venue.adapters.ExpandableListAdapter;
 import com.amtechventures.tucita.model.context.appointment.AppointmentCompletion;
 import com.amtechventures.tucita.model.context.appointment.AppointmentContext;
 import com.amtechventures.tucita.model.context.slot.SlotContext;
@@ -23,6 +27,7 @@ import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.error.AppError;
 import com.amtechventures.tucita.utils.views.AlertDialogError;
 import com.amtechventures.tucita.utils.views.AppointmentView;
+import com.amtechventures.tucita.utils.views.ViewUtils;
 import com.parse.ParseUser;
 
 import java.util.Calendar;
@@ -41,6 +46,9 @@ public class SecureCheckoutFragment extends Fragment{
     TextView textEmail;
     AppointmentContext appointmentContext;
     OnPlaceOrder listener;
+    private LayoutInflater inflater;
+    private ExpandableWithoutParentAdapter adapter;
+    private ExpandableListView listViewServices;
 
     public interface OnPlaceOrder{
 
@@ -85,6 +93,8 @@ public class SecureCheckoutFragment extends Fragment{
 
         textEmail = (TextView) rootView.findViewById(R.id.clientEmail);
 
+        listViewServices = (ExpandableListView) rootView.findViewById(R.id.listViewServices);
+
         user = new User();
 
         if(ParseUser.getCurrentUser() != null) {
@@ -102,20 +112,34 @@ public class SecureCheckoutFragment extends Fragment{
             @Override
             public void onClick(View v) {
 
-              listener.onPlaceOrder();
+                listener.onPlaceOrder();
             }
         });
+
+        this.inflater = inflater;
 
         return rootView;
     }
 
+    private void setupServices(){
 
-    @Override
-    public void onResume() {
+        ViewUtils viewUtils = new ViewUtils(getContext());
 
-        super.onResume();
+        adapter = new ExpandableWithoutParentAdapter(services, listViewServices, viewUtils);
+
+        adapter.setInflater(inflater);
+
+        listViewServices.setAdapter(adapter);
+
+    }
+
+    public void setup(){
+
+        setupTitle();
 
         setupAppointmentView();
+
+        setupServices();
     }
 
     public void setupAppointmentView(){
@@ -123,6 +147,15 @@ public class SecureCheckoutFragment extends Fragment{
         appointmentView.setTextName(venue.getName());
 
         appointmentView.setTextDate(date.getTime().toLocaleString());
+    }
+
+    private void setupTitle(){
+
+        String title = getString(R.string.secure_checkout);
+
+        AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
+
+        appCompatActivity.getSupportActionBar().setTitle(title);
     }
 
     public void placeOrder(){

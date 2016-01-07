@@ -430,6 +430,8 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
                 if(e == null){
 
                     secureCheckoutShow();
+
+                    secureCheckoutFragment.setup();
                 }
             }
         });

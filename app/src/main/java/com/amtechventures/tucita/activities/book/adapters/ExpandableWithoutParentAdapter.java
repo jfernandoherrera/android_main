@@ -1,39 +1,40 @@
-package com.amtechventures.tucita.utils.views;
+package com.amtechventures.tucita.activities.book.adapters;
 
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.CheckedTextView;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.model.domain.service.Service;
-
+import com.amtechventures.tucita.utils.views.ViewUtils;
 import java.util.List;
 
-public class ExpandableParentAdapter extends BaseExpandableListAdapter {
+public class ExpandableWithoutParentAdapter extends BaseExpandableListAdapter {
 
     private LayoutInflater inflater;
-    String description;
+    List<Service> services;
     ViewUtils viewUtils;
-    int childHeight;
     private final ExpandableListView listViewParent;
 
-    public ExpandableParentAdapter( String description, ExpandableListView listViewParent, ViewUtils viewUtils){
+    public ExpandableWithoutParentAdapter(List<Service> services, ExpandableListView listViewParent, ViewUtils viewUtils){
 
-        this.description = description;
+        this.services = services;
 
         this.listViewParent = listViewParent;
 
         this.viewUtils = viewUtils;
 
+        if (services.size() == 1){
+
+            listViewParent.setGroupIndicator(null);
+        }
     }
 
     public void setInflater(LayoutInflater inflater)
     {
+
         this.inflater = inflater;
     }
 
@@ -46,8 +47,7 @@ public class ExpandableParentAdapter extends BaseExpandableListAdapter {
     @Override
     public int getChildrenCount(int groupPosition) {
 
-
-        return 1;
+        return services.size() - 1;
     }
 
     @Override
@@ -80,16 +80,21 @@ public class ExpandableParentAdapter extends BaseExpandableListAdapter {
 
         if (convertView == null) {
 
-            convertView = inflater.inflate(R.layout.parent_view, null);
+            convertView = inflater.inflate(R.layout.item_service, null);
 
         }
-        CheckedTextView checkedTextView = (CheckedTextView) convertView.findViewById(R.id.textViewGroupName);
 
-        checkedTextView.setText(convertView.getResources().getString(R.string.description));
+        Service service = services.get(0);
 
-        checkedTextView.setHeight(viewUtils.parentHeight);
+        TextView TextView = (TextView) convertView.findViewById(R.id.textName);
 
-        checkedTextView.setPadding(24,20,0,0);
+        TextView.setText(service.getName());
+
+        final TextView textDuration = (TextView) convertView.findViewById(R.id.textDuration);
+
+        textDuration.setTextColor(convertView.getResources().getColor(R.color.blackSecondary));
+
+        textDuration.setText(service.getDurationInfo());
 
         return convertView;
     }
@@ -99,31 +104,20 @@ public class ExpandableParentAdapter extends BaseExpandableListAdapter {
 
         if (convertView == null) {
 
-            convertView = inflater.inflate(R.layout.list_item, null);
+            Service service = services.get(childPosition + 1);
 
-            final TextView text = (TextView) convertView.findViewById(R.id.textList);
+            convertView = inflater.inflate(R.layout.item_service, null);
 
-            text.setText(description);
+            final TextView textName = (TextView) convertView.findViewById(R.id.textName);
 
-            text.setTextColor(convertView.getResources().getColor(R.color.blackSecondary));
+            textName.setText(service.getName());
 
-            text.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            final TextView textDuration = (TextView) convertView.findViewById(R.id.textDuration);
 
-                boolean isFirst = true;
+            textDuration.setTextColor(convertView.getResources().getColor(R.color.blackSecondary));
 
-                @Override
-                public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+            textDuration.setText(service.getDurationInfo());
 
-                    childHeight = bottom - top ;
-
-                    if(isFirst) {
-
-                        viewUtils.setListViewHeightBasedOnChildrenCountLines(listViewParent, childHeight);
-
-                        isFirst = false;
-                    }
-                }
-            });
         }
 
         return convertView;
@@ -142,11 +136,8 @@ public class ExpandableParentAdapter extends BaseExpandableListAdapter {
     {
         super.onGroupExpanded(groupPosition);
 
-        if(childHeight != 0) {
+        viewUtils.setListViewHeightBasedOnChildren(listViewParent);
 
-            viewUtils.setListViewHeightBasedOnChildrenCountLines(listViewParent, childHeight);
-
-        }
     }
 
     @Override

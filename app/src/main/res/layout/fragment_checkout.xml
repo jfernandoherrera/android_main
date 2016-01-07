@@ -6,24 +6,69 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/appointment"/>
+        <ExpandableListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/listViewServices"
+            android:indicatorLeft="294dp"
+            android:indicatorRight="329dp"
+            android:foregroundGravity="bottom"
+            />
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
+        android:paddingLeft="@dimen/high_margin"
+        android:gravity="bottom"
+        android:paddingStart="@dimen/high_margin"
+        android:paddingRight="@dimen/high_margin"
+        android:paddingEnd="@dimen/high_margin"
         android:background="@color/colorPrimaryLight"
         android:text="@string/client_details"/>
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="@dimen/high_margin"
+        android:layout_marginStart="@dimen/high_margin"
         android:id="@+id/clientName"
         />
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_height="50dp"
+        android:layout_marginLeft="@dimen/high_margin"
+        android:layout_marginStart="@dimen/high_margin"
         android:id="@+id/clientEmail"
         />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/com_facebook_button_login_silver_background_color"
+        android:padding="@dimen/high_margin">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/blackSecondary"
+                android:text="@string/order_total"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textPrice"
+                />
+        </LinearLayout>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/high_margin"
+        android:layout_marginStart="@dimen/high_margin"
+        android:layout_marginRight="@dimen/high_margin"
+        android:layout_marginEnd="@dimen/high_margin"
         android:id="@+id/placeOrder"
         android:text="@string/place_order"/>
+    </LinearLayout>
 </LinearLayout>
