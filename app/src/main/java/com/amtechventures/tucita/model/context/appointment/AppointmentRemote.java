@@ -70,17 +70,13 @@ public class AppointmentRemote {
         });
     }
 
-    public void loadPendingAppointments(User user, final AppointmentCompletion.AppointmentErrorCompletion completion){
-
-        final List appointments = null;
+    public void loadUserAppointments(User user, final AppointmentCompletion.AppointmentErrorCompletion completion){
 
         ParseQuery<Appointment> query = Appointment.getQuery();
 
         query.whereEqualTo(AppointmentAttributes.user, user.getParseUser());
 
-        Calendar calendar = Calendar.getInstance();
-
-        query.whereGreaterThan(AppointmentAttributes.date, calendar.getTime());
+        query.orderByDescending(AppointmentAttributes.date);
 
         query.include(AppointmentAttributes.venue);
 
@@ -106,23 +102,4 @@ public class AppointmentRemote {
             });
     }
 
-    public List loadAppointmentsWithVenue(User user){
-
-        List venues = null;
-
-        ParseQuery<Appointment> query = Appointment.getQuery();
-
-        query.whereEqualTo(AppointmentAttributes.user, user.getParseUser());
-
-        query.include(AppointmentAttributes.venue);
-
-        try {
-            venues = query.find();
-
-        } catch (ParseException e) {
-
-            e.printStackTrace();
-        }
-        return venues;
-    }
 }

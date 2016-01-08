@@ -13,14 +13,12 @@ import android.widget.TextView;
 
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.account.adapters.AppointmentsAdapter;
-import com.amtechventures.tucita.activities.account.adapters.PagerAccountAdapter;
 import com.amtechventures.tucita.model.context.appointment.AppointmentCompletion;
 import com.amtechventures.tucita.model.context.appointment.AppointmentContext;
 import com.amtechventures.tucita.model.context.user.UserContext;
 import com.amtechventures.tucita.model.domain.appointment.Appointment;
 import com.amtechventures.tucita.model.domain.user.User;
 import com.amtechventures.tucita.model.error.AppError;
-import com.parse.ParseUser;
 
 import java.util.List;
 
@@ -78,21 +76,21 @@ public class BookingsFragment extends Fragment{
 
         User user = userContext.currentUser();
 
-        appointmentContext.loadPendingAppointments(user, new AppointmentCompletion.AppointmentErrorCompletion() {
-        @Override
-        public void completion(List<Appointment> appointmentList, AppError error) {
+        appointmentContext.loadUserAppointments(user, new AppointmentCompletion.AppointmentErrorCompletion() {
+            @Override
+            public void completion(List<Appointment> appointmentList, AppError error) {
 
-            if (appointmentList != null && !appointmentList.isEmpty()){
+                if (appointmentList != null && !appointmentList.isEmpty()) {
 
-                adapter = new AppointmentsAdapter(appointmentList);
+                    adapter = new AppointmentsAdapter(appointmentList);
 
-                recyclerView.setAdapter(adapter);
+                    recyclerView.setAdapter(adapter);
 
-                noResults.setVisibility(View.GONE);
+                    noResults.setVisibility(View.GONE);
+                }
+
+
             }
-
-
-        }
-    });
+        });
     }
 }

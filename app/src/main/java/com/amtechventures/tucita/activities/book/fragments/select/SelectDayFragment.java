@@ -108,6 +108,11 @@ public class SelectDayFragment extends Fragment{
         appCompatActivity.getSupportActionBar().setTitle(title);
     }
 
+    public void backSetupDateViews(){
+
+        setupDateViews(adapter.calendar);
+    }
+
     private String setCurrentMonth(Date date){
 
         String month =  new java.text.SimpleDateFormat("MMMM").format(date);

@@ -42,11 +42,11 @@ public class AppointmentContext {
         appointmentRemote.placeOrder(appointment, completion);
     }
 
-    public List loadPendingAppointments(User user, AppointmentCompletion.AppointmentErrorCompletion completion){
+    public List loadUserAppointments(User user, AppointmentCompletion.AppointmentErrorCompletion completion){
 
-        List appointments = appointmentLocal.loadPendingAppointments(user);
+        List appointments = appointmentLocal.loadUserAppointments(user);
 
-        appointmentRemote.loadPendingAppointments(user, completion);
+        appointmentRemote.loadUserAppointments(user, completion);
 
         return  appointments;
     }

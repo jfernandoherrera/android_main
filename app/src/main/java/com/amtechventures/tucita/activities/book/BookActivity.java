@@ -294,6 +294,7 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
            selectDateShow();
 
+           selectDateFragment.backSetupDateViews();
        }
     }
 
