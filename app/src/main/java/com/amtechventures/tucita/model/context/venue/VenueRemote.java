@@ -60,12 +60,19 @@ public class VenueRemote {
             @Override
             public void done(List<Venue> objects, ParseException e) {
 
+                if(e != null){
+                    e.printStackTrace();
+                }
+
                 if(objects != null){
                     try {
 
                         ParseObject.pinAll(objects);
 
-                    } catch (ParseException pe) {}
+                    } catch (ParseException pe) {
+
+                        pe.printStackTrace();
+                    }
 
                 }
 

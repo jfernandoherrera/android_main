@@ -14,8 +14,6 @@ import android.widget.TextView;
 
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.book.BookActivity;
-import com.amtechventures.tucita.model.domain.appointment.Appointment;
-import com.amtechventures.tucita.model.domain.service.ServiceAttributes;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.domain.venue.VenueAttributes;
 
@@ -46,9 +44,30 @@ public class VenuesAdapter extends RecyclerView.Adapter<VenuesAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+
         Venue venue = items.get(position);
 
         String venueName = venue.getName();
+
+        holder.name.setText(venueName);
+
+        holder.setAddress(venue.getAddress());
+
+        holder.location.setText(venue.getCity().formatedLocation());
+
+        holder.venueImage.setImageBitmap(venue.getPicture());
+
+        float rating = (float)venue.getRating();
+
+        if(rating != 0) {
+
+            holder.ratingBar.setRating(rating);
+
+        }
+        else{
+
+            holder.ratingBar.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
@@ -71,9 +90,7 @@ public class VenuesAdapter extends RecyclerView.Adapter<VenuesAdapter.ViewHolder
 
             protected ImageView venueImage;
 
-            private CardView categoryIcon;
-
-            protected TextView pricesFrom;
+            private CardView venueIcon;
 
             protected String from;
 
@@ -90,32 +107,28 @@ public class VenuesAdapter extends RecyclerView.Adapter<VenuesAdapter.ViewHolder
 
                 name = (TextView) itemView.findViewById(R.id.textName);
 
-                categoryIcon = (CardView) itemView.findViewById(R.id.card_view);
+                venueIcon = (CardView) itemView.findViewById(R.id.card_view);
 
                 venueImage = (ImageView) itemView.findViewById(R.id.imageSearchVenue);
 
                 ratingBar = (RatingBar) itemView.findViewById(R.id.searchRatingBar);
 
-                pricesFrom = (TextView) itemView.findViewById(R.id.textPricesFrom);
-
-                from = itemView.getContext().getString(R.string.from);
-
 
                 if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
 
 
-                    categoryIcon.setOnTouchListener(new View.OnTouchListener() {
+                    venueIcon.setOnTouchListener(new View.OnTouchListener() {
                         @Override
                         public boolean onTouch(View v, MotionEvent event) {
 
                             if (event.getAction() == MotionEvent.ACTION_DOWN) {
 
-                                categoryIcon.setCardElevation(0);
+                                venueIcon.setCardElevation(0);
 
 
                             } else if (event.getAction() != MotionEvent.ACTION_MOVE) {
 
-                                categoryIcon.setCardElevation(6);
+                                venueIcon.setCardElevation(6);
 
                             }
 
@@ -124,7 +137,7 @@ public class VenuesAdapter extends RecyclerView.Adapter<VenuesAdapter.ViewHolder
                     });
                 }
 
-                categoryIcon.setOnClickListener(new View.OnClickListener() {
+                venueIcon.setOnClickListener(new View.OnClickListener() {
 
                     @Override
                     public void onClick(View view) {

@@ -4,6 +4,7 @@ import com.amtechventures.tucita.model.domain.appointment.Appointment;
 import com.amtechventures.tucita.model.domain.appointment.AppointmentAttributes;
 import com.amtechventures.tucita.model.domain.user.User;
 import com.amtechventures.tucita.model.domain.venue.Venue;
+import com.amtechventures.tucita.model.domain.venue.VenueAttributes;
 import com.amtechventures.tucita.model.error.AppError;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -79,6 +80,8 @@ public class AppointmentRemote {
         query.orderByDescending(AppointmentAttributes.date);
 
         query.include(AppointmentAttributes.venue);
+
+        query.include(AppointmentAttributes.venue + "." + VenueAttributes.city);
 
             query.findInBackground(new FindCallback<Appointment>() {
                 @Override

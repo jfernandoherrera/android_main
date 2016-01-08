@@ -28,9 +28,10 @@ public class BookingsFragment extends Fragment{
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
-    private AppointmentContext appointmentContext;
     private TextView noResults;
-    private UserContext userContext;
+    private List<Appointment> appointmentList;
+
+
     @Override
     public void onAttach(Context context) {
 
@@ -41,17 +42,6 @@ public class BookingsFragment extends Fragment{
     public void onDetach() {
 
         super.onDetach();
-    }
-
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-
-        appointmentContext = AppointmentContext.context(appointmentContext);
-
-        userContext = UserContext.context(userContext);
-
-        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -73,25 +63,22 @@ public class BookingsFragment extends Fragment{
     return rootView;
     }
 
+    public void setAppointmentList(List<Appointment> appointmentList){
+
+        this.appointmentList = appointmentList;
+
+        setupList();
+    }
+
     public void setupList(){
 
-        User user = userContext.currentUser();
+        if (appointmentList != null && !appointmentList.isEmpty()) {
 
-        appointmentContext.loadUserAppointments(user, new AppointmentCompletion.AppointmentErrorCompletion() {
-            @Override
-            public void completion(List<Appointment> appointmentList, AppError error) {
+            adapter = new AppointmentsAdapter(appointmentList);
 
-                if (appointmentList != null && !appointmentList.isEmpty()) {
+            recyclerView.setAdapter(adapter);
 
-                    adapter = new AppointmentsAdapter(appointmentList);
-
-                    recyclerView.setAdapter(adapter);
-
-                    noResults.setVisibility(View.GONE);
-                }
-
-
-            }
-        });
+            noResults.setVisibility(View.GONE);
+        }
     }
 }

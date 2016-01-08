@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -15,13 +14,22 @@ import com.amtechventures.tucita.R;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
-
 import com.amtechventures.tucita.activities.account.adapters.PagerAccountAdapter;
+import com.amtechventures.tucita.activities.account.fragments.bookings.BookingsFragment;
+import com.amtechventures.tucita.activities.account.fragments.venues.VenuesFragment;
 import com.amtechventures.tucita.activities.main.MainActivity;
+import com.amtechventures.tucita.model.context.appointment.AppointmentCompletion;
+import com.amtechventures.tucita.model.context.appointment.AppointmentContext;
 import com.amtechventures.tucita.model.context.user.UserContext;
+import com.amtechventures.tucita.model.domain.appointment.Appointment;
 import com.amtechventures.tucita.model.domain.user.User;
 import com.amtechventures.tucita.model.domain.user.UserAttributes;
+import com.amtechventures.tucita.model.domain.venue.Venue;
+import com.amtechventures.tucita.model.error.AppError;
 import com.mikhaellopez.circularimageview.CircularImageView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AccountActivity extends AppCompatActivity {
 
@@ -31,6 +39,8 @@ public class AccountActivity extends AppCompatActivity {
     private CircularImageView circularImageView;
     private TextView textName;
     Typeface roboto;
+    private AppointmentContext appointmentContext;
+    PagerAccountAdapter pagerAccountAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +53,7 @@ public class AccountActivity extends AppCompatActivity {
 
         setToolbar();
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        setupTabs();
 
         circularImageView = (CircularImageView) findViewById(R.id.imageUser);
 
@@ -52,6 +62,34 @@ public class AccountActivity extends AppCompatActivity {
         roboto = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Light.ttf");
 
         textName.setTypeface(roboto);
+
+        appointmentContext = AppointmentContext.context(appointmentContext);
+
+        userContext = UserContext.context(userContext);
+
+        setImageUser();
+
+        setupAppointments();
+    }
+
+    private void setToolbar(){
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        if (toolbar != null) {
+
+            setSupportActionBar(toolbar);
+        }
+    }
+
+    private void setNameUser(User user){
+
+        textName.setText(user.getName());
+    }
+
+    private void setupTabs(){
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
 
         TabLayout.Tab tab = tabLayout.newTab();
 
@@ -79,58 +117,83 @@ public class AccountActivity extends AppCompatActivity {
 
         viewPager = (ViewPager) findViewById(R.id.container);
 
-        PagerAccountAdapter pagerAccountAdapter = new PagerAccountAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+        pagerAccountAdapter = new PagerAccountAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
 
         viewPager.setAdapter(pagerAccountAdapter);
 
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-    @Override
-    public void onTabSelected(TabLayout.Tab tab) {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
 
-        TextView tabText = (TextView) tab.getCustomView();
+                TextView tabText = (TextView) tab.getCustomView();
 
-        viewPager.setCurrentItem(tab.getPosition());
+                viewPager.setCurrentItem(tab.getPosition());
 
-        tabText.setTypeface(roboto, Typeface.BOLD);
+                tabText.setTypeface(roboto, Typeface.BOLD);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+                TextView tabText = (TextView) tab.getCustomView();
+
+                tabText.setTypeface(roboto, Typeface.NORMAL);
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+
+        });
+
     }
 
-    @Override
-    public void onTabUnselected(TabLayout.Tab tab) {
+    public void setupAppointments(){
 
-        TextView tabText = (TextView) tab.getCustomView();
+        User user = userContext.currentUser();
 
-        tabText.setTypeface(roboto, Typeface.NORMAL);
-    }
+        appointmentContext.loadUserAppointments(user, new AppointmentCompletion.AppointmentErrorCompletion() {
+            @Override
+            public void completion(List<Appointment> appointmentList, AppError error) {
 
-    @Override
-    public void onTabReselected(TabLayout.Tab tab) {
+                if (appointmentList != null && ! appointmentList.isEmpty()) {
 
-    }
+                    ((BookingsFragment) pagerAccountAdapter.getItem(0)).setAppointmentList(appointmentList);
 
-    });
+                    List<Venue> venues = new ArrayList<>();
 
-        setImageUser();
-    }
+                    for (Appointment appointment : appointmentList) {
 
-    private void setToolbar(){
+                        boolean isThere = false;
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+                        Venue venueToCheck = appointment.getVenue();
 
-        if (toolbar != null) {
+                        for(Venue venue : venues){
 
-            setSupportActionBar(toolbar);
-        }
-    }
+                            boolean equalName = venueToCheck.getName().equals(venue.getName());
 
-    private void setNameUser(User user){
+                            boolean equalAddress = venueToCheck.getAddress().equals(venue.getAddress());
 
-        textName.setText(user.getName());
-    }
+                            if(equalAddress && equalName){
 
-    private void setupTabs(){
+                                isThere = true;
+                            }
+                        }
 
+                        if(! isThere) {
+
+                            venues.add(venueToCheck);
+                        }
+                    }
+
+                    ((VenuesFragment) pagerAccountAdapter.getItem(1)).setVenues(venues);
+
+                }
+            }
+        });
     }
 
     private void setImageUser(){

@@ -5,15 +5,23 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.amtechventures.tucita.activities.account.fragments.bookings.BookingsFragment;
+import com.amtechventures.tucita.activities.account.fragments.venues.VenuesFragment;
 
 public class PagerAccountAdapter extends FragmentStatePagerAdapter {
+
     int numOfTabs;
+    BookingsFragment bookingsFragment;
+    VenuesFragment venuesFragment;
 
     public PagerAccountAdapter(FragmentManager fm, int NumOfTabs) {
 
         super(fm);
 
         this.numOfTabs = NumOfTabs;
+
+        bookingsFragment = new BookingsFragment();
+
+        venuesFragment = new VenuesFragment();
     }
 
     @Override
@@ -24,12 +32,12 @@ public class PagerAccountAdapter extends FragmentStatePagerAdapter {
         switch (position) {
 
             case 0:
-                current= new BookingsFragment();
+                current = bookingsFragment;
 
                 break;
 
             default:
-                current= new BookingsFragment();
+                current = venuesFragment;
 
                 break;
         }

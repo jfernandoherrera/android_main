@@ -11,9 +11,15 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.amtechventures.tucita.R;
+import com.amtechventures.tucita.activities.account.adapters.AppointmentsAdapter;
+import com.amtechventures.tucita.activities.account.adapters.VenuesAdapter;
 import com.amtechventures.tucita.model.context.appointment.AppointmentContext;
 import com.amtechventures.tucita.model.context.venue.VenueContext;
 import com.amtechventures.tucita.model.domain.appointment.Appointment;
+import com.amtechventures.tucita.model.domain.venue.Venue;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class VenuesFragment extends Fragment{
 
@@ -22,6 +28,7 @@ public class VenuesFragment extends Fragment{
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private TextView noResults;
+    private List<Venue> venues;
 
     @Override
     public void onAttach(Context context) {
@@ -33,6 +40,27 @@ public class VenuesFragment extends Fragment{
     public void onDetach() {
 
         super.onDetach();
+    }
+
+
+    public void setVenues(List<Venue> venues){
+
+        this.venues = venues;
+
+        setupList();
+    }
+
+
+    public void setupList(){
+
+        if (venues != null && !venues.isEmpty()) {
+
+            adapter = new VenuesAdapter(venues);
+
+            recyclerView.setAdapter(adapter);
+
+            noResults.setVisibility(View.GONE);
+        }
     }
 
     @Override
