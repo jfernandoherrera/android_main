@@ -36,16 +36,17 @@ import java.util.List;
 
 public class SecureCheckoutFragment extends Fragment{
 
-    AppointmentView appointmentView;
-    Venue venue;
-    List<Service> services;
-    int duration;
-    Calendar date;
-    User user;
-    TextView textClientName;
-    TextView textEmail;
-    AppointmentContext appointmentContext;
-    OnPlaceOrder listener;
+    private AppointmentView appointmentView;
+    private Venue venue;
+    private List<Service> services;
+    private int duration;
+    private Calendar date;
+    private User user;
+    private TextView textClientName;
+    private TextView textEmail;
+    private TextView textTotal;
+    private AppointmentContext appointmentContext;
+    private OnPlaceOrder listener;
     private LayoutInflater inflater;
     private ExpandableWithoutParentAdapter adapter;
     private ExpandableListView listViewServices;
@@ -92,6 +93,8 @@ public class SecureCheckoutFragment extends Fragment{
         textClientName = (TextView) rootView.findViewById(R.id.clientName);
 
         textEmail = (TextView) rootView.findViewById(R.id.clientEmail);
+
+        textTotal = (TextView) rootView.findViewById(R.id.textPrice);
 
         listViewServices = (ExpandableListView) rootView.findViewById(R.id.listViewServices);
 
@@ -140,6 +143,8 @@ public class SecureCheckoutFragment extends Fragment{
         setupAppointmentView();
 
         setupServices();
+
+        setupTotal();
     }
 
     public void setupAppointmentView(){
@@ -158,9 +163,23 @@ public class SecureCheckoutFragment extends Fragment{
         appCompatActivity.getSupportActionBar().setTitle(title);
     }
 
+    private void setupTotal(){
+
+        int total = 0;
+
+        for(Service service : services){
+
+            total = total + service.getPrice();
+        }
+        String money = "$" + total;
+
+        textTotal.setText(money);
+
+    }
+
     public void placeOrder(){
 
-    Appointment appointment = new Appointment();
+        Appointment appointment = new Appointment();
 
         appointment.setDate(date);
 

@@ -5,6 +5,8 @@
     <com.amtechventures.tucita.utils.views.AppointmentView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/high_margin"
+        android:layout_marginLeft="@dimen/high_margin"
         android:id="@+id/appointment"/>
         <ExpandableListView
             android:layout_width="match_parent"
@@ -40,19 +42,21 @@
         android:layout_marginStart="@dimen/high_margin"
         android:id="@+id/clientEmail"
         />
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:background="@color/com_facebook_button_login_silver_background_color"
         android:padding="@dimen/high_margin">
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="bottom"
                 android:textColor="@color/blackSecondary"
                 android:text="@string/order_total"/>
             <TextView
@@ -62,13 +66,13 @@
                 />
         </LinearLayout>
     <Button
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_marginLeft="@dimen/high_margin"
         android:layout_marginStart="@dimen/high_margin"
-        android:layout_marginRight="@dimen/high_margin"
-        android:layout_marginEnd="@dimen/high_margin"
         android:id="@+id/placeOrder"
         android:text="@string/place_order"/>
-    </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>

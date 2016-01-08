@@ -4,6 +4,8 @@
     <string name="bookings">Tus citas</string>
     <string name="action_settings">Settings</string>
     <string name="order_total">Total :</string>
+    <string name="make_review">Valora tu cita!</string>
+    <string name="edit">Editar</string>
     <string name="secure_checkout">Chequeo seguro</string>
     <string name="all">Todos</string>
     <string name="others">Otros</string>

@@ -61,7 +61,7 @@ public class AccountActivity extends AppCompatActivity {
 
         tabText.setText(R.string.bookings);
 
-        tabText.setTypeface(roboto);
+        tabText.setTypeface(roboto, Typeface.BOLD);
 
         TabLayout.Tab tab1 = tabLayout.newTab();
 
@@ -127,6 +127,10 @@ public class AccountActivity extends AppCompatActivity {
     private void setNameUser(User user){
 
         textName.setText(user.getName());
+    }
+
+    private void setupTabs(){
+
     }
 
     private void setImageUser(){

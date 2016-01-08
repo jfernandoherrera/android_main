@@ -24,7 +24,7 @@ public class AppointmentsAdapter extends RecyclerView.Adapter<AppointmentsAdapte
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int position) {
 
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.appointment_view, viewGroup, false);
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_user_appointment, viewGroup, false);
 
         ViewHolder viewHolder = new ViewHolder(v);
 

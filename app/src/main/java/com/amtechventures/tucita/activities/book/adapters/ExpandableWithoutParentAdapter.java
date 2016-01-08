@@ -29,6 +29,8 @@ public class ExpandableWithoutParentAdapter extends BaseExpandableListAdapter {
         if (services.size() == 1){
 
             listViewParent.setGroupIndicator(null);
+
+            listViewParent.setOnTouchListener(null);
         }
     }
 
