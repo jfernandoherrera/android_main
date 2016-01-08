@@ -4,6 +4,7 @@ package com.amtechventures.tucita.utils.views;
 
 import android.content.Context;
 import android.graphics.Point;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
@@ -19,9 +20,8 @@ import static android.view.View.MeasureSpec.*;
 
 public class ViewUtils {
 
-    public  int childHeight = 48;
-    public  int parentHeight = 72;
-    private final double sizeRatio = 0.0012;
+    public  int childHeight = 100;
+    public  int parentHeight = 48;
     private final int twelveHoursClock = 12;
     private final int oneDigitNumber = 9;
     private Context context;
@@ -41,30 +41,30 @@ public class ViewUtils {
 
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 
-        Display display = wm.getDefaultDisplay();
+        DisplayMetrics metrics = new DisplayMetrics();
 
-        Point size = new Point();
+        wm.getDefaultDisplay().getMetrics(metrics);
 
-        display.getSize(size);
+        double size = metrics.scaledDensity;
 
-        childHeight = (int) (childHeight * (size.y * sizeRatio)) * 3;
+        childHeight = (int) (childHeight * size);
 
-        parentHeight = (int) (parentHeight * (size.y * sizeRatio));
+        parentHeight = (int) (parentHeight * size);
     }
 
     private void setupHeights(int childHeight, int parentHeight){
 
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 
-        Display display = wm.getDefaultDisplay();
+        DisplayMetrics metrics = new DisplayMetrics();
 
-        Point size = new Point();
+        wm.getDefaultDisplay().getMetrics(metrics);
 
-        display.getSize(size);
+        double size = metrics.scaledDensity;
 
-        this.childHeight = (int) (childHeight * (size.y * sizeRatio)) * 3;
+        this.childHeight = (int) (childHeight * size);
 
-        this.parentHeight = (int) (parentHeight * (size.y * sizeRatio));
+        this.parentHeight = (int) (parentHeight * size);
     }
 
     public void setListViewHeightBasedOnChildren(ListView listView) {
@@ -78,20 +78,19 @@ public class ViewUtils {
 
         int totalHeight = 0;
 
-        int desiredWidth = makeMeasureSpec(listView.getWidth(), AT_MOST);
-
         for (int i = 0; i < listAdapter.getCount(); i++) {
 
             View listItem = listAdapter.getView(i, null, listView);
 
-            listItem.measure(desiredWidth, UNSPECIFIED);
+            if(listItem != null) {
 
-            if(listItem instanceof CheckedTextView) {
+                if (listItem instanceof CheckedTextView) {
 
-                totalHeight += parentHeight;
-            }else {
+                    totalHeight += parentHeight;
+                } else {
 
-                totalHeight += childHeight;
+                    totalHeight += childHeight;
+                }
             }
 
         }
@@ -132,7 +131,7 @@ public class ViewUtils {
 
             View listItem = listAdapter.getView(i, null, listView);
 
-            listItem.measure(desiredWidth, UNSPECIFIED);
+            listItem.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
 
             if(listItem instanceof CheckedTextView) {
 

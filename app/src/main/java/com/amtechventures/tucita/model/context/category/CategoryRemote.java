@@ -1,5 +1,7 @@
 package com.amtechventures.tucita.model.context.category;
 
+import android.util.Log;
+
 import java.util.List;
 
 import com.amtechventures.tucita.model.domain.category.CategoryAttributes;
@@ -38,13 +40,21 @@ public class CategoryRemote {
             @Override
             public void done(List<Category> categoryList, ParseException e) {
 
+                if(e != null) {
+
+                    e.printStackTrace();
+                }
+
                 if (categoryList != null) {
 
                     try {
 
                         ParseObject.pinAll(categoryList);
 
-                    } catch (ParseException pe) {}
+                    } catch (ParseException pe) {
+
+                        pe.printStackTrace();
+                    }
 
                 }
 

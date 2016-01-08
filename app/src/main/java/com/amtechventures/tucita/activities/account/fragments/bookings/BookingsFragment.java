@@ -43,6 +43,7 @@ public class BookingsFragment extends Fragment{
         super.onDetach();
     }
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
 

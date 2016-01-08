@@ -201,6 +201,11 @@ public class CategoryFragment extends Fragment {
             @Override
             public void completion(List<Category> categoryList, AppError error) {
 
+                if(progress != null){
+
+                    progress.dismiss();
+                }
+
                 if (categoryList != null) {
 
                     categories.clear();
@@ -208,11 +213,6 @@ public class CategoryFragment extends Fragment {
                     categories.addAll(categoryList);
 
                     adapter.notifyDataSetChanged();
-
-                    if(progress != null){
-
-                        progress.dismiss();
-                    }
 
                 } else {
 
