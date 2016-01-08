@@ -5,7 +5,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +27,7 @@ import java.util.List;
 public class BookingsFragment extends Fragment{
 
     private ProgressDialog progress;
-    private RecyclerView.LayoutManager layoutManager;
+    private LinearLayoutManager layoutManager;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private TextView noResults;
@@ -54,11 +56,36 @@ public class BookingsFragment extends Fragment{
 
         noResults = (TextView) rootView.findViewById(R.id.noResults);
 
-        layoutManager = new GridLayoutManager(getContext(), 1);
+        layoutManager = new LinearLayoutManager(getContext());
 
         recyclerView.setLayoutManager(layoutManager);
 
-        setupList();
+        recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy)
+            {
+                int pastVisibleItems, visibleItemCount, totalItemCount;
+
+                if(dy > 0) //check for scroll down
+                {
+                    visibleItemCount = layoutManager.getChildCount();
+
+                    totalItemCount = layoutManager.getItemCount();
+
+                    pastVisibleItems = layoutManager.findFirstVisibleItemPosition();
+
+                    if ( (visibleItemCount + pastVisibleItems) >= totalItemCount)
+                    {
+                        Log.v("...", "Last Item Wow !");
+                      
+                    }
+                }
+                super.onScrolled(recyclerView, dx, dy);
+            }
+        });
+
+                setupList();
 
     return rootView;
     }
