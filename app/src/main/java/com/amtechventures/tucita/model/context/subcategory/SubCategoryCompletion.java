@@ -1,6 +1,5 @@
 package com.amtechventures.tucita.model.context.subcategory;
 
-
 import com.amtechventures.tucita.model.domain.subcategory.SubCategory;
 import com.amtechventures.tucita.model.error.AppError;
 
@@ -13,4 +12,5 @@ public class SubCategoryCompletion {
         void completion(List<SubCategory> subCategoriesList, AppError error);
 
     }
+
 }

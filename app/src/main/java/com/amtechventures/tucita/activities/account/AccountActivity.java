@@ -1,19 +1,19 @@
 package com.amtechventures.tucita.activities.account;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.content.Intent;
-import com.amtechventures.tucita.R;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
+
+import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.account.adapters.PagerAccountAdapter;
 import com.amtechventures.tucita.activities.account.fragments.bookings.BookingsFragment;
 import com.amtechventures.tucita.activities.account.fragments.venues.VenuesFragment;
@@ -70,6 +70,7 @@ public class AccountActivity extends AppCompatActivity {
         setImageUser();
 
         setupAppointments();
+
     }
 
     private void setToolbar(){
@@ -79,15 +80,18 @@ public class AccountActivity extends AppCompatActivity {
         if (toolbar != null) {
 
             setSupportActionBar(toolbar);
+
         }
+
     }
 
-    private void setNameUser(User user){
+    private void setNameUser(User user) {
 
         textName.setText(user.getName());
+
     }
 
-    private void setupTabs(){
+    private void setupTabs() {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
 
@@ -124,6 +128,7 @@ public class AccountActivity extends AppCompatActivity {
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
 
@@ -132,6 +137,7 @@ public class AccountActivity extends AppCompatActivity {
                 viewPager.setCurrentItem(tab.getPosition());
 
                 tabText.setTypeface(roboto, Typeface.BOLD);
+
             }
 
             @Override
@@ -140,22 +146,22 @@ public class AccountActivity extends AppCompatActivity {
                 TextView tabText = (TextView) tab.getCustomView();
 
                 tabText.setTypeface(roboto, Typeface.NORMAL);
+
             }
 
             @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
+            public void onTabReselected(TabLayout.Tab tab) {}
 
         });
 
     }
 
-    public void setupAppointments(){
+    public void setupAppointments() {
 
         User user = userContext.currentUser();
 
         appointmentContext.loadUserAppointments(user, new AppointmentCompletion.AppointmentErrorCompletion() {
+
             @Override
             public void completion(List<Appointment> appointmentList, AppError error) {
 
@@ -180,33 +186,41 @@ public class AccountActivity extends AppCompatActivity {
                             if(equalAddress && equalName){
 
                                 isThere = true;
+
                             }
+
                         }
 
-                        if(! isThere) {
+                        if(!isThere) {
 
                             venues.add(venueToCheck);
+
                         }
+
                     }
 
                     ((VenuesFragment) pagerAccountAdapter.getItem(1)).setVenues(venues);
 
                 }
+
             }
+
         });
+
     }
 
     private void setImageUser(){
 
         User user = userContext.currentUser();
 
-        if(userContext.IsFacebook(user.getParseUser())) {
+        if(userContext.isFacebook(user.getParseUser())) {
 
             circularImageView.setImageBitmap(userContext.getPicture());
 
-        }else{
+        } else {
 
             circularImageView.setVisibility(View.GONE);
+
         }
 
         setNameUser(user);
@@ -247,6 +261,7 @@ public class AccountActivity extends AppCompatActivity {
         goToCategories();
 
         return super.onOptionsItemSelected(item);
+
     }
 
     @Override
@@ -255,6 +270,7 @@ public class AccountActivity extends AppCompatActivity {
         goToCategories();
 
         super.onBackPressed();
+
     }
 
     public static void goToAccount(Context context) {
@@ -274,9 +290,10 @@ public class AccountActivity extends AppCompatActivity {
         startActivity(intent);
 
         finish();
+
     }
 
-    public void goToCategories(){
+    public void goToCategories() {
 
         Intent intent = new Intent(this, MainActivity.class);
 
@@ -285,5 +302,6 @@ public class AccountActivity extends AppCompatActivity {
         startActivity(intent);
 
         finish();
+
     }
 }

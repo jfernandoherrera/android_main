@@ -11,18 +11,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.amtechventures.tucita.R;
 
-public class ServiceAddView extends RelativeLayout{
+public class ServiceAddView extends RelativeLayout {
 
     private ImageView imageView;
-
     private RelativeLayout relativeLayout;
-
     private TextView name;
-
     private TextView duration;
-
     private TextView price;
-
     private boolean plus = false;
 
     public ServiceAddView(Context context, AttributeSet attrs) {
@@ -32,38 +27,43 @@ public class ServiceAddView extends RelativeLayout{
         init(context);
 
         setOnTouchListener(new View.OnTouchListener() {
+
             @Override
             public boolean onTouch(View v, MotionEvent event) {
 
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
 
-                backgroundClicked();
+                    backgroundClicked();
 
-                } else if(event.getAction() == MotionEvent.ACTION_UP){
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
 
-                backgroundNormal();
+                    backgroundNormal();
+
                 }
+
                 return false;
+
             }
+
         });
 
     }
 
-    public void setPlus(boolean value){
+    public void setPlus(boolean value) {
 
         plus = value;
+
     }
 
-    public boolean getPlus(){
+    public boolean getPlus() {
 
         return plus;
+
     }
 
     private void init(Context context) {
 
-        LayoutInflater inflater = (LayoutInflater) context
-
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         inflater.inflate(R.layout.item_add_service, this);
 
@@ -76,55 +76,65 @@ public class ServiceAddView extends RelativeLayout{
         duration = (TextView) findViewById(R.id.textDuration);
 
         price = (TextView) findViewById(R.id.textPricesFrom);
+
     }
 
-    public void setName(String name){
+    public void setName(String name) {
 
         this.name.setText(name);
+
     }
 
-    public void setDuration(String duration){
+    public void setDuration(String duration) {
 
         this.duration.setText(duration);
+
     }
 
-    public void setPrice(int price){
+    public void setPrice(int price) {
 
         String formattedPrice = "$ " + price;
 
-    this.price.setText(formattedPrice);
+        this.price.setText(formattedPrice);
+
     }
 
-    public void backgroundClicked(){
+    public void backgroundClicked() {
 
         relativeLayout.setBackgroundResource(R.drawable.pressed_application_background_static);
+
     }
 
-    public void backgroundNormal(){
+    public void backgroundNormal() {
 
         relativeLayout.setBackgroundColor(Color.TRANSPARENT);
 
     }
 
-    public void setImageView(){
+    public void setImageView() {
 
-        if(plus){
+        if (plus) {
 
             plusImage();
-        }else{
+
+        } else {
 
             checkImage();
+
         }
+
     }
 
-    private void plusImage(){
+    private void plusImage() {
 
         imageView.setImageResource(R.mipmap.ic_plus);
+
     }
 
-    private void checkImage(){
+    private void checkImage() {
 
         imageView.setImageResource(R.mipmap.ic_check);
-    }
 
     }
+
+}

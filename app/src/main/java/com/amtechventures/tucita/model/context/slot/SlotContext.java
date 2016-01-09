@@ -9,12 +9,13 @@ import com.parse.SaveCallback;
 
 public class SlotContext {
 
-    SlotRemote slotRemote;
+    private SlotRemote slotRemote;
 
-    public SlotContext(){
+    public SlotContext() {
 
         slotRemote = new SlotRemote();
     }
+
     public static SlotContext context(SlotContext slotContext) {
 
         if (slotContext == null) {
@@ -23,25 +24,30 @@ public class SlotContext {
 
         }
 
-        return  slotContext;
+        return slotContext;
+
     }
 
-    public void loadDaySlots(Venue venue, int day, SlotCompletion.SlotErrorCompletion completion){
+    public void loadDaySlots(Venue venue, int day, SlotCompletion.SlotErrorCompletion completion) {
 
         ParseRelation object = (ParseRelation) venue.get(VenueAttributes.slots);
 
         ParseQuery<Slot> queryLocal = object.getQuery();
 
         slotRemote.loadDaySlots(queryLocal, day, completion);
+
     }
 
-    public void lockSlot(Slot slot, SaveCallback callback){
+    public void lockSlot(Slot slot, SaveCallback callback) {
 
         slotRemote.lockSlot(slot, callback);
+
     }
 
-    public boolean isLocked(Slot slot){
+    public boolean isLocked(Slot slot) {
 
-      return slotRemote.isLocked(slot);
+        return slotRemote.isLocked(slot);
+
     }
+
 }

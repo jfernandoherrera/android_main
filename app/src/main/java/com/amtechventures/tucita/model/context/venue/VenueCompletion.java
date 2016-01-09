@@ -12,4 +12,5 @@ public class VenueCompletion {
         void completion(List<Venue> venueList, AppError error);
 
     }
+
 }

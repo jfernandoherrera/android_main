@@ -2,6 +2,7 @@ package com.amtechventures.tucita.model.context.user;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
+
 import com.amtechventures.tucita.model.domain.user.User;
 import com.parse.ParseFacebookUtils;
 import com.parse.ParseUser;
@@ -20,6 +21,7 @@ public class UserContext {
         }
 
         return userContext;
+
     }
 
     public UserContext() {
@@ -54,22 +56,26 @@ public class UserContext {
 
     }
 
-    public boolean IsFacebook(ParseUser parseUser){
+    public boolean isFacebook(ParseUser parseUser) {
 
-       return ParseFacebookUtils.isLinked(parseUser);
+        return ParseFacebookUtils.isLinked(parseUser);
+
     }
 
-    public Bitmap getPicture(){
+    public Bitmap getPicture() {
 
         User user = currentUser();
 
         Bitmap bitmap = null;
 
-        if(user != null){
+        if (user != null) {
 
             bitmap = remote.getPicture(user.getParseUser());
+
         }
+
         return bitmap;
+
     }
 
     public void logout() {

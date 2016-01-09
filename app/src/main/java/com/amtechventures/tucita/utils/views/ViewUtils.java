@@ -1,43 +1,38 @@
 package com.amtechventures.tucita.utils.views;
 
-
-
 import android.content.Context;
-import android.graphics.Point;
 import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.Display;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.CheckedTextView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
-import static android.view.View.MeasureSpec.*;
+import static android.view.View.MeasureSpec.AT_MOST;
+import static android.view.View.MeasureSpec.makeMeasureSpec;
 
 public class ViewUtils {
 
-    public  int childHeight = 100;
-    public  int parentHeight = 48;
+    public int childHeight = 100;
+    public int parentHeight = 48;
     private final int twelveHoursClock = 12;
     private final int oneDigitNumber = 9;
     private Context context;
 
-    public ViewUtils(Context context){
+    public ViewUtils(Context context) {
 
         this.context = context;
 
-        if( context != null) {
+        if (context != null) {
 
-        setupHeights();
+            setupHeights();
 
         }
+
     }
 
-    private void setupHeights(){
+    private void setupHeights() {
 
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 
@@ -50,9 +45,10 @@ public class ViewUtils {
         childHeight = (int) (childHeight * size);
 
         parentHeight = (int) (parentHeight * size);
+
     }
 
-    private void setupHeights(int childHeight, int parentHeight){
+    private void setupHeights(int childHeight, int parentHeight) {
 
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 
@@ -65,6 +61,7 @@ public class ViewUtils {
         this.childHeight = (int) (childHeight * size);
 
         this.parentHeight = (int) (parentHeight * size);
+
     }
 
     public void setListViewHeightBasedOnChildren(ListView listView) {
@@ -72,8 +69,9 @@ public class ViewUtils {
         ListAdapter listAdapter = listView.getAdapter();
 
         if (listAdapter == null) {
-            // pre-condition
+
             return;
+
         }
 
         int totalHeight = 0;
@@ -82,28 +80,30 @@ public class ViewUtils {
 
             View listItem = listAdapter.getView(i, null, listView);
 
-            if(listItem != null) {
+            if (listItem != null) {
 
                 if (listItem instanceof CheckedTextView) {
 
                     totalHeight += parentHeight;
+
                 } else {
 
                     totalHeight += childHeight;
+
                 }
+
             }
 
         }
 
         ViewGroup.LayoutParams params = listView.getLayoutParams();
 
-        params.height = totalHeight + (listView.getDividerHeight() *
-
-                (listAdapter.getCount() - 1));
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
 
         listView.setLayoutParams(params);
 
         listView.requestLayout();
+
     }
 
     public void setListViewHeightBasedOnChildren(ListView listView, int childHeight, int parentHeight) {
@@ -111,16 +111,17 @@ public class ViewUtils {
         setupHeights(childHeight, parentHeight);
 
         setListViewHeightBasedOnChildren(listView);
-    }
 
+    }
 
     public void setListViewHeightBasedOnChildrenCountLines(ListView listView, int height) {
 
         ListAdapter listAdapter = listView.getAdapter();
 
         if (listAdapter == null) {
-            // pre-condition
+
             return;
+
         }
 
         int totalHeight = 0;
@@ -133,12 +134,14 @@ public class ViewUtils {
 
             listItem.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
 
-            if(listItem instanceof CheckedTextView) {
+            if (listItem instanceof CheckedTextView) {
 
                 totalHeight += parentHeight;
-            }else {
+
+            } else {
 
                 totalHeight += height;
+
             }
 
         }
@@ -153,18 +156,18 @@ public class ViewUtils {
 
     }
 
-
-    public String hourFormat(int hour, int minute){
+    public String hourFormat(int hour, int minute) {
 
         String amPm = hour <= twelveHoursClock ? "AM" : "PM";
 
-        String minuteString = minute <= oneDigitNumber ?  "0" + String.valueOf(minute) :  String.valueOf(minute);
+        String minuteString = minute <= oneDigitNumber ? "0" + String.valueOf(minute) : String.valueOf(minute);
 
         hour = hour <= twelveHoursClock ? hour : hour - twelveHoursClock;
 
         String hourString = " " + String.valueOf(hour) + ":" + minuteString + amPm + " ";
 
         return hourString;
+
     }
 
 }

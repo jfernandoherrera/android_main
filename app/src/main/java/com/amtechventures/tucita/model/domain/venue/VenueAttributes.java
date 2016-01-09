@@ -1,6 +1,5 @@
 package com.amtechventures.tucita.model.domain.venue;
 
-
 public class VenueAttributes {
 
     public static final String address = "address";
@@ -17,4 +16,5 @@ public class VenueAttributes {
     public static final String linkToLocation = "http://maps.google.com/?q=";
     public static final String updatedAt = "updatedAt";
     public static final String slots = "slots";
+
 }

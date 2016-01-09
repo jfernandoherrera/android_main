@@ -1,6 +1,5 @@
 package com.amtechventures.tucita.activities.advanced.fragments;
 
-
 import android.app.ProgressDialog;
 import android.location.Location;
 import android.os.Bundle;
@@ -87,6 +86,7 @@ public class VenuesResultFragment extends Fragment implements LocationCompletion
         locationClick = (LinearLayout) rootView.findViewById(R.id.locationClick);
 
         button.setOnTouchListener(new View.OnTouchListener() {
+
             @Override
             public boolean onTouch(View v, MotionEvent event) {
 
@@ -100,7 +100,9 @@ public class VenuesResultFragment extends Fragment implements LocationCompletion
                 }
 
                 return false;
+
             }
+
         });
 
         recyclerView.setHasFixedSize(true);
@@ -114,15 +116,14 @@ public class VenuesResultFragment extends Fragment implements LocationCompletion
         recyclerView.setLayoutManager(layoutManager);
 
         return rootView;
+
     }
 
-    private void setupProgress(){
+    private void setupProgress() {
 
-        progress = ProgressDialog.show(getContext(), getResources().getString(R.string.dialog_progress_title),
+        progress = ProgressDialog.show(getContext(), getResources().getString(R.string.dialog_progress_title), getResources().getString(R.string.dialog_advanced_search_progress_message), true);
 
-                getResources().getString(R.string.dialog_advanced_search_progress_message), true);
     }
-
 
     @Override
     public void onStart() {
@@ -134,6 +135,7 @@ public class VenuesResultFragment extends Fragment implements LocationCompletion
             locationContext.onStart();
 
         }else {
+
             AlertDialogError alertDialogError = new AlertDialogError();
 
             alertDialogError.noLocationAlert(getContext());
@@ -152,6 +154,7 @@ public class VenuesResultFragment extends Fragment implements LocationCompletion
         serviceContext.cancelQuery();
 
         venueContext.cancelQuery();
+
     }
 
     @Override

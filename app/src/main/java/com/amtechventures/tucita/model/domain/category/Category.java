@@ -1,16 +1,11 @@
 package com.amtechventures.tucita.model.domain.category;
 
-
-import com.parse.ParseQuery;
-import com.parse.ParseObject;
 import com.parse.ParseClassName;
-
-import java.util.ArrayList;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 @ParseClassName("Category")
 public class Category extends ParseObject {
-
-
 
     public void setName(String name) {
 
@@ -25,7 +20,9 @@ public class Category extends ParseObject {
     }
 
     public static ParseQuery<Category> getQuery() {
+
         ParseQuery<Category> query = ParseQuery.getQuery(Category.class);
+
         return query;
 
     }

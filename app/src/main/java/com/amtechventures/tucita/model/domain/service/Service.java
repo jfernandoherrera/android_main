@@ -6,12 +6,12 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 @ParseClassName("Service")
-public class Service extends ParseObject{
+public class Service extends ParseObject {
 
     private final String shortHour = "hr";
     private final String shortMinutes = "mins";
 
-    public String getDurationInfo(){
+    public String getDurationInfo() {
 
         int durationHours = getDurationHour();
 
@@ -23,41 +23,50 @@ public class Service extends ParseObject{
 
         String serviceDurationInfo = serviceDurationHours + " " + serviceDurationMinutes;
 
-    return serviceDurationInfo;
+        return serviceDurationInfo;
+
     }
 
-    public String getName(){
+    public String getName() {
 
         return getString(ServiceAttributes.name);
+
     }
 
-    public String getDescription(){
+    public String getDescription() {
 
         return getString(ServiceAttributes.description);
+
     }
 
-    public int getPrice(){
+    public int getPrice() {
 
-      return getInt(ServiceAttributes.price);
+        return getInt(ServiceAttributes.price);
+
     }
 
-    public SubCategory getSubcategory(){
+    public SubCategory getSubcategory() {
 
         return (SubCategory) getParseObject(ServiceAttributes.subCategory);
+
     }
 
-    public int getDurationHour(){
+    public int getDurationHour() {
 
-      return getInt(ServiceAttributes.durationHours);
+        return getInt(ServiceAttributes.durationHours);
+
     }
 
-    public int getDurationMinutes(){
+    public int getDurationMinutes() {
 
-       return getInt(ServiceAttributes.durationMinutes);
+        return getInt(ServiceAttributes.durationMinutes);
+
     }
 
     public static ParseQuery<Service> getQuery() {
 
         return ParseQuery.getQuery(Service.class);
+
     }
+
 }

@@ -22,6 +22,7 @@ public class PagerAccountAdapter extends FragmentStatePagerAdapter {
         bookingsFragment = new BookingsFragment();
 
         venuesFragment = new VenuesFragment();
+
     }
 
     @Override
@@ -41,11 +42,16 @@ public class PagerAccountAdapter extends FragmentStatePagerAdapter {
 
                 break;
         }
+
         return current;
+
     }
 
     @Override
     public int getCount() {
+
         return numOfTabs;
+
     }
+
 }

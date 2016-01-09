@@ -1,6 +1,5 @@
 package com.amtechventures.tucita.model.domain.openingHour;
 
-
 public class OpeningHourAttributes {
 
     public static final String day = "day";

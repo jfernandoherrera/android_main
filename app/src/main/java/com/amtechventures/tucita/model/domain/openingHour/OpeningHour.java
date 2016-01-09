@@ -1,40 +1,47 @@
 package com.amtechventures.tucita.model.domain.openingHour;
 
-
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import com.parse.ParseClassName;
-@ParseClassName("Opening_Hour")
-public class OpeningHour extends ParseObject{
 
-    public int getDay(){
+@ParseClassName("Opening_Hour")
+public class OpeningHour extends ParseObject {
+
+    public int getDay() {
 
         return getInt(OpeningHourAttributes.day);
+
     }
 
-    public int getStartHour(){
+    public int getStartHour() {
 
         return getInt(OpeningHourAttributes.startHour);
+
     }
 
-    public int getEndHour(){
+    public int getEndHour() {
 
         return getInt(OpeningHourAttributes.endHour);
+
     }
 
-    public int getStartMinute(){
+    public int getStartMinute() {
 
         return getInt(OpeningHourAttributes.startMinute);
+
     }
 
-    public int getEndMinute(){
+    public int getEndMinute() {
 
         return getInt(OpeningHourAttributes.endMinute);
+
     }
 
     public static ParseQuery<OpeningHour> getQuery() {
 
         return ParseQuery.getQuery(OpeningHour.class);
+
     }
+
 }

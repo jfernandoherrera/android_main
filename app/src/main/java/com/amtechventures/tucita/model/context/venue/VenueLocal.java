@@ -2,18 +2,18 @@ package com.amtechventures.tucita.model.context.venue;
 
 import com.amtechventures.tucita.model.domain.city.City;
 import com.amtechventures.tucita.model.domain.city.CityAttributes;
-import com.amtechventures.tucita.model.domain.service.Service;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.domain.venue.VenueAttributes;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class VenueLocal {
 
-    public Venue findVenue(String lookThat, String address){
+    public Venue findVenue(String lookThat, String address) {
 
         ParseQuery queryName = Venue.getQuery();
 
@@ -29,7 +29,7 @@ public class VenueLocal {
 
         queries.add(queryName);
 
-        ParseQuery query = ParseQuery.or(queries) ;
+        ParseQuery query = ParseQuery.or(queries);
 
         query.include(VenueAttributes.city);
 
@@ -44,12 +44,14 @@ public class VenueLocal {
         } catch (ParseException e) {
 
             e.printStackTrace();
+
         }
 
         return venue;
+
     }
 
-    public List<Venue> loadRecentVenues(){
+    public List<Venue> loadRecentVenues() {
 
         ParseQuery<Venue> queryName = Venue.getQuery();
 
@@ -64,21 +66,26 @@ public class VenueLocal {
         List venuesList = new ArrayList();
 
         try {
-        List venues = queryName.find();
 
-            if(venues != null){
+            List venues = queryName.find();
+
+            if (venues != null) {
 
                 venuesList = venues;
+
             }
 
         } catch (ParseException e) {
 
             e.printStackTrace();
+
         }
+
         return venuesList;
+
     }
 
-        public List<Venue> loadLikeVenues(String likeWord){
+    public List<Venue> loadLikeVenues(String likeWord) {
 
         ParseQuery queryName = Venue.getQuery();
 
@@ -114,24 +121,28 @@ public class VenueLocal {
 
         queries.add(queryVenueDepartment);
 
-        ParseQuery query = ParseQuery.or(queries) ;
+        ParseQuery query = ParseQuery.or(queries);
 
         query.include(VenueAttributes.city);
 
         query.fromLocalDatastore();
 
-            query.orderByAscending(VenueAttributes.name);
+        query.orderByAscending(VenueAttributes.name);
 
         List<Venue> venueList = new ArrayList<>();
 
         try {
 
-           venueList = query.find();
+            venueList = query.find();
 
         } catch (ParseException e) {
 
             e.printStackTrace();
+
         }
+
         return venueList;
+
     }
+
 }

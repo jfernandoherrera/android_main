@@ -8,13 +8,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.advanced.fragments.LocationOptionsFragment;
 import com.amtechventures.tucita.activities.advanced.fragments.VenuesResultFragment;
 import com.amtechventures.tucita.model.domain.category.CategoryAttributes;
 import com.amtechventures.tucita.model.domain.city.City;
 
-public class AdvancedSearchActivity extends AppCompatActivity implements LocationOptionsFragment.OnCitySelected{
+public class AdvancedSearchActivity extends AppCompatActivity implements LocationOptionsFragment.OnCitySelected {
 
     private Toolbar toolbar;
     private String name;
@@ -43,9 +44,10 @@ public class AdvancedSearchActivity extends AppCompatActivity implements Locatio
         hideLocationOptionsFragment();
 
         setToolbar();
+
     }
 
-    private void setVenuesResultFragment(){
+    private void setVenuesResultFragment() {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
 
@@ -54,9 +56,10 @@ public class AdvancedSearchActivity extends AppCompatActivity implements Locatio
         transaction.add(R.id.myDrawView1, venuesResultFragment);
 
         transaction.commit();
+
     }
 
-    private void setLocationOptionsFragment(){
+    private void setLocationOptionsFragment() {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
 
@@ -65,9 +68,10 @@ public class AdvancedSearchActivity extends AppCompatActivity implements Locatio
         transaction.add(R.id.myDrawView1, locationOptionsFragment);
 
         transaction.commit();
+
     }
 
-    private void showVenuesResultFragment(){
+    private void showVenuesResultFragment() {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
 
@@ -76,9 +80,10 @@ public class AdvancedSearchActivity extends AppCompatActivity implements Locatio
         transaction.show(venuesResultFragment);
 
         transaction.commit();
+
     }
 
-    private void hideVenuesResultFragment(){
+    private void hideVenuesResultFragment() {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
 
@@ -87,9 +92,10 @@ public class AdvancedSearchActivity extends AppCompatActivity implements Locatio
         transaction.hide(venuesResultFragment);
 
         transaction.commit();
+
     }
 
-    private void showLocationOptionsFragment(){
+    private void showLocationOptionsFragment() {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
 
@@ -98,9 +104,10 @@ public class AdvancedSearchActivity extends AppCompatActivity implements Locatio
         transaction.show(locationOptionsFragment);
 
         transaction.commit();
+
     }
 
-    private void hideLocationOptionsFragment(){
+    private void hideLocationOptionsFragment() {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
 
@@ -109,35 +116,42 @@ public class AdvancedSearchActivity extends AppCompatActivity implements Locatio
         transaction.hide(locationOptionsFragment);
 
         transaction.commit();
+
     }
 
-    private void setToolbar(){
+    private void setToolbar() {
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         if (toolbar != null) {
 
             setSupportActionBar(toolbar);
+
         }
+
     }
 
-    private void back(){
+    private void back() {
 
-        if (! venuesResultFragment.isHidden()){
+        if (!venuesResultFragment.isHidden()) {
 
             finish();
-        }else {
+
+        } else {
 
             hideLocationOptionsFragment();
 
-           showVenuesResultFragment();
+            showVenuesResultFragment();
+
         }
+
     }
 
     @Override
     public void onBackPressed() {
 
         back();
+
     }
 
     @Override
@@ -148,6 +162,7 @@ public class AdvancedSearchActivity extends AppCompatActivity implements Locatio
         getSupportActionBar().setTitle(name);
 
         return true;
+
     }
 
     @Override
@@ -156,6 +171,7 @@ public class AdvancedSearchActivity extends AppCompatActivity implements Locatio
         back();
 
         return super.onOptionsItemSelected(item);
+
     }
 
     public void onLocationClicked(final View view) {
@@ -163,6 +179,7 @@ public class AdvancedSearchActivity extends AppCompatActivity implements Locatio
         showLocationOptionsFragment();
 
         hideVenuesResultFragment();
+
     }
 
     @Override
@@ -173,5 +190,7 @@ public class AdvancedSearchActivity extends AppCompatActivity implements Locatio
         hideLocationOptionsFragment();
 
         showVenuesResultFragment();
+
     }
+
 }

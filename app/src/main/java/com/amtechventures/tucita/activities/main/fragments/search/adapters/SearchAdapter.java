@@ -4,23 +4,24 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.model.domain.subcategory.SubCategory;
 import com.amtechventures.tucita.model.domain.venue.Venue;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<SubCategory> subCategories = new ArrayList<>();
-    private List <Venue> venues = new ArrayList<>();
-    OnItemClickListener mItemClickListener;
+    private List<Venue> venues = new ArrayList<>();
+    private OnItemClickListener mItemClickListener;
     private final int typeSubCategory = 0;
     private final int typeVenue = 1;
     public static final int typeSection = 2;
@@ -29,15 +30,17 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     public interface OnItemClickListener {
 
-       void onItemClick(View view , int position);
+        void onItemClick(View view, int position);
+
     }
 
     public void setOnItemClickListener(final OnItemClickListener mItemClickListener) {
 
         this.mItemClickListener = mItemClickListener;
+
     }
 
-    public SearchAdapter(List <Venue> venues,List<SubCategory> subCategories, Context context, Typeface typeface){
+    public SearchAdapter(List<Venue> venues, List<SubCategory> subCategories, Context context, Typeface typeface) {
 
         roboto = typeface;
 
@@ -46,6 +49,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         this.subCategories = subCategories;
 
         this.context = context;
+
     }
 
     @Override
@@ -59,16 +63,18 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         boolean venuesWithSubCategoriesCheck = position == subCategories.size() + 1;
 
-        if(subCategoriesCheck || venuesWithSubCategoriesCheck || venuesCheck){
+        if (subCategoriesCheck || venuesWithSubCategoriesCheck || venuesCheck) {
 
             type = typeSection;
 
-        } else{
+        } else {
 
             type = position <= subCategories.size() ? typeSubCategory : typeVenue;
+
         }
 
         return type;
+
     }
 
     @Override
@@ -78,51 +84,54 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         RecyclerView.ViewHolder viewHolder;
 
-        if(viewType == typeSection){
+        if (viewType == typeSection) {
 
             v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.section, viewGroup, false);
 
             viewHolder = new ViewHolderSections(v);
 
-        }else if(viewType == typeSubCategory){
+        } else if (viewType == typeSubCategory) {
 
             v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_item, viewGroup, false);
 
             viewHolder = new ViewHolderSubCategories(v);
-        }else {
+
+        } else {
 
             v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.simplified_item_venue, viewGroup, false);
 
             viewHolder = new ViewHolderVenues(v);
+
         }
 
         return viewHolder;
+
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
 
-        boolean venuesEmpty = ! venues.isEmpty();
+        boolean venuesEmpty = !venues.isEmpty();
 
-        boolean subCategoriesEmpty = ! subCategories.isEmpty();
+        boolean subCategoriesEmpty = !subCategories.isEmpty();
 
         boolean venueCheck = (subCategoriesEmpty && position == subCategories.size() + 1) || position == 0;
 
-        if(position == 0 && viewHolder instanceof ViewHolderSections && ! subCategories.isEmpty()){
+        if (position == 0 && viewHolder instanceof ViewHolderSections && !subCategories.isEmpty()) {
 
-                ViewHolderSections sections = (ViewHolderSections) viewHolder;
+            ViewHolderSections sections = (ViewHolderSections) viewHolder;
 
-                sections.name.setText(context.getString(R.string.services));
+            sections.name.setText(context.getString(R.string.services));
 
-            }else if(venuesEmpty && venueCheck){
+        } else if (venuesEmpty && venueCheck) {
 
-                ViewHolderSections sections = (ViewHolderSections) viewHolder;
+            ViewHolderSections sections = (ViewHolderSections) viewHolder;
 
-                sections.name.setText(context.getString(R.string.venues));
+            sections.name.setText(context.getString(R.string.venues));
 
-                sections.name.setGravity(0x50);
+            sections.name.setGravity(0x50);
 
-            }   else if (subCategoriesEmpty && viewHolder instanceof ViewHolderSubCategories) {
+        } else if (subCategoriesEmpty && viewHolder instanceof ViewHolderSubCategories) {
 
             SubCategory subCategory = subCategories.get(position - 1);
 
@@ -130,7 +139,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
             subCategories.name.setText(subCategory.getName());
 
-        }else if(venuesEmpty){
+        } else if (venuesEmpty) {
 
             Venue venue = venues.get(position - subCategories.size() - typeSection);
 
@@ -141,26 +150,29 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             venues.location.setText(venue.getCity().formatedLocation());
 
         }
+
     }
 
     @Override
     public int getItemCount() {
 
-        int  size = 0;
+        int size = 0;
 
-        if(!subCategories.isEmpty() && !venues.isEmpty()){
+        if (!subCategories.isEmpty() && !venues.isEmpty()) {
 
             size = subCategories.size() + venues.size() + typeSection;
 
-        }else if(! (subCategories.isEmpty() && venues.isEmpty())){
+        } else if (!(subCategories.isEmpty() && venues.isEmpty())) {
 
             size = subCategories.size() + venues.size() + 1;
+
         }
 
         return size;
+
     }
 
-    class ViewHolderSections extends RecyclerView.ViewHolder{
+    class ViewHolderSections extends RecyclerView.ViewHolder {
 
         protected TextView name;
 
@@ -171,10 +183,12 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             name = (TextView) itemView.findViewById(R.id.text);
 
             name.setTypeface(roboto, Typeface.BOLD);
+
         }
+
     }
 
-    class ViewHolderVenues extends RecyclerView.ViewHolder implements View.OnClickListener{
+    class ViewHolderVenues extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         protected TextView name;
 
@@ -193,6 +207,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             location.setTypeface(roboto, Typeface.BOLD);
 
             itemView.setOnTouchListener(new View.OnTouchListener() {
+
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
 
@@ -200,28 +215,32 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
                         itemView.setBackgroundResource(R.drawable.pressed_application_background_static);
 
-                    } else if(event.getAction() != MotionEvent.ACTION_MOVE){
+                    } else if (event.getAction() != MotionEvent.ACTION_MOVE) {
 
                         itemView.setBackgroundColor(Color.TRANSPARENT);
 
                     }
 
                     return false;
+
                 }
+
             });
 
             itemView.setOnClickListener(this);
+
         }
 
         @Override
         public void onClick(View v) {
 
-        mItemClickListener.onItemClick(v, getAdapterPosition());
+            mItemClickListener.onItemClick(v, getAdapterPosition());
+
         }
 
     }
 
-    class ViewHolderSubCategories extends RecyclerView.ViewHolder implements View.OnClickListener{
+    class ViewHolderSubCategories extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         protected TextView name;
 
@@ -234,6 +253,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             name.setTypeface(roboto, Typeface.BOLD);
 
             itemView.setOnTouchListener(new View.OnTouchListener() {
+
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
 
@@ -241,23 +261,28 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
                         itemView.setBackgroundResource(R.drawable.pressed_application_background_static);
 
-                    } else if(event.getAction() != MotionEvent.ACTION_MOVE){
+                    } else if (event.getAction() != MotionEvent.ACTION_MOVE) {
 
                         itemView.setBackgroundColor(Color.TRANSPARENT);
 
                     }
 
-                        return false;
+                    return false;
                 }
+
             });
 
             itemView.setOnClickListener(this);
+
         }
 
         @Override
         public void onClick(View v) {
 
             mItemClickListener.onItemClick(v, getAdapterPosition());
+
         }
+
     }
+
 }

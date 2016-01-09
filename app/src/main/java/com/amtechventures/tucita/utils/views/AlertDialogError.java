@@ -1,7 +1,6 @@
 package com.amtechventures.tucita.utils.views;
 
 import android.content.Context;
-import android.support.v7.app.AlertDialog;
 import android.view.Gravity;
 import android.widget.Toast;
 
@@ -18,7 +17,9 @@ public class AlertDialogError {
             typeMore.setGravity(Gravity.CENTER | Gravity.LEFT, 0, 0);
 
             typeMore.show();
+
         }
+
     }
 
     public void noLocationAlert(Context context) {
@@ -28,6 +29,7 @@ public class AlertDialogError {
         typeMore.setGravity(Gravity.CENTER | Gravity.LEFT, 0, 0);
 
         typeMore.show();
+
     }
 
     public void noTypedEnough(Context context) {
@@ -37,6 +39,7 @@ public class AlertDialogError {
         typeMore.setGravity(Gravity.CENTER | Gravity.LEFT, 0, 0);
 
         typeMore.show();
+
     }
 
     public void noAvailableSlot(Context context) {
@@ -46,6 +49,7 @@ public class AlertDialogError {
         typeMore.setGravity(Gravity.CENTER | Gravity.LEFT, 0, 0);
 
         typeMore.show();
+
     }
 
 }

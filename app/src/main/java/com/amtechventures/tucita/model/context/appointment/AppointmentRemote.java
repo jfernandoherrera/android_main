@@ -11,28 +11,32 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.SaveCallback;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 public class AppointmentRemote {
 
-    ParseQuery<Appointment> query;
+    private ParseQuery<Appointment> query;
 
-    private void setQuery(){
+    private void setQuery() {
 
         query = Appointment.getQuery();
+
     }
 
-    public void cancelQuery(){
+    public void cancelQuery() {
 
-        if(query != null){
+        if (query != null) {
 
             query.cancel();
+
         }
+
     }
 
-    public void loadAppointmentsDateVenue(Venue venue, Calendar date, final AppointmentCompletion.AppointmentErrorCompletion completion){
+    public void loadAppointmentsDateVenue(Venue venue, Calendar date, final AppointmentCompletion.AppointmentErrorCompletion completion) {
 
         setQuery();
 
@@ -47,31 +51,40 @@ public class AppointmentRemote {
         query.whereEqualTo(AppointmentAttributes.venue, venue);
 
         query.findInBackground(new FindCallback<Appointment>() {
+
             @Override
             public void done(List<Appointment> objects, ParseException e) {
 
                 AppError appError = e != null ? new AppError(Appointment.class.toString(), 0, null) : null;
 
                 completion.completion(objects, appError);
+
             }
+
         });
+
         date.add(Calendar.DATE, -1);
+
     }
 
-    public void placeOrder(Appointment appointment, final  AppointmentCompletion.AppointmentErrorCompletion completion){
+    public void placeOrder(Appointment appointment, final AppointmentCompletion.AppointmentErrorCompletion completion) {
 
         appointment.saveInBackground(new SaveCallback() {
+
             @Override
             public void done(ParseException e) {
 
                 AppError appError = e != null ? new AppError(Appointment.class.toString(), 0, null) : null;
 
                 completion.completion(null, appError);
+
             }
+
         });
+
     }
 
-    public void loadUserAppointments(User user, final AppointmentCompletion.AppointmentErrorCompletion completion){
+    public void loadUserAppointments(User user, final AppointmentCompletion.AppointmentErrorCompletion completion) {
 
         ParseQuery<Appointment> query = Appointment.getQuery();
 
@@ -83,26 +96,33 @@ public class AppointmentRemote {
 
         query.include(AppointmentAttributes.venue + "." + VenueAttributes.city);
 
-            query.findInBackground(new FindCallback<Appointment>() {
-                @Override
-                public void done(List<Appointment> objects, ParseException e) {
+        query.findInBackground(new FindCallback<Appointment>() {
 
-                    if (objects != null) {
+            @Override
+            public void done(List<Appointment> objects, ParseException e) {
 
-                        try {
-                            ParseObject.pinAll(objects);
+                if (objects != null) {
 
-                        } catch (ParseException e1) {
+                    try {
 
-                            e1.printStackTrace();
-                        }
+                        ParseObject.pinAll(objects);
+
+                    } catch (ParseException e1) {
+
+                        e1.printStackTrace();
+
                     }
 
-                    AppError appError = e != null ? new AppError(Appointment.class.toString(), 0, null) : null;
-
-                    completion.completion(objects, appError);
                 }
-            });
+
+                AppError appError = e != null ? new AppError(Appointment.class.toString(), 0, null) : null;
+
+                completion.completion(objects, appError);
+
+            }
+
+        });
+
     }
 
 }

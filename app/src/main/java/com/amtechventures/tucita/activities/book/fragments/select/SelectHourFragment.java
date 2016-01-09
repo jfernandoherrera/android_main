@@ -1,6 +1,5 @@
 package com.amtechventures.tucita.activities.book.fragments.select;
 
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.book.fragments.select.adapters.SelectHourAdapter;
 import com.amtechventures.tucita.model.context.appointment.AppointmentCompletion;
@@ -19,26 +19,27 @@ import com.amtechventures.tucita.model.domain.appointment.Appointment;
 import com.amtechventures.tucita.model.domain.slot.Slot;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.error.AppError;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class SelectHourFragment extends Fragment{
+public class SelectHourFragment extends Fragment {
 
-    Calendar date;
-    Venue venue;
+    private Calendar date;
+    private Venue venue;
     private SlotContext slotContext;
     private SelectHourAdapter adapter;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
-    List<Slot> slots;
-    int durationHours;
-    int durationMinutes;
-    int price = 0;
-    boolean isFirst = false;
-    AppointmentContext appointmentContext;
-    SelectHourAdapter.OnSlotSelected listener;
+    private List<Slot> slots;
+    private int durationHours;
+    private int durationMinutes;
+    private int price = 0;
+    private boolean isFirst = false;
+    private AppointmentContext appointmentContext;
+    private SelectHourAdapter.OnSlotSelected listener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -49,7 +50,7 @@ public class SelectHourFragment extends Fragment{
 
         appointmentContext = AppointmentContext.context(appointmentContext);
 
-        recyclerView = (RecyclerView)rootView.findViewById(R.id.recycler_view);
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
 
         layoutManager = new LinearLayoutManager(getContext());
 
@@ -64,16 +65,19 @@ public class SelectHourFragment extends Fragment{
         loadDay(rootView);
 
         return rootView;
+
     }
 
-    public void setPrice(int price){
+    public void setPrice(int price) {
 
         this.price = price;
+
     }
 
     public void setListener(SelectHourAdapter.OnSlotSelected listener) {
 
         this.listener = listener;
+
     }
 
     public void loadDay(final View rootView) {
@@ -81,44 +85,53 @@ public class SelectHourFragment extends Fragment{
         int day = date.get(Calendar.DAY_OF_WEEK);
 
         slotContext.loadDaySlots(venue, day, new SlotCompletion.SlotErrorCompletion() {
+
                     @Override
                     public void completion(List<Slot> slotList, AppError error) {
 
                         setup(slotList, rootView);
+
                     }
 
-            }
+                }
+
         );
+
     }
 
-    public void setDuration(int durationHours, int durationMinutes){
+    public void setDuration(int durationHours, int durationMinutes) {
 
         this.durationHours = durationHours;
 
         this.durationMinutes = durationMinutes;
+
     }
 
-    public void setIsFirst(boolean first){
+    public void setIsFirst(boolean first) {
 
         isFirst = first;
+
     }
 
-    public void setVenue(Venue another){
+    public void setVenue(Venue another) {
 
         venue = another;
+
     }
 
-    public void setDate(Calendar date){
+    public void setDate(Calendar date) {
 
         this.date = date;
 
-        if(adapter != null){
+        if (adapter != null) {
 
             adapter.notifyDataSetChanged();
+
         }
+
     }
 
-    private void setupNoSlots(View view){
+    private void setupNoSlots(View view) {
 
         TextView textView = (TextView) view.findViewById(R.id.closed);
 
@@ -128,24 +141,25 @@ public class SelectHourFragment extends Fragment{
 
         String please = view.getResources().getString(R.string.pls_select_another_day);
 
-        String test = sorry + " " + date.get(Calendar.DAY_OF_MONTH)  + " " + date.get(Calendar.MONTH)+ " " + date.get(Calendar.YEAR) + " " + please;
+        String test = sorry + " " + date.get(Calendar.DAY_OF_MONTH) + " " + date.get(Calendar.MONTH) + " " + date.get(Calendar.YEAR) + " " + please;
 
         textView.setText(test);
 
         recyclerView.setVisibility(View.GONE);
+
     }
 
-    public void setup(List<Slot> slotsDay, View view){
+    public void setup(List<Slot> slotsDay, View view) {
 
-        if(slotsDay == null || slotsDay.isEmpty()){
-
-           setupNoSlots(view);
-
-        }else if(isFirst) {
+        if (slotsDay == null || slotsDay.isEmpty()) {
 
             setupNoSlots(view);
 
-        }else{
+        } else if (isFirst) {
+
+            setupNoSlots(view);
+
+        } else {
 
             slots.clear();
 
@@ -154,23 +168,28 @@ public class SelectHourFragment extends Fragment{
             slots();
 
             setupSlots();
+
         }
+
     }
 
-    private void slots(){
+    private void slots() {
 
-        for(Slot slot : slots){
+        for (Slot slot : slots) {
 
             slot.setAmount();
+
         }
+
     }
-    private void setupSlots(){
+
+    private void setupSlots() {
 
         removeSlots();
 
     }
 
-    private void removeSlots(){
+    private void removeSlots() {
 
         appointmentContext.loadAppointmentsDateVenue(venue, date, new AppointmentCompletion.AppointmentErrorCompletion() {
             @Override
@@ -209,40 +228,49 @@ public class SelectHourFragment extends Fragment{
                                 if (isFirst) {
 
                                     indexFirst.add(slots.indexOf(slot));
+
                                 }
 
                                 slot.decrementAmount();
 
-                                if(slot.getAmount() <= 0) {
+                                if (slot.getAmount() <= 0) {
 
                                     toRemove.add(slot);
+
                                 }
+
                             }
 
                         }
+
                     }
+
                     removeSlotsForDuration(indexFirst, toRemove);
 
-                    if(slots.isEmpty()){
+                    if (slots.isEmpty()) {
 
                         setupNoSlots(getView());
+
                     }
+
                 }
+
             }
         });
+
     }
 
-    private void removeSlotsForDuration(List<Integer> indexList, List<Slot> toRemove){
+    private void removeSlotsForDuration(List<Integer> indexList, List<Slot> toRemove) {
 
-        for(Integer index : indexList) {
+        for (Integer index : indexList) {
 
-            index --;
+            index--;
 
-            int durationHoursToRemove =  durationHours;
+            int durationHoursToRemove = durationHours;
 
             int durationMinutesToRemove = durationMinutes;
 
-            while (index >= 0 && ! (durationHoursToRemove <= 0 && durationMinutesToRemove <= 0) ) {
+            while (index >= 0 && !(durationHoursToRemove <= 0 && durationMinutesToRemove <= 0)) {
 
                 int indexInt = index;
 
@@ -252,39 +280,46 @@ public class SelectHourFragment extends Fragment{
 
                 slots.get(indexInt).decrementAmount();
 
-                if(slots.get(indexInt).getAmount() <= 0) {
+                if (slots.get(indexInt).getAmount() <= 0) {
 
                     toRemove.add(slots.get(indexInt));
+
                 }
 
-                index --;
+                index--;
+
             }
 
         }
+
         slots.removeAll(toRemove);
 
         adapter.notifyDataSetChanged();
 
     }
 
-    private int[] sixtyMinutes(int hour, int minutes){
+    private int[] sixtyMinutes(int hour, int minutes) {
 
         int[] time = new int[2];
 
-        if(minutes < 60){
+        if (minutes < 60) {
 
             time[0] = hour;
 
             time[1] = minutes;
-        }else {
+
+        } else {
 
             time[0] = hour + 1;
 
             minutes = minutes - 60;
 
             time[1] = minutes;
+
         }
 
         return time;
+
     }
+
 }

@@ -12,9 +12,9 @@ import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
 @ParseClassName("Appointment")
-public class Appointment extends ParseObject{
+public class Appointment extends ParseObject {
 
-    public int[] getDuration(){
+    public int[] getDuration() {
 
         int[] duration = new int[2];
 
@@ -22,20 +22,23 @@ public class Appointment extends ParseObject{
 
         int durationMinutes = getInt(AppointmentAttributes.duration);
 
-        if(durationMinutes >= 60){
+        if (durationMinutes >= 60) {
 
             durationHours = durationMinutes / 60;
 
             durationMinutes = durationMinutes - (60 * durationHours);
+
         }
+
         duration[0] = durationHours;
 
         duration[1] = durationMinutes;
 
         return duration;
+
     }
 
-    public Date getDateEnd(){
+    public Date getDateEnd() {
 
         TimeZone timezone = TimeZone.getDefault();
 
@@ -54,40 +57,49 @@ public class Appointment extends ParseObject{
         calendar.add(Calendar.MINUTE, duration[1]);
 
         return calendar.getTime();
+
     }
 
-    public Date getDate(){
+    public Date getDate() {
 
         return getDate(AppointmentAttributes.date);
+
     }
 
-    public Venue getVenue(){
+    public Venue getVenue() {
 
         return (Venue) get(AppointmentAttributes.venue);
+
     }
 
-    public void setDate(Calendar date){
+    public void setDate(Calendar date) {
 
         put(AppointmentAttributes.date, date.getTime());
+
     }
 
-    public void setDuration(int duration){
+    public void setDuration(int duration) {
 
         put(AppointmentAttributes.duration, duration);
+
     }
 
-    public void setVenue(Venue venue){
+    public void setVenue(Venue venue) {
 
         put(AppointmentAttributes.venue, venue);
+
     }
 
-    public void setUser(User user){
+    public void setUser(User user) {
 
         put(AppointmentAttributes.user, user.getParseUser());
+
     }
 
-    public static ParseQuery<Appointment> getQuery(){
+    public static ParseQuery<Appointment> getQuery() {
 
         return ParseQuery.getQuery(Appointment.class);
+
     }
+
 }

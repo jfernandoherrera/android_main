@@ -1,19 +1,15 @@
 package com.amtechventures.tucita.model.context.category;
 
-
-
-import java.util.List;
-import java.util.ArrayList;
-
+import com.amtechventures.tucita.model.domain.category.Category;
 import com.amtechventures.tucita.model.domain.category.CategoryAttributes;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
-import com.amtechventures.tucita.model.domain.category.Category;
 
+import java.util.List;
 
 public class CategoryLocal {
 
-    public Category findCategory(String name){
+    public Category findCategory(String name) {
 
         Category find = null;
 
@@ -22,14 +18,17 @@ public class CategoryLocal {
         query.whereEqualTo(CategoryAttributes.name, name);
 
         try {
+
             find = query.getFirst();
 
         } catch (ParseException e) {
 
             e.printStackTrace();
+
         }
 
         return find;
+
     }
 
     public List<Category> loadCategories() {
@@ -44,13 +43,14 @@ public class CategoryLocal {
 
             categories = query.find();
 
-        }catch (Exception exception) {
+        } catch (Exception exception) {
 
             exception.printStackTrace();
 
         }
 
         return categories;
+
     }
 
 }

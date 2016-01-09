@@ -16,12 +16,14 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.book.adapters.ServicesToBookAdapter;
 import com.amtechventures.tucita.model.domain.service.Service;
+
 import java.util.ArrayList;
 
-public class ShoppingCarView extends FrameLayout implements ServicesToBookAdapter.OnItemClosed{
+public class ShoppingCarView extends FrameLayout implements ServicesToBookAdapter.OnItemClosed {
 
     private ImageView car;
     private Button bookNow;
@@ -37,38 +39,43 @@ public class ShoppingCarView extends FrameLayout implements ServicesToBookAdapte
     private RelativeLayout shoppingCar;
     private RelativeLayout shoppingCarList;
 
-    public interface OnBookNow{
+    public interface OnBookNow {
 
         void onBookNow();
+
     }
 
-    public int[] getDuration(){
+    public int[] getDuration() {
 
         int hours = 0;
 
         int minutes = 0;
 
-        for(Service service : servicesToBook){
+        for (Service service : servicesToBook) {
 
             hours += service.getDurationHour();
 
-            minutes+= service.getDurationMinutes();
-        }
-
-        if(minutes > 59){
+            minutes += service.getDurationMinutes();
 
         }
+
+        if (minutes > 59) {
+        }
+
         return new int[]{hours, minutes};
+
     }
 
-    public interface OnMoreServices{
+    public interface OnMoreServices {
 
         void onMoreServices();
+
     }
 
-    public interface OnItemClosed{
+    public interface OnItemClosed {
 
         void onItemClosed(Service service);
+
     }
 
     public ShoppingCarView(Context context, AttributeSet attrs) {
@@ -82,13 +89,12 @@ public class ShoppingCarView extends FrameLayout implements ServicesToBookAdapte
         listener = (OnMoreServices) context;
 
         init(context);
+
     }
 
-    private void init(Context context){
+    private void init(Context context) {
 
-        LayoutInflater inflater = (LayoutInflater) context
-
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         inflater.inflate(R.layout.shopping_car, this);
 
@@ -104,7 +110,7 @@ public class ShoppingCarView extends FrameLayout implements ServicesToBookAdapte
 
         adapter = new ServicesToBookAdapter(servicesToBook, this);
 
-        recyclerView = (RecyclerView)findViewById(R.id.recycler_view);
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
         layoutManager = new LinearLayoutManager(getContext());
 
@@ -115,6 +121,7 @@ public class ShoppingCarView extends FrameLayout implements ServicesToBookAdapte
         final Button button = (Button) findViewById(R.id.moreServices);
 
         button.setOnTouchListener(new View.OnTouchListener() {
+
             @Override
             public boolean onTouch(View v, MotionEvent event) {
 
@@ -125,30 +132,35 @@ public class ShoppingCarView extends FrameLayout implements ServicesToBookAdapte
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
 
                     button.setBackgroundColor(Color.TRANSPARENT);
+
                 }
 
                 return false;
+
             }
+
         });
 
-        button.setOnClickListener(
+        button.setOnClickListener(new View.OnClickListener() {
 
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+                                      @Override
+                                      public void onClick(View v) {
 
-                        if(listIsVisible()){
+                                          if (listIsVisible()) {
 
-                        hideList();
-                        }
+                                              hideList();
 
-                        listener.onMoreServices();
-                    }
-                }
+                                          }
+
+                                          listener.onMoreServices();
+
+                                      }
+
+                                  }
+
         );
 
-
-                        circleTextView = (CircleTextView) findViewById(R.id.count);
+        circleTextView = (CircleTextView) findViewById(R.id.count);
 
         car.setImageResource(R.mipmap.ic_launcher);
 
@@ -162,55 +174,67 @@ public class ShoppingCarView extends FrameLayout implements ServicesToBookAdapte
 
         display.getSize(size);
 
-        int translation = (int)(size.x * positionRatio) / 2;
+        int translation = (int) (size.x * positionRatio) / 2;
 
         circleTextView.setTranslationX(translation);
 
         circleTextView.bringToFront();
 
         car.setOnClickListener(new OnClickListener() {
+
             @Override
             public void onClick(View v) {
 
                 if (listIsVisible()) {
 
                     hideList();
+
                 } else {
 
                     showList();
+
                 }
 
             }
+
         });
 
         bookNow.setOnClickListener(new OnClickListener() {
+
             @Override
             public void onClick(View v) {
 
                 listenerBookNow.onBookNow();
+
             }
+
         });
+
     }
 
-    public boolean listIsVisible(){
+    public boolean listIsVisible() {
 
         boolean isVisible = shoppingCarList.getVisibility() == VISIBLE;
 
         return isVisible;
+
     }
 
-    public void showView(){
+    public void showView() {
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
 
             shoppingCar.animate().translationY(getHeight()).withEndAction(new Runnable() {
+
                 @Override
                 public void run() {
 
                     shoppingCar.setVisibility(VISIBLE);
 
                     shoppingCar.animate().translationY(0);
+
                 }
+
             });
 
         } else {
@@ -218,20 +242,24 @@ public class ShoppingCarView extends FrameLayout implements ServicesToBookAdapte
             shoppingCar.setVisibility(VISIBLE);
 
         }
+
     }
 
-    public void showList(){
+    public void showList() {
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
 
             shoppingCarList.animate().translationY(shoppingCarList.getHeight()).withEndAction(new Runnable() {
+
                 @Override
                 public void run() {
 
                     shoppingCarList.animate().translationY(0);
 
                     shoppingCarList.setVisibility(View.VISIBLE);
+
                 }
+
             });
 
         } else {
@@ -239,6 +267,7 @@ public class ShoppingCarView extends FrameLayout implements ServicesToBookAdapte
             shoppingCarList.setVisibility(View.VISIBLE);
 
         }
+
         setBackgroundColor(getResources().getColor(R.color.dialogColor));
 
     }
@@ -253,13 +282,16 @@ public class ShoppingCarView extends FrameLayout implements ServicesToBookAdapte
                 public void run() {
 
                     shoppingCar.setVisibility(View.INVISIBLE);
+
                 }
+
             });
+
         } else {
 
             shoppingCar.setVisibility(View.INVISIBLE);
-        }
 
+        }
 
     }
 
@@ -273,69 +305,87 @@ public class ShoppingCarView extends FrameLayout implements ServicesToBookAdapte
                 public void run() {
 
                     shoppingCarList.setVisibility(View.GONE);
+
                 }
+
             });
+
         } else {
 
             shoppingCarList.setVisibility(View.GONE);
+
         }
+
         setBackgroundColor(Color.TRANSPARENT);
+
     }
 
     public ArrayList<Service> getServicesToBook() {
 
         return servicesToBook;
+
     }
 
-    public int getDurationInMinutes(){
+    public int getDurationInMinutes() {
 
         int duration = 0;
 
-        for(Service service : servicesToBook){
+        for (Service service : servicesToBook) {
 
             duration = duration + (service.getDurationHour() * 60) + service.getDurationMinutes();
+
         }
+
         return duration;
+
     }
 
-    public void setCount(){
+    public void setCount() {
 
         circleTextView.setText(" " + String.valueOf(servicesToBook.size()));
 
-        if(servicesToBook.size() == 1 && shoppingCar.getVisibility() != VISIBLE){
+        if (servicesToBook.size() == 1 && shoppingCar.getVisibility() != VISIBLE) {
 
             showView();
 
-        }else if(servicesToBook.isEmpty()){
+        } else if (servicesToBook.isEmpty()) {
 
             hideList();
 
             hideView();
+
         }
+
     }
 
-    public boolean isEmpty(){
+    public boolean isEmpty() {
 
         boolean isEmpty = servicesToBook.isEmpty();
 
         return isEmpty;
+
     }
 
-    public boolean alreadyExistsService(Service service){
+    public boolean alreadyExistsService(Service service) {
 
         boolean exists = false;
 
-        if(servicesToBook != null) {
+        if (servicesToBook != null) {
 
             for (Service service1 : servicesToBook) {
 
                 if (service1.getName().equals(service.getName())) {
 
                     exists = true;
+
                 }
+
             }
+
         }
+
         return exists;
+
     }
 
     public void addService(Service service) {
@@ -345,20 +395,25 @@ public class ShoppingCarView extends FrameLayout implements ServicesToBookAdapte
         if (adapter != null) {
 
             adapter.notifyDataSetChanged();
+
         }
+
         setCount();
+
     }
 
-    public void removeService(Service service){
+    public void removeService(Service service) {
 
         servicesToBook.remove(service);
 
         if (adapter != null) {
 
             adapter.notifyDataSetChanged();
+
         }
 
         setCount();
+
     }
 
     @Override

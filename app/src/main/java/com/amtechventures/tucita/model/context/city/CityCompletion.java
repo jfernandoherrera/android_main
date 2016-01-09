@@ -11,5 +11,6 @@ public class CityCompletion {
         void completion(List<City> cities, AppError error);
 
     }
+
 }
 

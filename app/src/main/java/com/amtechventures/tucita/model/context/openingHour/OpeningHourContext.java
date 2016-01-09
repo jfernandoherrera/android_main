@@ -5,6 +5,7 @@ import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.domain.venue.VenueAttributes;
 import com.parse.ParseQuery;
 import com.parse.ParseRelation;
+
 import java.util.List;
 
 public class OpeningHourContext {
@@ -12,16 +13,18 @@ public class OpeningHourContext {
     private OpeningHourLocal openingHourLocal;
     private OpeningHourRemote openingHourRemote;
 
-    public OpeningHourContext(){
+    public OpeningHourContext() {
 
         openingHourLocal = new OpeningHourLocal();
-        
+
         openingHourRemote = new OpeningHourRemote();
+
     }
 
-    public void cancelQuery(){
+    public void cancelQuery() {
 
         openingHourRemote.cancelQuery();
+
     }
 
     public static OpeningHourContext context(OpeningHourContext openingHourContext) {
@@ -32,19 +35,21 @@ public class OpeningHourContext {
 
         }
 
-        return  openingHourContext;
+        return openingHourContext;
+
     }
 
-    public void loadDayOpeningHours(Venue venue, int day, OpeningHourCompletion.OpeningHourErrorCompletion completion){
+    public void loadDayOpeningHours(Venue venue, int day, OpeningHourCompletion.OpeningHourErrorCompletion completion) {
 
         ParseRelation object = (ParseRelation) venue.get(VenueAttributes.openingHours);
 
         ParseQuery<OpeningHour> queryRemote = object.getQuery();
 
         openingHourRemote.loadDayOpeningHours(queryRemote, day, completion);
+
     }
 
-        public List<OpeningHour> loadOpeningHours(Venue venue, OpeningHourCompletion.OpeningHourErrorCompletion completion){
+    public List<OpeningHour> loadOpeningHours(Venue venue, OpeningHourCompletion.OpeningHourErrorCompletion completion) {
 
         List openingHours;
 
@@ -59,6 +64,7 @@ public class OpeningHourContext {
         openingHourRemote.loadOpeningHours(queryRemote, completion);
 
         return openingHours;
+
     }
 
 }

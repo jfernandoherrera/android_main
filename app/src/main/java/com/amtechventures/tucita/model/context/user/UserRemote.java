@@ -1,36 +1,37 @@
 package com.amtechventures.tucita.model.context.user;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Arrays;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.util.Log;
 
+import com.amtechventures.tucita.model.domain.category.Category;
+import com.amtechventures.tucita.model.domain.facebook.FacebookPermissions;
+import com.amtechventures.tucita.model.domain.user.User;
 import com.amtechventures.tucita.model.domain.user.UserAttributes;
+import com.amtechventures.tucita.model.error.AppError;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
-import com.parse.ParseObject;
-import com.parse.ParseUser;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
-import com.parse.SignUpCallback;
 import com.parse.ParseFacebookUtils;
-import com.amtechventures.tucita.model.error.AppError;
-import com.amtechventures.tucita.model.domain.user.User;
-import com.amtechventures.tucita.model.domain.category.Category;
-import com.amtechventures.tucita.model.domain.facebook.FacebookPermissions;
+import com.parse.ParseObject;
+import com.parse.ParseUser;
+import com.parse.SignUpCallback;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 public class UserRemote {
 
@@ -58,7 +59,7 @@ public class UserRemote {
         parseUser.setUsername(email);
 
         parseUser.setPassword(password);
-        
+
         parseUser.put(UserAttributes.name, name);
 
         parseUser.signUpInBackground(new SignUpCallback() {
@@ -83,62 +84,69 @@ public class UserRemote {
             @Override
             public void done(ParseUser parseUser, ParseException e) {
 
-
-
                 if (parseUser != null && parseUser.isNew()) {
 
-                        final User user = new User();
+                    final User user = new User();
 
-                        user.setParseUser(parseUser);
+                    user.setParseUser(parseUser);
 
-                        GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(),new GraphRequest.GraphJSONObjectCallback() {
-                            @Override
-                            public void onCompleted(JSONObject object, GraphResponse response) {
+                    GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+                        @Override
+                        public void onCompleted(JSONObject object, GraphResponse response) {
 
-                                String name = null;
+                            String name = null;
 
-                                String email = null;
+                            String email = null;
 
-                                try {
-                                    name = object.getString(UserAttributes.name);
+                            try {
 
-                                    email = object.getString(UserAttributes.email);
+                                name = object.getString(UserAttributes.name);
 
-                                } catch (JSONException e) {
+                                email = object.getString(UserAttributes.email);
 
-                                    e.printStackTrace();
-                                }
-                                user.setEmail(email);
+                            } catch (JSONException e) {
 
-                                user.setName(name);
+                                e.printStackTrace();
 
-                                saveUser(user);
                             }
-                        });
-                        Bundle parameters = new Bundle();
 
-                        String fields = "fields";
+                            user.setEmail(email);
 
-                        parameters.putString(fields, UserAttributes.name + "," + UserAttributes.email);
+                            user.setName(name);
 
-                        request.setParameters(parameters);
+                            saveUser(user);
 
-                        request.executeAsync();
+                        }
+                    });
+
+                    Bundle parameters = new Bundle();
+
+                    String fields = "fields";
+
+                    parameters.putString(fields, UserAttributes.name + "," + UserAttributes.email);
+
+                    request.setParameters(parameters);
+
+                    request.executeAsync();
+
                 }
 
                 processLogin(parseUser, e, completion);
+
             }
 
         });
 
     }
 
-    public Bitmap getPicture(ParseUser parseUser){
+    public Bitmap getPicture(ParseUser parseUser) {
 
         Bitmap icon = null;
+
         URL img_value = null;
 
         try {
+
             HashMap authData = (HashMap) parseUser.get("authData");
 
             HashMap facebook = (HashMap) authData.get("facebook");
@@ -148,8 +156,11 @@ public class UserRemote {
         } catch (MalformedURLException exception) {
 
             exception.printStackTrace();
+
         }
+
         try {
+
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 
             StrictMode.setThreadPolicy(policy);
@@ -159,32 +170,34 @@ public class UserRemote {
         } catch (IOException exce) {
 
             exce.printStackTrace();
+
         }
-    return icon;
+
+        return icon;
+
     }
 
-                private void processLogin (ParseUser parseUser, ParseException
-                e, UserCompletion.UserErrorCompletion completion){
+    private void processLogin(ParseUser parseUser, ParseException e, UserCompletion.UserErrorCompletion completion) {
 
-                    User user = null;
+        User user = null;
 
-                    AppError appError = new AppError(Category.class.toString(), 0, null);
+        AppError appError = new AppError(Category.class.toString(), 0, null);
 
-                    if (e == null && parseUser != null) {
+        if (e == null && parseUser != null) {
 
-                        user = new User();
+            user = new User();
 
-                        user.setParseUser(parseUser);
+            user.setParseUser(parseUser);
 
-                        appError = null;
+            appError = null;
 
-                    }
+        }
 
-                    completion.completion(user, appError);
+        completion.completion(user, appError);
 
-                }
+    }
 
-    public void saveUser(User user){
+    public void saveUser(User user) {
 
         List users = new ArrayList();
 
@@ -195,8 +208,11 @@ public class UserRemote {
             ParseObject.saveAll(users);
 
         } catch (ParseException e) {
+
             e.printStackTrace();
+
         }
+
     }
 
 }

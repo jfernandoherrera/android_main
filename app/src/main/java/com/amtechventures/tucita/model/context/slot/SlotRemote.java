@@ -1,7 +1,5 @@
 package com.amtechventures.tucita.model.context.slot;
 
-import android.util.Log;
-
 import com.amtechventures.tucita.model.domain.slot.Slot;
 import com.amtechventures.tucita.model.domain.slot.SlotAttributes;
 import com.amtechventures.tucita.model.error.AppError;
@@ -16,19 +14,22 @@ import java.util.List;
 
 public class SlotRemote {
 
-    ParseQuery<Slot> query;
+    private ParseQuery<Slot> query;
 
-    private void setQuery(){
+    private void setQuery() {
 
         query = Slot.getQuery();
+
     }
 
-    public void cancelQuery(){
+    public void cancelQuery() {
 
-        if(query != null){
+        if (query != null) {
 
             query.cancel();
+
         }
+
     }
 
     public void loadDaySlots(ParseQuery<Slot> slotParseQuery, int day, final SlotCompletion.SlotErrorCompletion completion) {
@@ -40,18 +41,21 @@ public class SlotRemote {
         query.orderByAscending(SlotAttributes.startHour + "," + SlotAttributes.startMinute);
 
         query.findInBackground(new FindCallback<Slot>() {
+
             @Override
             public void done(List<Slot> objects, com.parse.ParseException e) {
 
                 AppError appError = e != null ? new AppError(Slot.class.toString(), 0, null) : null;
 
                 completion.completion(objects, appError);
+
             }
 
         });
+
     }
 
-    public void lockSlot(Slot slot, final SaveCallback callback){
+    public void lockSlot(Slot slot, final SaveCallback callback) {
 
         ParseACL acl = slot.getACL();
 
@@ -68,9 +72,10 @@ public class SlotRemote {
         slot.setACL(acl);
 
         slot.saveEventually(callback);
+
     }
 
-    public boolean isLocked(Slot slot){
+    public boolean isLocked(Slot slot) {
 
         boolean locked = false;
 
@@ -78,13 +83,16 @@ public class SlotRemote {
 
             ParseACL acl = slot.fetch().getACL();
 
-            locked = acl.getReadAccess(ParseUser.getCurrentUser()) && ! acl.getPublicReadAccess();
+            locked = acl.getReadAccess(ParseUser.getCurrentUser()) && !acl.getPublicReadAccess();
 
         } catch (ParseException e) {
 
             e.printStackTrace();
+
         }
 
         return locked;
+
     }
+
 }

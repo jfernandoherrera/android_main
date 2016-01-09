@@ -14,8 +14,8 @@ import java.util.List;
 public class ExpandableWithoutParentAdapter extends BaseExpandableListAdapter {
 
     private LayoutInflater inflater;
-    List<Service> services;
-    ViewUtils viewUtils;
+    private List<Service> services;
+    private ViewUtils viewUtils;
     private final ExpandableListView listViewParent;
 
     public ExpandableWithoutParentAdapter(List<Service> services, ExpandableListView listViewParent, ViewUtils viewUtils){
@@ -31,50 +31,64 @@ public class ExpandableWithoutParentAdapter extends BaseExpandableListAdapter {
             listViewParent.setGroupIndicator(null);
 
             listViewParent.setOnTouchListener(null);
+
         }
+
     }
 
-    public void setInflater(LayoutInflater inflater)
-    {
+    public void setInflater(LayoutInflater inflater) {
 
         this.inflater = inflater;
+
     }
 
     @Override
     public int getGroupCount() {
 
         return 1;
+
     }
 
     @Override
     public int getChildrenCount(int groupPosition) {
 
         return services.size() - 1;
+
     }
 
     @Override
     public Object getGroup(int groupPosition) {
+
         return null;
+
     }
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
+
         return null;
+
     }
 
     @Override
     public long getGroupId(int groupPosition) {
+
         return 0;
+
     }
 
     @Override
     public long getChildId(int groupPosition, int childPosition) {
+
         return 0;
+
     }
 
     @Override
     public boolean hasStableIds() {
+
         return false;
+
     }
 
     @Override
@@ -99,6 +113,7 @@ public class ExpandableWithoutParentAdapter extends BaseExpandableListAdapter {
         textDuration.setText(service.getDurationInfo());
 
         return convertView;
+
     }
 
     @Override
@@ -123,19 +138,21 @@ public class ExpandableWithoutParentAdapter extends BaseExpandableListAdapter {
         }
 
         return convertView;
+
     }
 
     @Override
-    public void onGroupCollapsed(int groupPosition)
-    {
+    public void onGroupCollapsed(int groupPosition) {
+
         super.onGroupCollapsed(groupPosition);
 
         viewUtils.setListViewHeightBasedOnChildren(listViewParent);
+
     }
 
     @Override
-    public void onGroupExpanded(int groupPosition)
-    {
+    public void onGroupExpanded(int groupPosition) {
+
         super.onGroupExpanded(groupPosition);
 
         viewUtils.setListViewHeightBasedOnChildren(listViewParent);
@@ -144,6 +161,9 @@ public class ExpandableWithoutParentAdapter extends BaseExpandableListAdapter {
 
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
+
         return false;
+
     }
+
 }

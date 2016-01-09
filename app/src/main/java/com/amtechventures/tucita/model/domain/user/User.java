@@ -24,32 +24,33 @@ public class User {
 
     }
 
-    public String getUserName(){
+    public String getUserName() {
 
         return parseUser.getString(UserAttributes.username);
 
     }
 
-    public void setEmail(String email){
+    public void setEmail(String email) {
 
         parseUser.put(UserAttributes.email, email);
 
     }
 
-    public void setName(String name){
+    public void setName(String name) {
 
         parseUser.put(UserAttributes.name, name);
 
     }
 
-    public String getName(){
+    public String getName() {
 
-      return parseUser.getString(UserAttributes.name);
+        return parseUser.getString(UserAttributes.name);
+
     }
 
-    public String getEmail(){
+    public String getEmail() {
 
-      return  parseUser.getString(UserAttributes.email);
+        return parseUser.getString(UserAttributes.email);
 
     }
 

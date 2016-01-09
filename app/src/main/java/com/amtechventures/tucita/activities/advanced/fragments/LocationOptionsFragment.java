@@ -1,6 +1,5 @@
 package com.amtechventures.tucita.activities.advanced.fragments;
 
-
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -23,7 +22,7 @@ import com.amtechventures.tucita.utils.views.AlertDialogError;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LocationOptionsFragment extends Fragment{
+public class LocationOptionsFragment extends Fragment {
 
     private CityContext cityContext;
     private TextView textViewCities;
@@ -31,12 +30,13 @@ public class LocationOptionsFragment extends Fragment{
     private ListView listViewCities;
     private ArrayAdapter<String> citiesAdapter;
     private ArrayList<City> currentCities;
-    OnCitySelected listener;
+    private OnCitySelected listener;
     private final int minimumToSearch = 3;
 
     public interface OnCitySelected{
 
         void onCitySelected(City city);
+
     }
 
     @Override
@@ -48,9 +48,8 @@ public class LocationOptionsFragment extends Fragment{
 
             listener = (OnCitySelected) context;
 
-        } catch (ClassCastException e) {
+        } catch (ClassCastException e) {}
 
-        }
     }
 
     @Override
@@ -59,6 +58,7 @@ public class LocationOptionsFragment extends Fragment{
         super.onDetach();
 
         listener = null;
+
     }
 
     @Nullable
@@ -84,17 +84,23 @@ public class LocationOptionsFragment extends Fragment{
         listViewCities.setAdapter(citiesAdapter);
 
         listViewCities.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 listener.onCitySelected(currentCities.get(position));
+
             }
+
         });
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
             @Override
             public boolean onQueryTextSubmit(String query) {
+
                 return false;
+
             }
 
             @Override
@@ -109,12 +115,17 @@ public class LocationOptionsFragment extends Fragment{
                 } else {
 
                     setupCities(newText);
+
                 }
+
                 return false;
+
             }
+
         });
 
         return rootView;
+
     }
 
     private ArrayList<String> setCitiesToStringsArray(){
@@ -124,14 +135,17 @@ public class LocationOptionsFragment extends Fragment{
         for(City city: currentCities){
 
             stringsCities.add(city.formatedLocation());
+
         }
 
         return stringsCities;
+
     }
 
     public void setupCities(String like){
 
         cityContext.loadLikeCities(like, new CityCompletion.ErrorCompletion() {
+
             @Override
             public void completion(List<City> cities, AppError error) {
 
@@ -149,10 +163,16 @@ public class LocationOptionsFragment extends Fragment{
 
                     citiesAdapter.notifyDataSetChanged();
 
-                }else{
+                } else{
+
                     textViewCities.setVisibility(View.GONE);
+
                 }
+
             }
+
         });
+
     }
+
 }

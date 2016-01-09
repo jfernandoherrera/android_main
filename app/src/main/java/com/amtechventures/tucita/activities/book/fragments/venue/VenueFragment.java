@@ -18,6 +18,7 @@ import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.book.fragments.venue.adapters.ExpandableListAdapter;
 import com.amtechventures.tucita.model.context.openingHour.OpeningHourCompletion;
@@ -36,6 +37,7 @@ import com.amtechventures.tucita.model.error.AppError;
 import com.amtechventures.tucita.activities.book.adapters.ExpandableParentAdapter;
 import com.amtechventures.tucita.utils.views.OpeningHourView;
 import com.amtechventures.tucita.utils.views.ViewUtils;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -63,26 +65,29 @@ public class VenueFragment extends Fragment {
     private OnServiceSelected listener;
     private LayoutInflater inflater;
     private ProgressDialog progress;
-    ViewUtils viewUtils;
+    private ViewUtils viewUtils;
     private ScrollView scrollView;
 
-    public interface OnServiceSelected{
+    public interface OnServiceSelected {
 
         void onServiceSelected(Service service, View view);
+
     }
 
-    public Venue getVenue(){
+    public Venue getVenue() {
 
         return venue;
+
     }
 
-    public void cancelQuery(){
+    public void cancelQuery() {
 
         openingHourContext.cancelQuery();
 
         serviceContext.cancelQuery();
 
         venueContext.cancelQuery();
+
     }
 
     @Override
@@ -90,7 +95,7 @@ public class VenueFragment extends Fragment {
 
         super.onAttach(context);
 
-            listener = (OnServiceSelected) context;
+        listener = (OnServiceSelected) context;
 
     }
 
@@ -100,6 +105,7 @@ public class VenueFragment extends Fragment {
         super.onDetach();
 
         listener = null;
+
     }
 
     @Override
@@ -108,6 +114,7 @@ public class VenueFragment extends Fragment {
         viewUtils = new ViewUtils(getContext());
 
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
@@ -127,7 +134,7 @@ public class VenueFragment extends Fragment {
 
         venueName = (TextView) rootView.findViewById(R.id.title_Venue);
 
-        venueDescription = (ExpandableListView)rootView.findViewById(R.id.listViewDescription);
+        venueDescription = (ExpandableListView) rootView.findViewById(R.id.listViewDescription);
 
         ratingBar = (RatingBar) rootView.findViewById(R.id.ratingBar);
 
@@ -140,6 +147,7 @@ public class VenueFragment extends Fragment {
         this.inflater = inflater;
 
         return rootView;
+
     }
 
     @Override
@@ -148,30 +156,34 @@ public class VenueFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         setup();
+
     }
 
-    private void setup(){
+    private void setup() {
 
         setupDaysInAWeek();
 
         thisVenue();
 
         setupVenue();
+
     }
 
-    private void setupDaysInAWeek(){
+    private void setupDaysInAWeek() {
 
         days = new ArrayList();
 
-        for(int day = 1; day <= daysInAWeek; day++){
+        for (int day = 1; day <= daysInAWeek; day++) {
 
             days.add(day);
+
         }
+
     }
 
-    private void setupVenue(){
+    private void setupVenue() {
 
-        if(venue != null) {
+        if (venue != null) {
 
             setupPicture();
 
@@ -187,42 +199,50 @@ public class VenueFragment extends Fragment {
 
             setupFullMenu();
 
-        }else{
+        } else {
 
             setupProgress();
+
         }
+
     }
 
-    public void setMarginBottomToShoppingCarVisible( int shoppingCarHeight){
+    public void setMarginBottomToShoppingCarVisible(int shoppingCarHeight) {
 
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.MATCH_PARENT,
                 RelativeLayout.LayoutParams.MATCH_PARENT
         );
+
         params.setMargins(0, 0, 0, shoppingCarHeight);
 
         scrollView.setLayoutParams(params);
+
     }
 
-    public void setMarginBottomToShoppingCarGone( ){
+    public void setMarginBottomToShoppingCarGone() {
 
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.MATCH_PARENT,
                 RelativeLayout.LayoutParams.MATCH_PARENT
         );
-        params.setMargins(0, 0, 0,0);
+
+        params.setMargins(0, 0, 0, 0);
 
         scrollView.setLayoutParams(params);
+
     }
 
-    private void setupPicture(){
+    private void setupPicture() {
 
         venuePicture.setImageBitmap(venue.getPicture());
+
     }
 
-    private void setupName(){
+    private void setupName() {
 
         venueName.setText(venue.getName());
+
     }
 
     private void setupDescription() {
@@ -240,12 +260,15 @@ public class VenueFragment extends Fragment {
             venueDescription.setAdapter(parentAdapter);
 
             venueDescription.expandGroup(0);
+
         }
+
     }
 
-    private void setupFullMenu(){
+    private void setupFullMenu() {
 
         List<Service> servicesList = serviceContext.loadServices(venue, new ServiceCompletion.ErrorCompletion() {
+
             @Override
             public void completion(List<Service> servicesList, AppError error) {
 
@@ -262,13 +285,17 @@ public class VenueFragment extends Fragment {
                     fullMenuAdapter.notifyDataSetChanged();
 
                     setupAnotherMenu();
+
                 }
+
             }
+
         });
 
-        if (servicesList == null && progress == null){
+        if (servicesList == null && progress == null) {
 
             setupProgress();
+
         }
 
         setStringsArray(servicesList);
@@ -278,6 +305,7 @@ public class VenueFragment extends Fragment {
         fullMenuAdapter.setInflater(inflater);
 
         listViewFullMenu.setAdapter(fullMenuAdapter);
+
     }
 
     private void setupAnotherMenu() {
@@ -311,8 +339,11 @@ public class VenueFragment extends Fragment {
                         arrayList.add(subCategory1);
 
                         indexOf = subCategories.indexOf(subCategory1);
+
                     }
+
                 }
+
                 arrayListServices.add(services.get(indexOf));
 
                 anotherMenuAdapter = new ExpandableListAdapter(arrayList, arrayListServices, viewUtils, listViewAnotherMenu, listener);
@@ -322,17 +353,22 @@ public class VenueFragment extends Fragment {
                 listViewAnotherMenu.setAdapter(anotherMenuAdapter);
 
                 listViewAnotherMenu.expandGroup(0);
+
             }
+
             if (progress != null) {
 
                 progress.dismiss();
+
             }
+
         }
+
     }
 
-    private void setStringsArray(List<Service> servicesList){
+    private void setStringsArray(List<Service> servicesList) {
 
-        if(servicesList != null) {
+        if (servicesList != null) {
 
             for (Service service : servicesList) {
 
@@ -343,6 +379,7 @@ public class VenueFragment extends Fragment {
                     int indexOfSubCategory = subCategories.indexOf(subCategory);
 
                     services.get(indexOfSubCategory).add(service);
+
                 } else {
 
                     subCategories.add(subCategory);
@@ -352,42 +389,50 @@ public class VenueFragment extends Fragment {
                     subCategoriesString.add(service);
 
                     services.add(subCategoriesString);
+
                 }
 
             }
+
         }
+
     }
 
-    private void setupRating(){
+    private void setupRating() {
 
-        float rating = (float)venue.getRating();
+        float rating = (float) venue.getRating();
 
-        if(rating != 0) {
+        if (rating != 0) {
 
             ratingBar.setRating(rating);
 
-        }else{
+        } else {
 
             ratingBar.setVisibility(View.INVISIBLE);
+
         }
+
     }
 
-    private void setupOpeningHours(){
+    private void setupOpeningHours() {
 
         List<OpeningHour> openingHoursList = openingHourContext.loadOpeningHours(venue, new OpeningHourCompletion.OpeningHourErrorCompletion() {
 
             @Override
             public void completion(List<OpeningHour> openingHoursList, AppError error) {
 
-                if (openingHoursList != null && ! openingHoursList.isEmpty()) {
+                if (openingHoursList != null && !openingHoursList.isEmpty()) {
 
                     populateOpeningHours(openingHoursList);
+
                 }
 
             }
 
         });
+
         populateOpeningHours(openingHoursList);
+
     }
 
     private OpeningHourView getViewDay(int day) {
@@ -407,6 +452,7 @@ public class VenueFragment extends Fragment {
                     openingHourView.setDay(getResources().getString(R.string.monday));
 
                     break;
+
                 case Calendar.TUESDAY:
 
                     openingHourView = (OpeningHourView) activity.findViewById(R.id.radioButton2);
@@ -414,6 +460,7 @@ public class VenueFragment extends Fragment {
                     openingHourView.setDay(getResources().getString(R.string.tuesday));
 
                     break;
+
                 case Calendar.WEDNESDAY:
 
                     openingHourView = (OpeningHourView) activity.findViewById(R.id.radioButton3);
@@ -421,6 +468,7 @@ public class VenueFragment extends Fragment {
                     openingHourView.setDay(getResources().getString(R.string.wednesday));
 
                     break;
+
                 case Calendar.THURSDAY:
 
                     openingHourView = (OpeningHourView) activity.findViewById(R.id.radioButton4);
@@ -428,6 +476,7 @@ public class VenueFragment extends Fragment {
                     openingHourView.setDay(getResources().getString(R.string.thursday));
 
                     break;
+
                 case Calendar.FRIDAY:
 
                     openingHourView = (OpeningHourView) activity.findViewById(R.id.radioButton5);
@@ -435,6 +484,7 @@ public class VenueFragment extends Fragment {
                     openingHourView.setDay(getResources().getString(R.string.friday));
 
                     break;
+
                 case Calendar.SATURDAY:
 
                     openingHourView = (OpeningHourView) activity.findViewById(R.id.radioButton6);
@@ -442,6 +492,7 @@ public class VenueFragment extends Fragment {
                     openingHourView.setDay(getResources().getString(R.string.saturday));
 
                     break;
+
                 case Calendar.SUNDAY:
 
                     openingHourView = (OpeningHourView) activity.findViewById(R.id.radioButton7);
@@ -449,40 +500,47 @@ public class VenueFragment extends Fragment {
                     openingHourView.setDay(getResources().getString(R.string.sunday));
 
                     break;
+
                 default:
 
                     openingHourView = (OpeningHourView) activity.findViewById(R.id.radioButton1);
 
                     break;
             }
+
             setupDay(day, openingHourView);
+
         }
+
         return openingHourView;
+
     }
 
-    private void populateOpeningHours(List<OpeningHour> openingHours){
+    private void populateOpeningHours(List<OpeningHour> openingHours) {
 
-        for(Integer day : days){
+        for (Integer day : days) {
 
-                OpeningHourView openingHourView;
+            OpeningHourView openingHourView;
 
-                openingHourView = getViewDay(day);
+            openingHourView = getViewDay(day);
 
-            if(openingHourView != null) {
+            if (openingHourView != null) {
 
                 String closed = getResources().getString(R.string.closed);
 
                 openingHourView.setClosed(closed);
+
             }
+
         }
 
-        for(OpeningHour openingHour : openingHours ){
+        for (OpeningHour openingHour : openingHours) {
 
             OpeningHourView openingHourView;
 
             openingHourView = getViewDay(openingHour.getDay());
 
-            if(openingHourView != null) {
+            if (openingHourView != null) {
 
                 ViewUtils viewUtils = new ViewUtils(getContext());
 
@@ -493,12 +551,14 @@ public class VenueFragment extends Fragment {
                 String textTime = textOpeningStartHour + "-" + textOpeningEndHour;
 
                 openingHourView.setHours(textTime);
+
             }
+
         }
+
     }
 
-
-    private void setupAddressAndLocation(){
+    private void setupAddressAndLocation() {
 
         String locationString = venue.getCity().formatedLocation();
 
@@ -507,9 +567,9 @@ public class VenueFragment extends Fragment {
         location.setText(address);
 
         location.setOnTouchListener(new View.OnTouchListener() {
+
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-
 
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
 
@@ -518,23 +578,31 @@ public class VenueFragment extends Fragment {
                 } else if (event.getAction() != MotionEvent.ACTION_MOVE) {
 
                     location.setBackgroundResource(R.drawable.log_in_or_signup_click_out);
+
                 }
-                    return false;
+
+                return false;
+
             }
+
         });
 
         location.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
 
                 String url = VenueAttributes.linkToLocation + venue.getLatitude() + "," + venue.getLongitude();
 
                 openWebURL(url);
+
             }
+
         });
+
     }
 
-    private void thisVenue(){
+    private void thisVenue() {
 
         Intent intent = getActivity().getIntent();
 
@@ -543,20 +611,25 @@ public class VenueFragment extends Fragment {
         String address = intent.getExtras().getString(VenueAttributes.address);
 
         venue = venueContext.findVenue(name, address, new VenueCompletion.ErrorCompletion() {
+
             @Override
             public void completion(List<Venue> venuesList, AppError error) {
 
-                if(venuesList != null){
+                if (venuesList != null) {
 
                     venue = venuesList.get(0);
 
                     setupVenue();
+
                 }
+
             }
+
         });
+
     }
 
-    private void setupDay(int day,  OpeningHourView openingHourView) {
+    private void setupDay(int day, OpeningHourView openingHourView) {
 
         Calendar calendar = Calendar.getInstance();
 
@@ -565,23 +638,27 @@ public class VenueFragment extends Fragment {
         if (day == currentDay) {
 
             openingHourView.setState_drawable(true);
+
         } else {
 
             openingHourView.setState_drawable(false);
+
         }
+
     }
 
-    public void openWebURL( String inURL ) {
+    public void openWebURL(String inURL) {
 
-        Intent browse = new Intent( Intent.ACTION_VIEW , Uri.parse(inURL) );
+        Intent browse = new Intent(Intent.ACTION_VIEW, Uri.parse(inURL));
 
         startActivity(browse);
+
     }
 
-    private void setupProgress(){
+    private void setupProgress() {
 
-        progress = ProgressDialog.show(getContext(), getResources().getString(R.string.dialog_progress_title),
+        progress = ProgressDialog.show(getContext(), getResources().getString(R.string.dialog_progress_title), getResources().getString(R.string.dialog_all_progress_message), true);
 
-                getResources().getString(R.string.dialog_all_progress_message), true);
     }
+
 }

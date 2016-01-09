@@ -1,23 +1,23 @@
 package com.amtechventures.tucita.activities.signup;
 
-import android.os.Bundle;
-import android.view.View;
-import android.view.Gravity;
-import android.widget.Toast;
-import android.widget.Button;
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
+import android.view.View;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import com.amtechventures.tucita.R;
-import android.widget.AutoCompleteTextView;
-import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
+import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.main.MainActivity;
+import com.amtechventures.tucita.model.context.user.UserCompletion;
+import com.amtechventures.tucita.model.context.user.UserContext;
+import com.amtechventures.tucita.model.domain.user.User;
 import com.amtechventures.tucita.model.domain.user.UserAttributes;
 import com.amtechventures.tucita.model.error.AppError;
-import com.amtechventures.tucita.model.domain.user.User;
-import com.amtechventures.tucita.model.context.user.UserContext;
-import com.amtechventures.tucita.model.context.user.UserCompletion;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -35,13 +35,13 @@ public class SignUpActivity extends AppCompatActivity {
 
         userContext = UserContext.context(userContext);
 
-        passwordView = (EditText)findViewById(R.id.password);
+        passwordView = (EditText) findViewById(R.id.password);
 
-        emailView = (AutoCompleteTextView)findViewById(R.id.email);
+        emailView = (AutoCompleteTextView) findViewById(R.id.email);
 
-        nameView = (TextView)findViewById(R.id.name);
+        nameView = (TextView) findViewById(R.id.name);
 
-        Button singUpButton = (Button)findViewById(R.id.buttonSignUp);
+        Button singUpButton = (Button) findViewById(R.id.buttonSignUp);
 
         singUpButton.setOnClickListener(new View.OnClickListener() {
 

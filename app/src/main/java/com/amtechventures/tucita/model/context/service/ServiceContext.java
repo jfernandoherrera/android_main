@@ -4,7 +4,6 @@ import com.amtechventures.tucita.model.domain.service.Service;
 import com.amtechventures.tucita.model.domain.subcategory.SubCategory;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.domain.venue.VenueAttributes;
-import com.amtechventures.tucita.utils.blocks.Completion;
 import com.parse.ParseQuery;
 import com.parse.ParseRelation;
 
@@ -12,21 +11,23 @@ import java.util.List;
 
 public class ServiceContext {
 
-    ServiceLocal serviceLocal;
-    ServiceRemote serviceRemote;
+    private ServiceLocal serviceLocal;
+    private ServiceRemote serviceRemote;
 
-    public void cancelQuery(){
+    public void cancelQuery() {
 
         serviceRemote.cancelQuery();
+
     }
 
-    public int getPricesFrom(SubCategory subCategory, Venue venue){
+    public int getPricesFrom(SubCategory subCategory, Venue venue) {
 
         ParseRelation object = (ParseRelation) venue.get(VenueAttributes.services);
 
         ParseQuery<Service> queryRemote = object.getQuery();
 
         return serviceRemote.getPricesFrom(subCategory, queryRemote);
+
     }
 
     public static ServiceContext context(ServiceContext serviceContext) {
@@ -41,14 +42,15 @@ public class ServiceContext {
 
     }
 
-    private ServiceContext(){
+    private ServiceContext() {
 
         serviceLocal = new ServiceLocal();
 
         serviceRemote = new ServiceRemote();
+
     }
 
-    public List<Service> loadServices(Venue venue, ServiceCompletion.ErrorCompletion completion){
+    public List<Service> loadServices(Venue venue, ServiceCompletion.ErrorCompletion completion) {
 
         List services;
 
@@ -63,16 +65,19 @@ public class ServiceContext {
         serviceRemote.loadServices(queryRemote, completion);
 
         return services;
+
     }
 
-    public void loadSubCategorizedServices(SubCategory subCategory, ServiceCompletion.ErrorCompletion errorCompletion){
+    public void loadSubCategorizedServices(SubCategory subCategory, ServiceCompletion.ErrorCompletion errorCompletion) {
 
         serviceRemote.loadSubCategorizedServices(subCategory, errorCompletion);
+
     }
 
-    public void loadCategorizedServices(List<SubCategory> subCategories, ServiceCompletion.ErrorCompletion errorCompletion){
+    public void loadCategorizedServices(List<SubCategory> subCategories, ServiceCompletion.ErrorCompletion errorCompletion) {
 
-        serviceRemote.loadCategorizedServices(subCategories,errorCompletion);
+        serviceRemote.loadCategorizedServices(subCategories, errorCompletion);
+
     }
+
 }
-

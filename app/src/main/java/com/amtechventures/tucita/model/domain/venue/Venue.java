@@ -1,8 +1,8 @@
 package com.amtechventures.tucita.model.domain.venue;
 
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+
 import com.amtechventures.tucita.model.domain.city.City;
 import com.parse.ParseClassName;
 import com.parse.ParseException;
@@ -16,48 +16,55 @@ import com.parse.ParseQuery;
 public class Venue extends ParseObject {
 
 
-    public void setName(String name){
+    public void setName(String name) {
 
-        put(VenueAttributes.name,name );
+        put(VenueAttributes.name, name);
+
     }
 
-    public double getLatitude(){
+    public double getLatitude() {
 
         return getLocation().getLatitude();
+
     }
 
-    public double getLongitude(){
+    public double getLongitude() {
 
         return getLocation().getLongitude();
+
     }
 
-    public ParseGeoPoint getLocation(){
+    public ParseGeoPoint getLocation() {
 
         return getParseGeoPoint(VenueAttributes.location);
+
     }
 
-    public String getName(){
+    public String getName() {
 
         return getString(VenueAttributes.name);
+
     }
 
-    public String getDescription(){
+    public String getDescription() {
 
         return getString(VenueAttributes.description);
+
     }
 
-    public double getRating(){
+    public double getRating() {
 
         return getDouble(VenueAttributes.rating);
+
     }
 
-    public Bitmap getPicture(){
+    public Bitmap getPicture() {
 
         ParseFile picture = getParseFile(VenueAttributes.picture);
 
         Bitmap bm = null;
 
-        if(picture != null) {
+        if (picture != null) {
 
             try {
 
@@ -66,23 +73,31 @@ public class Venue extends ParseObject {
             } catch (ParseException e) {
 
                 e.printStackTrace();
+
             }
+
         }
+
         return bm;
+
     }
 
-    public String getAddress(){
+    public String getAddress() {
 
         return getString(VenueAttributes.address);
+
     }
 
-    public City getCity(){
+    public City getCity() {
 
         return (City) get(VenueAttributes.city);
+
     }
 
     public static ParseQuery<Venue> getQuery() {
 
         return ParseQuery.getQuery(Venue.class);
+
     }
+
 }

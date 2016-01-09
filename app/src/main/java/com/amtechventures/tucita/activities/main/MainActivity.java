@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.account.AccountActivity;
 import com.amtechventures.tucita.utils.views.UserImageView;
@@ -22,14 +23,14 @@ import com.amtechventures.tucita.model.context.user.UserContext;
 import com.amtechventures.tucita.model.domain.user.User;
 import com.amtechventures.tucita.utils.views.AlertDialogError;
 
-public class MainActivity extends AppCompatActivity implements CategoryFragment.OnItemClicked, SubCategoryFragment.OnOthersClicked{
+public class MainActivity extends AppCompatActivity implements CategoryFragment.OnItemClicked, SubCategoryFragment.OnOthersClicked {
 
     private SearchFragment searchFragment;
     private Toolbar toolbar;
     private UserContext userContext;
     private final int minimumToSearch = 3;
     private CategoryFragment fragment;
-    Typeface roboto;
+    private Typeface roboto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,20 +49,22 @@ public class MainActivity extends AppCompatActivity implements CategoryFragment.
 
         User current = userContext.currentUser();
 
-        if(current != null){
+        if (current != null) {
 
             UserImageView picture;
 
-            if(userContext.IsFacebook(current.getParseUser())) {
+            if (userContext.isFacebook(current.getParseUser())) {
 
-            picture = new UserImageView(userContext.getPicture(), roboto);
+                picture = new UserImageView(userContext.getPicture(), roboto);
 
-            }else {
+            } else {
 
                 picture = new UserImageView(null, roboto);
+
             }
 
             fragment.setPicture(picture);
+
         }
 
         setCategoryFragment();
@@ -73,9 +76,10 @@ public class MainActivity extends AppCompatActivity implements CategoryFragment.
         searchHide();
 
         setToolbar();
+
     }
 
-    private void setCategoryFragment(){
+    private void setCategoryFragment() {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
 
@@ -84,9 +88,10 @@ public class MainActivity extends AppCompatActivity implements CategoryFragment.
         transaction.add(R.id.layout_main, fragment);
 
         transaction.commit();
+
     }
 
-    private void showSubCategoryFragment(String name){
+    private void showSubCategoryFragment(String name) {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
 
@@ -98,13 +103,14 @@ public class MainActivity extends AppCompatActivity implements CategoryFragment.
 
             prev = SubCategoryFragment.newInstance(name);
         }
-       // ft.addToBackStack(null);
-        prev.show(fragmentManager, SubCategoryFragment.class.getName());
 
+        // ft.addToBackStack(null);
+
+        prev.show(fragmentManager, SubCategoryFragment.class.getName());
 
     }
 
-    private void setFragmentToSearch(){
+    private void setFragmentToSearch() {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
 
@@ -113,9 +119,10 @@ public class MainActivity extends AppCompatActivity implements CategoryFragment.
         transaction.add(R.id.layout_main, searchFragment);
 
         transaction.commit();
+
     }
 
-    private void categoryHide(){
+    private void categoryHide() {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
 
@@ -124,9 +131,10 @@ public class MainActivity extends AppCompatActivity implements CategoryFragment.
         transaction.hide(fragment);
 
         transaction.commit();
+
     }
 
-    private void categoryShow(){
+    private void categoryShow() {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
 
@@ -135,9 +143,10 @@ public class MainActivity extends AppCompatActivity implements CategoryFragment.
         transaction.show(fragment);
 
         transaction.commit();
+
     }
 
-    private void searchHide(){
+    private void searchHide() {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
 
@@ -146,9 +155,10 @@ public class MainActivity extends AppCompatActivity implements CategoryFragment.
         transaction.hide(searchFragment);
 
         transaction.commit();
+
     }
 
-    private void searchShow(){
+    private void searchShow() {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
 
@@ -157,16 +167,19 @@ public class MainActivity extends AppCompatActivity implements CategoryFragment.
         transaction.show(searchFragment);
 
         transaction.commit();
+
     }
 
-    private void setToolbar(){
+    private void setToolbar() {
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         if (toolbar != null) {
 
             setSupportActionBar(toolbar);
+
         }
+
     }
 
     @Override
@@ -188,9 +201,11 @@ public class MainActivity extends AppCompatActivity implements CategoryFragment.
                     searchHide();
 
                     categoryShow();
+
                 }
 
             }
+
         });
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -222,12 +237,17 @@ public class MainActivity extends AppCompatActivity implements CategoryFragment.
                     searchFragment.setupSubCategoryList(newText);
 
                     searchFragment.setupVenueList(newText);
+
                 }
 
                 return true;
+
             }
+
         });
+
         return true;
+
     }
 
     @Override
@@ -236,9 +256,10 @@ public class MainActivity extends AppCompatActivity implements CategoryFragment.
         goToSearch();
 
         return super.onOptionsItemSelected(item);
+
     }
 
-    public void goToSearch(){
+    public void goToSearch() {
 
         categoryHide();
 
@@ -247,6 +268,7 @@ public class MainActivity extends AppCompatActivity implements CategoryFragment.
         searchFragment.setupRecentVenueList();
 
         searchFragment.setupRecentSubCategoryList();
+
     }
 
     public void goToLogin(View v) {
@@ -262,6 +284,7 @@ public class MainActivity extends AppCompatActivity implements CategoryFragment.
         AccountActivity.goToAccount(this);
 
         finish();
+
     }
 
     @Override
@@ -269,9 +292,10 @@ public class MainActivity extends AppCompatActivity implements CategoryFragment.
 
         super.onBackPressed();
 
-        if (! fragment.isHidden()){
+        if (!fragment.isHidden()) {
 
-        finish();
+            finish();
+
         }
 
     }
@@ -279,12 +303,15 @@ public class MainActivity extends AppCompatActivity implements CategoryFragment.
     @Override
     public void onItemClicked(String name) {
 
-            showSubCategoryFragment(name);
+        showSubCategoryFragment(name);
+
     }
 
     @Override
     public void onOthersClicked() {
 
         goToSearch();
+
     }
+
 }

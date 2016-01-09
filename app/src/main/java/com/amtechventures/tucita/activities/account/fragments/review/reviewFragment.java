@@ -1,5 +1,3 @@
 package com.amtechventures.tucita.activities.account.fragments.review;
 
-
-public class reviewFragment {
-}
+public class ReviewFragment {}

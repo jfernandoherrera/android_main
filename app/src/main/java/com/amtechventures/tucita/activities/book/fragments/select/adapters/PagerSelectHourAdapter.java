@@ -1,6 +1,5 @@
 package com.amtechventures.tucita.activities.book.fragments.select.adapters;
 
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -14,7 +13,6 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.TimeZone;
 
-
 public class PagerSelectHourAdapter extends FragmentStatePagerAdapter {
 
     public final Calendar calendar = Calendar.getInstance();
@@ -23,9 +21,9 @@ public class PagerSelectHourAdapter extends FragmentStatePagerAdapter {
     private int currentDay;
     private int daysToEndMonth;
     private Venue venue;
-    int durationHours;
-    int durationMinutes;
-    SelectHourAdapter.OnSlotSelected listener;
+    private int durationHours;
+    private int durationMinutes;
+    private SelectHourAdapter.OnSlotSelected listener;
 
     public PagerSelectHourAdapter(FragmentManager fm, SelectHourAdapter.OnSlotSelected listener) {
 
@@ -40,23 +38,26 @@ public class PagerSelectHourAdapter extends FragmentStatePagerAdapter {
         currentDay = calendar.get(Calendar.DAY_OF_MONTH);
 
         daysToEndMonth = (getLastDayOfMonth(0) - currentDay);
+
     }
 
-    public void setVenue(Venue venue){
+    public void setVenue(Venue venue) {
 
         this.venue = venue;
+
     }
 
-    public int getCurrentDay(){
+    public int getCurrentDay() {
 
         return currentDay;
+
     }
 
-    public int getLastDayOfMonth(int month){
+    public int getLastDayOfMonth(int month) {
 
         int lastDay = 0;
 
-        switch (month){
+        switch (month) {
 
             case 0:
 
@@ -76,52 +77,57 @@ public class PagerSelectHourAdapter extends FragmentStatePagerAdapter {
 
                 break;
         }
+
         return lastDay;
+
     }
 
     @Override
     public Fragment getItem(int position) {
 
-            SelectHourFragment selectHourFragment = new SelectHourFragment();
+        SelectHourFragment selectHourFragment = new SelectHourFragment();
 
-            selectHourFragment.setListener(listener);
+        selectHourFragment.setListener(listener);
 
-            selectHourFragment.setDate(getFragmentDay(position));
+        selectHourFragment.setDate(getFragmentDay(position));
 
-            selectHourFragment.setVenue(venue);
+        selectHourFragment.setVenue(venue);
 
-            selectHourFragment.setDuration(durationHours, durationMinutes);
+        selectHourFragment.setDuration(durationHours, durationMinutes);
 
-            if(position == 0){
+        if (position == 0) {
 
-                selectHourFragment.setIsFirst(true);
-            }
+            selectHourFragment.setIsFirst(true);
 
-            return selectHourFragment;
+        }
+
+        return selectHourFragment;
+
     }
 
-    public void setDuration(int durationHours, int durationMinutes){
+    public void setDuration(int durationHours, int durationMinutes) {
 
         this.durationHours = durationHours;
 
         this.durationMinutes = durationMinutes;
+
     }
 
-    public Calendar getFragmentDay(int position){
+    public Calendar getFragmentDay(int position) {
 
         TimeZone timezone = TimeZone.getDefault();
 
         Calendar calendar = new GregorianCalendar(timezone);
 
-         position += currentDay;
+        position += currentDay;
 
-        if(position < getLastDayOfMonth(0)){
+        if (position < getLastDayOfMonth(0)) {
 
             calendar.set(Calendar.YEAR, this.calendar.get(Calendar.YEAR));
 
             calendar.set(Calendar.DAY_OF_MONTH, position);
 
-        }else if(position <= (getLastDayOfMonth(0) + getLastDayOfMonth(1))){
+        } else if (position <= (getLastDayOfMonth(0) + getLastDayOfMonth(1))) {
 
             calendar.set(Calendar.YEAR, calendarOneMonthMore.get(Calendar.YEAR));
 
@@ -129,19 +135,22 @@ public class PagerSelectHourAdapter extends FragmentStatePagerAdapter {
 
             calendar.set(Calendar.DAY_OF_MONTH, position - getLastDayOfMonth(0));
 
-        }else{
+        } else {
+
             calendar.set(Calendar.YEAR, calendarTwoMonthMore.get(Calendar.YEAR));
 
             calendar.set(Calendar.MONTH, calendarTwoMonthMore.get(Calendar.MONTH));
 
             calendar.set(Calendar.DAY_OF_MONTH, position - (getLastDayOfMonth(0) + getLastDayOfMonth(1)));
+
         }
 
         calendar.set(Calendar.HOUR_OF_DAY, 1);
 
-        calendar.set(Calendar.MINUTE,1);
+        calendar.set(Calendar.MINUTE, 1);
 
         return calendar;
+
     }
 
     @Override
@@ -156,11 +165,14 @@ public class PagerSelectHourAdapter extends FragmentStatePagerAdapter {
         title = dateFormat.format(date.getTime()) + "\n" + String.valueOf(date.get(Calendar.DAY_OF_MONTH));
 
         return title;
+
     }
 
     @Override
     public int getCount() {
 
-        return  getLastDayOfMonth(1) + getLastDayOfMonth(2) + daysToEndMonth ;
+        return getLastDayOfMonth(1) + getLastDayOfMonth(2) + daysToEndMonth;
+
     }
+
 }

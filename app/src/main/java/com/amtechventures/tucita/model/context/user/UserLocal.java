@@ -26,6 +26,7 @@ public class UserLocal {
     public void logout() {
 
         ParseUser.logOut();
+
     }
 
 }

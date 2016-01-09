@@ -1,6 +1,5 @@
 package com.amtechventures.tucita.model.context.service;
 
-
 import com.amtechventures.tucita.model.domain.service.Service;
 import com.amtechventures.tucita.model.domain.service.ServiceAttributes;
 import com.amtechventures.tucita.model.domain.subcategory.SubCategory;
@@ -9,26 +8,30 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+
 import java.util.List;
 
 public class ServiceRemote {
 
-    ParseQuery<Service> query;
+    private ParseQuery<Service> query;
 
-    private void setQuery(){
+    private void setQuery() {
 
         query = Service.getQuery();
+
     }
 
-    public void cancelQuery(){
+    public void cancelQuery() {
 
-        if(query != null){
+        if (query != null) {
 
             query.cancel();
+
         }
+
     }
 
-    public int getPricesFrom(SubCategory subCategory, ParseQuery<Service> servicesLocalQuery){
+    public int getPricesFrom(SubCategory subCategory, ParseQuery<Service> servicesLocalQuery) {
 
         query = servicesLocalQuery;
 
@@ -39,32 +42,40 @@ public class ServiceRemote {
         List<Service> services = null;
 
         try {
+
             services = query.find();
 
         } catch (ParseException e) {
 
             e.printStackTrace();
+
         }
+
         int priceFrom = 0;
 
-                    if(services != null){
+        if (services != null) {
 
-                        priceFrom = services.get(0).getPrice();
+            priceFrom = services.get(0).getPrice();
 
-                        for(Service service : services){
+            for (Service service : services) {
 
-                            int currentServicePrice = service.getPrice();
+                int currentServicePrice = service.getPrice();
 
-                            if(currentServicePrice < priceFrom){
+                if (currentServicePrice < priceFrom) {
 
-                                priceFrom = currentServicePrice;
-                            }
-                        }
-                    }
+                    priceFrom = currentServicePrice;
+
+                }
+
+            }
+
+        }
+
         return priceFrom;
+
     }
 
-    public void loadServices(ParseQuery<Service> servicesRemoteQuery, final ServiceCompletion.ErrorCompletion completion){
+    public void loadServices(ParseQuery<Service> servicesRemoteQuery, final ServiceCompletion.ErrorCompletion completion) {
 
         query = servicesRemoteQuery;
 
@@ -73,54 +84,39 @@ public class ServiceRemote {
         query.orderByAscending(ServiceAttributes.name);
 
         query.findInBackground(new FindCallback<Service>() {
+
             @Override
             public void done(List<Service> objects, com.parse.ParseException e) {
 
-                if(objects != null){
+                if (objects != null) {
 
                     try {
 
                         ParseObject.pinAll(objects);
 
-                    } catch (ParseException pe) {}
+                    } catch (ParseException pe) {
+                    }
 
                 }
 
                 AppError appError = e != null ? new AppError(Service.class.toString(), 0, null) : null;
 
                 completion.completion(objects, appError);
+
             }
 
         });
 
     }
 
-    public void loadSubCategorizedServices(SubCategory subCategory, final ServiceCompletion.ErrorCompletion completion){
+    public void loadSubCategorizedServices(SubCategory subCategory, final ServiceCompletion.ErrorCompletion completion) {
 
         setQuery();
 
         query.whereEqualTo(ServiceAttributes.subCategory, subCategory);
 
-             query.findInBackground(new FindCallback<Service>() {
-                 @Override
-                 public void done(List<Service> objects, ParseException e) {
-
-                     AppError appError = e != null ? new AppError(Service.class.toString(), 0, null) : null;
-
-                     completion.completion(objects, appError);
-
-                 }
-             });
-
-    }
-
-    public void loadCategorizedServices(List<SubCategory> subCategories, final ServiceCompletion.ErrorCompletion completion){
-
-        setQuery();
-
-        query.whereContainedIn(ServiceAttributes.subCategory, subCategories);
-
         query.findInBackground(new FindCallback<Service>() {
+
             @Override
             public void done(List<Service> objects, ParseException e) {
 
@@ -129,7 +125,30 @@ public class ServiceRemote {
                 completion.completion(objects, appError);
 
             }
+
         });
 
     }
+
+    public void loadCategorizedServices(List<SubCategory> subCategories, final ServiceCompletion.ErrorCompletion completion) {
+
+        setQuery();
+
+        query.whereContainedIn(ServiceAttributes.subCategory, subCategories);
+
+        query.findInBackground(new FindCallback<Service>() {
+
+            @Override
+            public void done(List<Service> objects, ParseException e) {
+
+                AppError appError = e != null ? new AppError(Service.class.toString(), 0, null) : null;
+
+                completion.completion(objects, appError);
+
+            }
+
+        });
+
+    }
+
 }

@@ -7,7 +7,6 @@ import java.util.List;
 
 public class SlotCompletion {
 
-
     public interface SlotErrorCompletion {
 
         void completion(List<Slot> slotList, AppError error);

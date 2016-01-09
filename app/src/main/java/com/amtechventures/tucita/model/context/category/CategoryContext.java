@@ -1,8 +1,8 @@
 package com.amtechventures.tucita.model.context.category;
 
-import java.util.List;
-
 import com.amtechventures.tucita.model.domain.category.Category;
+
+import java.util.List;
 
 public class CategoryContext {
 
@@ -15,9 +15,11 @@ public class CategoryContext {
         if (categoryContext == null) {
 
             categoryContext = new CategoryContext();
+
         }
 
-        return  categoryContext;
+        return categoryContext;
+
     }
 
     public CategoryContext() {
@@ -28,25 +30,28 @@ public class CategoryContext {
 
     }
 
-    public void cancelQuery(){
+    public void cancelQuery() {
 
         categoryRemote.cancelQuery();
+
     }
 
-    public List<Category> loadCategories(final CategoryCompletion.CategoriesErrorCompletion completion)  {
+    public List<Category> loadCategories(final CategoryCompletion.CategoriesErrorCompletion completion) {
 
         List<Category> list = categoryLocal.loadCategories();
 
         categoryRemote.loadCategories(completion);
 
         return list;
+
     }
 
-    public Category findCategory(String name){
+    public Category findCategory(String name) {
 
-       Category category = categoryLocal.findCategory(name);
+        Category category = categoryLocal.findCategory(name);
 
         return category;
+
     }
 
 }

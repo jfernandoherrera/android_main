@@ -6,7 +6,7 @@ public class AppError {
 
     private int errorCode;
     private String domain;
-    private Map<?,?> userInfo;
+    private Map<?, ?> userInfo;
 
     public AppError(String domain, int errorCode, Map<?, ?> userInfo) {
 

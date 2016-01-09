@@ -1,32 +1,33 @@
 package com.amtechventures.tucita.model.context.category;
 
-import android.util.Log;
-
-import java.util.List;
-
+import com.amtechventures.tucita.model.domain.category.Category;
 import com.amtechventures.tucita.model.domain.category.CategoryAttributes;
-import com.parse.ParseQuery;
-import com.parse.ParseObject;
+import com.amtechventures.tucita.model.error.AppError;
 import com.parse.FindCallback;
 import com.parse.ParseException;
-import com.amtechventures.tucita.model.error.AppError;
-import com.amtechventures.tucita.model.domain.category.Category;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+
+import java.util.List;
 
 public class CategoryRemote {
 
     ParseQuery<Category> query;
 
-    private void setQuery(){
+    private void setQuery() {
 
         query = Category.getQuery();
+
     }
 
-    public void cancelQuery(){
+    public void cancelQuery() {
 
-        if(query != null){
+        if (query != null) {
 
             query.cancel();
+
         }
+
     }
 
     public void loadCategories(final CategoryCompletion.CategoriesErrorCompletion completion) {
@@ -40,9 +41,10 @@ public class CategoryRemote {
             @Override
             public void done(List<Category> categoryList, ParseException e) {
 
-                if(e != null) {
+                if (e != null) {
 
                     e.printStackTrace();
+
                 }
 
                 if (categoryList != null) {
@@ -54,6 +56,7 @@ public class CategoryRemote {
                     } catch (ParseException pe) {
 
                         pe.printStackTrace();
+
                     }
 
                 }

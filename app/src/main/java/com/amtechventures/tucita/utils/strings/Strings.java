@@ -19,5 +19,7 @@ public class Strings {
         String nameCapitalized = s1 + word.substring(1);
 
         return nameCapitalized;
+
     }
+
 }

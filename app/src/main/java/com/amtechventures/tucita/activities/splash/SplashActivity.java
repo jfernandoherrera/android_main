@@ -1,31 +1,24 @@
 package com.amtechventures.tucita.activities.splash;
 
-import java.util.Timer;
-
-import android.os.Bundle;
-
-import java.util.TimerTask;
-
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
 
 import com.amtechventures.tucita.R;
-
-import android.support.v7.app.AppCompatActivity;
-
 import com.amtechventures.tucita.activities.main.MainActivity;
 import com.amtechventures.tucita.model.context.user.UserContext;
 import com.amtechventures.tucita.model.domain.user.UserAttributes;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class SplashActivity extends AppCompatActivity {
 
     private Timer timer;
-
     public boolean active = true;
-
     private long splashLength = 1000;
-
     private UserContext userContext;
 
     @Override
@@ -64,7 +57,6 @@ public class SplashActivity extends AppCompatActivity {
 
                 checkForLoginStatus();
 
-
             }
 
         }
@@ -99,6 +91,7 @@ public class SplashActivity extends AppCompatActivity {
         } else {
 
             Log.i("fderdsd", userContext.currentUser().getUserName());
+
             processLoggedUser();
 
         }

@@ -23,6 +23,7 @@ import com.amtechventures.tucita.model.domain.subcategory.SubCategory;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.domain.venue.VenueAttributes;
 import com.amtechventures.tucita.model.error.AppError;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,10 +35,11 @@ public class SearchFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private List<SubCategory> subCategories = new ArrayList<>();
-    private List <Venue> venues = new ArrayList<>();
+    private List<Venue> venues = new ArrayList<>();
     private List<SubCategory> recentSubCategories = new ArrayList<>();
-    private List <Venue> recentVenues = new ArrayList<>();
+    private List<Venue> recentVenues = new ArrayList<>();
     private Typeface roboto;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -53,37 +55,42 @@ public class SearchFragment extends Fragment {
         searchAdapter = new SearchAdapter(venues, subCategories, getContext(), roboto);
 
         searchAdapter.setOnItemClickListener(new SearchAdapter.OnItemClickListener() {
+
             @Override
             public void onItemClick(View view, int position) {
 
-        boolean isSubcategoryHeader = position == 0 && ! subCategories.isEmpty() ? true : false;
+                boolean isSubcategoryHeader = position == 0 && !subCategories.isEmpty() ? true : false;
 
-        boolean isVenueHeader = position == subCategories.size() + 1 && ! venues.isEmpty() ? true : false;
+                boolean isVenueHeader = position == subCategories.size() + 1 && !venues.isEmpty() ? true : false;
 
-                if(! isSubcategoryHeader && ! isVenueHeader && position <= subCategories.size()) {
+                if (!isSubcategoryHeader && !isVenueHeader && position <= subCategories.size()) {
 
                     advancedSearch(position);
-                }else {
+
+                } else {
 
                     position = position - subCategories.size();
 
                     venue(position);
+
                 }
 
             }
         });
+
         layoutManager = new GridLayoutManager(getContext(), 1);
 
-        recyclerView = (RecyclerView)rootView.findViewById(R.id.recycler_view);
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
 
         recyclerView.setLayoutManager(layoutManager);
 
         recyclerView.setAdapter(searchAdapter);
 
         return rootView;
+
     }
 
-    private void advancedSearch(int position){
+    private void advancedSearch(int position) {
 
         String name = subCategories.get(position - 1).getName();
 
@@ -98,9 +105,10 @@ public class SearchFragment extends Fragment {
         venueContext.cancelQuery();
 
         startActivity(intent);
+
     }
 
-    private void venue(int position){
+    private void venue(int position) {
 
         String name = venues.get(position - SearchAdapter.typeSection).getName();
 
@@ -119,12 +127,13 @@ public class SearchFragment extends Fragment {
         venueContext.cancelQuery();
 
         startActivity(intent);
+
     }
 
-
-    public void setupSubCategoryList(String newText){
+    public void setupSubCategoryList(String newText) {
 
         List<SubCategory> subCategoriesList = subCategoryContext.loadLikeSubCategories(newText, new SubCategoryCompletion.ErrorCompletion() {
+
             @Override
             public void completion(List<SubCategory> subCategoriesList, AppError error) {
 
@@ -135,9 +144,11 @@ public class SearchFragment extends Fragment {
                     subCategories.addAll(subCategoriesList);
 
                     searchAdapter.notifyDataSetChanged();
+
                 }
 
             }
+
         });
 
         if (subCategoriesList != null && !subCategoriesList.isEmpty()) {
@@ -147,12 +158,14 @@ public class SearchFragment extends Fragment {
             subCategories.addAll(subCategoriesList);
 
             searchAdapter.notifyDataSetChanged();
+
         }
+
     }
 
-    public void setupRecentVenueList(){
+    public void setupRecentVenueList() {
 
-        if(recentVenues.isEmpty()) {
+        if (recentVenues.isEmpty()) {
 
             final List<Venue> venuesList = venueContext.loadRecentVenues();
 
@@ -165,20 +178,24 @@ public class SearchFragment extends Fragment {
                 venues.addAll(recentVenues);
 
                 searchAdapter.notifyDataSetChanged();
+
             }
-        }else{
+
+        } else {
+
             venues.clear();
 
             venues.addAll(recentVenues);
 
             searchAdapter.notifyDataSetChanged();
+
         }
 
     }
 
-    public void setupRecentSubCategoryList(){
+    public void setupRecentSubCategoryList() {
 
-        if(recentSubCategories.isEmpty()) {
+        if (recentSubCategories.isEmpty()) {
 
             List<SubCategory> subCategoriesList = subCategoryContext.loadRecentSubcategories();
 
@@ -191,19 +208,24 @@ public class SearchFragment extends Fragment {
                 subCategories.addAll(recentSubCategories);
 
                 searchAdapter.notifyDataSetChanged();
+
             }
-        }else{
+
+        } else {
+
             subCategories.clear();
 
             subCategories.addAll(recentSubCategories);
 
             searchAdapter.notifyDataSetChanged();
+
         }
     }
 
-    public void setupVenueList(String newText){
+    public void setupVenueList(String newText) {
 
         final List<Venue> venuesList = venueContext.loadLikeVenues(newText, new VenueCompletion.ErrorCompletion() {
+
                     @Override
                     public void completion(List<Venue> venuesList, AppError error) {
 
@@ -214,19 +236,24 @@ public class SearchFragment extends Fragment {
                             venues.addAll(venuesList);
 
                             searchAdapter.notifyDataSetChanged();
+
                         }
+
                     }
+
                 }
-            );
 
-            if (venuesList != null && !venuesList.isEmpty()) {
+        );
 
-                venues.clear();
+        if (venuesList != null && !venuesList.isEmpty()) {
 
-                venues.addAll(venuesList);
+            venues.clear();
 
-                searchAdapter.notifyDataSetChanged();
-            }
+            venues.addAll(venuesList);
+
+            searchAdapter.notifyDataSetChanged();
+
+        }
 
     }
 

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.advanced.AdvancedSearchActivity;
 import com.amtechventures.tucita.activities.main.fragments.subcategory.adapters.SubCategoryAdapter;
@@ -22,6 +23,7 @@ import com.amtechventures.tucita.model.domain.category.CategoryAttributes;
 import com.amtechventures.tucita.model.domain.subcategory.SubCategory;
 import com.amtechventures.tucita.model.error.AppError;
 import com.parse.ParseObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +31,7 @@ public class SubCategoryFragment extends DialogFragment {
 
     private SubCategoryContext subCategoryContext;
     private Category category;
-    private List <SubCategory> subCategories = new ArrayList<>();
+    private List<SubCategory> subCategories = new ArrayList<>();
     private ListView listView;
     private SubCategoryAdapter adapter;
     private CategoryContext categoryContext;
@@ -38,9 +40,10 @@ public class SubCategoryFragment extends DialogFragment {
     private ProgressDialog progress;
     private Typeface roboto;
 
-    public interface OnOthersClicked{
+    public interface OnOthersClicked {
 
         void onOthersClicked();
+
     }
 
     @Override
@@ -51,6 +54,7 @@ public class SubCategoryFragment extends DialogFragment {
         listener = (OnOthersClicked) activity;
 
         roboto = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Roboto-Light.ttf");
+
     }
 
     @Override
@@ -59,13 +63,15 @@ public class SubCategoryFragment extends DialogFragment {
         super.onDetach();
 
         listener = null;
+
     }
 
-    public SubCategoryFragment(){
+    public SubCategoryFragment() {
 
         categoryContext = CategoryContext.context(categoryContext);
 
         subCategoryContext = SubCategoryContext.context(subCategoryContext);
+
     }
 
     public static SubCategoryFragment newInstance(String name) {
@@ -79,6 +85,7 @@ public class SubCategoryFragment extends DialogFragment {
         fragment.setArguments(args);
 
         return fragment;
+
     }
 
     @Override
@@ -89,6 +96,7 @@ public class SubCategoryFragment extends DialogFragment {
         name = getArguments().getString(CategoryAttributes.name);
 
         setStyle(DialogFragment.STYLE_NO_TITLE, 0);
+
     }
 
     @Override
@@ -101,8 +109,7 @@ public class SubCategoryFragment extends DialogFragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 int others = subCategories.size();
 
@@ -115,26 +122,30 @@ public class SubCategoryFragment extends DialogFragment {
                     dismiss();
 
                 } else {
+
                     String name = subCategories.get(position - 1).getName();
 
                     goToAdvancedSearch(name, false);
+
                 }
 
             }
+
         });
 
         setupList();
 
         return rootView;
+
     }
 
-    private ArrayList<String> setStringsArray(){
+    private ArrayList<String> setStringsArray() {
 
         Activity activity = getActivity();
 
         ArrayList<String> stringsSubCategories = new ArrayList<>();
 
-        if(activity != null) {
+        if (activity != null) {
 
             String all = activity.getString(R.string.all);
 
@@ -143,6 +154,7 @@ public class SubCategoryFragment extends DialogFragment {
             for (ParseObject subCategory : subCategories) {
 
                 stringsSubCategories.add(subCategory.getString(CategoryAttributes.name));
+
             }
 
             String others = getResources().getString(R.string.others);
@@ -152,45 +164,55 @@ public class SubCategoryFragment extends DialogFragment {
         }
 
         return stringsSubCategories;
+
     }
 
-    public void setupList(){
+    public void setupList() {
 
         category = categoryContext.findCategory(name);
 
         List<SubCategory> subCategoriesList = subCategoryContext.loadSubCategories(category, new SubCategoryCompletion.ErrorCompletion() {
-         @Override
-         public void completion(List<SubCategory> subCategoriesList, AppError error) {
 
-             if (subCategoriesList != null) {
+            @Override
+            public void completion(List<SubCategory> subCategoriesList, AppError error) {
 
-                 adapter.clear();
+                if (subCategoriesList != null) {
 
-                 subCategories.clear();
+                    adapter.clear();
 
-                 subCategories.addAll(subCategoriesList);
+                    subCategories.clear();
 
-                 adapter.addAll(setStringsArray());
+                    subCategories.addAll(subCategoriesList);
 
-                 adapter.notifyDataSetChanged();
-             }
-             if(progress != null){
+                    adapter.addAll(setStringsArray());
 
-                 progress.dismiss();
-             }
-         }
-     });
+                    adapter.notifyDataSetChanged();
 
-        if(subCategoriesList == null) {
+                }
+
+                if (progress != null) {
+
+                    progress.dismiss();
+
+                }
+
+            }
+        });
+
+        if (subCategoriesList == null) {
 
             setupProgress();
-        }else {
+
+        } else {
 
             subCategories.addAll(subCategoriesList);
+
         }
+
         adapter = new SubCategoryAdapter(getContext(), R.layout.item_sub_category, setStringsArray(), roboto);
 
         listView.setAdapter(adapter);
+
     }
 
     private void goToAdvancedSearch(String name, boolean category) {
@@ -206,17 +228,19 @@ public class SubCategoryFragment extends DialogFragment {
         subCategoryContext.cancelQuery();
 
         dismiss();
+
     }
 
     public void cancelQuery() {
 
         subCategoryContext.cancelQuery();
+
     }
 
-    private void setupProgress(){
+    private void setupProgress() {
 
-        progress = ProgressDialog.show(getContext(), getResources().getString(R.string.dialog_progress_title),
+        progress = ProgressDialog.show(getContext(), getResources().getString(R.string.dialog_progress_title), getResources().getString(R.string.dialog_all_progress_message), true);
 
-                getResources().getString(R.string.dialog_all_progress_message), true);
     }
+
 }

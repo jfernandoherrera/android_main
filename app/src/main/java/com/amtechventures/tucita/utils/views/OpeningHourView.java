@@ -6,23 +6,22 @@ import android.view.LayoutInflater;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.amtechventures.tucita.R;
 
 public class OpeningHourView extends LinearLayout {
 
     private ImageView state_drawable;
-
     private TextView day;
-
     private TextView hours;
-
     private String closed;
-    
-    public OpeningHourView(Context context, AttributeSet attributes){
+
+    public OpeningHourView(Context context, AttributeSet attributes) {
 
         super(context, attributes);
 
-       init(context);
+        init(context);
+
     }
 
     public OpeningHourView(Context context) {
@@ -30,13 +29,12 @@ public class OpeningHourView extends LinearLayout {
         super(context);
 
         init(context);
+
     }
 
-    private void init(Context context){
+    private void init(Context context) {
 
-        LayoutInflater inflater = (LayoutInflater) context
-
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         inflater.inflate(R.layout.opening_hour, this);
 
@@ -47,33 +45,38 @@ public class OpeningHourView extends LinearLayout {
         day = (TextView) findViewById(R.id.day);
 
         hours = (TextView) findViewById(R.id.hours);
+
     }
 
-    public void setState_drawable(boolean state_drawable){
+    public void setState_drawable(boolean state_drawable) {
 
-        if(state_drawable){
+        if (state_drawable) {
 
             this.state_drawable.setImageResource(R.mipmap.ic_state_drawable_activated);
 
-        }else{
+        } else {
 
             this.state_drawable.setImageResource(R.mipmap.ic_state_drawable_desactivated);
+
         }
+
         invalidate();
 
         requestLayout();
+
     }
 
-    public void setDay(String day){
+    public void setDay(String day) {
 
         this.day.setText(day);
 
         invalidate();
 
         requestLayout();
+
     }
 
-    public void setHours(String hours){
+    public void setHours(String hours) {
 
         String current = (String) this.hours.getText();
 
@@ -84,9 +87,10 @@ public class OpeningHourView extends LinearLayout {
         invalidate();
 
         requestLayout();
+
     }
 
-    public void setClosed(String closed){
+    public void setClosed(String closed) {
 
         this.closed = " " + closed;
 
@@ -95,5 +99,7 @@ public class OpeningHourView extends LinearLayout {
         invalidate();
 
         requestLayout();
+
     }
+
 }

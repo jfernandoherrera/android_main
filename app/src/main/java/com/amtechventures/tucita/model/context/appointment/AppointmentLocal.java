@@ -6,14 +6,11 @@ import com.amtechventures.tucita.model.domain.user.User;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 
-import java.util.Calendar;
 import java.util.List;
 
 public class AppointmentLocal {
 
-
-
-    public List loadUserAppointments(User user){
+    public List loadUserAppointments(User user) {
 
         List venues = null;
 
@@ -28,12 +25,17 @@ public class AppointmentLocal {
         query.include(AppointmentAttributes.venue);
 
         try {
+
             venues = query.find();
 
         } catch (ParseException e) {
 
             e.printStackTrace();
+
         }
+
         return venues;
+
     }
+
 }

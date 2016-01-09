@@ -40,6 +40,7 @@ public class VenuesAdapter extends RecyclerView.Adapter<VenuesAdapter.ViewHolder
         ViewHolder viewHolder = new ViewHolder(v);
 
         return viewHolder;
+
     }
 
     @Override
@@ -63,11 +64,12 @@ public class VenuesAdapter extends RecyclerView.Adapter<VenuesAdapter.ViewHolder
 
             holder.ratingBar.setRating(rating);
 
-        }
-        else{
+        } else{
 
             holder.ratingBar.setVisibility(View.INVISIBLE);
+
         }
+
     }
 
     @Override
@@ -78,85 +80,87 @@ public class VenuesAdapter extends RecyclerView.Adapter<VenuesAdapter.ViewHolder
     }
 
 
-        class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
 
-            protected TextView name;
+        protected TextView name;
 
-            protected String address;
+        protected String address;
 
-            protected TextView location;
+        protected TextView location;
 
-            protected RatingBar ratingBar;
+        protected RatingBar ratingBar;
 
-            protected ImageView venueImage;
+        protected ImageView venueImage;
 
-            private CardView venueIcon;
+        private CardView venueIcon;
 
-            protected String from;
+        protected String from;
 
-            public void setAddress(String address) {
+        public void setAddress(String address) {
 
-                this.address = address;
-            }
+            this.address = address;
+        }
 
-            public ViewHolder(final View itemView) {
+        public ViewHolder(final View itemView) {
 
-                super(itemView);
+            super(itemView);
 
-                location = (TextView) itemView.findViewById(R.id.textLocation);
+            location = (TextView) itemView.findViewById(R.id.textLocation);
 
-                name = (TextView) itemView.findViewById(R.id.textName);
+            name = (TextView) itemView.findViewById(R.id.textName);
 
-                venueIcon = (CardView) itemView.findViewById(R.id.card_view);
+            venueIcon = (CardView) itemView.findViewById(R.id.card_view);
 
-                venueImage = (ImageView) itemView.findViewById(R.id.imageSearchVenue);
+            venueImage = (ImageView) itemView.findViewById(R.id.imageSearchVenue);
 
-                ratingBar = (RatingBar) itemView.findViewById(R.id.searchRatingBar);
-
-
-                if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            ratingBar = (RatingBar) itemView.findViewById(R.id.searchRatingBar);
 
 
-                    venueIcon.setOnTouchListener(new View.OnTouchListener() {
-                        @Override
-                        public boolean onTouch(View v, MotionEvent event) {
-
-                            if (event.getAction() == MotionEvent.ACTION_DOWN) {
-
-                                venueIcon.setCardElevation(0);
+            if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
 
 
-                            } else if (event.getAction() != MotionEvent.ACTION_MOVE) {
-
-                                venueIcon.setCardElevation(6);
-
-                            }
-
-                            return false;
-                        }
-                    });
-                }
-
-                venueIcon.setOnClickListener(new View.OnClickListener() {
-
+                venueIcon.setOnTouchListener(new View.OnTouchListener() {
                     @Override
-                    public void onClick(View view) {
+                    public boolean onTouch(View v, MotionEvent event) {
 
-                        Intent intent = new Intent(view.getContext(), BookActivity.class);
+                        if (event.getAction() == MotionEvent.ACTION_DOWN) {
 
-                        intent.putExtra(Venue.class.getName(), name.getText());
+                            venueIcon.setCardElevation(0);
 
-                        intent.putExtra(VenueAttributes.address, address);
 
-                        view.getContext().startActivity(intent);
+                        } else if (event.getAction() != MotionEvent.ACTION_MOVE) {
 
+                            venueIcon.setCardElevation(6);
+
+                        }
+
+                        return false;
                     }
-
                 });
 
             }
 
+            venueIcon.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View view) {
+
+                    Intent intent = new Intent(view.getContext(), BookActivity.class);
+
+                    intent.putExtra(Venue.class.getName(), name.getText());
+
+                    intent.putExtra(VenueAttributes.address, address);
+
+                    view.getContext().startActivity(intent);
+
+                }
+
+            });
+
         }
+
     }
+
+}
 
 

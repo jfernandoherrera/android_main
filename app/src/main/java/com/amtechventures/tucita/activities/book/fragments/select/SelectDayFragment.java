@@ -9,21 +9,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.book.fragments.select.adapters.PagerSelectHourAdapter;
 import com.amtechventures.tucita.activities.book.fragments.select.adapters.SelectHourAdapter;
 import com.amtechventures.tucita.model.domain.venue.Venue;
+
 import java.util.Calendar;
 import java.util.Date;
 
-
-public class SelectDayFragment extends Fragment{
+public class SelectDayFragment extends Fragment {
 
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private PagerSelectHourAdapter adapter;
-    SelectHourAdapter.OnSlotSelected listener;
+    private SelectHourAdapter.OnSlotSelected listener;
 
     @Override
     public void onAttach(Context context) {
@@ -31,6 +32,7 @@ public class SelectDayFragment extends Fragment{
         super.onAttach(context);
 
         listener = (SelectHourAdapter.OnSlotSelected) context;
+
     }
 
     @Override
@@ -39,6 +41,7 @@ public class SelectDayFragment extends Fragment{
         super.onDetach();
 
         listener = null;
+
     }
 
     @Override
@@ -57,45 +60,47 @@ public class SelectDayFragment extends Fragment{
         tabLayout.setupWithViewPager(viewPager);
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
                 position = position + adapter.getCurrentDay();
 
-                if(position <= adapter.getLastDayOfMonth(0)){
+                if (position <= adapter.getLastDayOfMonth(0)) {
 
                     setupDateViews(adapter.calendar);
 
-                }else if(position <= (adapter.getLastDayOfMonth(0) + adapter.getLastDayOfMonth(1))){
+                } else if (position <= (adapter.getLastDayOfMonth(0) + adapter.getLastDayOfMonth(1))) {
 
                     setupDateViews(adapter.calendarOneMonthMore);
 
-                }else{
+                } else {
 
                     setupDateViews(adapter.calendarTwoMonthMore);
+
                 }
-            }
-
-            @Override
-            public void onPageSelected(int position) {
 
             }
 
             @Override
-            public void onPageScrollStateChanged(int state) {
+            public void onPageSelected(int position) {}
 
-            }
+            @Override
+            public void onPageScrollStateChanged(int state) {}
+
         });
 
         return rootView;
+
     }
 
     public void setVenue(Venue venue) {
 
-       adapter.setVenue(venue);
+        adapter.setVenue(venue);
+
     }
 
-    public void setupDateViews(Calendar calendar){
+    public void setupDateViews(Calendar calendar) {
 
         String month = setCurrentMonth(calendar.getTime());
 
@@ -106,28 +111,33 @@ public class SelectDayFragment extends Fragment{
         AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
 
         appCompatActivity.getSupportActionBar().setTitle(title);
+
     }
 
-    public void backSetupDateViews(){
+    public void backSetupDateViews() {
 
         setupDateViews(adapter.calendar);
+
     }
 
-    private String setCurrentMonth(Date date){
+    private String setCurrentMonth(Date date) {
 
-        String month =  new java.text.SimpleDateFormat("MMMM").format(date);
+        String month = new java.text.SimpleDateFormat("MMMM").format(date);
 
         return month;
+
     }
 
-    private String setCurrentYear(int currentYear){
+    private String setCurrentYear(int currentYear) {
 
         return String.valueOf(currentYear);
+
     }
 
-    public void reload(){
+    public void reload() {
 
         adapter.notifyDataSetChanged();
+
     }
 
     public void setDuration(int[] duration) {
@@ -135,6 +145,5 @@ public class SelectDayFragment extends Fragment{
         adapter.setDuration(duration[0], duration[1]);
 
     }
+
 }
-
-

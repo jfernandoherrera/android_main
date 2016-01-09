@@ -1,8 +1,9 @@
 package com.amtechventures.tucita.utils.blocks;
 
+import com.amtechventures.tucita.model.error.AppError;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
-import com.amtechventures.tucita.model.error.AppError;
 
 public class Completion {
 
@@ -21,7 +22,7 @@ public class Completion {
     public interface IntErrorCompletion{
 
         void completion(int number, AppError error);
-    }
 
+    }
 
 }

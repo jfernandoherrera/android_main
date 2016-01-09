@@ -1,11 +1,11 @@
 package com.amtechventures.tucita.model.context.subcategory;
 
-
 import com.amtechventures.tucita.model.domain.category.Category;
 import com.amtechventures.tucita.model.domain.category.CategoryAttributes;
 import com.amtechventures.tucita.model.domain.subcategory.SubCategory;
 import com.parse.ParseQuery;
 import com.parse.ParseRelation;
+
 import java.util.List;
 
 public class SubCategoryContext {
@@ -25,28 +25,31 @@ public class SubCategoryContext {
 
     }
 
-    public SubCategoryContext(){
+    public SubCategoryContext() {
 
         subCategoryRemote = new SubCategoryRemote();
 
         subCategoryLocal = new SubCategoryLocal();
+
     }
 
-    public void cancelQuery(){
+    public void cancelQuery() {
 
-    subCategoryRemote.cancelQuery();
+        subCategoryRemote.cancelQuery();
+
     }
 
-    public List<SubCategory> loadRecentSubcategories(){
+    public List<SubCategory> loadRecentSubcategories() {
 
         List subCategories = subCategoryLocal.loadRecentSubCategories();
 
         return subCategories;
+
     }
 
-    public List<SubCategory> loadSubCategories(Category category, SubCategoryCompletion.ErrorCompletion completion){
+    public List<SubCategory> loadSubCategories(Category category, SubCategoryCompletion.ErrorCompletion completion) {
 
-      List subCategories;
+        List subCategories;
 
         ParseRelation object = (ParseRelation) category.get(CategoryAttributes.subCategories);
 
@@ -56,12 +59,13 @@ public class SubCategoryContext {
 
         ParseQuery<SubCategory> queryRemote = object.getQuery().setLimit(6);
 
-        subCategoryRemote.loadSubCategories(queryRemote,completion);
+        subCategoryRemote.loadSubCategories(queryRemote, completion);
 
         return subCategories;
+
     }
 
-    public List<SubCategory> loadLikeSubCategories(String likeWord, SubCategoryCompletion.ErrorCompletion completion){
+    public List<SubCategory> loadLikeSubCategories(String likeWord, SubCategoryCompletion.ErrorCompletion completion) {
 
         List subCategories;
 
@@ -70,10 +74,12 @@ public class SubCategoryContext {
         subCategoryRemote.loadLikeSubCategories(likeWord, completion);
 
         return subCategories;
+
     }
 
-    public SubCategory findSubCategory(String name){
+    public SubCategory findSubCategory(String name) {
 
         return subCategoryLocal.findSubCategory(name);
+
     }
 }

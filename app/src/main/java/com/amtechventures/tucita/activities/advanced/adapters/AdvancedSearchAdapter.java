@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.book.BookActivity;
 import com.amtechventures.tucita.model.domain.service.ServiceAttributes;
@@ -36,6 +37,7 @@ public class AdvancedSearchAdapter extends RecyclerView.Adapter<AdvancedSearchAd
         this.priceStrings = priceStrings;
 
         this.subCategory = subCategory;
+
     }
 
     @Override
@@ -46,6 +48,7 @@ public class AdvancedSearchAdapter extends RecyclerView.Adapter<AdvancedSearchAd
         ViewHolder viewHolder = new ViewHolder(v);
 
         return viewHolder;
+
     }
 
     @Override
@@ -61,21 +64,22 @@ public class AdvancedSearchAdapter extends RecyclerView.Adapter<AdvancedSearchAd
 
         viewHolder.venueImage.setImageBitmap(venue.getPicture());
 
-            float rating = (float)venue.getRating();
+        float rating = (float) venue.getRating();
 
-            if(rating != 0) {
+        if (rating != 0) {
 
-                viewHolder.ratingBar.setRating(rating);
+            viewHolder.ratingBar.setRating(rating);
 
-            }
-            else{
+        } else {
 
-                viewHolder.ratingBar.setVisibility(View.INVISIBLE);
-            }
+            viewHolder.ratingBar.setVisibility(View.INVISIBLE);
 
-        String from = viewHolder.from + " $"+priceStrings.get(position);
+        }
+
+        String from = viewHolder.from + " $" + priceStrings.get(position);
 
         viewHolder.pricesFrom.setText(from);
+
     }
 
     @Override
@@ -85,7 +89,7 @@ public class AdvancedSearchAdapter extends RecyclerView.Adapter<AdvancedSearchAd
 
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder{
+    class ViewHolder extends RecyclerView.ViewHolder {
 
         protected TextView name;
 
@@ -103,20 +107,21 @@ public class AdvancedSearchAdapter extends RecyclerView.Adapter<AdvancedSearchAd
 
         protected String from;
 
-        public void setAddress(String address){
+        public void setAddress(String address) {
 
             this.address = address;
+
         }
 
         public ViewHolder(final View itemView) {
 
             super(itemView);
 
-            location = (TextView)itemView.findViewById(R.id.textLocation);
+            location = (TextView) itemView.findViewById(R.id.textLocation);
 
-            name = (TextView)itemView.findViewById(R.id.textName);
+            name = (TextView) itemView.findViewById(R.id.textName);
 
-            categoryIcon = (CardView)itemView.findViewById(R.id.card_view);
+            categoryIcon = (CardView) itemView.findViewById(R.id.card_view);
 
             venueImage = (ImageView) itemView.findViewById(R.id.imageSearchVenue);
 
@@ -126,11 +131,10 @@ public class AdvancedSearchAdapter extends RecyclerView.Adapter<AdvancedSearchAd
 
             from = itemView.getContext().getString(R.string.from);
 
-
-            if(android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-
+            if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
 
                 categoryIcon.setOnTouchListener(new View.OnTouchListener() {
+
                     @Override
                     public boolean onTouch(View v, MotionEvent event) {
 
@@ -147,7 +151,9 @@ public class AdvancedSearchAdapter extends RecyclerView.Adapter<AdvancedSearchAd
 
                         return false;
                     }
+
                 });
+
             }
 
             categoryIcon.setOnClickListener(new View.OnClickListener() {
@@ -157,7 +163,7 @@ public class AdvancedSearchAdapter extends RecyclerView.Adapter<AdvancedSearchAd
 
                     Intent intent = new Intent(view.getContext(), BookActivity.class);
 
-                    intent.putExtra(Venue.class.getName(),name.getText());
+                    intent.putExtra(Venue.class.getName(), name.getText());
 
                     intent.putExtra(VenueAttributes.address, address);
 

@@ -1,6 +1,5 @@
 package com.amtechventures.tucita.model.domain.service;
 
-
 public class ServiceAttributes {
 
     public static final String name = "name";
@@ -9,4 +8,5 @@ public class ServiceAttributes {
     public static final String durationMinutes = "durationMinutes";
     public static final String price = "price";
     public static final String subCategory = "subCategory";
+
 }

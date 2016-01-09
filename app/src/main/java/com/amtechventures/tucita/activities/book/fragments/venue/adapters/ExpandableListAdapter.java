@@ -1,6 +1,5 @@
 package com.amtechventures.tucita.activities.book.fragments.venue.adapters;
 
-
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -9,16 +8,17 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckedTextView;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
+
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.book.fragments.venue.VenueFragment;
 import com.amtechventures.tucita.model.domain.service.Service;
 import com.amtechventures.tucita.model.domain.subcategory.SubCategory;
 import com.amtechventures.tucita.utils.views.ViewUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExpandableListAdapter extends BaseExpandableListAdapter{
-
+public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     private ArrayList<ArrayList<Service>> childItems;
     private LayoutInflater inflater;
@@ -27,9 +27,8 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter{
     private VenueFragment.OnServiceSelected listener;
     private ViewUtils viewUtils;
 
+    public ExpandableListAdapter(List<SubCategory> parents, List<ArrayList<Service>> children, ViewUtils viewUtils, ExpandableListView expandableListView, VenueFragment.OnServiceSelected listener) {
 
-    public ExpandableListAdapter(List<SubCategory> parents, List<ArrayList<Service>> children, ViewUtils viewUtils, ExpandableListView expandableListView, VenueFragment.OnServiceSelected listener)
-    {
         this.parentItems = (ArrayList<SubCategory>) parents;
 
         this.childItems = (ArrayList<ArrayList<Service>>) children;
@@ -39,16 +38,17 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter{
         this.viewUtils = viewUtils;
 
         this.listener = listener;
+
     }
 
-    public void setInflater(LayoutInflater inflater)
-    {
+    public void setInflater(LayoutInflater inflater) {
+
         this.inflater = inflater;
+
     }
 
     @Override
-    public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent)
-    {
+    public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
 
         Service service = childItems.get(groupPosition).get(childPosition);
 
@@ -61,6 +61,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter{
         if (convertView == null) {
 
             convertView = inflater.inflate(R.layout.item_service, null);
+
         }
 
         String serviceName = service.getName();
@@ -80,28 +81,35 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter{
         textPricesFrom.setText(servicePrice);
 
         convertView.setOnTouchListener(new View.OnTouchListener() {
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
 
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
 
-           v.setBackgroundResource(R.drawable.pressed_application_background_static);
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
 
-        } else if (event.getAction() != MotionEvent.ACTION_MOVE) {
+                    v.setBackgroundResource(R.drawable.pressed_application_background_static);
 
-        v.setBackgroundColor(v.getResources().getColor(R.color.colorPrimaryLight));
+                } else if (event.getAction() != MotionEvent.ACTION_MOVE) {
 
-        }
-            return false;
-        }
-    });
+                    v.setBackgroundColor(v.getResources().getColor(R.color.colorPrimaryLight));
+
+                }
+
+                return false;
+
+            }
+
+        });
+
         convertView.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
 
                 listener.onServiceSelected(childItems.get(groupPosition).get(childPosition), view);
+
             }
+
         });
 
         textName.setHeight(viewUtils.childHeight);
@@ -110,8 +118,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter{
     }
 
     @Override
-    public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent)
-    {
+    public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
 
         if (convertView == null) {
 
@@ -123,70 +130,81 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter{
         ((CheckedTextView) convertView).setHeight(viewUtils.parentHeight);
 
         return convertView;
+
     }
 
     @Override
-    public Object getChild(int groupPosition, int childPosition)
-    {
+    public Object getChild(int groupPosition, int childPosition) {
+
         return null;
+
     }
 
     @Override
-    public long getChildId(int groupPosition, int childPosition)
-    {
+    public long getChildId(int groupPosition, int childPosition) {
+
         return 0;
+
     }
 
     @Override
-    public int getChildrenCount(int groupPosition)
-    {
+    public int getChildrenCount(int groupPosition) {
+
         return (childItems.get(groupPosition)).size();
+
     }
 
     @Override
-    public Object getGroup(int groupPosition)
-    {
+    public Object getGroup(int groupPosition) {
+
         return null;
+
     }
 
     @Override
-    public int getGroupCount()
-    {
+    public int getGroupCount() {
+
         return parentItems.size();
+
     }
 
     @Override
-    public void onGroupCollapsed(int groupPosition)
-    {
+    public void onGroupCollapsed(int groupPosition) {
+
         super.onGroupCollapsed(groupPosition);
 
         viewUtils.setListViewHeightBasedOnChildren(expandableListView);
+
     }
 
     @Override
-    public void onGroupExpanded(int groupPosition)
-    {
+    public void onGroupExpanded(int groupPosition) {
+
         super.onGroupExpanded(groupPosition);
 
         viewUtils.setListViewHeightBasedOnChildren(expandableListView);
+
     }
 
     @Override
-    public long getGroupId(int groupPosition)
-    {
+    public long getGroupId(int groupPosition) {
+
         return 0;
+
     }
 
     @Override
-    public boolean hasStableIds()
-    {
+    public boolean hasStableIds() {
+
         return false;
+
     }
 
     @Override
-    public boolean isChildSelectable(int groupPosition, int childPosition)
-    {
+    public boolean isChildSelectable(int groupPosition, int childPosition) {
+
         return false;
+
     }
 
 }

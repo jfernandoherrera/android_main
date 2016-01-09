@@ -28,7 +28,7 @@ public class UserImageView extends Drawable {
     private UserContext userContext = new UserContext();
     private Typeface typeface;
 
-    public UserImageView(Bitmap picture, Typeface typeface){
+    public UserImageView(Bitmap picture, Typeface typeface) {
 
         this.picture = picture;
 
@@ -42,11 +42,12 @@ public class UserImageView extends Drawable {
 
         //paint.setAlpha(ALPHA_TRANSPARENCY);
 
-        if(picture != null) {
+        if (picture != null) {
 
             picture = Bitmap.createScaledBitmap(picture, 60, 60, false);
 
             canvas.drawBitmap(picture, PICTURE_X, PICTURE_Y, paint);
+
         }
 
         User user = userContext.currentUser();
@@ -57,28 +58,25 @@ public class UserImageView extends Drawable {
 
         paint.setTextSize(TEXT_SIZE);
 
-        if(user != null) {
+        if (user != null) {
 
             String name = user.getName();
 
             if (name != null) {
 
                 canvas.drawText(name, TEXT_X, TEXT_Y, paint);
+
             }
+
         }
 
-
     }
 
     @Override
-    public void setAlpha(int alpha) {
-
-    }
+    public void setAlpha(int alpha) {}
 
     @Override
-    public void setColorFilter(ColorFilter colorFilter) {
-
-    }
+    public void setColorFilter(ColorFilter colorFilter) {}
 
     @Override
     public int getOpacity() {

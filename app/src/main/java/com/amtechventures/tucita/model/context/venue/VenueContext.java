@@ -1,6 +1,5 @@
 package com.amtechventures.tucita.model.context.venue;
 
-
 import android.location.Location;
 
 import com.amtechventures.tucita.model.domain.city.City;
@@ -31,6 +30,7 @@ public class VenueContext {
         venueLocal = new VenueLocal();
 
         venueRemote = new VenueRemote();
+
     }
 
     public List<Venue> loadLikeVenues(String likeWord, VenueCompletion.ErrorCompletion completion) {
@@ -40,13 +40,15 @@ public class VenueContext {
         venueRemote.loadLikeVenues(likeWord, completion);
 
         return venues;
+
     }
 
-    public List<Venue> loadRecentVenues(){
+    public List<Venue> loadRecentVenues() {
 
         List venues = venueLocal.loadRecentVenues();
 
         return venues;
+
     }
 
     public Venue findVenue(String lookThat, String address, VenueCompletion.ErrorCompletion completion) {
@@ -56,20 +58,25 @@ public class VenueContext {
         venueRemote.findVenue(lookThat, address, completion);
 
         return venue;
+
     }
 
     public void loadSubCategorizedNearVenues(List<Service> services, Location location, VenueCompletion.ErrorCompletion completion) {
 
         venueRemote.loadSubCategorizedNearVenues(services, location, completion);
+
     }
 
-    public void loadSubCategorizedCityVenues(List<Service> services, City city, VenueCompletion.ErrorCompletion completion){
+    public void loadSubCategorizedCityVenues(List<Service> services, City city, VenueCompletion.ErrorCompletion completion) {
 
-        venueRemote.loadSubCategorizedCityVenues(services,city, completion);
+        venueRemote.loadSubCategorizedCityVenues(services, city, completion);
+
     }
 
-    public void cancelQuery(){
+    public void cancelQuery() {
 
         venueRemote.cancelQuery();
+
     }
+
 }

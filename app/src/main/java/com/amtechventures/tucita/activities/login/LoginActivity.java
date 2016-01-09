@@ -1,27 +1,25 @@
 package com.amtechventures.tucita.activities.login;
 
 import android.content.Context;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Toast;
-import android.view.Gravity;
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
+import android.view.View;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import com.amtechventures.tucita.activities.main.MainActivity;
-import com.amtechventures.tucita.model.domain.user.UserAttributes;
-import com.parse.ParseFacebookUtils;
-
-import android.widget.AutoCompleteTextView;
-import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import com.amtechventures.tucita.R;
-import com.amtechventures.tucita.model.error.AppError;
-import com.amtechventures.tucita.model.domain.user.User;
-import com.amtechventures.tucita.model.context.user.UserContext;
+import com.amtechventures.tucita.activities.main.MainActivity;
 import com.amtechventures.tucita.activities.signup.SignUpActivity;
 import com.amtechventures.tucita.model.context.user.UserCompletion;
+import com.amtechventures.tucita.model.context.user.UserContext;
+import com.amtechventures.tucita.model.domain.user.User;
+import com.amtechventures.tucita.model.domain.user.UserAttributes;
+import com.amtechventures.tucita.model.error.AppError;
+import com.parse.ParseFacebookUtils;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -40,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
 
         emailView = (AutoCompleteTextView) findViewById(R.id.email);
 
-        passwordView = (EditText)findViewById(R.id.password);
+        passwordView = (EditText) findViewById(R.id.password);
 
     }
 
@@ -92,12 +90,14 @@ public class LoginActivity extends AppCompatActivity {
 
                 } else {
 
-
                     processLoggedUser();
+
                 }
+
             }
 
         });
+
     }
 
     private void processLoggedUser() {
@@ -161,5 +161,7 @@ public class LoginActivity extends AppCompatActivity {
         processUncloggedUser();
 
         super.onBackPressed();
+
     }
+
 }

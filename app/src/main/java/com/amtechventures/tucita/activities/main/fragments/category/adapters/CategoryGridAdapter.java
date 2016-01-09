@@ -1,29 +1,29 @@
 package com.amtechventures.tucita.activities.main.fragments.category.adapters;
 
-import java.util.List;
-
 import android.graphics.Typeface;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
-import android.view.LayoutInflater;
+
 import com.amtechventures.tucita.R;
-import android.support.v7.widget.RecyclerView;
 import com.amtechventures.tucita.activities.main.fragments.category.CategoryFragment;
 import com.amtechventures.tucita.model.context.category.CategoryContext;
 import com.amtechventures.tucita.model.domain.category.Category;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
+import java.util.List;
 
 public class CategoryGridAdapter extends RecyclerView.Adapter<CategoryGridAdapter.ViewHolder> {
 
-    List<Category> items;
-    CategoryFragment.OnItemClicked onItemClickListener;
-    Typeface typeface;
-    CategoryContext categoryContext;
+    private List<Category> items;
+    private CategoryFragment.OnItemClicked onItemClickListener;
+    private Typeface typeface;
+    private CategoryContext categoryContext;
 
     public CategoryGridAdapter(List<Category> offer, CategoryContext categoryContext, Typeface typeface, CategoryFragment.OnItemClicked onItemClickListener) {
 
@@ -36,11 +36,13 @@ public class CategoryGridAdapter extends RecyclerView.Adapter<CategoryGridAdapte
         items = offer;
 
         this.onItemClickListener = onItemClickListener;
+
     }
 
-    public void cancelQuery(){
+    public void cancelQuery() {
 
         categoryContext.cancelQuery();
+
     }
 
     @Override
@@ -51,6 +53,7 @@ public class CategoryGridAdapter extends RecyclerView.Adapter<CategoryGridAdapte
         ViewHolder viewHolder = new ViewHolder(v);
 
         return viewHolder;
+
     }
 
     @Override
@@ -69,7 +72,7 @@ public class CategoryGridAdapter extends RecyclerView.Adapter<CategoryGridAdapte
 
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder{
+    class ViewHolder extends RecyclerView.ViewHolder {
 
         protected TextView category;
 
@@ -79,11 +82,11 @@ public class CategoryGridAdapter extends RecyclerView.Adapter<CategoryGridAdapte
 
             super(itemView);
 
-            category = (TextView)itemView.findViewById(R.id.textCategory);
+            category = (TextView) itemView.findViewById(R.id.textCategory);
 
             category.setTypeface(typeface, Typeface.BOLD);
 
-            categoryIcon = (CircularImageView)itemView.findViewById(R.id.imageButtonCategory);
+            categoryIcon = (CircularImageView) itemView.findViewById(R.id.imageButtonCategory);
 
             categoryIcon.setOnTouchListener(new View.OnTouchListener() {
 
@@ -98,25 +101,30 @@ public class CategoryGridAdapter extends RecyclerView.Adapter<CategoryGridAdapte
 
                                                     } else if (event.getAction() == MotionEvent.ACTION_UP) {
 
-                                                            categoryIcon.callOnClick();
-                                                        }
+                                                        categoryIcon.callOnClick();
+
+                                                    }
 
                                                     return true;
                                                 }
+
                                             }
 
             );
 
-                categoryIcon.setOnClickListener(new View.OnClickListener() {
+            categoryIcon.setOnClickListener(new View.OnClickListener() {
 
-                    @Override
-                    public void onClick(View v) {
+                @Override
+                public void onClick(View v) {
 
-                        onItemClickListener.onItemClicked((String) category.getText());
-                    }
-                });
+                    onItemClickListener.onItemClicked((String) category.getText());
 
-            }
+                }
+
+            });
 
         }
+
+    }
+
 }
