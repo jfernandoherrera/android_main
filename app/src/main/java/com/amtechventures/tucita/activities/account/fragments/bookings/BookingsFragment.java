@@ -27,11 +27,14 @@ public class BookingsFragment extends Fragment {
     private TextView noResults;
     private List<Appointment> completedAppointmentsList;
     private List<Appointment> pendingAppointmentsList;
+    private AppointmentsAdapter.OnReview adapterListener;
 
     @Override
     public void onAttach(Context context) {
 
         super.onAttach(context);
+
+        adapterListener = (AppointmentsAdapter.OnReview) context;
 
     }
 
@@ -39,6 +42,8 @@ public class BookingsFragment extends Fragment {
     public void onDetach() {
 
         super.onDetach();
+
+        adapterListener = null;
 
     }
 
@@ -94,8 +99,6 @@ public class BookingsFragment extends Fragment {
 
         });
 
-        setupList();
-
         return rootView;
 
     }
@@ -103,6 +106,10 @@ public class BookingsFragment extends Fragment {
     public void setAppointmentList(List<Appointment> appointmentList) {
 
         Calendar calendar = Calendar.getInstance();
+
+        completedAppointmentsList = new ArrayList<>();
+
+        pendingAppointmentsList = new ArrayList<>();
 
         for (Appointment appointment : appointmentList) {
 
@@ -121,7 +128,6 @@ public class BookingsFragment extends Fragment {
         }
 
         setupList();
-
     }
 
     public void setupList() {
@@ -130,7 +136,7 @@ public class BookingsFragment extends Fragment {
 
         if (noEmpty) {
 
-            adapter = new AppointmentsAdapter(completedAppointmentsList, pendingAppointmentsList);
+            adapter = new AppointmentsAdapter(completedAppointmentsList, pendingAppointmentsList, adapterListener);
 
             recyclerView.setAdapter(adapter);
 

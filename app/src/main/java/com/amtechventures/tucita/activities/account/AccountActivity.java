@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -12,10 +14,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-
 import com.amtechventures.tucita.R;
+import com.amtechventures.tucita.activities.account.adapters.AppointmentsAdapter;
 import com.amtechventures.tucita.activities.account.adapters.PagerAccountAdapter;
 import com.amtechventures.tucita.activities.account.fragments.bookings.BookingsFragment;
+import com.amtechventures.tucita.activities.account.fragments.review.ReviewFragment;
 import com.amtechventures.tucita.activities.account.fragments.venues.VenuesFragment;
 import com.amtechventures.tucita.activities.main.MainActivity;
 import com.amtechventures.tucita.model.context.appointment.AppointmentCompletion;
@@ -31,7 +34,7 @@ import com.mikhaellopez.circularimageview.CircularImageView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AccountActivity extends AppCompatActivity {
+public class AccountActivity extends AppCompatActivity implements AppointmentsAdapter.OnReview{
 
     private UserContext userContext;
     private Toolbar toolbar;
@@ -41,6 +44,8 @@ public class AccountActivity extends AppCompatActivity {
     Typeface roboto;
     private AppointmentContext appointmentContext;
     PagerAccountAdapter pagerAccountAdapter;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,6 +158,23 @@ public class AccountActivity extends AppCompatActivity {
             public void onTabReselected(TabLayout.Tab tab) {}
 
         });
+
+    }
+
+    private void showReviewFragment() {
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        ReviewFragment prev = (ReviewFragment) fragmentManager.findFragmentByTag(ReviewFragment.class.getName());
+
+        if (prev == null) {
+
+            prev = new ReviewFragment();
+        }
+
+        prev.show(fragmentManager, ReviewFragment.class.getName());
+
+        prev.setStyle(DialogFragment.STYLE_NO_TITLE,0);
 
     }
 
@@ -302,6 +324,13 @@ public class AccountActivity extends AppCompatActivity {
         startActivity(intent);
 
         finish();
+
+    }
+
+    @Override
+    public void onReview(Appointment appointment) {
+
+        showReviewFragment();
 
     }
 }

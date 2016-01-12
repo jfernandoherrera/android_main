@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.model.domain.appointment.Appointment;
@@ -14,10 +15,19 @@ public class AppointmentsAdapter extends RecyclerView.Adapter<AppointmentsAdapte
 
     List<Appointment> completedItems;
     List<Appointment> pendingItems;
+    OnReview listener;
 
-    public AppointmentsAdapter(List<Appointment> appointments, List<Appointment> pendingAppointments) {
+    public interface OnReview {
+
+        void onReview(Appointment appointment);
+
+    }
+
+    public AppointmentsAdapter(List<Appointment> appointments, List<Appointment> pendingAppointments, OnReview listener) {
 
         super();
+
+        this.listener = listener;
 
         completedItems = appointments;
 
@@ -50,13 +60,15 @@ public class AppointmentsAdapter extends RecyclerView.Adapter<AppointmentsAdapte
 
             viewHolder.date.setText(formattedDate);
 
-            viewHolder.button.setVisibility(View.GONE);
+            viewHolder.button.setVisibility(View.INVISIBLE);
+
+            viewHolder.ratingBar.setVisibility(View.INVISIBLE);
 
         } else {
 
             position = position - pendingItems.size();
 
-            Appointment appointment = completedItems.get(position);
+            final Appointment appointment = completedItems.get(position);
 
             String venueName = appointment.getVenue().getName();
 
@@ -67,6 +79,16 @@ public class AppointmentsAdapter extends RecyclerView.Adapter<AppointmentsAdapte
             viewHolder.date.setText(formattedDate);
 
             viewHolder.button.setVisibility(View.VISIBLE);
+
+            viewHolder.button.setBackgroundResource(R.mipmap.ic_comment);
+
+            viewHolder.button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    listener.onReview(appointment);
+                }
+            });
 
         }
     }
@@ -86,6 +108,8 @@ public class AppointmentsAdapter extends RecyclerView.Adapter<AppointmentsAdapte
 
         protected Button button;
 
+        protected RatingBar ratingBar;
+
 
         public ViewHolder(final View itemView) {
 
@@ -96,6 +120,9 @@ public class AppointmentsAdapter extends RecyclerView.Adapter<AppointmentsAdapte
             date = (TextView) itemView.findViewById(R.id.textDate);
 
             button = (Button) itemView.findViewById(R.id.buttonReview);
+
+            ratingBar = (RatingBar) itemView.findViewById(R.id.ratingBar);
+
         }
 
     }

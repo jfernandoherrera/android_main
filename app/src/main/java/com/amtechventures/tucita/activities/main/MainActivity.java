@@ -95,16 +95,12 @@ public class MainActivity extends AppCompatActivity implements CategoryFragment.
 
         FragmentManager fragmentManager = getSupportFragmentManager();
 
-        FragmentTransaction ft = fragmentManager.beginTransaction();
-
         SubCategoryFragment prev = (SubCategoryFragment) fragmentManager.findFragmentByTag(SubCategoryFragment.class.getName());
 
         if (prev == null) {
 
             prev = SubCategoryFragment.newInstance(name);
         }
-
-        // ft.addToBackStack(null);
 
         prev.show(fragmentManager, SubCategoryFragment.class.getName());
 
