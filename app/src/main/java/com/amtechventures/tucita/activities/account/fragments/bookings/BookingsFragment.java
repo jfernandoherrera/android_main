@@ -15,6 +15,8 @@ import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.account.adapters.AppointmentsAdapter;
 import com.amtechventures.tucita.model.domain.appointment.Appointment;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class BookingsFragment extends Fragment {
@@ -23,7 +25,8 @@ public class BookingsFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private TextView noResults;
-    private List<Appointment> appointmentList;
+    private List<Appointment> completedAppointmentsList;
+    private List<Appointment> pendingAppointmentsList;
 
     @Override
     public void onAttach(Context context) {
@@ -37,6 +40,16 @@ public class BookingsFragment extends Fragment {
 
         super.onDetach();
 
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+
+        completedAppointmentsList = new ArrayList<>();
+
+        pendingAppointmentsList = new ArrayList<>();
+
+        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -89,7 +102,23 @@ public class BookingsFragment extends Fragment {
 
     public void setAppointmentList(List<Appointment> appointmentList) {
 
-        this.appointmentList = appointmentList;
+        Calendar calendar = Calendar.getInstance();
+
+        for (Appointment appointment : appointmentList) {
+
+        boolean isBefore = appointment.getDate().before(calendar.getTime());
+
+            if (isBefore) {
+
+                completedAppointmentsList.add(appointment);
+
+            } else {
+
+            pendingAppointmentsList.add(appointment);
+
+            }
+
+        }
 
         setupList();
 
@@ -97,9 +126,11 @@ public class BookingsFragment extends Fragment {
 
     public void setupList() {
 
-        if (appointmentList != null && !appointmentList.isEmpty()) {
+        boolean noEmpty = !completedAppointmentsList.isEmpty() || !pendingAppointmentsList.isEmpty();
 
-            adapter = new AppointmentsAdapter(appointmentList);
+        if (noEmpty) {
+
+            adapter = new AppointmentsAdapter(completedAppointmentsList, pendingAppointmentsList);
 
             recyclerView.setAdapter(adapter);
 
