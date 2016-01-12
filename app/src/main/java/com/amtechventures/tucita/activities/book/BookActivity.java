@@ -168,6 +168,8 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
         transaction.commit();
 
+        secureCheckoutFragment.setup();
+
     }
 
     private void venueShow() {
@@ -470,8 +472,6 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
                 if (e == null) {
 
                     secureCheckoutShow();
-
-                    secureCheckoutFragment.setup();
 
                 }
 

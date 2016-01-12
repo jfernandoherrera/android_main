@@ -1,5 +1,6 @@
 package com.amtechventures.tucita.activities.book.adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +31,13 @@ public class ExpandableWithoutParentAdapter extends BaseExpandableListAdapter {
 
             listViewParent.setGroupIndicator(null);
 
-            listViewParent.setOnTouchListener(null);
+            viewUtils.setListViewHeightBasedOnChildren(listViewParent);
+
+        }else{
+
+            listViewParent.setGroupIndicator(listViewParent.getResources().getDrawable(R.drawable.indicator));
+
+            viewUtils.setListViewHeightBasedOnChildren(listViewParent);
 
         }
 
@@ -52,7 +59,9 @@ public class ExpandableWithoutParentAdapter extends BaseExpandableListAdapter {
     @Override
     public int getChildrenCount(int groupPosition) {
 
-        return services.size() - 1;
+        int childCount = services.size() - getGroupCount();
+
+        return childCount;
 
     }
 
@@ -119,21 +128,27 @@ public class ExpandableWithoutParentAdapter extends BaseExpandableListAdapter {
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
 
-        if (convertView == null) {
+        childPosition = childPosition + getGroupCount();
 
-            Service service = services.get(childPosition + 1);
+        if(services.size() != childPosition) {
 
-            convertView = inflater.inflate(R.layout.item_service, null);
+            if (convertView == null) {
 
-            final TextView textName = (TextView) convertView.findViewById(R.id.textName);
+                Service service = services.get(childPosition);
 
-            textName.setText(service.getName());
+                convertView = inflater.inflate(R.layout.item_service, null);
 
-            final TextView textDuration = (TextView) convertView.findViewById(R.id.textDuration);
+                final TextView textName = (TextView) convertView.findViewById(R.id.textName);
 
-            textDuration.setTextColor(convertView.getResources().getColor(R.color.blackSecondary));
+                textName.setText(service.getName());
 
-            textDuration.setText(service.getDurationInfo());
+                final TextView textDuration = (TextView) convertView.findViewById(R.id.textDuration);
+
+                textDuration.setTextColor(convertView.getResources().getColor(R.color.blackSecondary));
+
+                textDuration.setText(service.getDurationInfo());
+
+            }
 
         }
 
