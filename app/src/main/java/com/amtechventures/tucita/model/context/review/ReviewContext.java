@@ -1,0 +1,41 @@
+package com.amtechventures.tucita.model.context.review;
+
+import com.amtechventures.tucita.model.domain.review.Review;
+import com.amtechventures.tucita.model.domain.user.User;
+import com.amtechventures.tucita.model.domain.venue.Venue;
+
+import java.util.List;
+
+public class ReviewContext {
+
+    ReviewLocal reviewLocal;
+    ReviewRemote reviewRemote;
+
+    public static ReviewContext context(ReviewContext reviewContext) {
+
+        if (reviewContext == null) {
+
+            reviewContext = new ReviewContext();
+
+        }
+
+        return reviewContext;
+
+    }
+
+    public ReviewContext() {
+
+        reviewLocal = new ReviewLocal();
+
+        reviewRemote = new ReviewRemote();
+    }
+
+    public List<Review> getReviewsUser(User user, ReviewCompletion.ReviewErrorCompletion completion) {
+
+        reviewRemote.getReviewsUser(user, completion);
+
+       List<Review> reviews = reviewLocal.getReviewsUser(user);
+
+        return reviews;
+    }
+}

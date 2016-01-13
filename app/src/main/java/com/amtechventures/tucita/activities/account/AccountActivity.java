@@ -45,8 +45,7 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
     Typeface roboto;
     private AppointmentContext appointmentContext;
     PagerAccountAdapter pagerAccountAdapter;
-
-
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -181,7 +180,7 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
 
     public void setupAppointments() {
 
-        User user = userContext.currentUser();
+        final User user = userContext.currentUser();
 
         appointmentContext.loadUserAppointments(user, new AppointmentCompletion.AppointmentErrorCompletion() {
 
@@ -222,7 +221,7 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
 
                     }
 
-                    ((VenuesFragment) pagerAccountAdapter.getItem(1)).setVenues(venues);
+                    ((VenuesFragment) pagerAccountAdapter.getItem(1)).setVenuesAndUser(venues, user);
 
                 }
 
@@ -234,7 +233,7 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
 
     private void setImageUser(){
 
-        User user = userContext.currentUser();
+        user = userContext.currentUser();
 
         if(userContext.isFacebook(user.getParseUser())) {
 

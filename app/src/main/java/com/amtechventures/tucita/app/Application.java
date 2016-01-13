@@ -4,6 +4,7 @@ import com.amtechventures.tucita.model.domain.appointment.Appointment;
 import com.amtechventures.tucita.model.domain.category.Category;
 import com.amtechventures.tucita.model.domain.city.City;
 import com.amtechventures.tucita.model.domain.openingHour.OpeningHour;
+import com.amtechventures.tucita.model.domain.review.Review;
 import com.amtechventures.tucita.model.domain.service.Service;
 import com.amtechventures.tucita.model.domain.slot.Slot;
 import com.amtechventures.tucita.model.domain.subcategory.SubCategory;
@@ -41,6 +42,8 @@ public class Application extends android.app.Application {
         ParseObject.registerSubclass(Appointment.class);
 
         ParseObject.registerSubclass(Slot.class);
+
+        ParseObject.registerSubclass(Review.class);
 
         FacebookSdk.sdkInitialize(this);
 

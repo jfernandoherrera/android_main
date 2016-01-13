@@ -13,19 +13,25 @@ import android.widget.TextView;
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.account.adapters.VenuesAdapter;
 import com.amtechventures.tucita.model.context.appointment.AppointmentContext;
+import com.amtechventures.tucita.model.context.review.ReviewCompletion;
+import com.amtechventures.tucita.model.context.review.ReviewContext;
+import com.amtechventures.tucita.model.domain.review.Review;
+import com.amtechventures.tucita.model.domain.user.User;
 import com.amtechventures.tucita.model.domain.venue.Venue;
+import com.amtechventures.tucita.model.error.AppError;
 
 import java.util.List;
 
 public class VenuesFragment extends Fragment {
 
-    private AppointmentContext appointmentContext;
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private TextView noResults;
     private List<Venue> venues;
+    private User user;
     private VenuesAdapter.OnReview adapterListener;
+    private ReviewContext reviewContext;
 
     @Override
     public void onAttach(Context context) {
@@ -46,20 +52,22 @@ public class VenuesFragment extends Fragment {
     }
 
 
-    public void setVenues(List<Venue> venues) {
+    public void setVenuesAndUser(List<Venue> venues, User user) {
 
         this.venues = venues;
 
-        setupList();
+        this.user = user;
+
+        setupReview();
 
     }
 
 
-    public void setupList() {
+    public void setupList(List<Review> reviewList) {
 
         if (venues != null && !venues.isEmpty()) {
 
-            adapter = new VenuesAdapter(venues, adapterListener);
+            adapter = new VenuesAdapter(venues, reviewList, adapterListener);
 
             recyclerView.setAdapter(adapter);
 
@@ -69,13 +77,27 @@ public class VenuesFragment extends Fragment {
 
     }
 
+    private void setupReview(){
+
+        reviewContext.getReviewsUser(user, new ReviewCompletion.ReviewErrorCompletion() {
+
+            @Override
+            public void completion(List<Review> reviewList, AppError error) {
+
+                setupList(reviewList);
+
+            }
+        });
+
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_venues, container, false);
+        reviewContext = ReviewContext.context(reviewContext);
 
-        appointmentContext = AppointmentContext.context(appointmentContext);
+        View rootView = inflater.inflate(R.layout.fragment_venues, container, false);
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
 

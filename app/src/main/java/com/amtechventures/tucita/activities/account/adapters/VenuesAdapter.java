@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.book.BookActivity;
 import com.amtechventures.tucita.model.domain.appointment.Appointment;
+import com.amtechventures.tucita.model.domain.review.Review;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.domain.venue.VenueAttributes;
 
@@ -24,7 +25,7 @@ import java.util.List;
 public class VenuesAdapter extends RecyclerView.Adapter<VenuesAdapter.ViewHolder> {
 
     List<Venue> items;
-
+    List<Review> reviewList;
     OnReview listener;
 
     public interface OnReview {
@@ -33,7 +34,7 @@ public class VenuesAdapter extends RecyclerView.Adapter<VenuesAdapter.ViewHolder
 
     }
 
-    public VenuesAdapter(List<Venue> venues, OnReview listener) {
+    public VenuesAdapter(List<Venue> venues, List<Review> reviewList, OnReview listener) {
 
         super();
 
@@ -41,8 +42,32 @@ public class VenuesAdapter extends RecyclerView.Adapter<VenuesAdapter.ViewHolder
 
         items = venues;
 
+        this.reviewList = reviewList;
+
     }
 
+    private boolean haveReview(Venue venue){
+
+        boolean haveReview = false;
+
+        String idVenue = venue.getObjectId();
+
+        for(Review review : reviewList){
+
+            String id = review.getVenue().getObjectId();
+
+            if(id.equals(idVenue)){
+
+                haveReview = true;
+
+                break;
+
+            }
+        }
+
+        return haveReview;
+
+    }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
@@ -93,6 +118,11 @@ public class VenuesAdapter extends RecyclerView.Adapter<VenuesAdapter.ViewHolder
             }
         });
 
+        if(haveReview(venue)){
+
+            holder.review.setVisibility(View.GONE);
+
+        }
     }
 
     @Override
