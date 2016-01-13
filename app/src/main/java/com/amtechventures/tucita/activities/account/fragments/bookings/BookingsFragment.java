@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.account.adapters.AppointmentsAdapter;
+import com.amtechventures.tucita.activities.account.adapters.VenuesAdapter;
 import com.amtechventures.tucita.model.domain.appointment.Appointment;
 
 import java.util.ArrayList;
@@ -27,14 +28,12 @@ public class BookingsFragment extends Fragment {
     private TextView noResults;
     private List<Appointment> completedAppointmentsList;
     private List<Appointment> pendingAppointmentsList;
-    private AppointmentsAdapter.OnReview adapterListener;
+
 
     @Override
     public void onAttach(Context context) {
 
         super.onAttach(context);
-
-        adapterListener = (AppointmentsAdapter.OnReview) context;
 
     }
 
@@ -42,8 +41,6 @@ public class BookingsFragment extends Fragment {
     public void onDetach() {
 
         super.onDetach();
-
-        adapterListener = null;
 
     }
 
@@ -136,7 +133,7 @@ public class BookingsFragment extends Fragment {
 
         if (noEmpty) {
 
-            adapter = new AppointmentsAdapter(completedAppointmentsList, pendingAppointmentsList, adapterListener);
+            adapter = new AppointmentsAdapter(completedAppointmentsList, pendingAppointmentsList);
 
             recyclerView.setAdapter(adapter);
 

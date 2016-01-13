@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout
     android:layout_width="match_parent"
-    android:layout_height="150dp"
+    android:layout_height="200dp"
     android:id="@+id/up"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <RelativeLayout
         android:layout_width="250dp"
-        android:layout_height="170dp"
+        android:layout_height="220dp"
         android:id="@+id/frames"
         android:gravity="center_horizontal"
         android:layout_gravity="top"
@@ -28,7 +28,7 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="250dp"
-        android:layout_height="120dp"
+        android:layout_height="170dp"
         android:layout_gravity="bottom"
         >
         <TextView
@@ -41,16 +41,10 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="5dp"
             android:id="@+id/textName"/>
-        <RatingBar
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:numStars="5"
-            android:layout_below="@+id/up"
-            android:id="@+id/ratingBar"
-           android:isIndicator="false"
-            android:layout_gravity="center_horizontal"
-            style="?android:attr/ratingBarStyleIndicator"
-            />
+<com.amtechventures.tucita.utils.views.RatingView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    />
     </android.support.design.widget.AppBarLayout>
     </FrameLayout>
 

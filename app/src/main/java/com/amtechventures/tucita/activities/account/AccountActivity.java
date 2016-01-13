@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.account.adapters.AppointmentsAdapter;
 import com.amtechventures.tucita.activities.account.adapters.PagerAccountAdapter;
+import com.amtechventures.tucita.activities.account.adapters.VenuesAdapter;
 import com.amtechventures.tucita.activities.account.fragments.bookings.BookingsFragment;
 import com.amtechventures.tucita.activities.account.fragments.review.ReviewFragment;
 import com.amtechventures.tucita.activities.account.fragments.venues.VenuesFragment;
@@ -34,7 +35,7 @@ import com.mikhaellopez.circularimageview.CircularImageView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AccountActivity extends AppCompatActivity implements AppointmentsAdapter.OnReview{
+public class AccountActivity extends AppCompatActivity implements VenuesAdapter.OnReview{
 
     private UserContext userContext;
     private Toolbar toolbar;
@@ -328,7 +329,7 @@ public class AccountActivity extends AppCompatActivity implements AppointmentsAd
     }
 
     @Override
-    public void onReview(Appointment appointment) {
+    public void onReview(Venue venue) {
 
         showReviewFragment();
 

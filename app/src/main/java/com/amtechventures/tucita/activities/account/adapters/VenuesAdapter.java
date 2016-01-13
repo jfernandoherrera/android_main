@@ -8,12 +8,14 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.book.BookActivity;
+import com.amtechventures.tucita.model.domain.appointment.Appointment;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.domain.venue.VenueAttributes;
 
@@ -23,9 +25,19 @@ public class VenuesAdapter extends RecyclerView.Adapter<VenuesAdapter.ViewHolder
 
     List<Venue> items;
 
-    public VenuesAdapter(List<Venue> venues) {
+    OnReview listener;
+
+    public interface OnReview {
+
+        void onReview(Venue venue);
+
+    }
+
+    public VenuesAdapter(List<Venue> venues, OnReview listener) {
 
         super();
+
+        this.listener = listener;
 
         items = venues;
 
@@ -35,7 +47,7 @@ public class VenuesAdapter extends RecyclerView.Adapter<VenuesAdapter.ViewHolder
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
 
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_venue, viewGroup, false);
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_venue_user, viewGroup, false);
 
         ViewHolder viewHolder = new ViewHolder(v);
 
@@ -46,7 +58,7 @@ public class VenuesAdapter extends RecyclerView.Adapter<VenuesAdapter.ViewHolder
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        Venue venue = items.get(position);
+        final Venue venue = items.get(position);
 
         String venueName = venue.getName();
 
@@ -69,6 +81,17 @@ public class VenuesAdapter extends RecyclerView.Adapter<VenuesAdapter.ViewHolder
             holder.ratingBar.setVisibility(View.INVISIBLE);
 
         }
+
+        holder.review.setVisibility(View.VISIBLE);
+
+        holder.review.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                listener.onReview(venue);
+
+            }
+        });
 
     }
 
@@ -94,6 +117,8 @@ public class VenuesAdapter extends RecyclerView.Adapter<VenuesAdapter.ViewHolder
 
         private CardView venueIcon;
 
+        protected Button review;
+
         protected String from;
 
         public void setAddress(String address) {
@@ -115,6 +140,7 @@ public class VenuesAdapter extends RecyclerView.Adapter<VenuesAdapter.ViewHolder
 
             ratingBar = (RatingBar) itemView.findViewById(R.id.searchRatingBar);
 
+            review = (Button) itemView.findViewById(R.id.buttonReview);
 
             if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
 

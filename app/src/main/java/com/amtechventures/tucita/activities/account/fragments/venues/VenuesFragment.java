@@ -25,11 +25,14 @@ public class VenuesFragment extends Fragment {
     private RecyclerView.Adapter adapter;
     private TextView noResults;
     private List<Venue> venues;
+    private VenuesAdapter.OnReview adapterListener;
 
     @Override
     public void onAttach(Context context) {
 
         super.onAttach(context);
+
+        adapterListener = (VenuesAdapter.OnReview) context;
 
     }
 
@@ -37,6 +40,8 @@ public class VenuesFragment extends Fragment {
     public void onDetach() {
 
         super.onDetach();
+
+        adapterListener = null;
 
     }
 
@@ -54,7 +59,7 @@ public class VenuesFragment extends Fragment {
 
         if (venues != null && !venues.isEmpty()) {
 
-            adapter = new VenuesAdapter(venues);
+            adapter = new VenuesAdapter(venues, adapterListener);
 
             recyclerView.setAdapter(adapter);
 

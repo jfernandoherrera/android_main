@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RatingBar
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:numStars="5"
+        android:id="@+id/ratingBar"
+        android:isIndicator="false"
+        android:layout_marginTop="22dp"
+        android:layout_marginStart="37dp"
+        android:layout_marginLeft="37dp"
+        style="?android:attr/ratingBarStyleIndicator"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:layout_below="@+id/ratingBar"
+        android:id="@+id/means"/>
+</RelativeLayout>

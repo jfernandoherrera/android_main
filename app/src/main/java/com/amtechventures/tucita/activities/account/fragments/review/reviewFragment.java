@@ -32,12 +32,7 @@ public class ReviewFragment extends DialogFragment {
 
         layout = (RelativeLayout) rootView.findViewById(R.id.frames);
 
-        ratingBar = (RatingBar) rootView.findViewById(R.id.ratingBar);
-
         layout.bringToFront();
-
-        ratingBar.requestFocus();
-       // circularImageView.setTranslationY(-35);
 
         Window window = getDialog().getWindow();
 
