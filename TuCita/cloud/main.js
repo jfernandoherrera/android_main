@@ -1,6 +1,48 @@
 
 // Use Parse.Cloud.define to define as many cloud functions as you want.
 // For example:
+
+
+Parse.Cloud.beforeSave("Appointment", function(request, response) {
+
+
+var appointment = new Parse.Object.extend("Appointment");
+
+var queryAppointment = new Parse.Query(appointment);
+
+queryAppointment.greaterThan("date", request.object.get("date"));
+
+var tomorrow = request.object.get("date");
+
+tomorrow.setDate(tomorrow.getDate() + 1);
+
+queryAppointment.lessThan("date", tomorrow);
+
+queryAppointment.find().then(function(results) {
+
+var slot = new Parse.Object.extend("Slot");
+
+var querySlot = new Parse.Query(slot);
+
+querySlot.equalTo("startHour", request.object.get("date").getHours());
+
+querySlot.lessThan("startMinute", request.object.get("date").getMinutes());
+
+
+
+
+
+
+}
+                                      if (request.object.get("stars") < 1) {
+                                        response.error("you cannot give less than one star");
+                                      } else if (request.object.get("stars") > 5) {
+                                        response.error("you cannot give more than five stars");
+                                      } else {
+                                        response.success();
+                                      }
+                                    });
+
 Parse.Cloud.job("lockReview", function(request, status) {
 
 function addMinutes(date, minutes) {

@@ -66,8 +66,11 @@
         android:layout_marginEnd="20dp"
         android:layout_below="@+id/ratingView">
 
-        <AutoCompleteTextView android:id="@+id/title" android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:hint="@string/title"
+        <AutoCompleteTextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/title"
             android:maxLines="1"
             android:singleLine="true" />
 

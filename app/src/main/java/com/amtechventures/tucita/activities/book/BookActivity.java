@@ -67,9 +67,13 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
         setVenueFragment();
 
+        setSecureCheckoutFragment();
+
         serviceHide();
 
         selectDateHide();
+
+        secureCheckoutHide();
 
         shoppingCarView.hideView();
 
@@ -460,27 +464,6 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
     }
 
-    private void setLockSlot(Slot slot) {
-
-        toLock = slot;
-
-        slotContext.lockSlot(slot, new SaveCallback() {
-
-            @Override
-            public void done(ParseException e) {
-
-                if (e == null) {
-
-                    secureCheckoutShow();
-
-                }
-
-            }
-
-        });
-
-    }
-
     @Override
     public void onSlotSelected(Slot slot) {
 
@@ -500,17 +483,7 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
             secureCheckoutFragment.setServices(shoppingCarView.getServicesToBook());
 
-            if (!secureCheckoutFragment.isAdded()) {
-
-                setSecureCheckoutFragment();
-
-            } else {
-
-                secureCheckoutFragment.setupAppointmentView();
-
-            }
-
-            setLockSlot(slot);
+            secureCheckoutShow();
 
         }
 
@@ -519,15 +492,7 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
     @Override
     public void onPlaceOrder() {
 
-        if (slotContext.isLocked(toLock)) {
-
             secureCheckoutFragment.placeOrder();
-
-        } else {
-
-            back();
-
-        }
 
     }
 

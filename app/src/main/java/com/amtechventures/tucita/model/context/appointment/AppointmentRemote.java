@@ -74,6 +74,12 @@ public class AppointmentRemote {
             @Override
             public void done(ParseException e) {
 
+                if(e != null){
+
+                    e.printStackTrace();
+
+                }
+
                 AppError appError = e != null ? new AppError(Appointment.class.toString(), 0, null) : null;
 
                 completion.completion(null, appError);
