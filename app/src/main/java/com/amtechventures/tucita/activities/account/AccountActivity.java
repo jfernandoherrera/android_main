@@ -33,6 +33,7 @@ import com.amtechventures.tucita.model.error.AppError;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class AccountActivity extends AppCompatActivity implements VenuesAdapter.OnReview{
@@ -174,7 +175,7 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
 
         prev.show(fragmentManager, ReviewFragment.class.getName());
 
-        prev.setStyle(DialogFragment.STYLE_NO_TITLE,0);
+        prev.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
 
     }
 
@@ -193,32 +194,39 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
 
                     List<Venue> venues = new ArrayList<>();
 
+                    Calendar calendar = Calendar.getInstance();
+
                     for (Appointment appointment : appointmentList) {
 
                         boolean isThere = false;
 
-                        Venue venueToCheck = appointment.getVenue();
+                        Venue venueToCheck;
 
-                        for(Venue venue : venues){
+                        if (appointment.getDate().before(calendar.getTime())) {
 
-                            boolean equalName = venueToCheck.getName().equals(venue.getName());
+                            venueToCheck = appointment.getVenue();
 
-                            boolean equalAddress = venueToCheck.getAddress().equals(venue.getAddress());
+                            for (Venue venue : venues) {
 
-                            if(equalAddress && equalName){
+                                boolean equalName = venueToCheck.getName().equals(venue.getName());
 
-                                isThere = true;
+                                boolean equalAddress = venueToCheck.getAddress().equals(venue.getAddress());
+
+                                if (equalAddress && equalName) {
+
+                                    isThere = true;
+
+                                }
+
+                            }
+
+                            if (!isThere) {
+
+                                venues.add(venueToCheck);
 
                             }
 
                         }
-
-                        if(!isThere) {
-
-                            venues.add(venueToCheck);
-
-                        }
-
                     }
 
                     ((VenuesFragment) pagerAccountAdapter.getItem(1)).setVenuesAndUser(venues, user);
