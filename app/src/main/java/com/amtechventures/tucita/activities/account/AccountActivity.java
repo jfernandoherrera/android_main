@@ -162,7 +162,7 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
 
     }
 
-    private void showReviewFragment() {
+    private void showReviewFragment(Venue venue) {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
 
@@ -174,6 +174,10 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
         }
 
         prev.show(fragmentManager, ReviewFragment.class.getName());
+
+        prev.setUser(user);
+
+        prev.setVenue(venue);
 
         prev.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
 
@@ -338,7 +342,7 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
     @Override
     public void onReview(Venue venue) {
 
-        showReviewFragment();
+        showReviewFragment(venue);
 
     }
 }

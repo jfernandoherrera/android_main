@@ -30,6 +30,12 @@ public class ReviewContext {
         reviewRemote = new ReviewRemote();
     }
 
+    public void createReview(Review review, final ReviewCompletion.ReviewErrorCompletion completion){
+
+        reviewRemote.createReview(review, completion);
+
+    }
+
     public List<Review> getReviewsUser(User user, ReviewCompletion.ReviewErrorCompletion completion) {
 
         reviewRemote.getReviewsUser(user, completion);

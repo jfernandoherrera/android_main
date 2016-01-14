@@ -1,5 +1,6 @@
 package com.amtechventures.tucita.model.context.review;
 
+import com.amtechventures.tucita.model.domain.appointment.Appointment;
 import com.amtechventures.tucita.model.domain.category.Category;
 import com.amtechventures.tucita.model.domain.review.Review;
 import com.amtechventures.tucita.model.domain.review.ReviewAttributes;
@@ -11,6 +12,7 @@ import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.SaveCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,6 +75,29 @@ public class ReviewRemote {
 
             }
         });
+    }
+
+    public void createReview(Review review, final ReviewCompletion.ReviewErrorCompletion completion){
+
+        review.saveInBackground(new SaveCallback() {
+
+            @Override
+            public void done(ParseException e) {
+
+                if(e != null){
+
+                    e.printStackTrace();
+
+                }
+
+                AppError appError = e != null ? new AppError(Review.class.toString(), 0, null) : null;
+
+                completion.completion(null, appError);
+
+            }
+
+        });
+
     }
 
 }

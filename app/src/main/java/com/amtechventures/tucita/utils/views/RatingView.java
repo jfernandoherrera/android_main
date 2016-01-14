@@ -85,6 +85,13 @@ public class RatingView extends RelativeLayout{
             }
         });
 
+        ratingBar.setRating(4);
+    }
+
+    public int getRating(){
+
+        return (int) ratingBar.getRating();
+
     }
 
     }
