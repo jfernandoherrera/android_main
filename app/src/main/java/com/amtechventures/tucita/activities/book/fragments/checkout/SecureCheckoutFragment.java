@@ -94,18 +94,6 @@ public class SecureCheckoutFragment extends Fragment {
 
         listViewServices = (ExpandableListView) rootView.findViewById(R.id.listViewServices);
 
-        user = new User();
-
-        if (ParseUser.getCurrentUser() != null) {
-
-            user.setParseUser(ParseUser.getCurrentUser());
-
-            textClientName.setText(user.getName());
-
-            textEmail.setText(user.getEmail());
-
-        }
-
         Button button = (Button) rootView.findViewById(R.id.placeOrder);
 
         button.setOnClickListener(new View.OnClickListener() {
@@ -139,6 +127,8 @@ public class SecureCheckoutFragment extends Fragment {
 
     public void setup() {
 
+        setupUser();
+
         setupTitle();
 
         setupAppointmentView();
@@ -167,6 +157,14 @@ public class SecureCheckoutFragment extends Fragment {
 
     }
 
+    private void setupUser(){
+
+            textClientName.setText(user.getName());
+
+            textEmail.setText(user.getEmail());
+
+    }
+
     private void setupTotal() {
 
         int total = 0;
@@ -183,7 +181,7 @@ public class SecureCheckoutFragment extends Fragment {
 
     }
 
-    public void placeOrder() {
+    public void placeOrder(AppointmentCompletion.AppointmentErrorCompletion completion) {
 
         Appointment appointment = new Appointment();
 
@@ -195,32 +193,19 @@ public class SecureCheckoutFragment extends Fragment {
 
         appointment.setVenue(venue);
 
-        appointmentContext.placeOrder(appointment, new AppointmentCompletion.AppointmentErrorCompletion() {
-
-            @Override
-            public void completion(List<Appointment> appointmentList, AppError error) {
-
-                if (error != null) {
-
-                    AlertDialogError alertDialogError = new AlertDialogError();
-
-                    alertDialogError.noAvailableSlot(getContext());
-
-                } else {
-
-                    getActivity().finish();
-
-                }
-
-            }
-
-        });
+        appointmentContext.placeOrder(appointment, completion);
 
     }
 
     public void setVenue(Venue venue) {
 
         this.venue = venue;
+
+    }
+
+    public void setUser(User user) {
+
+        this.user = user;
 
     }
 

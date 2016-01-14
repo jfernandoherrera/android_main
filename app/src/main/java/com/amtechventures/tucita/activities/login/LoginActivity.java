@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amtechventures.tucita.R;
+import com.amtechventures.tucita.activities.book.BookActivity;
 import com.amtechventures.tucita.activities.main.MainActivity;
 import com.amtechventures.tucita.activities.signup.SignUpActivity;
 import com.amtechventures.tucita.model.context.user.UserCompletion;
@@ -102,29 +103,61 @@ public class LoginActivity extends AppCompatActivity {
 
     private void processLoggedUser() {
 
-        Intent intent = new Intent(this, MainActivity.class);
+        Bundle bundle = getIntent().getExtras();
 
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        if(bundle != null){
 
-        intent.putExtra(UserAttributes.connected, true);
+            boolean fromBook = bundle.getBoolean(BookActivity.class.getName());
 
-        startActivity(intent);
+            if(fromBook) {
 
-        finish();
+                finish();
+
+            }
+
+        } else {
+
+            Intent intent = new Intent(this, MainActivity.class);
+
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+            intent.putExtra(UserAttributes.connected, true);
+
+            startActivity(intent);
+
+            finish();
+
+        }
 
     }
 
-    private void processUncloggedUser() {
+    private void processUnLoggedUser() {
 
-        Intent intent = new Intent(this, MainActivity.class);
+     Bundle bundle = getIntent().getExtras();
 
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        if(bundle != null){
 
-        intent.putExtra(UserAttributes.connected, false);
+            boolean fromBook = bundle.getBoolean(BookActivity.class.getName());
 
-        startActivity(intent);
+            if(fromBook) {
 
-        finish();
+                finish();
+
+            }
+
+        } else {
+
+            Intent intent = new Intent(this, MainActivity.class);
+
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+            intent.putExtra(UserAttributes.connected, false);
+
+            startActivity(intent);
+
+            finish();
+
+        }
 
     }
 
@@ -158,7 +191,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        processUncloggedUser();
+        processUnLoggedUser();
 
         super.onBackPressed();
 

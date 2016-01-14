@@ -90,8 +90,6 @@ public class SplashActivity extends AppCompatActivity {
 
         } else {
 
-            Log.i("fderdsd", userContext.currentUser().getUserName());
-
             processLoggedUser();
 
         }

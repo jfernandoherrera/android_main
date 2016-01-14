@@ -1,5 +1,6 @@
 package com.amtechventures.tucita.activities.advanced;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -12,8 +13,11 @@ import android.view.View;
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.advanced.fragments.LocationOptionsFragment;
 import com.amtechventures.tucita.activities.advanced.fragments.VenuesResultFragment;
+import com.amtechventures.tucita.activities.main.MainActivity;
+import com.amtechventures.tucita.activities.splash.SplashActivity;
 import com.amtechventures.tucita.model.domain.category.CategoryAttributes;
 import com.amtechventures.tucita.model.domain.city.City;
+import com.amtechventures.tucita.model.domain.user.UserAttributes;
 
 public class AdvancedSearchActivity extends AppCompatActivity implements LocationOptionsFragment.OnCitySelected {
 

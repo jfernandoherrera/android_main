@@ -17,13 +17,22 @@ import com.amtechventures.tucita.activities.book.fragments.select.adapters.Selec
 import com.amtechventures.tucita.activities.login.LoginActivity;
 import com.amtechventures.tucita.activities.book.fragments.service.ServiceFragment;
 import com.amtechventures.tucita.activities.book.fragments.venue.VenueFragment;
+import com.amtechventures.tucita.activities.splash.SplashActivity;
+import com.amtechventures.tucita.model.context.appointment.AppointmentCompletion;
 import com.amtechventures.tucita.model.context.slot.SlotContext;
+import com.amtechventures.tucita.model.context.user.UserContext;
+import com.amtechventures.tucita.model.domain.appointment.Appointment;
 import com.amtechventures.tucita.model.domain.service.Service;
 import com.amtechventures.tucita.model.domain.slot.Slot;
+import com.amtechventures.tucita.model.domain.user.User;
+import com.amtechventures.tucita.model.error.AppError;
+import com.amtechventures.tucita.utils.views.AlertDialogError;
 import com.amtechventures.tucita.utils.views.ShoppingCarView;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
+
+import java.util.List;
 
 public class BookActivity extends AppCompatActivity implements VenueFragment.OnServiceSelected,
         ServiceFragment.OnServiceSelected, ShoppingCarView.OnItemClosed,
@@ -37,6 +46,7 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
     private ShoppingCarView shoppingCarView;
     private Slot toLock;
     private SlotContext slotContext;
+    private UserContext userContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +66,8 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
         secureCheckoutFragment = new SecureCheckoutFragment();
 
         slotContext = SlotContext.context(slotContext);
+
+        userContext = UserContext.context(userContext);
 
         shoppingCarView.hideList();
 
@@ -286,6 +298,18 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
     }
 
+    private void goToMain(){
+
+        Intent intent = new Intent(this, SplashActivity.class);
+
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+        startActivity(intent);
+
+        finish();
+
+    }
+
     private void back() {
 
         if (shoppingCarView.listIsVisible()) {
@@ -296,7 +320,7 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
             venueFragment.cancelQuery();
 
-            finish();
+            goToMain();
 
         } else if (!serviceFragment.isHidden()) {
 
@@ -460,6 +484,8 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
         Intent intent = new Intent(BookActivity.this, LoginActivity.class);
 
+        intent.putExtra(BookActivity.class.getName(), true);
+
         startActivity(intent);
 
     }
@@ -467,13 +493,17 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
     @Override
     public void onSlotSelected(Slot slot) {
 
-        if (ParseUser.getCurrentUser() == null) {
+        User user = userContext.currentUser();
+
+        if (user == null) {
 
             goToLogin();
 
         } else {
 
             selectDateHide();
+
+            secureCheckoutFragment.setUser(user);
 
             secureCheckoutFragment.setDate(slot.getDate());
 
@@ -492,7 +522,26 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
     @Override
     public void onPlaceOrder() {
 
-            secureCheckoutFragment.placeOrder();
+            secureCheckoutFragment.placeOrder(new AppointmentCompletion.AppointmentErrorCompletion() {
+
+                @Override
+                public void completion(List<Appointment> appointmentList, AppError error) {
+
+                    if (error != null) {
+
+                        AlertDialogError alertDialogError = new AlertDialogError();
+
+                        alertDialogError.noAvailableSlot(getApplicationContext());
+
+                    } else {
+
+                        goToMain();
+
+                    }
+
+                }
+
+            });
 
     }
 
