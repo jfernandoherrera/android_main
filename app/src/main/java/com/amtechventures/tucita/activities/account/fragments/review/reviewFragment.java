@@ -1,11 +1,13 @@
 package com.amtechventures.tucita.activities.account.fragments.review;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -40,6 +42,13 @@ public class ReviewFragment extends DialogFragment {
     Button send;
     User user;
     Venue venue;
+    OnSend listener;
+
+    public interface OnSend{
+
+        void onSend();
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
@@ -53,6 +62,17 @@ public class ReviewFragment extends DialogFragment {
     public void onAttach(Activity activity) {
 
         super.onAttach(activity);
+
+        listener = (OnSend) activity;
+
+    }
+
+    @Override
+    public void onDetach() {
+
+        super.onDetach();
+
+        listener = null;
 
     }
 
@@ -85,6 +105,29 @@ public class ReviewFragment extends DialogFragment {
         ratingView = (RatingView) rootView.findViewById(R.id.ratingView);
 
         send = (Button) rootView.findViewById(R.id.send);
+
+        send.setBackgroundColor(Color.WHITE);
+
+        send.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+
+                    send.setBackgroundResource(R.mipmap.ic_close_pressed);
+
+                } else if (event.getAction() != MotionEvent.ACTION_MOVE) {
+
+                    send.setBackgroundColor(Color.WHITE);
+
+                }
+
+                return false;
+
+            }
+        });
+
 
         send.setOnClickListener(new View.OnClickListener() {
 
@@ -132,10 +175,19 @@ public class ReviewFragment extends DialogFragment {
             @Override
             public void completion(List<Review> reviewList, AppError error) {
 
-                if(error == null){
+                if(error != null){
+
+                }else{
+
+                    listener.onSend();
+
+                    dismiss();
 
                 }
+
             }
         });
+
     }
+
 }

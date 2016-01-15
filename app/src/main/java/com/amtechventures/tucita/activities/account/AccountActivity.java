@@ -36,7 +36,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class AccountActivity extends AppCompatActivity implements VenuesAdapter.OnReview{
+public class AccountActivity extends AppCompatActivity implements VenuesAdapter.OnReview, ReviewFragment.OnSend{
 
     private UserContext userContext;
     private Toolbar toolbar;
@@ -343,6 +343,13 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
     public void onReview(Venue venue) {
 
         showReviewFragment(venue);
+
+    }
+
+    @Override
+    public void onSend() {
+
+        setupAppointments();
 
     }
 }
