@@ -13,7 +13,7 @@
     style="@style/AppTheme.Title"/>
         <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginLeft="@dimen/high_margin"
         android:layout_marginStart="@dimen/high_margin"
         android:id="@+id/textLocation"

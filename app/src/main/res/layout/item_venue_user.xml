@@ -52,8 +52,9 @@
             android:scaleX="0.5"
             android:scaleY="0.5"
             android:translationX="-33dp"
+            android:isIndicator="true"
             android:translationY="-2dp"
-            android:progressDrawable="@drawable/btn_star_big_on_pressed"
+           android:progressDrawable="@drawable/rating"
             />
          <Button
         android:layout_width="180dp"

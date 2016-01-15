@@ -20,23 +20,27 @@
                     android:layout_marginStart="@dimen/high_margin"
                     android:layout_marginLeft="@dimen/high_margin"
                     android:id="@+id/title_Venue"/>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:id="@+id/clickRating"
+                    android:layout_below="@+id/title_Venue"
+                    android:layout_height="32dp">
                 <RatingBar
                     android:layout_width="wrap_content"
                     android:layout_height="32dp"
                     android:numStars="5"
-                    android:layout_below="@+id/title_Venue"
                     android:id="@+id/ratingBar"
                     android:scaleX="0.5"
                     android:scaleY="0.5"
                     android:translationX="-20dp"
                     android:translationY="-5dp"
-                    android:progressDrawable="@drawable/btn_star_big_on_pressed"
-                    />
+                    android:progressDrawable="@drawable/rating"
+                    /></RelativeLayout>
                 <TextView
                     android:layout_width="match_parent"
                     android:text="@string/top_services"
                     android:id="@+id/textViewTop"
-                    android:layout_below="@+id/ratingBar"
+                    android:layout_below="@+id/clickRating"
                     android:layout_height="wrap_content"
                     android:textSize="25sp"
                     android:visibility="gone"

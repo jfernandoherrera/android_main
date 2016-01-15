@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.book.fragments.venue.adapters.ExpandableListAdapter;
+import com.amtechventures.tucita.activities.reviews.ReviewsActivity;
 import com.amtechventures.tucita.model.context.openingHour.OpeningHourCompletion;
 import com.amtechventures.tucita.model.context.openingHour.OpeningHourContext;
 import com.amtechventures.tucita.model.context.service.ServiceCompletion;
@@ -138,6 +140,39 @@ public class VenueFragment extends Fragment {
 
         ratingBar = (RatingBar) rootView.findViewById(R.id.ratingBar);
 
+        RelativeLayout clickRating = (RelativeLayout) rootView.findViewById(R.id.clickRating);
+
+        clickRating.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+
+                    v.setBackgroundResource(R.drawable.pressed_application_background_static);
+
+                } else if (event.getAction() != MotionEvent.ACTION_MOVE) {
+
+                    v.setBackgroundColor(Color.TRANSPARENT);
+
+                }
+
+                return false;
+
+            }
+        });
+
+        clickRating.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+            goToReviews();
+
+            }
+
+        });
+
         location = (Button) rootView.findViewById(R.id.watch_location);
 
         listViewFullMenu = (ExpandableListView) rootView.findViewById(R.id.listViewFull);
@@ -148,6 +183,11 @@ public class VenueFragment extends Fragment {
 
         return rootView;
 
+    }
+
+    private void goToReviews(){
+
+        ReviewsActivity.goToReviews(getContext());
     }
 
     @Override

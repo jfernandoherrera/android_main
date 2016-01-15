@@ -11,12 +11,41 @@ import com.parse.ParseQuery;
 public class Review extends ParseObject {
 
 
-    public Venue getVenue() {
+    public int getRating(){
 
-      Venue venue = (Venue) get(ReviewAttributes.venue);
+        return getInt(ReviewAttributes.rating);
+
+    }
+
+    public String getTitle(){
+
+        return getString(ReviewAttributes.title);
+
+    }
+
+    public String getDescription(){
+
+        return getString(ReviewAttributes.description);
+
+    }
+
+    public User getUser(){
+
+        User user = new User();
+
+        user.setParseUser(getParseUser(ReviewAttributes.user));
+
+        return user;
+
+    }
+
+    public Venue getVenue(){
+
+        Venue venue;
+
+        venue = (Venue) get(ReviewAttributes.venue);
 
         return venue;
-
     }
 
     public void setVenue(Venue venue) {

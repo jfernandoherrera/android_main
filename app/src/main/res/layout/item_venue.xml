@@ -53,7 +53,7 @@
                 android:scaleY="0.5"
                 android:translationX="-33dp"
                 android:translationY="-2dp"
-                android:progressDrawable="@drawable/btn_star_big_on_pressed"
+                android:progressDrawable="@drawable/rating"
                 />
             <TextView
                 android:layout_width="wrap_content"
