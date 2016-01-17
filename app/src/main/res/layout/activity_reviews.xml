@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/high_margin"
         android:layout_marginStart="@dimen/high_margin"
-        android:id="@+id/textLocation"
+        android:id="@+id/textTitle"
         android:layout_below="@+id/textName"
         style="@style/AppTheme.text"/>
     <RelativeLayout
@@ -58,7 +58,7 @@
                >
                 <TextView
                     android:layout_width="wrap_content"
-                    android:id="@+id/textDuration"
+                    android:id="@+id/textDescription"
                     style="@style/AppTheme.ListViewItem"/>
                 <TextView
                     android:layout_width="wrap_content"

@@ -281,9 +281,9 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
         serviceFragment.setup(service, exists);
 
-        venueHide();
-
         serviceShow();
+
+        venueHide();
 
         view.setBackgroundColor(getResources().getColor(R.color.colorPrimaryLight));
 

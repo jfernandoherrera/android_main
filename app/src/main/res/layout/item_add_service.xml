@@ -31,11 +31,11 @@
         android:layout_below="@+id/textName">
         <TextView
             android:layout_width="wrap_content"
-            android:id="@+id/textTitle"
+            android:id="@+id/textDuration"
             style="@style/AppTheme.ListViewItem"/>
         <TextView
             android:layout_width="wrap_content"
-            android:id="@+id/textDescription"
+            android:id="@+id/textPricesFrom"
             style="@style/AppTheme.ListViewItem"
             android:paddingEnd="@dimen/high_margin"
             android:paddingRight="@dimen/high_margin"
