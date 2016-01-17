@@ -45,16 +45,15 @@
             />
         <RatingBar
             android:layout_width="wrap_content"
-            android:layout_height="32dp"
+            android:layout_height="44dp"
             android:numStars="5"
             android:id="@+id/searchRatingBar"
             android:layout_below="@id/textLocation"
-            android:scaleX="0.5"
-            android:scaleY="0.5"
-            android:translationX="-33dp"
-            android:isIndicator="true"
-            android:translationY="-2dp"
-           android:progressDrawable="@drawable/rating"
+            android:scaleX="0.3"
+            android:scaleY="0.3"
+            android:translationX="-73dp"
+            android:translationY="-10dp"
+            style="@style/RatingBar"
             />
          <Button
         android:layout_width="180dp"
