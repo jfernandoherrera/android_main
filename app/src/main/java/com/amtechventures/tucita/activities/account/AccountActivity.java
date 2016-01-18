@@ -2,6 +2,7 @@ package com.amtechventures.tucita.activities.account;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -156,7 +157,8 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
             }
 
             @Override
-            public void onTabReselected(TabLayout.Tab tab) {}
+            public void onTabReselected(TabLayout.Tab tab) {
+            }
 
         });
 
@@ -192,7 +194,7 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
             @Override
             public void completion(List<Appointment> appointmentList, AppError error) {
 
-                if (appointmentList != null && ! appointmentList.isEmpty()) {
+                if (appointmentList != null && !appointmentList.isEmpty()) {
 
                     ((BookingsFragment) pagerAccountAdapter.getItem(0)).setAppointmentList(appointmentList);
 
@@ -249,7 +251,17 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
 
         if(userContext.isFacebook(user.getParseUser())) {
 
-            circularImageView.setImageBitmap(userContext.getPicture());
+            Bitmap image = userContext.getPicture();
+
+            if(image != null) {
+
+                circularImageView.setImageBitmap(image);
+
+            }else{
+
+                circularImageView.setVisibility(View.GONE);
+
+            }
 
         } else {
 

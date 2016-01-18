@@ -44,7 +44,6 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
     private SecureCheckoutFragment secureCheckoutFragment;
     private Toolbar toolbar;
     private ShoppingCarView shoppingCarView;
-    private Slot toLock;
     private SlotContext slotContext;
     private UserContext userContext;
 

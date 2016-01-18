@@ -27,14 +27,25 @@
                     android:layout_height="44dp">
                 <RatingBar
                     android:layout_width="wrap_content"
-                    android:layout_height="44dp"
+                    android:layout_height="wrap_content"
                     android:numStars="5"
                     android:id="@+id/ratingBar"
                     android:scaleX="0.3"
                     android:scaleY="0.3"
-                    android:translationX="-65dp"
+                    android:translationX="-63dp"
+                    android:isIndicator="true"
+                    android:background="@android:color/transparent"
                     style="@style/RatingBar"
-                    /></RelativeLayout>
+                    />
+                    <TextView
+                        android:layout_width="120dp"
+                        android:id="@+id/textViewReviews"
+                        android:layout_height="44dp"
+                        android:textSize="10sp"
+                        android:layout_toEndOf="@+id/ratingBar"
+                        android:layout_toRightOf="@+id/ratingBar"
+                        android:background="@android:color/transparent" />
+                </RelativeLayout>
                 <TextView
                     android:layout_width="match_parent"
                     android:text="@string/top_services"

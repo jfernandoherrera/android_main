@@ -7,6 +7,8 @@ import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Point;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -15,6 +17,7 @@ public class CircleTextView extends TextView {
 
     private int padding;
     private Paint circlePaint;
+    private boolean mini = false;
 
     public CircleTextView(Context context, AttributeSet attrs) {
 
@@ -22,13 +25,34 @@ public class CircleTextView extends TextView {
 
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 
-        Display display = wm.getDefaultDisplay();
+        DisplayMetrics metrics = new DisplayMetrics();
 
-        Point size = new Point();
+        wm.getDefaultDisplay().getMetrics(metrics);
 
-        display.getSize(size);
+        double size = metrics.scaledDensity;
 
-        padding = (int) (size.x * 0.08) / 3;
+        if(attrs.getAttributeValue(2).equals("-2")){
+
+            mini = true;
+
+            padding = (int) (9 * size);
+
+        }else{
+
+            int width = Integer.parseInt(attrs.getAttributeValue(2).substring(0, 2));
+
+            int lessBorders = (int) (width * 0.6);
+
+            setPadding(lessBorders / 3, lessBorders / 3, 0, 0);
+
+            setWidth((int) ((width * size) + (lessBorders * size)));
+
+            setHeight((int) ((width * size) + (lessBorders * size)));
+
+            padding = (int) ((Integer.parseInt(attrs.getAttributeValue(2).substring(0, 2)) - lessBorders) * size);
+
+        }
+
 
         circlePaint = new Paint();
 
@@ -43,7 +67,15 @@ public class CircleTextView extends TextView {
     @Override
     protected void onDraw(Canvas canvas) {
 
-        canvas.drawCircle((getMeasuredWidth() / 4) + 2, getMeasuredHeight() / 4, padding, circlePaint);
+        if(mini) {
+
+            canvas.drawCircle((getMeasuredWidth() / 4) + 2, getMeasuredHeight() / 4, padding, circlePaint);
+
+        }else{
+
+            canvas.drawCircle((getMeasuredWidth() / 4) * 2, (getMeasuredHeight() / 4) * 2, padding, circlePaint);
+
+        }
 
         super.onDraw(canvas);
 

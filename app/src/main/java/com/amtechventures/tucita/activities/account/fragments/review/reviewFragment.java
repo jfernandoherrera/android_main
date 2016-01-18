@@ -149,7 +149,7 @@ public class ReviewFragment extends DialogFragment {
 
         String reviewBy = getString(R.string.review_by);
 
-        String text = reviewBy +" " + user.getName();
+        String text = reviewBy + " " + user.getName();
 
         textName.setText(text);
 

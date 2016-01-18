@@ -77,6 +77,47 @@ public class ReviewRemote {
         });
     }
 
+    public void getReviewsVenue(Venue venue, final ReviewCompletion.ReviewErrorCompletion completion){
+
+        setQuery();
+
+        query.whereEqualTo(ReviewAttributes.venue, venue);
+
+        query.include(ReviewAttributes.user);
+
+        query.findInBackground(new FindCallback<Review>() {
+            @Override
+            public void done(List<Review> objects, ParseException e) {
+
+                if (e != null) {
+
+                    e.printStackTrace();
+
+                }
+
+                if (objects != null) {
+
+                    try {
+
+                        ParseObject.pinAll(objects);
+
+                    } catch (ParseException pe) {
+
+                        pe.printStackTrace();
+
+                    }
+
+                }
+
+                AppError appError = e != null ? new AppError(Review.class.toString(), 0, null) : null;
+
+                completion.completion(objects, appError);
+
+            }
+        });
+    }
+
+
     public void createReview(Review review, final ReviewCompletion.ReviewErrorCompletion completion){
 
         review.saveInBackground(new SaveCallback() {

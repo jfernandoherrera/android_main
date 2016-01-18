@@ -69,6 +69,7 @@ public class VenueFragment extends Fragment {
     private ProgressDialog progress;
     private ViewUtils viewUtils;
     private ScrollView scrollView;
+    private TextView textReviews;
 
     public interface OnServiceSelected {
 
@@ -134,6 +135,8 @@ public class VenueFragment extends Fragment {
 
         venuePicture = (ImageView) rootView.findViewById(R.id.imageVenue);
 
+        textReviews = (TextView) rootView.findViewById(R.id.textViewReviews);
+
         venueName = (TextView) rootView.findViewById(R.id.title_Venue);
 
         venueDescription = (ExpandableListView) rootView.findViewById(R.id.listViewDescription);
@@ -187,7 +190,7 @@ public class VenueFragment extends Fragment {
 
     private void goToReviews(){
 
-        ReviewsActivity.goToReviews(getContext());
+        ReviewsActivity.goToReviews(getContext(), venue.getName(), venue.getAddress());
     }
 
     @Override
@@ -239,11 +242,25 @@ public class VenueFragment extends Fragment {
 
             setupFullMenu();
 
+            setupReviews();
+
         } else {
 
             setupProgress();
 
         }
+
+    }
+
+    private void setupReviews(){
+
+        String reviewBy = getString(R.string.review_by);
+
+        String users = getString(R.string.users);
+
+        String textReviewsDone = reviewBy + " " + venue.getReviews() + " " + users;
+
+        textReviews.setText(textReviewsDone);
 
     }
 

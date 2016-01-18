@@ -1,56 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:id="@+id/container"
+    android:orientation="horizontal"
     android:layout_height="match_parent">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/image"
-            android:layout_centerVertical="true"
-            android:paddingLeft="@dimen/high_margin"
-            android:paddingStart="@dimen/high_margin"
-            />
+    <com.mikhaellopez.circularimageview.CircularImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_marginLeft="@dimen/high_margin"
+        android:layout_marginStart="@dimen/high_margin"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="30dp"
+        android:id="@+id/imageUser"
+        android:layout_gravity="top|center_horizontal"
+        android:padding="5dp"
+        app:border_width="0dp"
+        app:shadow="true"
+        app:shadow_radius="1"
+        app:civ_border_color="@android:color/transparent"
+        />
         <RelativeLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="9"
             android:layout_height="wrap_content"
             android:id="@+id/touched"
-            android:layout_toEndOf="@+id/image"
-            android:layout_toRightOf="@+id/image"
             android:background="@drawable/ab_transparent_light_holo">
             <TextView
-                android:layout_width="match_parent"
-                android:id="@+id/textName"
+                android:layout_width="250dp"
+                android:id="@+id/textNameUser"
                 android:gravity="bottom"
                 style="@style/AppTheme.ListViewItem"/>
-            <RelativeLayout
+            <LinearLayout
+                android:layout_width="250dp"
+                android:orientation="horizontal"
+                android:id="@+id/ratingContainer"
+                android:layout_below="@id/textNameUser"
+                android:layout_height="wrap_content">
+            <RatingBar
+                android:layout_width="160dp"
+                android:layout_height="44dp"
+                android:numStars="5"
+                android:id="@+id/ratingBar"
+                android:scaleX="0.3"
+                android:scaleY="0.3"
+                android:isIndicator="true"
+                android:translationX="-73dp"
+                android:translationY="-10dp"
+                style="@style/RatingBar"
+                />
+                <TextView
+                    android:layout_width="90dp"
+                    android:layout_height="44dp"
+                    android:id="@+id/textDate"/>
+            </LinearLayout>
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/textName">
-                <RatingBar
-                    android:layout_width="wrap_content"
-                    android:layout_height="32dp"
-                    android:numStars="5"
-                    android:id="@+id/ratingBar"
-                    android:scaleX="0.5"
-                    android:scaleY="0.5"
-                    android:translationX="-20dp"
-                    android:translationY="-5dp"
-                    android:progressDrawable="@drawable/rating"
-                    />
+                android:id="@+id/textTitle"
+                android:layout_below="@+id/ratingContainer"
+                android:gravity="bottom"
+                style="@style/AppTheme.ListViewItem"/>
+
                 <TextView
                     android:layout_width="wrap_content"
-                    android:id="@+id/textDuration"
+                    android:layout_below="@+id/textTitle"
+                    android:id="@+id/textDescription"
                     style="@style/AppTheme.ListViewItem"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:id="@+id/textPricesFrom"
-                    style="@style/AppTheme.ListViewItem"
-                    android:paddingEnd="@dimen/high_margin"
-                    android:paddingRight="@dimen/high_margin"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true"
-                    />
-            </RelativeLayout>
         </RelativeLayout>
-</RelativeLayout>
+</LinearLayout>

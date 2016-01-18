@@ -1,17 +1,24 @@
 package com.amtechventures.tucita.activities.reviews.adapters;
 
 
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.amtechventures.tucita.R;
+import com.amtechventures.tucita.model.context.user.UserContext;
 import com.amtechventures.tucita.model.domain.review.Review;
+import com.amtechventures.tucita.model.domain.user.User;
+import com.mikhaellopez.circularimageview.CircularImageView;
+
+import java.util.Date;
 import java.util.List;
 
 public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHolder> {
@@ -20,16 +27,20 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
 
     private OnReviewClicked listener;
 
+    private UserContext userContext;
+
     public interface OnReviewClicked{
 
         void onReviewClicked(Review review);
     }
 
-    public ReviewsAdapter(List<Review> services, OnReviewClicked onItemClosed) {
+    public ReviewsAdapter(List<Review> reviews, OnReviewClicked onReviewClicked, UserContext user) {
 
-        listener = onItemClosed;
+        listener = onReviewClicked;
 
-        reviewList = services;
+        reviewList = reviews;
+
+        this.userContext = user;
 
     }
 
@@ -51,11 +62,19 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
 
         final Review review = reviewList.get(position);
 
-        holder.textName.setText(review.getTitle());
+        User user = review.getUser();
+
+        holder.textName.setText(user.getName());
+
+        holder.textTitle.setText(review.getTitle());
+
+        holder.ratingBar.setRating(review.getRating());
 
         holder.textDescription.setText(review.getDescription());
 
-        holder.textTitle.setText(String.valueOf(review.getTitle()));
+        holder.textDate.setText(date(review.getUpdatedAt()));
+
+        setImageUser(user, holder);
 
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
 
@@ -67,6 +86,44 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
             }
 
         });
+
+    }
+
+    private String date(Date date){
+
+        String slash = "/";
+
+        String formattedDate;
+
+        int bugDate = 1900;
+
+        formattedDate = date.getDate() + slash + date.getMonth() + slash + (date.getYear() + bugDate);
+
+        return formattedDate;
+
+    }
+
+    private void setImageUser(User user, ViewHolder holder){
+
+        if(userContext.isFacebook(user.getParseUser())) {
+
+            Bitmap image = userContext.getPicture();
+
+            if(image != null) {
+
+                holder.circularImageView.setImageBitmap(image);
+
+            }else{
+
+                holder.circularImageView.setVisibility(View.GONE);
+
+            }
+
+        } else {
+
+            holder.circularImageView.setVisibility(View.GONE);
+
+        }
 
     }
 
@@ -85,17 +142,21 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
 
         protected TextView textDescription;
 
+        protected TextView textDate;
+
+        protected CircularImageView circularImageView;
+
         protected RatingBar ratingBar;
 
         protected ImageView user;
 
-        protected RelativeLayout relativeLayout;
+        protected LinearLayout relativeLayout;
 
         public ViewHolder(View itemView) {
 
             super(itemView);
 
-            textName = (TextView) itemView.findViewById(R.id.textName);
+            textName = (TextView) itemView.findViewById(R.id.textNameUser);
 
             textDescription = (TextView) itemView.findViewById(R.id.textDescription);
 
@@ -103,7 +164,13 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
 
             user = (ImageView) itemView.findViewById(R.id.image);
 
-            relativeLayout = (RelativeLayout) itemView.findViewById(R.id.container);
+            textDate = (TextView) itemView.findViewById(R.id.textDate);
+
+            ratingBar = (RatingBar) itemView.findViewById(R.id.ratingBar);
+
+            relativeLayout = (LinearLayout) itemView.findViewById(R.id.container);
+
+            circularImageView = (CircularImageView) itemView.findViewById(R.id.imageUser);
 
             relativeLayout.setOnTouchListener(new View.OnTouchListener() {
 

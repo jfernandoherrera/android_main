@@ -37,4 +37,29 @@ public class ReviewLocal {
 
     }
 
+    public List<Review> getReviewsVenue(Venue venue){
+
+        List<Review> reviews = null;
+
+        ParseQuery query = Review.getQuery();
+
+        query.fromLocalDatastore();
+
+        query.whereEqualTo(ReviewAttributes.venue, venue);
+
+        query.include(ReviewAttributes.user);
+
+        try {
+
+            reviews = query.find();
+
+        } catch (ParseException e) {
+
+            e.printStackTrace();
+        }
+
+        return reviews;
+
+    }
+
 }

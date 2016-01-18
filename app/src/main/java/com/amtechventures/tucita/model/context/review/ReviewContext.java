@@ -44,4 +44,13 @@ public class ReviewContext {
 
         return reviews;
     }
+
+    public List<Review> getReviewsVenue(Venue venue, ReviewCompletion.ReviewErrorCompletion completion) {
+
+        reviewRemote.getReviewsVenue(venue, completion);
+
+        List<Review> reviews = reviewLocal.getReviewsVenue(venue);
+
+        return reviews;
+    }
 }
