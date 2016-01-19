@@ -1,20 +1,16 @@
 package com.amtechventures.tucita.model.context.review;
 
-import com.amtechventures.tucita.model.domain.appointment.Appointment;
-import com.amtechventures.tucita.model.domain.category.Category;
+
 import com.amtechventures.tucita.model.domain.review.Review;
 import com.amtechventures.tucita.model.domain.review.ReviewAttributes;
 import com.amtechventures.tucita.model.domain.user.User;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.error.AppError;
 import com.parse.FindCallback;
-import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.SaveCallback;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class ReviewRemote {
@@ -42,6 +38,8 @@ public class ReviewRemote {
         setQuery();
 
         query.whereEqualTo(ReviewAttributes.user, user.getParseUser());
+
+        query.orderByAscending(ReviewAttributes.updatedAt);
 
         query.include(ReviewAttributes.venue);
 
@@ -82,6 +80,8 @@ public class ReviewRemote {
         setQuery();
 
         query.whereEqualTo(ReviewAttributes.venue, venue);
+
+        query.orderByAscending(ReviewAttributes.updatedAt);
 
         query.include(ReviewAttributes.user);
 

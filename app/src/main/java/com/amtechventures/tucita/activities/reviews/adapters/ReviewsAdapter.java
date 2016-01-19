@@ -2,6 +2,7 @@ package com.amtechventures.tucita.activities.reviews.adapters;
 
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -66,11 +67,35 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
 
         holder.textName.setText(user.getName());
 
-        holder.textTitle.setText(review.getTitle());
+        String title = review.getTitle();
+
+        if(! title.equals("")){
+
+            holder.textTitle.setText(title);
+
+            holder.textTitle.setVisibility(View.VISIBLE);
+
+        }else {
+
+            holder.textTitle.setVisibility(View.GONE);
+
+        }
+
+        String description = review.getDescription();
+
+        if(! description.equals("")){
+
+            holder.textDescription.setText(description);
+
+            holder.textTitle.setVisibility(View.VISIBLE);
+
+        }else {
+
+            holder.textDescription.setVisibility(View.GONE);
+
+        }
 
         holder.ratingBar.setRating(review.getRating());
-
-        holder.textDescription.setText(review.getDescription());
 
         holder.textDate.setText(date(review.getUpdatedAt()));
 
@@ -97,7 +122,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
 
         int bugDate = 1900;
 
-        formattedDate = date.getDate() + slash + date.getMonth() + slash + (date.getYear() + bugDate);
+        formattedDate = date.getDate() + slash + (date.getMonth() + 1) + slash + (date.getYear() + bugDate);
 
         return formattedDate;
 
@@ -113,15 +138,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
 
                 holder.circularImageView.setImageBitmap(image);
 
-            }else{
-
-                holder.circularImageView.setVisibility(View.GONE);
-
             }
-
-        } else {
-
-            holder.circularImageView.setVisibility(View.GONE);
 
         }
 
@@ -179,11 +196,11 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
 
                     if (event.getAction() == MotionEvent.ACTION_DOWN) {
 
-                        v.setBackgroundResource(R.mipmap.ic_close_pressed);
+                        v.setBackgroundResource(R.drawable.pressed_application_background_static);
 
                     } else if (event.getAction() != MotionEvent.ACTION_MOVE) {
 
-                        v.setBackgroundResource(R.mipmap.ic_close);
+                        v.setBackgroundColor(Color.TRANSPARENT);
 
                     }
 

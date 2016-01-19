@@ -54,11 +54,11 @@ public class ReviewsActivity extends AppCompatActivity {
 
         reviewsFragment = new ReviewsFragment();
 
-        setReviewsFragment();
-
         setup();
 
         setToolbar();
+
+        setReviewsFragment();
 
     }
 
@@ -116,7 +116,7 @@ public class ReviewsActivity extends AppCompatActivity {
             }
         });
 
-        if(reviews != null){
+        if(reviews != null) {
 
             reviewsFragment.setReviewList(reviews);
 
@@ -124,6 +124,18 @@ public class ReviewsActivity extends AppCompatActivity {
 
     }
 
+
+    private void reviewsHide() {
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+        transaction.hide(reviewsFragment);
+
+        transaction.commit();
+
+    }
     private void setReviewsFragment() {
 
         FragmentManager fragmentManager = getSupportFragmentManager();

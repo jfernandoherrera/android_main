@@ -115,7 +115,7 @@ public class ReviewFragment extends DialogFragment {
 
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
 
-                    send.setBackgroundResource(R.mipmap.ic_close_pressed);
+                    send.setBackgroundResource(R.drawable.pressed_application_background_static);
 
                 } else if (event.getAction() != MotionEvent.ACTION_MOVE) {
 

@@ -1,5 +1,6 @@
 package com.amtechventures.tucita.activities.reviews.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -28,7 +29,20 @@ public class ReviewsFragment extends Fragment implements ReviewsAdapter.OnReview
     List<Review> reviewList;
     float rating;
     UserContext user;
+    String reviewBy ;
+    String users;
 
+
+    @Override
+    public void onAttach(Context context) {
+
+        super.onAttach(context);
+
+        reviewBy = getString(R.string.review_by);
+
+        users = getString(R.string.users);
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -47,21 +61,15 @@ public class ReviewsFragment extends Fragment implements ReviewsAdapter.OnReview
 
         recyclerView.setLayoutManager(layoutManager);
 
-        ratingBar.setRating(rating);
+        if(reviewList != null){
 
-        textRating.setText(String.valueOf(rating));
+            adapter = new ReviewsAdapter(reviewList, this, user);
 
-        String reviewBy = getString(R.string.review_by);
+            recyclerView.setAdapter(adapter);
 
-        String users = getString(R.string.users);
+        }
 
-        String textReviewsDone = reviewBy + " " + reviewList.size() + " " + users;
-
-        textReviews.setText(textReviewsDone);
-
-        adapter = new ReviewsAdapter(reviewList, this, user);
-
-        recyclerView.setAdapter(adapter);
+        setupRating();
 
         return rootView;
     }
@@ -69,6 +77,12 @@ public class ReviewsFragment extends Fragment implements ReviewsAdapter.OnReview
     public void setRating(float rating) {
 
         this.rating = rating;
+
+        if(textRating != null) {
+
+            setupRating();
+
+        }
 
     }
 
@@ -78,11 +92,35 @@ public class ReviewsFragment extends Fragment implements ReviewsAdapter.OnReview
 
     }
 
+    private void setupRating(){
+
+        ratingBar.setRating(rating);
+
+        textRating.setText(String.valueOf(rating));
+
+    }
+
+    private void setupReviews(){
+
+        String textReviewsDone = reviewBy + " " + reviewList.size() + " " + users;
+
+        textReviews.setText(textReviewsDone);
+
+    }
+
     public void setReviewList(List<Review> reviewList) {
 
         if(this.reviewList == null){
 
             this.reviewList = reviewList;
+
+            if(recyclerView != null){
+
+                adapter = new ReviewsAdapter(reviewList, this, user);
+
+                recyclerView.setAdapter(adapter);
+
+            }
 
         }else {
 
@@ -90,8 +128,18 @@ public class ReviewsFragment extends Fragment implements ReviewsAdapter.OnReview
 
             this.reviewList.addAll(reviewList);
 
+            if (adapter != null) {
+
+                adapter.notifyDataSetChanged();
+
+            }
         }
 
+        if(textReviews != null) {
+
+            setupReviews();
+
+        }
     }
 
     @Override

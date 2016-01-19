@@ -22,6 +22,8 @@ public class ReviewLocal {
 
         query.whereEqualTo(ReviewAttributes.user, user.getParseUser());
 
+        query.orderByAscending(ReviewAttributes.updatedAt);
+
         query.include(ReviewAttributes.venue);
 
         try {
@@ -46,6 +48,8 @@ public class ReviewLocal {
         query.fromLocalDatastore();
 
         query.whereEqualTo(ReviewAttributes.venue, venue);
+
+        query.orderByAscending(ReviewAttributes.updatedAt);
 
         query.include(ReviewAttributes.user);
 
