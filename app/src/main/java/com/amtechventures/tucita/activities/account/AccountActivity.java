@@ -249,7 +249,7 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
 
         user = userContext.currentUser();
 
-        if(userContext.isFacebook(user.getParseUser())) {
+        if(userContext.isFacebook(user)) {
 
             Bitmap image = userContext.getPicture();
 

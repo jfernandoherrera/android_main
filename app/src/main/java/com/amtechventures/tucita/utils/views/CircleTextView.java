@@ -41,15 +41,15 @@ public class CircleTextView extends TextView {
 
             int width = Integer.parseInt(attrs.getAttributeValue(2).substring(0, 2));
 
-            int lessBorders = (int) (width * 0.6);
+    //        int lessBorders = (int) (width * 0.5);
 
-            setPadding(lessBorders / 3, lessBorders / 3, 0, 0);
+            //setWidth((int) ((width * size) + (lessBorders * size)));
 
-            setWidth((int) ((width * size) + (lessBorders * size)));
+           // setHeight((int) ((width * size) + (lessBorders * size)));
 
-            setHeight((int) ((width * size) + (lessBorders * size)));
+            padding = (int) ((Integer.parseInt(attrs.getAttributeValue(2).substring(0, 2)) ) * size) / 2;
 
-            padding = (int) ((Integer.parseInt(attrs.getAttributeValue(2).substring(0, 2)) - lessBorders) * size);
+           setPadding(padding / 3, padding / 3, 0, 0);
 
         }
 
@@ -73,7 +73,7 @@ public class CircleTextView extends TextView {
 
         }else{
 
-            canvas.drawCircle((getMeasuredWidth() / 4) * 2, (getMeasuredHeight() / 4) * 2, padding, circlePaint);
+            canvas.drawCircle((getMeasuredWidth() / 2) , (getMeasuredHeight() / 2) , padding, circlePaint);
 
         }
 

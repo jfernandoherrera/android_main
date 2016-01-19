@@ -4,8 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <RelativeLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/high_margin"
+        android:layout_marginLeft="@dimen/high_margin"
+        android:layout_marginTop="@dimen/high_margin"
         android:id="@+id/venueView">
     <com.amtechventures.tucita.utils.views.CircleTextView
         android:id="@+id/textRating"
@@ -13,10 +16,10 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         />
-<RelativeLayout
-    android:layout_width="300dp"
-    android:layout_alignParentEnd="true"
-    android:layout_alignParentRight="true"
+    <RelativeLayout
+    android:layout_width="wrap_content"
+        android:layout_toEndOf="@id/textRating"
+        android:layout_toRightOf="@id/textRating"
     android:layout_height="wrap_content">
     <RatingBar
         android:layout_width="wrap_content"

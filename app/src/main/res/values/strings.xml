@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">TuCita</string>
     <string name="cancel">Cancel</string>
+    <string name="save">Guardar</string>
     <string name="bookings">Tus citas</string>
     <string name="action_settings">Settings</string>
     <string name="order_total">Total :</string>

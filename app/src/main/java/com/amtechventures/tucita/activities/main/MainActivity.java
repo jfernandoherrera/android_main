@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements CategoryFragment.
 
             UserImageView picture;
 
-            if (userContext.isFacebook(current.getParseUser())) {
+            if (userContext.isFacebook(current)) {
 
                 picture = new UserImageView(userContext.getPicture(), roboto);
 

@@ -130,7 +130,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
 
     private void setImageUser(User user, ViewHolder holder){
 
-        if(userContext.isFacebook(user.getParseUser())) {
+        if(userContext.isFacebook(user)) {
 
             Bitmap image = userContext.getPicture();
 
@@ -139,6 +139,10 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
                 holder.circularImageView.setImageBitmap(image);
 
             }
+
+        }else {
+
+            holder.circularImageView.setImageResource(R.mipmap.ic_user);
 
         }
 
