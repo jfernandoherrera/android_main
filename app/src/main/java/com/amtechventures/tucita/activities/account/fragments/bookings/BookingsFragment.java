@@ -29,7 +29,6 @@ public class BookingsFragment extends Fragment {
     private List<Appointment> completedAppointmentsList;
     private List<Appointment> pendingAppointmentsList;
 
-
     @Override
     public void onAttach(Context context) {
 
@@ -129,15 +128,22 @@ public class BookingsFragment extends Fragment {
 
     public void setupList() {
 
-        boolean noEmpty = !completedAppointmentsList.isEmpty() || !pendingAppointmentsList.isEmpty();
 
-        if (noEmpty) {
+        if (recyclerView != null) {
 
-            adapter = new AppointmentsAdapter(completedAppointmentsList, pendingAppointmentsList);
+            boolean noEmpty = !completedAppointmentsList.isEmpty() || !pendingAppointmentsList.isEmpty();
 
-            recyclerView.setAdapter(adapter);
+            if (noEmpty) {
 
-            noResults.setVisibility(View.GONE);
+                adapter = new AppointmentsAdapter(completedAppointmentsList, pendingAppointmentsList);
+
+                recyclerView.setAdapter(adapter);
+
+                noResults.setVisibility(View.GONE);
+
+            }
+
+        }else {
 
         }
 

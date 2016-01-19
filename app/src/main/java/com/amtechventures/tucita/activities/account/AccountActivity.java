@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -297,16 +298,33 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
 
         });
 
+        MenuItem contactUs = menu.findItem(R.id.action_contact_us);
+
+        contactUs.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+
+                String email = "jose@amtechventures.com";
+
+                String typeEmail = "message/rfc822";
+
+                Intent intent = new Intent(Intent.ACTION_SEND);
+
+                intent.setType(typeEmail);
+
+                intent.putExtra(android.content.Intent.EXTRA_EMAIL,new String[] { email });
+
+                Intent mailer = Intent.createChooser(intent, null);
+
+                startActivity(mailer);
+
+                return true;
+
+            }
+        });
+
         return true;
-
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        goToCategories();
-
-        return super.onOptionsItemSelected(item);
 
     }
 
@@ -364,4 +382,5 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
         setupAppointments();
 
     }
+
 }
