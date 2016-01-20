@@ -87,7 +87,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
 
             holder.textDescription.setText(description);
 
-            holder.textTitle.setVisibility(View.VISIBLE);
+            holder.textDescription.setVisibility(View.VISIBLE);
 
         }else {
 

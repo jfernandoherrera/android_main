@@ -23,17 +23,19 @@
     android:layout_height="wrap_content">
     <RatingBar
         android:layout_width="wrap_content"
-        android:layout_height="44dp"
+        android:layout_height="30sp"
         android:numStars="5"
         android:id="@+id/ratingBar"
         android:isIndicator="true"
-        android:scaleX="0.3"
-        android:scaleY="0.3"
-        android:translationX="-73dp"
-        android:translationY="-10dp"
+        android:scaleX="0.5"
+        android:scaleY="0.5"
+        android:translationX="-30sp"
+        android:translationY="-3sp"
         style="@style/RatingBar"
         />
     <TextView
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:layout_width="wrap_content"
         android:id="@+id/textReviews"
         android:layout_below="@id/ratingBar"
