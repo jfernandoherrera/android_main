@@ -30,7 +30,7 @@ public class VenuesAdapter extends RecyclerView.Adapter<VenuesAdapter.ViewHolder
 
     public interface OnReview {
 
-        void onReview(Venue venue);
+        void onReview(Venue venue, float ratingSelected);
 
     }
 
@@ -81,7 +81,7 @@ public class VenuesAdapter extends RecyclerView.Adapter<VenuesAdapter.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
 
         final Venue venue = items.get(position);
 
@@ -107,20 +107,22 @@ public class VenuesAdapter extends RecyclerView.Adapter<VenuesAdapter.ViewHolder
 
         }
 
-        holder.review.setVisibility(View.VISIBLE);
+        holder.ratingBarReview.setVisibility(View.VISIBLE);
 
-        holder.review.setOnClickListener(new View.OnClickListener() {
+        holder.ratingBarReview.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
-            public void onClick(View v) {
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
 
-                listener.onReview(venue);
+                listener.onReview(venue, rating);
 
             }
         });
 
         if(haveReview(venue)){
 
-            holder.review.setVisibility(View.GONE);
+            holder.textReview.setVisibility(View.GONE);
+
+            holder.ratingBarReview.setVisibility(View.GONE);
 
         }
     }
@@ -141,13 +143,15 @@ public class VenuesAdapter extends RecyclerView.Adapter<VenuesAdapter.ViewHolder
 
         protected TextView location;
 
+        protected TextView textReview;
+
         protected RatingBar ratingBar;
 
         protected ImageView venueImage;
 
         private CardView venueIcon;
 
-        protected Button review;
+        protected RatingBar ratingBarReview;
 
         protected String from;
 
@@ -162,6 +166,8 @@ public class VenuesAdapter extends RecyclerView.Adapter<VenuesAdapter.ViewHolder
 
             location = (TextView) itemView.findViewById(R.id.textLocation);
 
+            textReview = (TextView) itemView.findViewById(R.id.textReview);
+
             name = (TextView) itemView.findViewById(R.id.textName);
 
             venueIcon = (CardView) itemView.findViewById(R.id.card_view);
@@ -170,7 +176,7 @@ public class VenuesAdapter extends RecyclerView.Adapter<VenuesAdapter.ViewHolder
 
             ratingBar = (RatingBar) itemView.findViewById(R.id.searchRatingBar);
 
-            review = (Button) itemView.findViewById(R.id.buttonReview);
+            ratingBarReview = (RatingBar) itemView.findViewById(R.id.ratingBar);
 
             if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
 

@@ -76,4 +76,7 @@
     <style name="RatingBar" parent="@android:style/Widget.RatingBar">
         <item name="android:progressDrawable">@drawable/rating</item>
     </style>
+    <style name="RatingBarSelector" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/rating_selector</item>
+    </style>
 </resources>

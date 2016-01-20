@@ -38,6 +38,7 @@ public class ReviewFragment extends DialogFragment {
     User user;
     Venue venue;
     OnSend listener;
+    float rating;
 
     public interface OnSend{
 
@@ -99,6 +100,8 @@ public class ReviewFragment extends DialogFragment {
 
         ratingView = (RatingView) rootView.findViewById(R.id.ratingView);
 
+        ratingView.setRating(rating);
+
         send = (Button) rootView.findViewById(R.id.send);
 
         send.setBackgroundColor(Color.WHITE);
@@ -151,6 +154,11 @@ public class ReviewFragment extends DialogFragment {
         return rootView;
     }
 
+    public void setRating(float rating){
+
+    this.rating = rating;
+
+    }
 
     private void sendReview(){
 
