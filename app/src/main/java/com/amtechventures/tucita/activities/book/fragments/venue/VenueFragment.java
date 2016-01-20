@@ -170,7 +170,7 @@ public class VenueFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-            goToReviews();
+                goToReviews();
 
             }
 

@@ -27,6 +27,8 @@ public class VenuesAdapter extends RecyclerView.Adapter<VenuesAdapter.ViewHolder
     List<Venue> items;
     List<Review> reviewList;
     OnReview listener;
+    String reviewBy;
+    String users;
 
     public interface OnReview {
 
@@ -34,11 +36,15 @@ public class VenuesAdapter extends RecyclerView.Adapter<VenuesAdapter.ViewHolder
 
     }
 
-    public VenuesAdapter(List<Venue> venues, List<Review> reviewList, OnReview listener) {
+    public VenuesAdapter(List<Venue> venues, List<Review> reviewList, OnReview listener, String reviewBy, String users) {
 
         super();
 
         this.listener = listener;
+
+        this.reviewBy = reviewBy;
+
+        this.users = users;
 
         items = venues;
 
@@ -80,6 +86,14 @@ public class VenuesAdapter extends RecyclerView.Adapter<VenuesAdapter.ViewHolder
 
     }
 
+    private String reviews(int reviews){
+
+        String textReviewsDone = reviewBy + " " + reviews + " " + users;
+
+        return textReviewsDone;
+
+    }
+
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
 
@@ -92,6 +106,8 @@ public class VenuesAdapter extends RecyclerView.Adapter<VenuesAdapter.ViewHolder
         holder.setAddress(venue.getAddress());
 
         holder.location.setText(venue.getCity().formatedLocation());
+
+        holder.textViewReviews.setText(reviews(venue.getReviews()));
 
         holder.venueImage.setImageBitmap(venue.getPicture());
 
@@ -145,6 +161,8 @@ public class VenuesAdapter extends RecyclerView.Adapter<VenuesAdapter.ViewHolder
 
         protected TextView textReview;
 
+        protected TextView textViewReviews;
+
         protected RatingBar ratingBar;
 
         protected ImageView venueImage;
@@ -167,6 +185,8 @@ public class VenuesAdapter extends RecyclerView.Adapter<VenuesAdapter.ViewHolder
             location = (TextView) itemView.findViewById(R.id.textLocation);
 
             textReview = (TextView) itemView.findViewById(R.id.textReview);
+
+            textViewReviews = (TextView) itemView.findViewById(R.id.textViewReviews);
 
             name = (TextView) itemView.findViewById(R.id.textName);
 

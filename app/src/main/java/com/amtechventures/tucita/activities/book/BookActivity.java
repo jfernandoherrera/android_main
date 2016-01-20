@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.book.fragments.checkout.SecureCheckoutFragment;
@@ -36,7 +37,7 @@ import java.util.List;
 
 public class BookActivity extends AppCompatActivity implements VenueFragment.OnServiceSelected,
         ServiceFragment.OnServiceSelected, ShoppingCarView.OnItemClosed,
-        ShoppingCarView.OnMoreServices, ShoppingCarView.OnBookNow, SelectHourAdapter.OnSlotSelected, SecureCheckoutFragment.OnPlaceOrder {
+        ShoppingCarView.OnMoreServices, ShoppingCarView.OnBookNow, SelectHourAdapter.OnSlotSelected, SecureCheckoutFragment.OnPlaceOrder, ShoppingCarView.OnHide {
 
     private VenueFragment venueFragment;
     private ServiceFragment serviceFragment;
@@ -46,6 +47,7 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
     private ShoppingCarView shoppingCarView;
     private SlotContext slotContext;
     private UserContext userContext;
+    private RelativeLayout relativeLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +89,8 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
         secureCheckoutHide();
 
         shoppingCarView.hideView();
+
+        relativeLayout = (RelativeLayout) findViewById(R.id.concealer);
 
     }
 
@@ -544,4 +548,10 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
     }
 
+    @Override
+    public void onHide() {
+
+        relativeLayout.setVisibility(View.GONE);
+
+    }
 }

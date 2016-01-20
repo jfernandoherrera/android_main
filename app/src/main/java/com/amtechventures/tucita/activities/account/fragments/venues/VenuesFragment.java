@@ -67,7 +67,11 @@ public class VenuesFragment extends Fragment {
 
         if (venues != null && !venues.isEmpty()) {
 
-            adapter = new VenuesAdapter(venues, reviewList, adapterListener);
+            String reviewBy = getString(R.string.review_by);
+
+            String users = getString(R.string.users);
+
+            adapter = new VenuesAdapter(venues, reviewList, adapterListener, reviewBy, users);
 
             recyclerView.setAdapter(adapter);
 

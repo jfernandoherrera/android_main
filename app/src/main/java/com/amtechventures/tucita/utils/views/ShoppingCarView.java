@@ -39,10 +39,17 @@ public class ShoppingCarView extends FrameLayout implements ServicesToBookAdapte
     private OnBookNow listenerBookNow;
     private RelativeLayout shoppingCar;
     private RelativeLayout shoppingCarList;
+    private OnHide onHide;
 
     public interface OnBookNow {
 
         void onBookNow();
+
+    }
+
+    public interface OnHide {
+
+        void onHide();
 
     }
 
@@ -88,6 +95,8 @@ public class ShoppingCarView extends FrameLayout implements ServicesToBookAdapte
         listenerBookNow = (OnBookNow) context;
 
         listener = (OnMoreServices) context;
+
+        onHide = (OnHide) context;
 
         init(context);
 
@@ -283,6 +292,8 @@ public class ShoppingCarView extends FrameLayout implements ServicesToBookAdapte
                 public void run() {
 
                     shoppingCar.setVisibility(View.INVISIBLE);
+
+                    onHide.onHide();
 
                 }
 

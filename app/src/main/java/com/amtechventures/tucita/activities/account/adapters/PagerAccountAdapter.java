@@ -33,6 +33,7 @@ public class PagerAccountAdapter extends FragmentStatePagerAdapter {
         switch (position) {
 
             case 0:
+
                 current = bookingsFragment;
 
                 break;

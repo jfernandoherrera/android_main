@@ -315,7 +315,9 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
 
                 intent.setType(typeEmail);
 
-                intent.putExtra(android.content.Intent.EXTRA_EMAIL,new String[] { email });
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+                intent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[] { email });
 
                 Intent mailer = Intent.createChooser(intent, null);
 
