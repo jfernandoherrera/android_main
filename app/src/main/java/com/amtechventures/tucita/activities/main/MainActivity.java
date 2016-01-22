@@ -1,6 +1,5 @@
 package com.amtechventures.tucita.activities.main;
 
-import android.graphics.Typeface;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MenuItemCompat;
@@ -11,26 +10,20 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.account.AccountActivity;
-import com.amtechventures.tucita.utils.views.UserImageView;
 import com.amtechventures.tucita.activities.main.fragments.category.CategoryFragment;
 import com.amtechventures.tucita.activities.login.LoginActivity;
 import com.amtechventures.tucita.activities.main.fragments.search.SearchFragment;
 import com.amtechventures.tucita.activities.main.fragments.subcategory.SubCategoryFragment;
-import com.amtechventures.tucita.model.context.user.UserContext;
-import com.amtechventures.tucita.model.domain.user.User;
 import com.amtechventures.tucita.utils.views.AlertDialogError;
 
 public class MainActivity extends AppCompatActivity implements CategoryFragment.OnItemClicked, SubCategoryFragment.OnOthersClicked {
 
     private SearchFragment searchFragment;
     private Toolbar toolbar;
-    private UserContext userContext;
     private final int minimumToSearch = 3;
     private CategoryFragment fragment;
-    private Typeface roboto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,30 +35,6 @@ public class MainActivity extends AppCompatActivity implements CategoryFragment.
         fragment = new CategoryFragment();
 
         searchFragment = new SearchFragment();
-
-        userContext = UserContext.context(userContext);
-
-        roboto = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Light.ttf");
-
-        User current = userContext.currentUser();
-
-        if (current != null) {
-
-            UserImageView picture;
-
-            if (userContext.isFacebook(current)) {
-
-                picture = new UserImageView(userContext.getPicture(), roboto);
-
-            } else {
-
-                picture = new UserImageView(null, roboto);
-
-            }
-
-            fragment.setPicture(picture);
-
-        }
 
         setCategoryFragment();
 

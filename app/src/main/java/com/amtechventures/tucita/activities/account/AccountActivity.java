@@ -262,13 +262,13 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
 
             }else{
 
-                circularImageView.setVisibility(View.GONE);
+                circularImageView.setImageResource(R.mipmap.ic_user);
 
             }
 
         } else {
 
-            circularImageView.setVisibility(View.GONE);
+            circularImageView.setImageResource(R.mipmap.ic_user);
 
         }
 
@@ -329,6 +329,15 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
         });
 
         return true;
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        goToCategories();
+
+        return super.onOptionsItemSelected(item);
 
     }
 

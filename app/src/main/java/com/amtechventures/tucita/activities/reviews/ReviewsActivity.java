@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 
@@ -263,6 +264,16 @@ public class ReviewsActivity extends AppCompatActivity implements UserReviewView
         getSupportActionBar().setTitle(name);
 
         return true;
+
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        finish();
+
+        return super.onOptionsItemSelected(item);
 
     }
 
