@@ -28,10 +28,14 @@
             android:id="@+id/touched"
             android:background="@drawable/ab_transparent_light_holo">
             <TextView
-                android:layout_width="250dp"
+                android:layout_width="wrap_content"
                 android:id="@+id/textNameUser"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:gravity="center_vertical"
-                style="@style/AppTheme.ListViewItem"/>
+                style="@style/AppTheme.subTitle"/>
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:id="@+id/ratingContainer"
@@ -44,7 +48,7 @@
                 android:id="@+id/ratingBar"
                 android:scaleX="0.5"
                 android:scaleY="0.5"
-                android:translationX="-20sp"
+                android:translationX="-31sp"
                 android:translationY="-6sp"
                 android:isIndicator="true"
                 style="@style/RatingBar"
@@ -61,12 +65,17 @@
             <TextView
                 android:layout_width="match_parent"
                 android:id="@+id/textTitle"
+                android:maxLines="1"
                 android:layout_below="@+id/ratingContainer"
-                android:gravity="center_vertical"
-                style="@style/AppTheme.ListViewItem"/>
+                android:gravity="top"
+                android:layout_height="wrap_content"
+                style="@style/AppTheme.Title"/>
                 <TextView
+                    android:maxLines="2"
                     android:layout_width="wrap_content"
                     android:layout_below="@+id/textTitle"
+                    android:layout_marginEnd="@dimen/high_margin"
+                    android:layout_marginRight="@dimen/high_margin"
                     android:id="@+id/textDescription"
                     style="@style/AppTheme.ListViewItem"/>
         </RelativeLayout>

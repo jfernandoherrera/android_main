@@ -68,9 +68,9 @@
                 <ExpandableListView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:indicatorLeft="280dp"
+                    android:indicatorRight="0dp"
                     android:layout_below="@+id/textViewTop"
-                    android:indicatorLeft="294dp"
-                    android:indicatorRight="329dp"
                     android:id="@+id/listViewTop"
                     />
                 <TextView
@@ -89,9 +89,9 @@
                 <ExpandableListView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:indicatorLeft="294dp"
-                    android:indicatorRight="329dp"
                     android:id="@+id/listViewFull"
+                    android:indicatorLeft="280dp"
+                    android:indicatorRight="0dp"
                     android:layout_below="@+id/textViewFull"
                     />
                 <TextView
@@ -111,8 +111,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/listViewDescription"
-                    android:indicatorLeft="294dp"
-                    android:indicatorRight="329dp"
+                    android:indicatorLeft="280dp"
+                    android:indicatorRight="0dp"
                     android:layout_below="@+id/textViewAbout"
                     android:foregroundGravity="bottom"
                     android:divider="@android:color/holo_red_dark"

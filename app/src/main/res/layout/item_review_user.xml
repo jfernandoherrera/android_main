@@ -35,8 +35,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:id="@+id/textNameUser"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/activity_horizontal_margin"
                     android:gravity="center_vertical"
-                    style="@style/AppTheme.ListViewItem"/>
+                    style="@style/AppTheme.subTitle"/>
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
@@ -58,7 +62,7 @@
                         android:numStars="5"
                         android:scaleX="0.5"
                         android:scaleY="0.5"
-                        android:translationX="-33sp"
+                        android:translationX="-31sp"
                         android:translationY="-3sp"
                         android:id="@+id/ratingBar"
                         android:isIndicator="true"
@@ -69,6 +73,7 @@
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
                         android:layout_marginEnd="20dp"
+                        android:gravity="bottom"
                         android:layout_marginRight="20dp"
                         android:layout_height="30sp"
                         android:id="@+id/textDate"/>
@@ -77,12 +82,15 @@
         <TextView
             android:layout_width="match_parent"
             android:id="@+id/textTitle"
+            android:maxLines="1"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/containerC"
-            android:gravity="center_vertical"
+            android:gravity="top"
             android:layout_marginEnd="@dimen/high_margin"
             android:layout_marginRight="@dimen/high_margin"
-            style="@style/AppTheme.ListViewItem"/>
+            style="@style/AppTheme.Title"/>
         <TextView
+            android:maxLines="2"
             android:layout_width="wrap_content"
             android:layout_below="@+id/textTitle"
             android:layout_marginEnd="@dimen/high_margin"

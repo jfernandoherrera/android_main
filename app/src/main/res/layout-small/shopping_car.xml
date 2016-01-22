@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/high_margin"
+        android:id="@+id/listContainer"
+        android:layout_marginLeft="@dimen/high_margin"
+        android:layout_marginRight="@dimen/high_margin"
+        android:layout_marginTop="@dimen/high_margin"
+        android:layout_marginBottom="80dp"
+        android:background="@android:color/white"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/basket"
+            android:id="@+id/title"
+            style="@style/AppTheme.Title"/>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_below="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="190dp"
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:id="@+id/moreServices"
+            android:text="@string/add_more_services"
+            android:gravity="bottom"
+            android:layout_below="@+id/recycler_view"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            style="@style/AppTheme.Button.ButtonBasket"/>
+    </RelativeLayout>
+<RelativeLayout
+    android:id="@+id/containerShoppingView"
+    android:layout_gravity="bottom|center"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
+    android:background="@drawable/jog_tab_bar_right_end_confirm_yellow">
+    <ImageView
+        android:id="@+id/car"
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:scaleType="fitXY"
+        android:layout_gravity="start"
+        />
+    <com.amtechventures.tucita.utils.views.CircleTextView
+        android:id="@+id/count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+    <Button
+        android:id="@+id/bookNow"
+        android:layout_centerInParent="true"
+        android:background="@android:color/transparent"
+        android:text="@string/book_now"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"/>
+</RelativeLayout>
+</merge>

@@ -8,10 +8,12 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
@@ -180,8 +182,6 @@ public class VenueFragment extends Fragment {
 
         listViewFullMenu = (ExpandableListView) rootView.findViewById(R.id.listViewFull);
 
-        listViewAnotherMenu = (ExpandableListView) rootView.findViewById(R.id.listViewTop);
-
         this.inflater = inflater;
 
         return rootView;
@@ -191,6 +191,7 @@ public class VenueFragment extends Fragment {
     private void goToReviews(){
 
         ReviewsActivity.goToReviews(getContext(), venue.getName(), venue.getAddress());
+
     }
 
     @Override
