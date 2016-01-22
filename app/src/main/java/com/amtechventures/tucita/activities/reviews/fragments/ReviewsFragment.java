@@ -14,6 +14,7 @@ import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.amtechventures.tucita.R;
+import com.amtechventures.tucita.activities.reviews.ReviewsActivity;
 import com.amtechventures.tucita.activities.reviews.adapters.ReviewsAdapter;
 import com.amtechventures.tucita.model.context.user.UserContext;
 import com.amtechventures.tucita.model.domain.review.Review;
@@ -23,7 +24,7 @@ import com.amtechventures.tucita.utils.views.UserReviewView;
 import java.util.Date;
 import java.util.List;
 
-public class ReviewsFragment extends Fragment implements ReviewsAdapter.OnReviewClicked{
+public class ReviewsFragment extends Fragment {
 
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView recyclerView;
@@ -40,6 +41,11 @@ public class ReviewsFragment extends Fragment implements ReviewsAdapter.OnReview
     UserReviewView userReviewView;
     int reviewsCount;
 
+    public interface OnDetails{
+
+        void onDetails(Review review);
+    }
+
     @Override
     public void onAttach(Context context) {
 
@@ -48,6 +54,13 @@ public class ReviewsFragment extends Fragment implements ReviewsAdapter.OnReview
         reviewBy = getString(R.string.review_by);
 
         users = getString(R.string.users);
+
+    }
+
+    @Override
+    public void onDetach() {
+
+        super.onDetach();
 
     }
 
@@ -72,7 +85,7 @@ public class ReviewsFragment extends Fragment implements ReviewsAdapter.OnReview
 
         if(reviewList != null){
 
-            adapter = new ReviewsAdapter(reviewList, this, user);
+            adapter = new ReviewsAdapter(reviewList, (ReviewsAdapter.OnReviewClicked) getActivity(), user);
 
             recyclerView.setAdapter(adapter);
 
@@ -185,7 +198,7 @@ public class ReviewsFragment extends Fragment implements ReviewsAdapter.OnReview
 
             if(recyclerView != null){
 
-                adapter = new ReviewsAdapter(reviewList, this, user);
+                adapter = new ReviewsAdapter(reviewList, (ReviewsAdapter.OnReviewClicked) getActivity(), user);
 
                 recyclerView.setAdapter(adapter);
 
@@ -211,8 +224,4 @@ public class ReviewsFragment extends Fragment implements ReviewsAdapter.OnReview
         }
     }
 
-    @Override
-    public void onReviewClicked(Review review) {
-
-    }
 }

@@ -13,6 +13,7 @@ import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.amtechventures.tucita.R;
+import com.amtechventures.tucita.activities.reviews.fragments.ReviewsFragment;
 import com.amtechventures.tucita.model.domain.review.Review;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
@@ -41,6 +42,8 @@ public class UserReviewView extends RelativeLayout{
 
     private OnEdit onEdit;
 
+    private ReviewsFragment.OnDetails onDetails;
+
     public interface OnEdit{
 
         void onEdit(Review review);
@@ -54,6 +57,8 @@ public class UserReviewView extends RelativeLayout{
         init(context);
 
         onEdit = (OnEdit) context;
+
+        onDetails = (ReviewsFragment.OnDetails) context;
 
     }
 
@@ -88,7 +93,7 @@ public class UserReviewView extends RelativeLayout{
 
                     v.setBackgroundResource(R.drawable.pressed_application_background_static);
 
-                } else if (event.getAction() != MotionEvent.ACTION_MOVE) {
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
 
                     v.setBackgroundColor(Color.TRANSPARENT);
 
@@ -104,7 +109,7 @@ public class UserReviewView extends RelativeLayout{
             @Override
             public void onClick(View v) {
 
-            onEdit.onEdit(review);
+                onEdit.onEdit(review);
 
             }
 
@@ -119,7 +124,7 @@ public class UserReviewView extends RelativeLayout{
 
                     v.setBackgroundResource(R.drawable.pressed_application_background_static);
 
-                } else if (event.getAction() != MotionEvent.ACTION_MOVE) {
+                } else {
 
                     v.setBackgroundColor(Color.TRANSPARENT);
 
@@ -131,15 +136,20 @@ public class UserReviewView extends RelativeLayout{
         });
 
         relativeLayout.setOnClickListener(new OnClickListener() {
-
             @Override
             public void onClick(View v) {
 
-
+                onDetails.onDetails(review);
 
             }
-
         });
+
+    }
+
+
+    public Review getReview() {
+
+        return review;
 
     }
 

@@ -16,7 +16,9 @@ import android.widget.RelativeLayout;
 
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.account.fragments.review.ReviewFragment;
+import com.amtechventures.tucita.activities.reviews.adapters.ReviewsAdapter;
 import com.amtechventures.tucita.activities.reviews.fragments.EditReviewFragment;
+import com.amtechventures.tucita.activities.reviews.fragments.ReviewDetailsFragment;
 import com.amtechventures.tucita.activities.reviews.fragments.ReviewsFragment;
 import com.amtechventures.tucita.model.context.city.CityCompletion;
 import com.amtechventures.tucita.model.context.review.ReviewCompletion;
@@ -34,7 +36,7 @@ import com.amtechventures.tucita.utils.views.UserReviewView;
 
 import java.util.List;
 
-public class ReviewsActivity extends AppCompatActivity implements UserReviewView.OnEdit, EditReviewFragment.OnEdited{
+public class ReviewsActivity extends AppCompatActivity implements UserReviewView.OnEdit, EditReviewFragment.OnEdited, ReviewsFragment.OnDetails, ReviewsAdapter.OnReviewClicked {
 
     private Toolbar toolbar;
     private String name;
@@ -42,9 +44,21 @@ public class ReviewsActivity extends AppCompatActivity implements UserReviewView
     private VenueContext venueContext;
     private Venue venue;
     private ReviewsFragment reviewsFragment;
+    private ReviewDetailsFragment reviewDetailsFragment;
     private ReviewContext reviewContext;
     private UserContext userContext;
     private RelativeLayout concealer;
+
+    @Override
+    public void onDetails(Review review) {
+
+        reviewDetailsFragment.setReview(review);
+
+        reviewDetailsShow();
+
+        reviewsHide();
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,11 +77,17 @@ public class ReviewsActivity extends AppCompatActivity implements UserReviewView
 
         reviewsFragment = new ReviewsFragment();
 
+        reviewDetailsFragment = new ReviewDetailsFragment();
+
         setup();
 
         setToolbar();
 
         setReviewsFragment();
+
+        setReviewsDetailsFragment();
+
+        reviewDetailsHide();
 
     }
 
@@ -199,6 +219,31 @@ public class ReviewsActivity extends AppCompatActivity implements UserReviewView
         transaction.commit();
 
     }
+
+    private void reviewDetailsHide() {
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+        transaction.hide(reviewDetailsFragment);
+
+        transaction.commit();
+
+    }
+
+    private void setReviewsDetailsFragment() {
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+        transaction.add(R.id.drawView, reviewDetailsFragment);
+
+        transaction.commit();
+
+    }
+
     private void setReviewsFragment() {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -267,11 +312,42 @@ public class ReviewsActivity extends AppCompatActivity implements UserReviewView
 
     }
 
+    private void back(){
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        EditReviewFragment prev = (EditReviewFragment) fragmentManager.findFragmentByTag(EditReviewFragment.class.getName());
+
+        if(prev != null){
+
+            prev.dismiss();
+
+        }else if(reviewsFragment.isHidden()){
+
+        reviewsShow();
+
+        reviewDetailsHide();
+
+            }else {
+
+            finish();
+
+            }
+
+    }
+
+
+    @Override
+    public void onBackPressed() {
+
+     back();
+
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        finish();
+        back();
 
         return super.onOptionsItemSelected(item);
 
@@ -284,10 +360,46 @@ public class ReviewsActivity extends AppCompatActivity implements UserReviewView
 
     }
 
+    private void reviewDetailsShow() {
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+        transaction.show(reviewDetailsFragment);
+
+        transaction.commit();
+
+    }
+
+
+    private void reviewsShow() {
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+        transaction.show(reviewsFragment);
+
+        transaction.commit();
+
+    }
+
     @Override
     public void onEdited(Review review) {
 
     reviewsFragment.setYours(review);
+
+    }
+
+    @Override
+    public void onReviewClicked(Review review) {
+
+        reviewDetailsFragment.setReview(review);
+
+        reviewDetailsShow();
+
+        reviewsHide();
 
     }
 }
