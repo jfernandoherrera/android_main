@@ -4,6 +4,7 @@ package com.amtechventures.tucita.activities.reviews.adapters;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -99,7 +100,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
 
         holder.textDate.setText(date(review.getUpdatedAt()));
 
-        setImageUser(user, holder);
+        holder.circularImageView.setImageResource(R.mipmap.ic_user);
 
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
 
@@ -128,26 +129,6 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
 
     }
 
-    private void setImageUser(User user, ViewHolder holder){
-
-        if(userContext.isFacebook(user)) {
-
-            Bitmap image = userContext.getPicture();
-
-            if(image != null) {
-
-                holder.circularImageView.setImageBitmap(image);
-
-            }
-
-        }else {
-
-            holder.circularImageView.setImageResource(R.mipmap.ic_user);
-
-        }
-
-    }
-
     @Override
     public int getItemCount() {
 
@@ -169,8 +150,6 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
 
         protected RatingBar ratingBar;
 
-        protected ImageView user;
-
         protected LinearLayout relativeLayout;
 
         public ViewHolder(View itemView) {
@@ -182,8 +161,6 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
             textDescription = (TextView) itemView.findViewById(R.id.textDescription);
 
             textTitle = (TextView) itemView.findViewById(R.id.textTitle);
-
-            user = (ImageView) itemView.findViewById(R.id.image);
 
             textDate = (TextView) itemView.findViewById(R.id.textDate);
 

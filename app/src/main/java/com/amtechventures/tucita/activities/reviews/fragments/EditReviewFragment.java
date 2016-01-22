@@ -1,4 +1,4 @@
-package com.amtechventures.tucita.activities.account.fragments.review;
+package com.amtechventures.tucita.activities.reviews.fragments;
 
 import android.app.Activity;
 import android.graphics.Color;
@@ -12,20 +12,17 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.model.context.review.ReviewCompletion;
 import com.amtechventures.tucita.model.context.review.ReviewContext;
 import com.amtechventures.tucita.model.domain.review.Review;
 import com.amtechventures.tucita.model.domain.user.User;
-import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.error.AppError;
 import com.amtechventures.tucita.utils.views.RatingView;
 import com.mikhaellopez.circularimageview.CircularImageView;
-
 import java.util.List;
 
-public class ReviewFragment extends DialogFragment {
+public class EditReviewFragment extends DialogFragment {
 
     CircularImageView circularImageView;
     RelativeLayout layout;
@@ -34,32 +31,15 @@ public class ReviewFragment extends DialogFragment {
     TextView textTitle;
     TextView textDescription;
     TextView textName;
-    Button send;
-    User user;
-    Venue venue;
-    OnSend listener;
+    Button edit;
+    Review review;
     float rating;
+    OnEdited onEdited;
+    User user;
 
-    public interface OnSend{
+    public interface OnEdited{
 
-        void onSend();
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-
-        super.onAttach(activity);
-
-        listener = (OnSend) activity;
-
-    }
-
-    @Override
-    public void onDetach() {
-
-        super.onDetach();
-
-        listener = null;
+        void onEdited(Review review);
 
     }
 
@@ -72,15 +52,21 @@ public class ReviewFragment extends DialogFragment {
 
     }
 
-    public void setUser(User user) {
+    @Override
+    public void onAttach(Activity activity) {
 
-        this.user = user;
+        super.onAttach(activity);
+
+    onEdited = (OnEdited) activity;
 
     }
 
-    public void setVenue(Venue venue) {
+    @Override
+    public void onDetach() {
 
-        this.venue = venue;
+        super.onDetach();
+
+        onEdited = null;
 
     }
 
@@ -88,7 +74,7 @@ public class ReviewFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_add_review, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_edit_review, container, false);
 
         textName = (TextView) rootView.findViewById(R.id.textName);
 
@@ -100,24 +86,22 @@ public class ReviewFragment extends DialogFragment {
 
         ratingView = (RatingView) rootView.findViewById(R.id.ratingView);
 
-        ratingView.setRating(rating);
+        edit = (Button) rootView.findViewById(R.id.send);
 
-        send = (Button) rootView.findViewById(R.id.send);
+        edit.setBackgroundColor(Color.WHITE);
 
-        send.setBackgroundColor(Color.WHITE);
-
-        send.setOnTouchListener(new View.OnTouchListener() {
+        edit.setOnTouchListener(new View.OnTouchListener() {
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
 
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
 
-                    send.setBackgroundResource(R.drawable.pressed_application_background_static);
+                    edit.setBackgroundResource(R.drawable.pressed_application_background_static);
 
                 } else if (event.getAction() != MotionEvent.ACTION_MOVE) {
 
-                    send.setBackgroundColor(Color.WHITE);
+                    edit.setBackgroundColor(Color.WHITE);
 
                 }
 
@@ -127,12 +111,12 @@ public class ReviewFragment extends DialogFragment {
         });
 
 
-        send.setOnClickListener(new View.OnClickListener() {
+        edit.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
 
-        sendReview();
+                editReview();
 
             }
         });
@@ -151,22 +135,35 @@ public class ReviewFragment extends DialogFragment {
 
         textName.setText(text);
 
+        textTitle.setText(review.getTitle());
+
+        textDescription.setText(review.getDescription());
+
+        setRating(review.getRating());
+
         return rootView;
-    }
-
-    public void setRating(float rating){
-
-    this.rating = rating;
 
     }
 
-    private void sendReview(){
+    public void setUser(User user) {
 
-        Review review = new Review();
+        this.user = user;
 
-        review.setUser(user);
+    }
 
-        review.setVenue(venue);
+    private void setRating(float rating){
+
+        ratingView.setRating(rating);
+
+    }
+
+    public void setReview(Review review) {
+
+        this.review = review;
+
+    }
+
+    private void editReview(){
 
         review.setRating(ratingView.getRating());
 
@@ -182,7 +179,7 @@ public class ReviewFragment extends DialogFragment {
 
                 } else {
 
-                    listener.onSend();
+                    onEdited.onEdited(review);
 
                     dismiss();
 

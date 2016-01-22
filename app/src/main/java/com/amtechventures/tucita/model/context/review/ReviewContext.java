@@ -30,9 +30,9 @@ public class ReviewContext {
         reviewRemote = new ReviewRemote();
     }
 
-    public void createReview(Review review, final ReviewCompletion.ReviewErrorCompletion completion){
+    public void saveReview(Review review, final ReviewCompletion.ReviewErrorCompletion completion){
 
-        reviewRemote.createReview(review, completion);
+        reviewRemote.saveReview(review, completion);
 
     }
 

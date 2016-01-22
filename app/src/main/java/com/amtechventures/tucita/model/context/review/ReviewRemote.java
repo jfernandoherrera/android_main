@@ -118,7 +118,7 @@ public class ReviewRemote {
     }
 
 
-    public void createReview(Review review, final ReviewCompletion.ReviewErrorCompletion completion){
+    public void saveReview(Review review, final ReviewCompletion.ReviewErrorCompletion completion){
 
         review.saveInBackground(new SaveCallback() {
 

@@ -1,6 +1,7 @@
 package com.amtechventures.tucita.activities.reviews.fragments;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,14 +9,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.reviews.adapters.ReviewsAdapter;
 import com.amtechventures.tucita.model.context.user.UserContext;
 import com.amtechventures.tucita.model.domain.review.Review;
 import com.amtechventures.tucita.model.domain.user.User;
+import com.amtechventures.tucita.utils.views.UserReviewView;
 
+import java.util.Date;
 import java.util.List;
 
 public class ReviewsFragment extends Fragment implements ReviewsAdapter.OnReviewClicked{
@@ -31,7 +36,9 @@ public class ReviewsFragment extends Fragment implements ReviewsAdapter.OnReview
     UserContext user;
     String reviewBy ;
     String users;
-
+    Review yours;
+    UserReviewView userReviewView;
+    int reviewsCount;
 
     @Override
     public void onAttach(Context context) {
@@ -53,9 +60,11 @@ public class ReviewsFragment extends Fragment implements ReviewsAdapter.OnReview
 
         textReviews = (TextView) rootView.findViewById(R.id.textReviews);
 
-        ratingBar = (RatingBar) rootView.findViewById(R.id.ratingBar);
+        ratingBar = (RatingBar) rootView.findViewById(R.id.ratingBarVenue);
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
+
+        userReviewView = (UserReviewView) rootView.findViewById(R.id.userReview);
 
         layoutManager = new LinearLayoutManager(getContext());
 
@@ -70,6 +79,8 @@ public class ReviewsFragment extends Fragment implements ReviewsAdapter.OnReview
         }
 
         setupRating();
+
+        setupYours();
 
         return rootView;
     }
@@ -86,6 +97,18 @@ public class ReviewsFragment extends Fragment implements ReviewsAdapter.OnReview
 
     }
 
+    public void setReviewsCount(int count) {
+
+        reviewsCount = count;
+
+        if(textRating != null) {
+
+            setupReviews();
+
+        }
+
+    }
+
     public void setUser(UserContext user) {
 
         this.user = user;
@@ -94,17 +117,63 @@ public class ReviewsFragment extends Fragment implements ReviewsAdapter.OnReview
 
     private void setupRating(){
 
+        textRating.setText(String.valueOf(rating));
+
         ratingBar.setRating(rating);
 
-        textRating.setText(String.valueOf(rating));
+    }
+
+    private void setImageUser(User user){
+
+        if(this.user.isFacebook(user)) {
+
+            Bitmap image = this.user.getPicture();
+
+            if(image != null) {
+
+                userReviewView.setImageUser(image);
+
+            }
+
+        }
 
     }
 
     private void setupReviews(){
 
-        String textReviewsDone = reviewBy + " " + reviewList.size() + " " + users;
+        String textReviewsDone = reviewBy + " " + reviewsCount + " " + users;
 
         textReviews.setText(textReviewsDone);
+
+    }
+
+    public void setYours(Review yours) {
+
+        this.yours = yours;
+
+        if(userReviewView != null){
+
+            setupYours();
+
+        }
+
+    }
+
+    private void setupYours(){
+
+        if(yours == null){
+
+            userReviewView.setVisibility(View.GONE);
+
+        }else {
+
+            userReviewView.setVisibility(View.VISIBLE);
+
+            userReviewView.setReview(yours);
+
+            setImageUser(yours.getUser());
+
+        }
 
     }
 
