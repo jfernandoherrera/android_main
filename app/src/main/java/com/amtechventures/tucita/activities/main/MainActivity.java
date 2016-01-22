@@ -1,5 +1,8 @@
 package com.amtechventures.tucita.activities.main;
 
+import android.content.Context;
+import android.graphics.Typeface;
+import android.os.Handler;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MenuItemCompat;
@@ -7,9 +10,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.AttributeSet;
+import android.view.InflateException;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
+
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.account.AccountActivity;
 import com.amtechventures.tucita.activities.main.fragments.category.CategoryFragment;
@@ -18,13 +26,15 @@ import com.amtechventures.tucita.activities.main.fragments.search.SearchFragment
 import com.amtechventures.tucita.activities.main.fragments.subcategory.SubCategoryFragment;
 import com.amtechventures.tucita.utils.views.AlertDialogError;
 
+import java.lang.reflect.Field;
+
 public class MainActivity extends AppCompatActivity implements CategoryFragment.OnItemClicked, SubCategoryFragment.OnOthersClicked {
 
     private SearchFragment searchFragment;
     private Toolbar toolbar;
     private final int minimumToSearch = 3;
     private CategoryFragment fragment;
-
+    private Typeface roboto;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -35,6 +45,8 @@ public class MainActivity extends AppCompatActivity implements CategoryFragment.
         fragment = new CategoryFragment();
 
         searchFragment = new SearchFragment();
+
+        roboto = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Light.ttf");
 
         setCategoryFragment();
 
@@ -147,10 +159,36 @@ public class MainActivity extends AppCompatActivity implements CategoryFragment.
 
     }
 
+    private TextView getActionBarTextView() {
+
+        TextView titleTextView = null;
+
+        String defaultNameTitleMenu = "mTitleTextView";
+
+        try {
+
+            Field field = toolbar.getClass().getDeclaredField(defaultNameTitleMenu);
+
+            field.setAccessible(true);
+
+            titleTextView = (TextView) field.get(toolbar);
+
+        } catch (NoSuchFieldException e) {
+
+        } catch (IllegalAccessException e) {
+
+        }
+
+        return titleTextView;
+
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
         toolbar.inflateMenu((R.menu.menu_main));
+
+        getActionBarTextView().setTypeface(roboto);
 
         MenuItem searchItem = menu.findItem(R.id.action_search);
 

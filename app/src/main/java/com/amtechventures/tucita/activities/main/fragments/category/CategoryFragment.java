@@ -159,6 +159,10 @@ public class CategoryFragment extends Fragment {
 
         CircularImageView circularImageView = (CircularImageView) view.findViewById(R.id.imageUser);
 
+        buttonText.setTypeface(roboto);
+
+        textView.setTypeface(roboto);
+
         linearLayout.setBackgroundResource(R.drawable.log_in_or_signup_click_out);
 
         if (connected) {
