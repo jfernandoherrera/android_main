@@ -16,7 +16,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:theme="@style/AppTheme.Base"
+            android:theme="@style/AppTheme.Base"
             android:background="@color/colorPrimary"
             android:paddingBottom="@dimen/high_margin"/>
         <com.mikhaellopez.circularimageview.CircularImageView

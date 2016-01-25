@@ -29,7 +29,7 @@
             android:paddingRight="@dimen/high_margin"
             android:paddingEnd="@dimen/high_margin"
             android:background="@color/colorPrimaryLight"
-            android:text="@string/client_details"/>
+            android:text="@string/venue_details"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -76,7 +76,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginLeft="@dimen/high_margin"
                 android:layout_marginStart="@dimen/high_margin"
-                android:id="@+id/placeOrder"
-                android:text="@string/place_order"/>
+                android:id="@+id/changeDate"
+                android:text="@string/change_date"/>
         </RelativeLayout>
     </LinearLayout></ScrollView>

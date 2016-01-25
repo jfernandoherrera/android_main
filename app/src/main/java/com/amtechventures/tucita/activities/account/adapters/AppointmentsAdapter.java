@@ -49,6 +49,8 @@ public class AppointmentsAdapter extends RecyclerView.Adapter<AppointmentsAdapte
 
             Appointment appointment = pendingItems.get(position);
 
+            viewHolder.objectId = appointment.getObjectId();
+
             String venueName = appointment.getVenue().getName();
 
             viewHolder.name.setText(venueName);
@@ -87,6 +89,7 @@ public class AppointmentsAdapter extends RecyclerView.Adapter<AppointmentsAdapte
 
         protected TextView date;
 
+        protected String objectId;
 
         public ViewHolder(final View itemView) {
 
@@ -115,7 +118,7 @@ public class AppointmentsAdapter extends RecyclerView.Adapter<AppointmentsAdapte
                 @Override
                 public void onClick(View v) {
 
-                    goToDetails(v.getContext());
+                    AppointmentActivity.goToDetails(v.getContext(), objectId);
 
                 }
             });
@@ -128,12 +131,6 @@ public class AppointmentsAdapter extends RecyclerView.Adapter<AppointmentsAdapte
     }
 
 
-    public static void goToDetails(Context context) {
 
-        Intent intent = new Intent(context, AppointmentActivity.class);
-
-        context.startActivity(intent);
-
-    }
 
 }
