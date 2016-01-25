@@ -45,14 +45,13 @@
         />
             <RatingBar
                 android:layout_width="wrap_content"
-                android:layout_height="30sp"
+                android:layout_height="15sp"
                 android:numStars="5"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+android:layout_marginBottom="@dimen/activity_horizontal_margin"
                 android:id="@+id/searchRatingBar"
                 android:layout_below="@id/textLocation"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:translationX="-30sp"
-                android:translationY="-3sp"
                style="@style/RatingBar"
                 />
             <TextView

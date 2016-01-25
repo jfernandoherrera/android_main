@@ -93,7 +93,7 @@ public class UserReviewView extends RelativeLayout{
 
                     v.setBackgroundResource(R.drawable.pressed_application_background_static);
 
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                } else if (event.getAction() != MotionEvent.ACTION_MOVE) {
 
                     v.setBackgroundColor(Color.TRANSPARENT);
 
@@ -124,7 +124,7 @@ public class UserReviewView extends RelativeLayout{
 
                     v.setBackgroundResource(R.drawable.pressed_application_background_static);
 
-                } else {
+                } else if (event.getAction() != MotionEvent.ACTION_MOVE) {
 
                     v.setBackgroundColor(Color.TRANSPARENT);
 

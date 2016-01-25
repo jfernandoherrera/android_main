@@ -17,7 +17,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/high_margin"
         android:layout_marginLeft="@dimen/high_margin"
-        android:layout_marginTop="@dimen/high_margin"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="32dp"
         android:id="@+id/venueView">
     <com.amtechventures.tucita.utils.views.CircleTextView
         android:id="@+id/textRating"
@@ -32,19 +33,17 @@
         android:layout_height="wrap_content">
     <RatingBar
         android:layout_width="wrap_content"
-        android:layout_height="30sp"
+        android:layout_height="15sp"
         android:numStars="5"
+        android:layout_marginStart="@dimen/high_margin"
+        android:layout_marginLeft="@dimen/high_margin"
         android:id="@+id/ratingBarVenue"
         android:isIndicator="true"
-        android:scaleX="0.5"
-        android:scaleY="0.5"
-        android:translationX="-30sp"
-        android:translationY="-3sp"
         style="@style/RatingBar"
         />
     <TextView
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginLeft="@dimen/high_margin"
+        android:layout_marginStart="@dimen/high_margin"
         android:layout_width="wrap_content"
         android:id="@+id/textReviews"
         android:layout_below="@id/ratingBarVenue"

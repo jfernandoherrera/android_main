@@ -58,23 +58,22 @@
 
                     <RatingBar
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="15sp"
                         android:numStars="5"
-                        android:scaleX="0.5"
-                        android:scaleY="0.5"
-                        android:translationX="-31sp"
-                        android:translationY="-3sp"
                         android:id="@+id/ratingBar"
                         android:isIndicator="true"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_marginStart="@dimen/activity_horizontal_margin"
                         style="@style/RatingBar"
                         />
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginEnd="20dp"
-                        android:gravity="bottom"
-                        android:layout_marginRight="20dp"
+                        android:layout_toRightOf="@id/ratingBar"
+                        android:layout_toEndOf="@id/ratingBar"
+                        android:layout_marginStart="@dimen/activity_horizontal_margin"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:gravity="top"
                         android:layout_height="30sp"
                         android:id="@+id/textDate"/>
                 </RelativeLayout>
@@ -86,6 +85,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/containerC"
             android:gravity="top"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginEnd="@dimen/high_margin"
             android:layout_marginRight="@dimen/high_margin"
             style="@style/AppTheme.Title"/>
@@ -93,6 +94,8 @@
             android:maxLines="2"
             android:layout_width="wrap_content"
             android:layout_below="@+id/textTitle"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginEnd="@dimen/high_margin"
             android:layout_marginRight="@dimen/high_margin"
             android:id="@+id/textDescription"

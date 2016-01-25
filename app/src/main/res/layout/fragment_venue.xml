@@ -26,23 +26,22 @@
                     android:layout_width="match_parent"
                     android:id="@+id/clickRating"
                     android:layout_below="@+id/title_Venue"
-                    android:layout_height="30sp">
+                    android:layout_height="17sp">
                 <RatingBar
                     android:layout_width="wrap_content"
-                    android:layout_height="30sp"
+                    android:layout_height="15sp"
                     android:numStars="5"
+                    android:layout_marginTop="1dp"
+                    android:layout_marginStart="@dimen/high_margin"
+                    android:layout_marginLeft="@dimen/high_margin"
                     android:id="@+id/ratingBar"
-                    android:scaleX="0.5"
-                    android:scaleY="0.5"
-                    android:translationX="-20sp"
                     android:isIndicator="true"
-                    android:background="@android:color/transparent"
                     style="@style/RatingBar"
                     />
                     <TextView
                         android:layout_width="wrap_content"
                         android:id="@+id/textViewReviews"
-                        android:layout_height="30sp"
+                        android:layout_height="15sp"
                         android:textSize="12sp"
                         android:gravity="center_vertical"
                         android:layout_alignParentEnd="true"
