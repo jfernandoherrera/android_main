@@ -39,14 +39,6 @@ public class CircleTextView extends TextView {
 
         }else{
 
-            int width = Integer.parseInt(attrs.getAttributeValue(2).substring(0, 2));
-
-    //        int lessBorders = (int) (width * 0.5);
-
-            //setWidth((int) ((width * size) + (lessBorders * size)));
-
-           // setHeight((int) ((width * size) + (lessBorders * size)));
-
             padding = (int) ((Integer.parseInt(attrs.getAttributeValue(2).substring(0, 2)) ) * size) / 2;
 
            setPadding(padding / 3, padding / 3, 0, 0);

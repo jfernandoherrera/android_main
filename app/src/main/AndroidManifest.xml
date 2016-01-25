@@ -38,6 +38,8 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity android:name=".activities.signup.SignUpActivity" >
         </activity>
+        <activity android:name=".activities.appointment.AppointmentActivity" >
+        </activity>
         <activity android:name=".activities.account.AccountActivity" >
         </activity>
         <activity android:name=".activities.reviews.ReviewsActivity" >

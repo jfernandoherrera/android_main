@@ -21,6 +21,7 @@ import com.amtechventures.tucita.model.domain.review.Review;
 import com.amtechventures.tucita.model.domain.user.User;
 import com.amtechventures.tucita.utils.views.UserReviewView;
 
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -129,8 +130,17 @@ public class ReviewsFragment extends Fragment {
     }
 
     private void setupRating(){
+        
+        DecimalFormat df = new DecimalFormat("#.#");
+        
+        String clippedRating =  df.format(rating);
 
-        textRating.setText(String.valueOf(rating));
+        if(clippedRating.length() == 1){
+
+            clippedRating = clippedRating + ",0";
+        }
+        
+        textRating.setText(clippedRating);
 
         ratingBar.setRating(rating);
 

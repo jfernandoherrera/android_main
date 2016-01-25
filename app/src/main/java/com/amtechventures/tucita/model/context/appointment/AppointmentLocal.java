@@ -10,6 +10,31 @@ import java.util.List;
 
 public class AppointmentLocal {
 
+    public Appointment getAppointment(String objectId){
+
+        Appointment appointment = null;
+
+        ParseQuery<Appointment> query = Appointment.getQuery();
+
+        query.fromLocalDatastore();
+
+        query.whereEqualTo(AppointmentAttributes.objectId, objectId);
+
+        query.include(AppointmentAttributes.venue);
+
+        try {
+
+            appointment = query.getFirst();
+
+        } catch (ParseException e) {
+
+            e.printStackTrace();
+
+        }
+
+        return appointment;
+    }
+
     public List loadUserAppointments(User user) {
 
         List venues = null;

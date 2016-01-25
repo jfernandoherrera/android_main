@@ -7,11 +7,13 @@ import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.domain.venue.VenueAttributes;
 import com.amtechventures.tucita.model.error.AppError;
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.SaveCallback;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -34,6 +36,36 @@ public class AppointmentRemote {
 
         }
 
+    }
+
+    public void getAppointment(String objectId, final AppointmentCompletion.AppointmentErrorCompletion completion){
+
+        setQuery();
+
+        query.whereEqualTo(AppointmentAttributes.objectId, objectId);
+
+        query.include(AppointmentAttributes.venue);
+
+        query.getFirstInBackground(new GetCallback<Appointment>() {
+
+            @Override
+            public void done(Appointment object, ParseException e) {
+
+                List <Appointment> appointments = null;
+
+                if(e == null){
+
+                appointments = new ArrayList<>();
+
+                    appointments.add(object);
+
+                }
+
+                AppError appError = e != null ? new AppError(Appointment.class.toString(), 0, null) : null;
+
+                completion.completion(appointments, appError);
+            }
+        });
     }
 
     public void loadAppointmentsDateVenue(Venue venue, Calendar date, final AppointmentCompletion.AppointmentErrorCompletion completion) {

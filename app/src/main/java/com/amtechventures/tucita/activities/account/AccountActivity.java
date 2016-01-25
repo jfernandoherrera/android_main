@@ -203,11 +203,19 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
 
                     List<Venue> venues = new ArrayList<>();
 
-                    Calendar calendar = Calendar.getInstance();
+
 
                     for (Appointment appointment : appointmentList) {
 
                         boolean isThere = false;
+
+                        Calendar calendar = Calendar.getInstance();
+
+                        int[] duration = appointment.getDuration();
+
+                        calendar.add(Calendar.HOUR, duration[0]);
+
+                        calendar.add(Calendar.MINUTE, duration[1]);
 
                         Venue venueToCheck;
 

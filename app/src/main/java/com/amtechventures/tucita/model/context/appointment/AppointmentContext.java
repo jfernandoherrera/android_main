@@ -54,4 +54,14 @@ public class AppointmentContext {
 
     }
 
+    public Appointment getAppointment(String objectId, AppointmentCompletion.AppointmentErrorCompletion completion) {
+
+        Appointment appointments = appointmentLocal.getAppointment(objectId);
+
+        appointmentRemote.getAppointment(objectId, completion);
+
+        return appointments;
+
+    }
+
 }

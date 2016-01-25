@@ -1,13 +1,19 @@
 package com.amtechventures.tucita.activities.account.adapters;
 
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import com.amtechventures.tucita.R;
+import com.amtechventures.tucita.activities.appointment.AppointmentActivity;
+import com.amtechventures.tucita.activities.appointment.fragments.details.AppointmentDetailsFragment;
 import com.amtechventures.tucita.model.domain.appointment.Appointment;
 import java.util.List;
 
@@ -29,7 +35,7 @@ public class AppointmentsAdapter extends RecyclerView.Adapter<AppointmentsAdapte
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int position) {
 
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.appointment_view, viewGroup, false);
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_appointment, viewGroup, false);
 
         ViewHolder viewHolder = new ViewHolder(v);
 
@@ -86,11 +92,47 @@ public class AppointmentsAdapter extends RecyclerView.Adapter<AppointmentsAdapte
 
             super(itemView);
 
+            itemView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+
+                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
+
+                        v.setBackgroundResource(R.drawable.pressed_application_background_static);
+
+                    } else if (event.getAction() != MotionEvent.ACTION_MOVE) {
+
+                        v.setBackgroundColor(Color.TRANSPARENT);
+
+                    }
+
+                    return false;
+                }
+            });
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+
+                    goToDetails(v.getContext());
+
+                }
+            });
             name = (TextView) itemView.findViewById(R.id.textName);
 
             date = (TextView) itemView.findViewById(R.id.textDate);
 
         }
+
+    }
+
+
+    public static void goToDetails(Context context) {
+
+        Intent intent = new Intent(context, AppointmentActivity.class);
+
+        context.startActivity(intent);
 
     }
 
