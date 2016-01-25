@@ -182,6 +182,8 @@ public class VenueFragment extends Fragment {
 
         listViewFullMenu = (ExpandableListView) rootView.findViewById(R.id.listViewFull);
 
+        listViewAnotherMenu = (ExpandableListView) rootView.findViewById(R.id.listViewTop);
+
         this.inflater = inflater;
 
         return rootView;
