@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.amtechventures.tucita.R;
@@ -28,7 +29,7 @@ public class BookingsFragment extends Fragment {
     private TextView noResults;
     private List<Appointment> completedAppointmentsList;
     private List<Appointment> pendingAppointmentsList;
-
+    private RelativeLayout relativeLayout;
     @Override
     public void onAttach(Context context) {
 
@@ -66,6 +67,8 @@ public class BookingsFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getContext());
 
         recyclerView.setLayoutManager(layoutManager);
+
+        relativeLayout = (RelativeLayout) rootView.findViewById(R.id.concealer);
 
         recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
 
@@ -140,6 +143,8 @@ public class BookingsFragment extends Fragment {
                 recyclerView.setAdapter(adapter);
 
                 noResults.setVisibility(View.GONE);
+
+                relativeLayout.setVisibility(View.GONE);
 
             }
 

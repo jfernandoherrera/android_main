@@ -45,7 +45,6 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
     private SecureCheckoutFragment secureCheckoutFragment;
     private Toolbar toolbar;
     private ShoppingCarView shoppingCarView;
-    private SlotContext slotContext;
     private UserContext userContext;
     private RelativeLayout relativeLayout;
 
@@ -65,8 +64,6 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
         selectDateFragment = new SelectDayFragment();
 
         secureCheckoutFragment = new SecureCheckoutFragment();
-
-        slotContext = SlotContext.context(slotContext);
 
         userContext = UserContext.context(userContext);
 
