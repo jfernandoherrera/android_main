@@ -8,14 +8,12 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.book.BookActivity;
-import com.amtechventures.tucita.model.domain.appointment.Appointment;
 import com.amtechventures.tucita.model.domain.review.Review;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.domain.venue.VenueAttributes;
@@ -105,7 +103,7 @@ public class VenuesAdapter extends RecyclerView.Adapter<VenuesAdapter.ViewHolder
 
         holder.setAddress(venue.getAddress());
 
-        holder.location.setText(venue.getCity().formatedLocation());
+        holder.location.setText(venue.getCity().formattedLocation());
 
         holder.textViewReviews.setText(reviews(venue.getReviews()));
 

@@ -204,7 +204,6 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
                     List<Venue> venues = new ArrayList<>();
 
 
-
                     for (Appointment appointment : appointmentList) {
 
                         boolean isThere = false;
@@ -249,6 +248,11 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
                     ((VenuesFragment) pagerAccountAdapter.getItem(1)).setVenuesAndUser(venues, user);
 
                 }
+
+            }
+
+            @Override
+            public void completion(Appointment appointment, AppError error) {
 
             }
 
@@ -300,7 +304,9 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
 
                 userContext.logout();
 
-                goToCategoriesFromLogout();
+                MainActivity.goToCategoriesFromLogout(getApplicationContext());
+
+                finish();
 
                 return true;
 
@@ -325,7 +331,7 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
 
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
-                intent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[] { email });
+                intent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{email});
 
                 Intent mailer = Intent.createChooser(intent, null);
 
@@ -343,7 +349,7 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        goToCategories();
+        MainActivity.goToCategories(getApplicationContext());
 
         return super.onOptionsItemSelected(item);
 
@@ -352,7 +358,7 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
     @Override
     public void onBackPressed() {
 
-        goToCategories();
+        MainActivity.goToCategories(getApplicationContext());
 
         super.onBackPressed();
 
@@ -366,29 +372,7 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
 
     }
 
-    public void goToCategoriesFromLogout(){
 
-        Intent intent = new Intent(this, MainActivity.class);
-
-        intent.putExtra(UserAttributes.connected, false);
-
-        startActivity(intent);
-
-        finish();
-
-    }
-
-    public void goToCategories() {
-
-        Intent intent = new Intent(this, MainActivity.class);
-
-        intent.putExtra(UserAttributes.connected, true);
-
-        startActivity(intent);
-
-        finish();
-
-    }
 
     @Override
     public void onReview(Venue venue, float ratingSelected) {

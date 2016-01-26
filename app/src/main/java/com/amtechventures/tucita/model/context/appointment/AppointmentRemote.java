@@ -51,19 +51,9 @@ public class AppointmentRemote {
             @Override
             public void done(Appointment object, ParseException e) {
 
-                List <Appointment> appointments = null;
-
-                if(e == null){
-
-                appointments = new ArrayList<>();
-
-                    appointments.add(object);
-
-                }
-
                 AppError appError = e != null ? new AppError(Appointment.class.toString(), 0, null) : null;
 
-                completion.completion(appointments, appError);
+                completion.completion(object, appError);
             }
         });
     }
@@ -114,7 +104,7 @@ public class AppointmentRemote {
 
                 AppError appError = e != null ? new AppError(Appointment.class.toString(), 0, null) : null;
 
-                completion.completion(null, appError);
+                completion.completion(new Appointment(), appError);
 
             }
 

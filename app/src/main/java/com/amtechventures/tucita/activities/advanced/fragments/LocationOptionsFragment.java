@@ -134,7 +134,7 @@ public class LocationOptionsFragment extends Fragment {
 
         for(City city: currentCities){
 
-            stringsCities.add(city.formatedLocation());
+            stringsCities.add(city.formattedLocation());
 
         }
 

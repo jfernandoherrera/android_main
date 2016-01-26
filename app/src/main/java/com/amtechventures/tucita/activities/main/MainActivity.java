@@ -1,6 +1,7 @@
 package com.amtechventures.tucita.activities.main;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Handler;
 import android.support.v4.app.FragmentManager;
@@ -24,6 +25,7 @@ import com.amtechventures.tucita.activities.main.fragments.category.CategoryFrag
 import com.amtechventures.tucita.activities.login.LoginActivity;
 import com.amtechventures.tucita.activities.main.fragments.search.SearchFragment;
 import com.amtechventures.tucita.activities.main.fragments.subcategory.SubCategoryFragment;
+import com.amtechventures.tucita.model.domain.user.UserAttributes;
 import com.amtechventures.tucita.utils.views.AlertDialogError;
 
 import java.lang.reflect.Field;
@@ -314,6 +316,34 @@ public class MainActivity extends AppCompatActivity implements CategoryFragment.
     public void onOthersClicked() {
 
         goToSearch();
+
+    }
+
+    public static void goToCategoriesFromLogout(Context context){
+
+        Intent intent = new Intent(context, MainActivity.class);
+
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        intent.putExtra(UserAttributes.connected, false);
+
+        context.startActivity(intent);
+
+    }
+
+    public static void goToCategories(Context context) {
+
+        Intent intent = new Intent(context, MainActivity.class);
+
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        intent.putExtra(UserAttributes.connected, true);
+
+        context.startActivity(intent);
 
     }
 

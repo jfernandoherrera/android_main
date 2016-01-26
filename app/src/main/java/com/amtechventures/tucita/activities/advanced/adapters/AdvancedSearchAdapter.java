@@ -60,7 +60,7 @@ public class AdvancedSearchAdapter extends RecyclerView.Adapter<AdvancedSearchAd
 
         viewHolder.setAddress(venue.getAddress());
 
-        viewHolder.location.setText(venue.getCity().formatedLocation());
+        viewHolder.location.setText(venue.getCity().formattedLocation());
 
         viewHolder.venueImage.setImageBitmap(venue.getPicture());
 

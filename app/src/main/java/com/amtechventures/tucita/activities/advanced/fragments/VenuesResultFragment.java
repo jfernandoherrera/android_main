@@ -257,7 +257,7 @@ public class VenuesResultFragment extends Fragment implements LocationCompletion
 
         setupProgress();
 
-        setCity(city.formatedLocation());
+        setCity(city.formattedLocation());
 
         subCategory = subCategoryContext.findSubCategory(name);
 

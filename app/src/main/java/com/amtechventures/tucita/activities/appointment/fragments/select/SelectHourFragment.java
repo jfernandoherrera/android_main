@@ -256,6 +256,11 @@ public class SelectHourFragment extends Fragment {
                 }
 
             }
+
+            @Override
+            public void completion(Appointment appointment, AppError error) {
+
+            }
         });
 
     }

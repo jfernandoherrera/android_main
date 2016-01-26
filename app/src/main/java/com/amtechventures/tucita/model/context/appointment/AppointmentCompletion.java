@@ -11,6 +11,8 @@ public class AppointmentCompletion {
 
         void completion(List<Appointment> appointmentList, AppError error);
 
+        void completion(Appointment appointment, AppError error);
+
     }
 
 }

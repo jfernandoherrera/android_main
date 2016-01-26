@@ -8,12 +8,10 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
@@ -620,7 +618,7 @@ public class VenueFragment extends Fragment {
 
     private void setupAddressAndLocation() {
 
-        String locationString = venue.getCity().formatedLocation();
+        String locationString = venue.getCity().formattedLocation();
 
         String address = locationString + " " + venue.getAddress();
 

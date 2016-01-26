@@ -49,3 +49,37 @@ queryReview.equalTo("venue", venue);
     });
 
 });
+
+Parse.Cloud.beforeSave(Parse.User, function(request, response) {
+
+var user = new Parse.Object.extend("User");
+
+var queryUser = new Parse.Query(user);
+
+queryUser.equalTo("email", request.object.get("email"));
+
+    queryUser.find( {
+
+        success : function(results) {
+
+            if(results.length != 0){
+
+            response.error("email exists");
+
+            }else{
+
+                response.success();
+
+                }
+
+        },
+
+        error: function(venue, error) {
+
+        alert('Failed to find objects, with error code: ' + error.message);
+
+        }
+
+    });
+
+});

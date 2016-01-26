@@ -19,7 +19,7 @@ public class City extends ParseObject {
 
     }
 
-    public String formatedLocation() {
+    public String formattedLocation() {
 
         String city = getName();
 

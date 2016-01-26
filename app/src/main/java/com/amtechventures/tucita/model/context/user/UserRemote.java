@@ -85,6 +85,12 @@ public class UserRemote {
             @Override
             public void done(ParseUser parseUser, ParseException e) {
 
+                if(e != null){
+
+                    e.printStackTrace();
+
+                }
+
                 if (parseUser != null && parseUser.isNew()) {
 
                     final User user = new User();
@@ -198,6 +204,12 @@ public class UserRemote {
         User user = null;
 
         AppError appError = new AppError(Category.class.toString(), 0, null);
+
+        if(e != null){
+
+            e.printStackTrace();
+
+        }
 
         if (e == null && parseUser != null) {
 

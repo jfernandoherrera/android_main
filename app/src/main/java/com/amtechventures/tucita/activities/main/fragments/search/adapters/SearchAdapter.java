@@ -147,7 +147,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
             venues.name.setText(venue.getName());
 
-            venues.location.setText(venue.getCity().formatedLocation());
+            venues.location.setText(venue.getCity().formattedLocation());
 
         }
 

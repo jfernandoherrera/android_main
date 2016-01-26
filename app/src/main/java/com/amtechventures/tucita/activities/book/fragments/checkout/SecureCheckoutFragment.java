@@ -16,6 +16,7 @@ import com.amtechventures.tucita.activities.book.adapters.ExpandableWithoutParen
 import com.amtechventures.tucita.model.context.appointment.AppointmentCompletion;
 import com.amtechventures.tucita.model.context.appointment.AppointmentContext;
 import com.amtechventures.tucita.model.domain.appointment.Appointment;
+import com.amtechventures.tucita.model.domain.appointment.AppointmentAttributes;
 import com.amtechventures.tucita.model.domain.service.Service;
 import com.amtechventures.tucita.model.domain.user.User;
 import com.amtechventures.tucita.model.domain.venue.Venue;
@@ -23,6 +24,7 @@ import com.amtechventures.tucita.model.error.AppError;
 import com.amtechventures.tucita.utils.views.AlertDialogError;
 import com.amtechventures.tucita.utils.views.AppointmentView;
 import com.amtechventures.tucita.utils.views.ViewUtils;
+import com.parse.ParseRelation;
 import com.parse.ParseUser;
 
 import java.util.Calendar;
@@ -141,9 +143,13 @@ public class SecureCheckoutFragment extends Fragment {
 
     public void setupAppointmentView() {
 
-        appointmentView.setTextName(venue.getName());
+        String dateString = date.getTime().toLocaleString();
 
-        appointmentView.setTextDate(date.getTime().toLocaleString());
+        appointmentView.setTextDate(dateString);
+
+        String venueName = venue.getName();
+
+        appointmentView.setTextName(venueName);
 
     }
 
@@ -184,6 +190,14 @@ public class SecureCheckoutFragment extends Fragment {
     public void placeOrder(AppointmentCompletion.AppointmentErrorCompletion completion) {
 
         Appointment appointment = new Appointment();
+
+        ParseRelation<Service> serviceParseRelation = appointment.getRelation(AppointmentAttributes.services);
+
+        for(Service service : services){
+
+            serviceParseRelation.add(service);
+
+        }
 
         appointment.setDate(date);
 

@@ -527,6 +527,11 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
                 @Override
                 public void completion(List<Appointment> appointmentList, AppError error) {
 
+                }
+
+                @Override
+                public void completion(Appointment appointment, AppError error) {
+
                     if (error != null) {
 
                         AlertDialogError alertDialogError = new AlertDialogError();

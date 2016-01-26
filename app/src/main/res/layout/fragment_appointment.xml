@@ -30,22 +30,11 @@
             android:paddingEnd="@dimen/high_margin"
             android:background="@color/colorPrimaryLight"
             android:text="@string/venue_details"/>
-        <TextView
+        <Button
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:gravity="center_vertical"
-            android:layout_marginLeft="@dimen/high_margin"
-            android:layout_marginStart="@dimen/high_margin"
-            android:id="@+id/clientName"
-            />
-        <TextView
-            android:layout_width="match_parent"
-            android:gravity="center_vertical"
-            android:layout_height="50dp"
-            android:layout_marginLeft="@dimen/high_margin"
-            android:layout_marginStart="@dimen/high_margin"
-            android:id="@+id/clientEmail"
-            />
+            android:layout_height="60dp"
+            android:id="@+id/watch_location"
+            android:background="@drawable/log_in_or_signup_click_out" />
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
