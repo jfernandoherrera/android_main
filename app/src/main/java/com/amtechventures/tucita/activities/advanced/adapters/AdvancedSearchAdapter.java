@@ -1,6 +1,7 @@
 package com.amtechventures.tucita.activities.advanced.adapters;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -28,11 +29,15 @@ public class AdvancedSearchAdapter extends RecyclerView.Adapter<AdvancedSearchAd
 
     String subCategory;
 
-    public AdvancedSearchAdapter(List<Venue> venues, List<String> priceStrings, String subCategory) {
+    Typeface typeface;
+
+    public AdvancedSearchAdapter(List<Venue> venues, List<String> priceStrings, String subCategory, Typeface typeface) {
 
         super();
 
         items = venues;
+
+        this.typeface = typeface;
 
         this.priceStrings = priceStrings;
 
@@ -128,6 +133,12 @@ public class AdvancedSearchAdapter extends RecyclerView.Adapter<AdvancedSearchAd
             ratingBar = (RatingBar) itemView.findViewById(R.id.searchRatingBar);
 
             pricesFrom = (TextView) itemView.findViewById(R.id.textPricesFrom);
+
+            pricesFrom.setTypeface(typeface);
+
+            name.setTypeface(typeface);
+
+            location.setTypeface(typeface);
 
             from = itemView.getContext().getString(R.string.from);
 
