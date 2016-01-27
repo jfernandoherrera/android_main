@@ -38,7 +38,7 @@ public class SubCategoryFragment extends DialogFragment {
     private String name;
     private OnOthersClicked listener;
     private ProgressDialog progress;
-    private Typeface roboto;
+    private Typeface typeface;
 
     public interface OnOthersClicked {
 
@@ -52,8 +52,6 @@ public class SubCategoryFragment extends DialogFragment {
         super.onAttach(activity);
 
         listener = (OnOthersClicked) activity;
-
-        roboto = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Roboto-Light.ttf");
 
     }
 
@@ -96,6 +94,12 @@ public class SubCategoryFragment extends DialogFragment {
         name = getArguments().getString(CategoryAttributes.name);
 
         setStyle(DialogFragment.STYLE_NO_TITLE, 0);
+
+    }
+
+    public void setTypeface(Typeface typeface) {
+
+        this.typeface = typeface;
 
     }
 
@@ -209,7 +213,7 @@ public class SubCategoryFragment extends DialogFragment {
 
         }
 
-        adapter = new SubCategoryAdapter(getContext(), R.layout.item_sub_category, setStringsArray(), roboto);
+        adapter = new SubCategoryAdapter(getContext(), R.layout.item_sub_category, setStringsArray(), typeface);
 
         listView.setAdapter(adapter);
 

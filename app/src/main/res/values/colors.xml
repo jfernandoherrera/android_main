@@ -10,4 +10,5 @@
     <color name="blackSecondary">#8a000000</color>
     <color name="blackHintDisabled">#62000000</color>
     <color name="white">#FFFFFF</color>
+    <color name="expanded_children_color">#FFFFFF</color>
 </resources>

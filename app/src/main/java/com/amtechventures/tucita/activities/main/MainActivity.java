@@ -26,6 +26,7 @@ import com.amtechventures.tucita.activities.login.LoginActivity;
 import com.amtechventures.tucita.activities.main.fragments.search.SearchFragment;
 import com.amtechventures.tucita.activities.main.fragments.subcategory.SubCategoryFragment;
 import com.amtechventures.tucita.model.domain.user.UserAttributes;
+import com.amtechventures.tucita.utils.common.AppFont;
 import com.amtechventures.tucita.utils.views.AlertDialogError;
 
 import java.lang.reflect.Field;
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements CategoryFragment.
     private Toolbar toolbar;
     private final int minimumToSearch = 3;
     private CategoryFragment fragment;
-    private Typeface roboto;
+    private Typeface typeface;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -48,7 +49,13 @@ public class MainActivity extends AppCompatActivity implements CategoryFragment.
 
         searchFragment = new SearchFragment();
 
-        roboto = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Light.ttf");
+        AppFont appFont = new AppFont();
+
+        typeface = appFont.getAppFont(getApplicationContext());
+
+        fragment.setTypeface(typeface);
+
+        searchFragment.setTypeface(typeface);
 
         setCategoryFragment();
 
@@ -83,6 +90,8 @@ public class MainActivity extends AppCompatActivity implements CategoryFragment.
         if (prev == null) {
 
             prev = SubCategoryFragment.newInstance(name);
+
+            prev.setTypeface(typeface);
         }
 
         prev.show(fragmentManager, SubCategoryFragment.class.getName());
@@ -190,7 +199,7 @@ public class MainActivity extends AppCompatActivity implements CategoryFragment.
 
         toolbar.inflateMenu((R.menu.menu_main));
 
-        getActionBarTextView().setTypeface(roboto);
+        getActionBarTextView().setTypeface(typeface);
 
         MenuItem searchItem = menu.findItem(R.id.action_search);
 

@@ -1,6 +1,7 @@
 package com.amtechventures.tucita.activities.account.fragments.venues;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -34,6 +35,8 @@ public class VenuesFragment extends Fragment {
     private VenuesAdapter.OnReview adapterListener;
     private ReviewContext reviewContext;
     private RelativeLayout relativeLayout;
+    private Typeface typeface;
+
     @Override
     public void onAttach(Context context) {
 
@@ -52,6 +55,11 @@ public class VenuesFragment extends Fragment {
 
     }
 
+    public void setTypeface(Typeface typeface) {
+
+        this.typeface = typeface;
+
+    }
 
     public void setVenuesAndUser(List<Venue> venues, User user) {
 

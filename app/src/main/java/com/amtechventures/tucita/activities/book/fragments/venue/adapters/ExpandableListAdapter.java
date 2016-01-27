@@ -91,7 +91,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
                 } else if (event.getAction() != MotionEvent.ACTION_MOVE) {
 
-                    v.setBackgroundColor(v.getResources().getColor(R.color.colorPrimaryLight));
+                    v.setBackgroundColor(v.getResources().getColor(R.color.expanded_children_color));
 
                 }
 

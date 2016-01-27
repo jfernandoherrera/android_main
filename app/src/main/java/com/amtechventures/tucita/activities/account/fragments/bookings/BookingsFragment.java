@@ -1,6 +1,7 @@
 package com.amtechventures.tucita.activities.account.fragments.bookings;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -30,6 +31,8 @@ public class BookingsFragment extends Fragment {
     private List<Appointment> completedAppointmentsList;
     private List<Appointment> pendingAppointmentsList;
     private RelativeLayout relativeLayout;
+    private Typeface typeface;
+
     @Override
     public void onAttach(Context context) {
 
@@ -41,6 +44,12 @@ public class BookingsFragment extends Fragment {
     public void onDetach() {
 
         super.onDetach();
+
+    }
+
+    public void setTypeface(Typeface typeface) {
+
+        this.typeface = typeface;
 
     }
 

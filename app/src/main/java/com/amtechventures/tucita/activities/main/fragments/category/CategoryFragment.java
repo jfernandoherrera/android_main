@@ -19,7 +19,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -49,7 +48,7 @@ public class CategoryFragment extends Fragment {
     private List<Category> categories = new ArrayList<>();
     private ProgressDialog progress;
     private OnItemClicked listener;
-    private Typeface roboto;
+    private Typeface typeface;
     private UserContext userContext;
 
     public interface OnItemClicked {
@@ -65,7 +64,11 @@ public class CategoryFragment extends Fragment {
 
         listener = (OnItemClicked) context;
 
-        roboto = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Roboto-Light.ttf");
+    }
+
+    public void setTypeface(Typeface typeface) {
+
+        this.typeface = typeface;
 
     }
 
@@ -123,11 +126,11 @@ public class CategoryFragment extends Fragment {
 
         SpannableStringBuilder stringBuilder = new SpannableStringBuilder(firstString + " " + secondString + " " + thirdString);
 
-        stringBuilder.setSpan(new CustomSpanTypeface(null, Typeface.BOLD, size, null, null, roboto), 0, firstString.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        stringBuilder.setSpan(new CustomSpanTypeface(null, Typeface.BOLD, size, null, null, typeface), 0, firstString.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
 
-        stringBuilder.setSpan(new CustomSpanTypeface(null, Typeface.BOLD, size, ColorStateList.valueOf(Color.rgb(223, 223, 223)), null, roboto), firstString.length() + 1, firstString.length() + secondString.length() + 1, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        stringBuilder.setSpan(new CustomSpanTypeface(null, Typeface.BOLD, size, ColorStateList.valueOf(Color.rgb(223, 223, 223)), null, typeface), firstString.length() + 1, firstString.length() + secondString.length() + 1, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
 
-        stringBuilder.setSpan(new CustomSpanTypeface(null, Typeface.BOLD, size, null, null, roboto), firstString.length() + secondString.length() + 2, firstString.length() + secondString.length() + thirdString.length() + 2, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        stringBuilder.setSpan(new CustomSpanTypeface(null, Typeface.BOLD, size, null, null, typeface), firstString.length() + secondString.length() + 2, firstString.length() + secondString.length() + thirdString.length() + 2, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
 
         return stringBuilder;
 
@@ -159,9 +162,9 @@ public class CategoryFragment extends Fragment {
 
         CircularImageView circularImageView = (CircularImageView) view.findViewById(R.id.imageUser);
 
-        buttonText.setTypeface(roboto);
+        buttonText.setTypeface(typeface);
 
-        textView.setTypeface(roboto);
+        textView.setTypeface(typeface);
 
         linearLayout.setBackgroundResource(R.drawable.log_in_or_signup_click_out);
 
@@ -282,7 +285,7 @@ public class CategoryFragment extends Fragment {
 
         }
 
-        adapter = new CategoryGridAdapter(categories, categoryContext, roboto, (OnItemClicked) getActivity());
+        adapter = new CategoryGridAdapter(categories, categoryContext, typeface, (OnItemClicked) getActivity());
 
         recyclerView.setAdapter(adapter);
 

@@ -89,46 +89,52 @@ public class AppointmentDetailsFragment extends Fragment{
         calendar.add(Calendar.HOUR, oneDay);
 
         Date tomorrow = calendar.getTime();
+        try {
 
-        if(tomorrow.before(appointment.getDate())) {
+            if (tomorrow.before(appointment.getDate())) {
 
-            button.setOnTouchListener(new View.OnTouchListener() {
+                button.setOnTouchListener(new View.OnTouchListener() {
 
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
 
-                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                        if (event.getAction() == MotionEvent.ACTION_DOWN) {
 
-                        v.setBackgroundResource(R.drawable.pressed_application_background_static);
+                            v.setBackgroundResource(R.drawable.pressed_application_background_static);
 
-                    } else if (event.getAction() != MotionEvent.ACTION_MOVE) {
+                        } else if (event.getAction() != MotionEvent.ACTION_MOVE) {
 
-                        v.setBackgroundResource(R.drawable.log_in_or_signup_click_out);
+                            v.setBackgroundResource(R.drawable.log_in_or_signup_click_out);
+
+                        }
+
+                        return false;
 
                     }
 
-                    return false;
+                });
 
-                }
+                button.setOnClickListener(new View.OnClickListener() {
 
-            });
+                    @Override
+                    public void onClick(View v) {
 
-            button.setOnClickListener(new View.OnClickListener() {
+                        listener.onChangeDate(new Date());
 
-                @Override
-                public void onClick(View v) {
+                    }
+                });
 
-                    listener.onChangeDate(new Date());
+            } else {
 
-                }
-            });
+                button.setVisibility(View.GONE);
 
-        }else {
+            }
 
-            button.setVisibility(View.GONE);
+        }catch (NullPointerException e){
+
+            e.printStackTrace();
 
         }
-
         this.inflater = inflater;
 
         return rootView;

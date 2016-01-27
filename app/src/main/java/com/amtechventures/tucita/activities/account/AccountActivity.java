@@ -11,13 +11,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 import com.amtechventures.tucita.R;
-import com.amtechventures.tucita.activities.account.adapters.AppointmentsAdapter;
 import com.amtechventures.tucita.activities.account.adapters.PagerAccountAdapter;
 import com.amtechventures.tucita.activities.account.adapters.VenuesAdapter;
 import com.amtechventures.tucita.activities.account.fragments.bookings.BookingsFragment;
@@ -29,11 +26,12 @@ import com.amtechventures.tucita.model.context.appointment.AppointmentContext;
 import com.amtechventures.tucita.model.context.user.UserContext;
 import com.amtechventures.tucita.model.domain.appointment.Appointment;
 import com.amtechventures.tucita.model.domain.user.User;
-import com.amtechventures.tucita.model.domain.user.UserAttributes;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.error.AppError;
+import com.amtechventures.tucita.utils.common.AppFont;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -45,7 +43,7 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
     private ViewPager viewPager;
     private CircularImageView circularImageView;
     private TextView textName;
-    Typeface roboto;
+    Typeface typeface;
     private AppointmentContext appointmentContext;
     PagerAccountAdapter pagerAccountAdapter;
     User user;
@@ -61,19 +59,21 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
 
         setToolbar();
 
-        setupTabs();
-
         circularImageView = (CircularImageView) findViewById(R.id.imageUser);
 
         textName = (TextView) findViewById(R.id.textName);
 
-        roboto = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Light.ttf");
+        AppFont appFont = new AppFont();
 
-        textName.setTypeface(roboto);
+        typeface = appFont.getAppFont(getApplicationContext());
+
+        textName.setTypeface(typeface);
 
         appointmentContext = AppointmentContext.context(appointmentContext);
 
         userContext = UserContext.context(userContext);
+
+        setupTabs();
 
         setImageUser();
 
@@ -111,7 +111,7 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
 
         tabText.setText(R.string.bookings);
 
-        tabText.setTypeface(roboto, Typeface.BOLD);
+        tabText.setTypeface(typeface, Typeface.BOLD);
 
         TabLayout.Tab tab1 = tabLayout.newTab();
 
@@ -119,7 +119,7 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
 
         TextView tabText1 = (TextView) tab1.getCustomView();
 
-        tabText1.setTypeface(roboto);
+        tabText1.setTypeface(typeface);
 
         tabText1.setText(R.string.venues);
 
@@ -129,7 +129,7 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
 
         viewPager = (ViewPager) findViewById(R.id.container);
 
-        pagerAccountAdapter = new PagerAccountAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+        pagerAccountAdapter = new PagerAccountAdapter(getSupportFragmentManager(), tabLayout.getTabCount(), typeface);
 
         viewPager.setAdapter(pagerAccountAdapter);
 
@@ -144,7 +144,7 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
 
                 viewPager.setCurrentItem(tab.getPosition());
 
-                tabText.setTypeface(roboto, Typeface.BOLD);
+                tabText.setTypeface(typeface, Typeface.BOLD);
 
             }
 
@@ -153,7 +153,7 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
 
                 TextView tabText = (TextView) tab.getCustomView();
 
-                tabText.setTypeface(roboto, Typeface.NORMAL);
+                tabText.setTypeface(typeface, Typeface.NORMAL);
 
             }
 
@@ -288,12 +288,38 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
 
     }
 
+    private TextView getActionBarTextView() {
+
+        TextView titleTextView = null;
+
+        String defaultNameTitleMenu = "mTitleTextView";
+
+        try {
+
+            Field field = toolbar.getClass().getDeclaredField(defaultNameTitleMenu);
+
+            field.setAccessible(true);
+
+            titleTextView = (TextView) field.get(toolbar);
+
+        } catch (NoSuchFieldException e) {
+
+        } catch (IllegalAccessException e) {
+
+        }
+
+        return titleTextView;
+
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         getMenuInflater().inflate(R.menu.menu_logout, menu);
+
+        getActionBarTextView().setTypeface(typeface);
 
         MenuItem logoutItem = menu.findItem(R.id.action_logout);
 

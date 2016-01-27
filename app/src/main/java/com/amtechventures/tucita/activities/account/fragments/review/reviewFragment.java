@@ -2,6 +2,7 @@ package com.amtechventures.tucita.activities.account.fragments.review;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
@@ -39,6 +40,7 @@ public class ReviewFragment extends DialogFragment {
     Venue venue;
     OnSend listener;
     float rating;
+    private Typeface typeface;
 
     public interface OnSend{
 
@@ -51,6 +53,12 @@ public class ReviewFragment extends DialogFragment {
         super.onAttach(activity);
 
         listener = (OnSend) activity;
+
+    }
+
+    public void setTypeface(Typeface typeface) {
+
+        this.typeface = typeface;
 
     }
 
