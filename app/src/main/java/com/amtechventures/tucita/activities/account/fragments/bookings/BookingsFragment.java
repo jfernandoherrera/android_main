@@ -16,7 +16,11 @@ import android.widget.TextView;
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.account.adapters.AppointmentsAdapter;
 import com.amtechventures.tucita.activities.account.adapters.VenuesAdapter;
+import com.amtechventures.tucita.model.context.appointment.AppointmentCompletion;
+import com.amtechventures.tucita.model.context.appointment.AppointmentContext;
 import com.amtechventures.tucita.model.domain.appointment.Appointment;
+import com.amtechventures.tucita.model.domain.user.User;
+import com.amtechventures.tucita.model.error.AppError;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -32,6 +36,8 @@ public class BookingsFragment extends Fragment {
     private List<Appointment> pendingAppointmentsList;
     private RelativeLayout relativeLayout;
     private Typeface typeface;
+    private AppointmentContext appointmentContext;
+    private User user;
 
     @Override
     public void onAttach(Context context) {
@@ -53,12 +59,20 @@ public class BookingsFragment extends Fragment {
 
     }
 
+    public void setUser(User user) {
+
+        this.user = user;
+
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
         completedAppointmentsList = new ArrayList<>();
 
         pendingAppointmentsList = new ArrayList<>();
+
+        appointmentContext = AppointmentContext.context(appointmentContext);
 
         super.onCreate(savedInstanceState);
     }
@@ -77,9 +91,13 @@ public class BookingsFragment extends Fragment {
 
         recyclerView.setLayoutManager(layoutManager);
 
+        noResults.setTypeface(typeface);
+
         relativeLayout = (RelativeLayout) rootView.findViewById(R.id.concealer);
 
         recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            int skip = 4;
 
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -96,7 +114,33 @@ public class BookingsFragment extends Fragment {
 
                     if ((visibleItemCount + pastVisibleItems) >= totalItemCount) {
 
-                        Log.v("...", "Last Item Wow !");
+                        List<Appointment> appointments = appointmentContext.loadUserAppointments(user, new AppointmentCompletion.AppointmentErrorCompletion() {
+                            @Override
+                            public void completion(List<Appointment> appointmentList, AppError error) {
+
+                                if (appointmentList != null && !appointmentList.isEmpty()) {
+
+                                    setAppointmentList(appointmentList);
+
+                                }
+
+                            }
+
+                            @Override
+                            public void completion(Appointment appointment, AppError error) {
+
+                            }
+                        }, skip);
+
+                        if (appointments != null && !appointments.isEmpty()) {
+
+                            setAppointmentList(appointments);
+
+                        }
+
+                        Log.v("...", "Last Item Wow !" + skip);
+
+                        skip += 4;
 
                     }
                 }
@@ -115,9 +159,12 @@ public class BookingsFragment extends Fragment {
 
         Calendar calendar = Calendar.getInstance();
 
-        completedAppointmentsList = new ArrayList<>();
+        if(completedAppointmentsList == null) {
 
-        pendingAppointmentsList = new ArrayList<>();
+            completedAppointmentsList = new ArrayList<>();
+
+            pendingAppointmentsList = new ArrayList<>();
+        }
 
         for (Appointment appointment : appointmentList) {
 
@@ -135,11 +182,88 @@ public class BookingsFragment extends Fragment {
 
         }
 
+        removeCompletedRepeated();
+
+        removePendingRepeated();
+
         setupList();
+    }
+
+    private void removePendingRepeated(){
+
+        List<Appointment> toRemove = new ArrayList();
+
+        int index = 0;
+
+        for(Appointment appointment : pendingAppointmentsList){
+
+            List<Appointment> temp = new ArrayList<>();
+
+            temp.addAll(pendingAppointmentsList);
+
+            temp.remove(index);
+
+            for(Appointment compare : temp){
+
+                String compareId = compare.getObjectId();
+
+                String appointmentId = appointment.getObjectId();
+
+                if(compareId.equals(appointmentId)){
+
+                    toRemove.add(appointment);
+
+                    break;
+                }
+
+            }
+
+            index ++;
+
+        }
+
+        pendingAppointmentsList.removeAll(toRemove);
+    }
+
+    private void removeCompletedRepeated(){
+
+        List<Appointment> toRemove = new ArrayList();
+
+        int index = 0;
+
+        for(Appointment appointment : completedAppointmentsList){
+
+            List<Appointment> temp = new ArrayList<>();
+
+            temp.addAll(completedAppointmentsList);
+
+            temp.remove(index);
+
+            for(Appointment compare : temp){
+
+                String compareId = compare.getObjectId();
+
+                String appointmentId = appointment.getObjectId();
+
+                if(compareId.equals(appointmentId)){
+
+                    toRemove.add(appointment);
+
+                    break;
+                }
+
+            }
+
+            index ++;
+
+        }
+
+        completedAppointmentsList.removeAll(toRemove);
     }
 
     public void setupList() {
 
+        relativeLayout.setVisibility(View.GONE);
 
         if (recyclerView != null) {
 
@@ -147,13 +271,11 @@ public class BookingsFragment extends Fragment {
 
             if (noEmpty) {
 
-                adapter = new AppointmentsAdapter(completedAppointmentsList, pendingAppointmentsList);
+                adapter = new AppointmentsAdapter(completedAppointmentsList, pendingAppointmentsList, typeface);
 
                 recyclerView.setAdapter(adapter);
 
                 noResults.setVisibility(View.GONE);
-
-                relativeLayout.setVisibility(View.GONE);
 
             }
 

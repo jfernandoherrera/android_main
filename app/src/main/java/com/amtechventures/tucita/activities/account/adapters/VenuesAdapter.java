@@ -1,6 +1,7 @@
 package com.amtechventures.tucita.activities.account.adapters;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -27,6 +28,7 @@ public class VenuesAdapter extends RecyclerView.Adapter<VenuesAdapter.ViewHolder
     OnReview listener;
     String reviewBy;
     String users;
+    Typeface typeface;
 
     public interface OnReview {
 
@@ -34,9 +36,11 @@ public class VenuesAdapter extends RecyclerView.Adapter<VenuesAdapter.ViewHolder
 
     }
 
-    public VenuesAdapter(List<Venue> venues, List<Review> reviewList, OnReview listener, String reviewBy, String users) {
+    public VenuesAdapter(List<Venue> venues, List<Review> reviewList, OnReview listener, String reviewBy, String users, Typeface typeface) {
 
         super();
+
+        this.typeface = typeface;
 
         this.listener = listener;
 
@@ -195,6 +199,14 @@ public class VenuesAdapter extends RecyclerView.Adapter<VenuesAdapter.ViewHolder
             ratingBar = (RatingBar) itemView.findViewById(R.id.searchRatingBar);
 
             ratingBarReview = (RatingBar) itemView.findViewById(R.id.ratingBar);
+
+            location.setTypeface(typeface);
+
+            textReview.setTypeface(typeface);
+
+            textViewReviews.setTypeface(typeface);
+
+            name.setTypeface(typeface);
 
             if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
 

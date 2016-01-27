@@ -44,11 +44,11 @@ public class AppointmentContext {
 
     }
 
-    public List loadUserAppointments(User user, AppointmentCompletion.AppointmentErrorCompletion completion) {
+    public List loadUserAppointments(User user, AppointmentCompletion.AppointmentErrorCompletion completion, int skip) {
 
-        List appointments = appointmentLocal.loadUserAppointments(user);
+        List appointments = appointmentLocal.loadUserAppointments(user, skip);
 
-        appointmentRemote.loadUserAppointments(user, completion);
+        appointmentRemote.loadUserAppointments(user, completion, skip);
 
         return appointments;
 

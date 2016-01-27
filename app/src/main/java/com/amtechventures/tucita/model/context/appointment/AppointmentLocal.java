@@ -35,13 +35,17 @@ public class AppointmentLocal {
         return appointment;
     }
 
-    public List loadUserAppointments(User user) {
+    public List loadUserAppointments(User user, int skip) {
 
         List venues = null;
 
         ParseQuery<Appointment> query = Appointment.getQuery();
 
         query.fromLocalDatastore();
+
+        query.setSkip(skip);
+
+        query.setLimit(4);
 
         query.whereEqualTo(AppointmentAttributes.user, user.getParseUser());
 

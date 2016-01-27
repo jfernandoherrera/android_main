@@ -174,6 +174,9 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
         if (prev == null) {
 
             prev = new ReviewFragment();
+
+            prev.setTypeface(typeface);
+
         }
 
         prev.show(fragmentManager, ReviewFragment.class.getName());
@@ -192,17 +195,18 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
 
         final User user = userContext.currentUser();
 
+        ((BookingsFragment) pagerAccountAdapter.getItem(0)).setUser(user);
+
         appointmentContext.loadUserAppointments(user, new AppointmentCompletion.AppointmentErrorCompletion() {
 
             @Override
             public void completion(List<Appointment> appointmentList, AppError error) {
 
+                ((BookingsFragment) pagerAccountAdapter.getItem(0)).setAppointmentList(appointmentList);
+
+                List<Venue> venues = new ArrayList<>();
+
                 if (appointmentList != null && !appointmentList.isEmpty()) {
-
-                    ((BookingsFragment) pagerAccountAdapter.getItem(0)).setAppointmentList(appointmentList);
-
-                    List<Venue> venues = new ArrayList<>();
-
 
                     for (Appointment appointment : appointmentList) {
 
@@ -245,9 +249,9 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
                         }
                     }
 
-                    ((VenuesFragment) pagerAccountAdapter.getItem(1)).setVenuesAndUser(venues, user);
-
                 }
+
+                ((VenuesFragment) pagerAccountAdapter.getItem(1)).setVenuesAndUser(venues, user);
 
             }
 
@@ -256,7 +260,7 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
 
             }
 
-        });
+        }, 0);
 
     }
 

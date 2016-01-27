@@ -74,19 +74,19 @@ public class VenuesFragment extends Fragment {
 
     public void setupList(List<Review> reviewList) {
 
+        relativeLayout.setVisibility(View.GONE);
+
         if (venues != null && !venues.isEmpty()) {
 
             String reviewBy = getString(R.string.review_by);
 
             String users = getString(R.string.users);
 
-            adapter = new VenuesAdapter(venues, reviewList, adapterListener, reviewBy, users);
+            adapter = new VenuesAdapter(venues, reviewList, adapterListener, reviewBy, users, typeface);
 
             recyclerView.setAdapter(adapter);
 
             noResults.setVisibility(View.GONE);
-
-            relativeLayout.setVisibility(View.GONE);
 
         }
 
@@ -117,6 +117,8 @@ public class VenuesFragment extends Fragment {
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
 
         noResults = (TextView) rootView.findViewById(R.id.noResults);
+
+        noResults.setTypeface(typeface);
 
         relativeLayout = (RelativeLayout) rootView.findViewById(R.id.concealer);
 

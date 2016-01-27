@@ -242,9 +242,11 @@ public class VenuesResultFragment extends Fragment implements LocationCompletion
             });
 
         }else{
+
             AlertDialogError alertDialogError = new AlertDialogError();
 
             alertDialogError.noLocationAlert(getContext());
+
         }
     }
 

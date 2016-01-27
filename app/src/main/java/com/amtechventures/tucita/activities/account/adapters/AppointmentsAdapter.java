@@ -3,6 +3,7 @@ package com.amtechventures.tucita.activities.account.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -21,10 +22,13 @@ public class AppointmentsAdapter extends RecyclerView.Adapter<AppointmentsAdapte
 
     List<Appointment> completedItems;
     List<Appointment> pendingItems;
+    Typeface typeface;
 
-    public AppointmentsAdapter(List<Appointment> appointments, List<Appointment> pendingAppointments) {
+    public AppointmentsAdapter(List<Appointment> appointments, List<Appointment> pendingAppointments, Typeface typeface) {
 
         super();
+
+        this.typeface = typeface;
 
         completedItems = appointments;
 
@@ -122,9 +126,14 @@ public class AppointmentsAdapter extends RecyclerView.Adapter<AppointmentsAdapte
 
                 }
             });
+
             name = (TextView) itemView.findViewById(R.id.textName);
 
             date = (TextView) itemView.findViewById(R.id.textDate);
+
+            name.setTypeface(typeface);
+
+            date.setTypeface(typeface);
 
         }
 

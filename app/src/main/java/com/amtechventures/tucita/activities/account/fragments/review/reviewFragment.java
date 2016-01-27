@@ -3,7 +3,9 @@ package com.amtechventures.tucita.activities.account.fragments.review;
 import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -108,9 +110,27 @@ public class ReviewFragment extends DialogFragment {
 
         ratingView = (RatingView) rootView.findViewById(R.id.ratingView);
 
-        ratingView.setRating(rating);
-
         send = (Button) rootView.findViewById(R.id.send);
+
+        TextInputLayout textInputLayout = (TextInputLayout) rootView.findViewById(R.id.textTitleLayout);
+
+        textInputLayout.setTypeface(typeface);
+
+        textInputLayout = (TextInputLayout) rootView.findViewById(R.id.textDescriptionLayout);
+
+        textInputLayout.setTypeface(typeface);
+
+        textTitle.setTypeface(typeface);
+
+        textName.setTypeface(typeface);
+
+        textDescription.setTypeface(typeface);
+
+        ratingView.setTypeface(typeface);
+
+        send.setTypeface(typeface);
+
+        ratingView.setRating(rating);
 
         send.setBackgroundColor(Color.WHITE);
 
@@ -147,7 +167,11 @@ public class ReviewFragment extends DialogFragment {
 
         layout = (RelativeLayout) rootView.findViewById(R.id.frames);
 
-        layout.bringToFront();
+        if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+
+            layout.bringToFront();
+
+        }
 
         Window window = getDialog().getWindow();
 

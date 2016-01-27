@@ -112,13 +112,17 @@ public class AppointmentRemote {
 
     }
 
-    public void loadUserAppointments(User user, final AppointmentCompletion.AppointmentErrorCompletion completion) {
+    public void loadUserAppointments(User user, final AppointmentCompletion.AppointmentErrorCompletion completion, int skip) {
 
         ParseQuery<Appointment> query = Appointment.getQuery();
 
         query.whereEqualTo(AppointmentAttributes.user, user.getParseUser());
 
         query.orderByDescending(AppointmentAttributes.date);
+
+        query.setSkip(skip);
+
+        query.setLimit(4);
 
         query.include(AppointmentAttributes.venue);
 
