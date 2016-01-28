@@ -1,6 +1,7 @@
 package com.amtechventures.tucita.activities.book.fragments.checkout;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -46,6 +47,7 @@ public class SecureCheckoutFragment extends Fragment {
     private LayoutInflater inflater;
     private ExpandableWithoutParentAdapter adapter;
     private ExpandableListView listViewServices;
+    private Typeface typeface;
 
     public interface OnPlaceOrder {
 
@@ -68,6 +70,12 @@ public class SecureCheckoutFragment extends Fragment {
         super.onDetach();
 
         listener = null;
+
+    }
+
+    public void setTypeface(Typeface typeface) {
+
+        this.typeface = typeface;
 
     }
 
@@ -119,7 +127,7 @@ public class SecureCheckoutFragment extends Fragment {
 
         ViewUtils viewUtils = new ViewUtils(getContext());
 
-        adapter = new ExpandableWithoutParentAdapter(services, listViewServices, viewUtils);
+        adapter = new ExpandableWithoutParentAdapter(services, listViewServices, viewUtils, typeface);
 
         adapter.setInflater(inflater);
 

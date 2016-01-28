@@ -1,6 +1,7 @@
 package com.amtechventures.tucita.activities.book.fragments.service;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -24,6 +25,7 @@ public class ServiceFragment extends Fragment {
     private Service service;
     private LayoutInflater inflater;
     private OnServiceSelected listener;
+    private Typeface typeface;
 
     public interface OnServiceSelected {
 
@@ -43,6 +45,12 @@ public class ServiceFragment extends Fragment {
         super.onAttach(context);
 
         listener = (OnServiceSelected) context;
+
+    }
+
+    public void setTypeface(Typeface typeface) {
+
+        this.typeface = typeface;
 
     }
 
@@ -79,6 +87,8 @@ public class ServiceFragment extends Fragment {
 
         this.inflater = inflater;
 
+        serviceAddView.setTypeface(typeface);
+
         return rootView;
 
     }
@@ -108,7 +118,7 @@ public class ServiceFragment extends Fragment {
 
             ViewUtils viewUtils = new ViewUtils(getContext());
 
-            parentAdapter = new ExpandableParentAdapter(description, listViewParent, viewUtils);
+            parentAdapter = new ExpandableParentAdapter(description, listViewParent, viewUtils, typeface);
 
             parentAdapter.setInflater(inflater);
 

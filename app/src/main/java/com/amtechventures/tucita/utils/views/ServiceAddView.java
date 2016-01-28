@@ -2,6 +2,7 @@ package com.amtechventures.tucita.utils.views;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -76,6 +77,16 @@ public class ServiceAddView extends RelativeLayout {
         duration = (TextView) findViewById(R.id.textDuration);
 
         price = (TextView) findViewById(R.id.textPricesFrom);
+
+    }
+
+    public void setTypeface(Typeface typeface){
+
+        name.setTypeface(typeface);
+
+        duration.setTypeface(typeface);
+
+        price.setTypeface(typeface);
 
     }
 

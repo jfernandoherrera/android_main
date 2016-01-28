@@ -17,7 +17,6 @@ public class CircleTextView extends TextView {
 
     private int padding;
     private Paint circlePaint;
-    private boolean mini = false;
 
     public CircleTextView(Context context, AttributeSet attrs) {
 
@@ -31,20 +30,9 @@ public class CircleTextView extends TextView {
 
         double size = metrics.scaledDensity;
 
-        if(attrs.getAttributeValue(2).equals("-2")){
+        padding = (int) ((Integer.parseInt(attrs.getAttributeValue(2).substring(0, 2)) ) * size) / 2;
 
-            mini = true;
-
-            padding = (int) (9 * size);
-
-        }else{
-
-            padding = (int) ((Integer.parseInt(attrs.getAttributeValue(2).substring(0, 2)) ) * size) / 2;
-
-           setPadding(padding / 3, padding / 3, 0, 0);
-
-        }
-
+        setPadding(padding / 3, padding / 3, 0, 0);
 
         circlePaint = new Paint();
 
@@ -59,15 +47,7 @@ public class CircleTextView extends TextView {
     @Override
     protected void onDraw(Canvas canvas) {
 
-        if(mini) {
-
-            canvas.drawCircle((getMeasuredWidth() / 4) + 2, getMeasuredHeight() / 4, padding, circlePaint);
-
-        }else{
-
-            canvas.drawCircle((getMeasuredWidth() / 2) , (getMeasuredHeight() / 2) , padding, circlePaint);
-
-        }
+        canvas.drawCircle((getMeasuredWidth() / 2) , (getMeasuredHeight() / 2) , padding, circlePaint);
 
         super.onDraw(canvas);
 

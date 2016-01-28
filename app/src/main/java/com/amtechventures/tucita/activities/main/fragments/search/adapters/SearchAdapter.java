@@ -26,7 +26,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private final int typeVenue = 1;
     public static final int typeSection = 2;
     private Context context;
-    protected Typeface roboto;
+    protected Typeface typeface;
 
     public interface OnItemClickListener {
 
@@ -42,7 +42,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     public SearchAdapter(List<Venue> venues, List<SubCategory> subCategories, Context context, Typeface typeface) {
 
-        roboto = typeface;
+        this.typeface = typeface;
 
         this.venues = venues;
 
@@ -182,7 +182,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
             name = (TextView) itemView.findViewById(R.id.text);
 
-            name.setTypeface(roboto, Typeface.BOLD);
+            name.setTypeface(typeface, Typeface.BOLD);
 
         }
 
@@ -202,9 +202,9 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
             location = (TextView) itemView.findViewById(R.id.textLocation);
 
-            name.setTypeface(roboto, Typeface.BOLD);
+            name.setTypeface(typeface, Typeface.BOLD);
 
-            location.setTypeface(roboto, Typeface.BOLD);
+            location.setTypeface(typeface, Typeface.BOLD);
 
             itemView.setOnTouchListener(new View.OnTouchListener() {
 
@@ -250,7 +250,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
             name = (TextView) itemView.findViewById(R.id.textList);
 
-            name.setTypeface(roboto, Typeface.BOLD);
+            name.setTypeface(typeface, Typeface.BOLD);
 
             itemView.setOnTouchListener(new View.OnTouchListener() {
 

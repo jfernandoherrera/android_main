@@ -29,6 +29,7 @@
             android:paddingStart="@dimen/high_margin"
             android:paddingRight="@dimen/high_margin"
             android:paddingEnd="@dimen/high_margin"
+            android:id="@+id/details"
             android:background="@color/colorPrimaryLight"
             android:text="@string/venue_details"/>
         <Button
@@ -52,6 +53,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="bottom"
                     android:textColor="@color/blackSecondary"
+                    android:id="@+id/total"
                     android:text="@string/order_total"/>
                 <TextView
                     android:layout_width="match_parent"

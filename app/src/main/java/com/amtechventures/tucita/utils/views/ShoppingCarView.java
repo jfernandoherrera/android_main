@@ -3,6 +3,7 @@ package com.amtechventures.tucita.utils.views;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -29,7 +30,7 @@ public class ShoppingCarView extends FrameLayout implements ServicesToBookAdapte
     private ImageView car;
     private Button bookNow;
     private CircleTextView circleTextView;
-    private final double positionRatio = 0.095;
+    private final double positionRatio = 0.085;
     private ArrayList<Service> servicesToBook;
     private RecyclerView recyclerView;
     private ServicesToBookAdapter adapter;
@@ -174,7 +175,9 @@ public class ShoppingCarView extends FrameLayout implements ServicesToBookAdapte
 
         car.setImageResource(R.mipmap.ic_launcher);
 
-        circleTextView.setText(" " + String.valueOf(servicesToBook.size()));
+        String circleText = " " + String.valueOf(servicesToBook.size());
+
+        circleTextView.setText(circleText);
 
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 
@@ -187,6 +190,8 @@ public class ShoppingCarView extends FrameLayout implements ServicesToBookAdapte
         int translation = (int) (size.x * positionRatio) / 2;
 
         circleTextView.setTranslationX(translation);
+
+        circleTextView.setTranslationY(-6);
 
         circleTextView.bringToFront();
 
@@ -219,6 +224,14 @@ public class ShoppingCarView extends FrameLayout implements ServicesToBookAdapte
             }
 
         });
+
+    }
+
+    public void setTypeface(Typeface typeface){
+
+        circleTextView.setTypeface(typeface);
+
+        bookNow.setTypeface(typeface);
 
     }
 
@@ -354,7 +367,9 @@ public class ShoppingCarView extends FrameLayout implements ServicesToBookAdapte
 
     public void setCount() {
 
-        circleTextView.setText(" " + String.valueOf(servicesToBook.size()));
+        String circleText = " " + String.valueOf(servicesToBook.size());
+
+        circleTextView.setText(circleText);
 
         if (servicesToBook.size() == 1 && shoppingCar.getVisibility() != VISIBLE) {
 

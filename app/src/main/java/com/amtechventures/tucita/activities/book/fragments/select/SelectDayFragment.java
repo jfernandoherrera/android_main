@@ -1,14 +1,19 @@
 package com.amtechventures.tucita.activities.book.fragments.select;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.book.fragments.select.adapters.PagerSelectHourAdapter;
@@ -25,6 +30,7 @@ public class SelectDayFragment extends Fragment {
     private ViewPager viewPager;
     private PagerSelectHourAdapter adapter;
     private SelectHourAdapter.OnSlotSelected listener;
+    private Typeface typeface;
 
     @Override
     public void onAttach(Context context) {
@@ -53,11 +59,31 @@ public class SelectDayFragment extends Fragment {
 
         viewPager = (ViewPager) rootView.findViewById(R.id.container);
 
-        adapter = new PagerSelectHourAdapter(getChildFragmentManager(), listener);
+        adapter = new PagerSelectHourAdapter(getChildFragmentManager(), listener, typeface);
 
         viewPager.setAdapter(adapter);
 
         tabLayout.setupWithViewPager(viewPager);
+
+/*
+        for(int index = 0; index < tabLayout.getTabCount(); index ++){
+
+            TabLayout.Tab tab = tabLayout.getTabAt(index);
+
+            String text = (String) tab.getText();
+
+            TextView textView = (TextView) rootView.findViewById(R.id.textName);
+
+            textView.setTextColor(Color.WHITE);
+
+            textView.setTypeface(typeface);
+
+            textView.setText(text);
+
+            tab.setCustomView(textView);
+
+        }*/
+
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
@@ -91,6 +117,12 @@ public class SelectDayFragment extends Fragment {
         });
 
         return rootView;
+
+    }
+
+    public void setTypeface(Typeface typeface) {
+
+        this.typeface = typeface;
 
     }
 
