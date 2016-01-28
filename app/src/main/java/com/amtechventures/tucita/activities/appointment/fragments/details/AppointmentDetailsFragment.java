@@ -2,6 +2,7 @@ package com.amtechventures.tucita.activities.appointment.fragments.details;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -40,6 +41,7 @@ public class AppointmentDetailsFragment extends Fragment{
     private List<Service> services;
     private Button location;
     private OnChangeDate listener;
+    private Typeface typeface;
 
 
     public interface OnChangeDate{
@@ -66,6 +68,12 @@ public class AppointmentDetailsFragment extends Fragment{
 
     }
 
+    public void setTypeface(Typeface typeface) {
+
+        this.typeface = typeface;
+
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -78,11 +86,27 @@ public class AppointmentDetailsFragment extends Fragment{
 
         textTotal = (TextView) rootView.findViewById(R.id.textPrice);
 
+        TextView total = (TextView) rootView.findViewById(R.id.total);
+
+        TextView details = (TextView) rootView.findViewById(R.id.details);
+
         listViewServices = (ExpandableListView) rootView.findViewById(R.id.listViewServices);
 
         Button button = (Button) rootView.findViewById(R.id.changeDate);
 
         Calendar calendar = Calendar.getInstance();
+
+        textTotal.setTypeface(typeface);
+
+        total.setTypeface(typeface, Typeface.BOLD);
+
+        details.setTypeface(typeface);
+
+        location.setTypeface(typeface);
+
+        appointmentView.setTypeface(typeface);
+
+        button.setTypeface(typeface);
 
         int oneDay = 24;
 
@@ -286,7 +310,7 @@ public class AppointmentDetailsFragment extends Fragment{
 
         ViewUtils viewUtils = new ViewUtils(getContext());
 
-        adapter = new ExpandableWithoutParentAdapter(services, listViewServices, viewUtils);
+        adapter = new ExpandableWithoutParentAdapter(services, listViewServices, viewUtils, typeface);
 
         adapter.setInflater(inflater);
 

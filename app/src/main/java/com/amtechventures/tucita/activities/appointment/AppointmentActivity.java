@@ -2,6 +2,7 @@ package com.amtechventures.tucita.activities.appointment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -10,6 +11,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.appointment.fragments.details.AppointmentDetailsFragment;
 import com.amtechventures.tucita.activities.book.fragments.select.SelectDayFragment;
@@ -24,8 +27,10 @@ import com.amtechventures.tucita.model.domain.appointment.AppointmentAttributes;
 import com.amtechventures.tucita.model.domain.service.Service;
 import com.amtechventures.tucita.model.domain.slot.Slot;
 import com.amtechventures.tucita.model.error.AppError;
+import com.amtechventures.tucita.utils.common.AppFont;
 import com.amtechventures.tucita.utils.views.AlertDialogError;
 
+import java.lang.reflect.Field;
 import java.util.Date;
 import java.util.List;
 
@@ -36,6 +41,7 @@ public class AppointmentActivity extends AppCompatActivity implements Appointmen
     private AppointmentContext appointmentContext;
     private ServiceContext serviceContext;
     private SelectDayFragment selectDateFragment;
+    private Typeface typeface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +55,12 @@ public class AppointmentActivity extends AppCompatActivity implements Appointmen
         serviceContext = ServiceContext.context(serviceContext);
 
         selectDateFragment = new SelectDayFragment();
+
+        AppFont appFont = new AppFont();
+
+        typeface = appFont.getAppFont(getApplicationContext());
+
+        appointmentDetailsFragment.setTypeface(typeface);
 
         setContentView(R.layout.activity_appointment);
 
@@ -162,7 +174,33 @@ public class AppointmentActivity extends AppCompatActivity implements Appointmen
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        getActionBarTextView().setTypeface(typeface);
+
         return true;
+
+    }
+
+    private TextView getActionBarTextView() {
+
+        TextView titleTextView = null;
+
+        String defaultNameTitleMenu = "mTitleTextView";
+
+        try {
+
+            Field field = toolbar.getClass().getDeclaredField(defaultNameTitleMenu);
+
+            field.setAccessible(true);
+
+            titleTextView = (TextView) field.get(toolbar);
+
+        } catch (NoSuchFieldException e) {
+
+        } catch (IllegalAccessException e) {
+
+        }
+
+        return titleTextView;
 
     }
 

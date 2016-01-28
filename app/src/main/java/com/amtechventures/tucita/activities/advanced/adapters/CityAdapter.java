@@ -22,7 +22,7 @@ public class CityAdapter extends ArrayAdapter {
     @Override
     public View getView(int position, View view, ViewGroup viewGroup)
     {
-        TextView textView = ((TextView)view);
+        TextView textView = (TextView) super.getView(position, view, viewGroup);
 
         textView.setTypeface(typeface);
 

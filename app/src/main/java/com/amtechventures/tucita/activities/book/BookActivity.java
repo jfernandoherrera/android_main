@@ -1,6 +1,7 @@
 package com.amtechventures.tucita.activities.book;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.book.fragments.checkout.SecureCheckoutFragment;
@@ -27,12 +29,14 @@ import com.amtechventures.tucita.model.domain.service.Service;
 import com.amtechventures.tucita.model.domain.slot.Slot;
 import com.amtechventures.tucita.model.domain.user.User;
 import com.amtechventures.tucita.model.error.AppError;
+import com.amtechventures.tucita.utils.common.AppFont;
 import com.amtechventures.tucita.utils.views.AlertDialogError;
 import com.amtechventures.tucita.utils.views.ShoppingCarView;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 public class BookActivity extends AppCompatActivity implements VenueFragment.OnServiceSelected,
@@ -47,6 +51,7 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
     private ShoppingCarView shoppingCarView;
     private UserContext userContext;
     private RelativeLayout relativeLayout;
+    private Typeface typeface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +69,12 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
         selectDateFragment = new SelectDayFragment();
 
         secureCheckoutFragment = new SecureCheckoutFragment();
+
+        AppFont appFont = new AppFont();
+
+        typeface = appFont.getAppFont(getApplicationContext());
+
+        venueFragment.setTypeface(typeface);
 
         userContext = UserContext.context(userContext);
 
@@ -292,7 +303,33 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        getActionBarTextView().setTypeface(typeface);
+
         return true;
+
+    }
+
+    private TextView getActionBarTextView() {
+
+        TextView titleTextView = null;
+
+        String defaultNameTitleMenu = "mTitleTextView";
+
+        try {
+
+            Field field = toolbar.getClass().getDeclaredField(defaultNameTitleMenu);
+
+            field.setAccessible(true);
+
+            titleTextView = (TextView) field.get(toolbar);
+
+        } catch (NoSuchFieldException e) {
+
+        } catch (IllegalAccessException e) {
+
+        }
+
+        return titleTextView;
 
     }
 
