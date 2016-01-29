@@ -30,8 +30,12 @@
             android:layout_height="50dp"
             android:id="@+id/moreServices"
             android:text="@string/add_more_services"
-            android:gravity="bottom"
+            android:gravity="center_vertical"
             android:layout_below="@+id/recycler_view"
+            android:paddingStart="@dimen/high_margin"
+            android:paddingLeft="@dimen/high_margin"
+            android:paddingEnd="@dimen/high_margin"
+            android:paddingRight="@dimen/high_margin"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             style="@style/AppTheme.Button.ButtonBasket"/>

@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.book.adapters.ServicesToBookAdapter;
@@ -41,6 +42,7 @@ public class ShoppingCarView extends FrameLayout implements ServicesToBookAdapte
     private RelativeLayout shoppingCar;
     private RelativeLayout shoppingCarList;
     private OnHide onHide;
+    private Button button;
 
     public interface OnBookNow {
 
@@ -129,7 +131,7 @@ public class ShoppingCarView extends FrameLayout implements ServicesToBookAdapte
 
         recyclerView.setAdapter(adapter);
 
-        final Button button = (Button) findViewById(R.id.moreServices);
+        button = (Button) findViewById(R.id.moreServices);
 
         button.setOnTouchListener(new View.OnTouchListener() {
 
@@ -229,9 +231,15 @@ public class ShoppingCarView extends FrameLayout implements ServicesToBookAdapte
 
     public void setTypeface(Typeface typeface){
 
+        TextView title = (TextView) findViewById(R.id.title);
+
+        title.setTypeface(typeface);
+
         circleTextView.setTypeface(typeface);
 
         bookNow.setTypeface(typeface);
+
+        button.setTypeface(typeface);
 
     }
 
