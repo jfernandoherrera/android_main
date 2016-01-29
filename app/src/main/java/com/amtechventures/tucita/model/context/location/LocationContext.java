@@ -1,20 +1,23 @@
 package com.amtechventures.tucita.model.context.location;
 
+import android.location.Location;
 import android.os.Bundle;
 import android.content.Context;
-import android.location.Location;
-
 import com.amtechventures.tucita.model.error.AppError;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 
-public class LocationContext implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
+public class LocationContext implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks, com.google.android.gms.location.LocationListener {
 
     private Context context;
     private LocationRemote locationRemote;
     private GoogleApiClient googleApiClient;
+
     private LocationCompletion.LocationErrorCompletion completion;
 
     public static LocationContext context(LocationContext locationContext, Context context, LocationCompletion.LocationErrorCompletion completion) {
@@ -80,9 +83,14 @@ public class LocationContext implements GoogleApiClient.OnConnectionFailedListen
     @Override
     public void onConnected(Bundle bundle) {
 
-        Location location = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+        LocationRequest locationRequest = LocationRequest.create();
 
-        completion.locationCompletion(location, null);
+        locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+
+        locationRequest.setInterval(5000);
+
+        LocationServices.FusedLocationApi.requestLocationUpdates(
+                googleApiClient, locationRequest, this);
 
     }
 
@@ -96,8 +104,15 @@ public class LocationContext implements GoogleApiClient.OnConnectionFailedListen
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
 
-        completion.locationCompletion(null, new AppError("", 0, null));
+        completion.locationCompletion(null, new AppError(connectionResult.getErrorMessage(), 0, null));
 
     }
 
+
+    @Override
+    public void onLocationChanged(Location location) {
+
+        completion.locationCompletion(location, null);
+
+    }
 }
