@@ -100,6 +100,8 @@ public class PagerSelectHourAdapter extends FragmentStatePagerAdapter {
 
         selectHourFragment.setVenue(venue);
 
+        selectHourFragment.setTypeface(typeface);
+
         selectHourFragment.setDuration(durationHours, durationMinutes);
 
         if (position == 0) {

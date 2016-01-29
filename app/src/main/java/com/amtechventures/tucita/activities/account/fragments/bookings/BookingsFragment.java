@@ -263,9 +263,9 @@ public class BookingsFragment extends Fragment {
 
     public void setupList() {
 
-        relativeLayout.setVisibility(View.GONE);
-
         if (recyclerView != null) {
+
+            relativeLayout.setVisibility(View.GONE);
 
             boolean noEmpty = !completedAppointmentsList.isEmpty() || !pendingAppointmentsList.isEmpty();
 

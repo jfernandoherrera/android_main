@@ -102,9 +102,19 @@ public class SecureCheckoutFragment extends Fragment {
 
         textTotal = (TextView) rootView.findViewById(R.id.textPrice);
 
+        textTotal.setTypeface(typeface);
+
+        textEmail.setTypeface(typeface);
+
+        textClientName.setTypeface(typeface);
+
+        appointmentView.setTypeface(typeface);
+
         listViewServices = (ExpandableListView) rootView.findViewById(R.id.listViewServices);
 
         Button button = (Button) rootView.findViewById(R.id.placeOrder);
+
+        button.setTypeface(typeface);
 
         button.setOnClickListener(new View.OnClickListener() {
 
@@ -117,9 +127,23 @@ public class SecureCheckoutFragment extends Fragment {
 
         });
 
+        setupTitlesTypeface(rootView);
+
         this.inflater = inflater;
 
         return rootView;
+
+    }
+
+    private void setupTitlesTypeface(View rootView){
+
+        TextView textClient = (TextView) rootView.findViewById(R.id.client);
+
+        TextView textTotal = (TextView) rootView.findViewById(R.id.total);
+
+        textClient.setTypeface(typeface, Typeface.BOLD);
+
+        textTotal.setTypeface(typeface, Typeface.BOLD);
 
     }
 

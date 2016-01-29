@@ -53,8 +53,8 @@
     <com.amtechventures.tucita.utils.views.CircleTextView
         android:layout_marginTop="5dp"
         android:id="@+id/count"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="21dp"
+        android:layout_height="21dp"
         android:textSize="12sp"
         />
     <Button

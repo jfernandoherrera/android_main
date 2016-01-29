@@ -19,6 +19,7 @@ import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.book.fragments.select.adapters.PagerSelectHourAdapter;
 import com.amtechventures.tucita.activities.book.fragments.select.adapters.SelectHourAdapter;
 import com.amtechventures.tucita.model.domain.venue.Venue;
+import com.amtechventures.tucita.utils.common.AppFont;
 import com.amtechventures.tucita.utils.common.AppTabLayout;
 
 import java.util.Calendar;
@@ -31,7 +32,6 @@ public class SelectDayFragment extends Fragment {
     private ViewPager viewPager;
     private PagerSelectHourAdapter adapter;
     private SelectHourAdapter.OnSlotSelected listener;
-    private Typeface typeface;
 
     @Override
     public void onAttach(Context context) {
@@ -59,6 +59,10 @@ public class SelectDayFragment extends Fragment {
         tabLayout = (AppTabLayout) rootView.findViewById(R.id.tabs);
 
         viewPager = (ViewPager) rootView.findViewById(R.id.container);
+
+        AppFont appFont = new AppFont();
+
+        Typeface typeface = appFont.getAppFont(rootView.getContext());
 
         adapter = new PagerSelectHourAdapter(getChildFragmentManager(), listener, typeface);
 
@@ -98,12 +102,6 @@ public class SelectDayFragment extends Fragment {
         });
 
         return rootView;
-
-    }
-
-    public void setTypeface(Typeface typeface) {
-
-        this.typeface = typeface;
 
     }
 

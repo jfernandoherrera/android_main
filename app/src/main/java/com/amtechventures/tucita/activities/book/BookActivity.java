@@ -80,7 +80,7 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
         shoppingCarView.setTypeface(typeface);
 
-        selectDateFragment.setTypeface(typeface);
+        secureCheckoutFragment.setTypeface(typeface);
 
         userContext = UserContext.context(userContext);
 
