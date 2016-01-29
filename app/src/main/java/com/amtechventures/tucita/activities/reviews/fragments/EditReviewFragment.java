@@ -2,7 +2,9 @@ package com.amtechventures.tucita.activities.reviews.fragments;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -36,6 +38,7 @@ public class EditReviewFragment extends DialogFragment {
     float rating;
     OnEdited onEdited;
     User user;
+    private Typeface typeface;
 
     public interface OnEdited{
 
@@ -139,9 +142,33 @@ public class EditReviewFragment extends DialogFragment {
 
         textDescription.setText(review.getDescription());
 
+        TextInputLayout textInputLayout = (TextInputLayout) rootView.findViewById(R.id.textTitleLayout);
+
+        textInputLayout.setTypeface(typeface);
+
+        textInputLayout = (TextInputLayout) rootView.findViewById(R.id.textDescriptionLayout);
+
+        textInputLayout.setTypeface(typeface);
+
+        textTitle.setTypeface(typeface);
+
+        textName.setTypeface(typeface);
+
+        textDescription.setTypeface(typeface);
+
+        ratingView.setTypeface(typeface);
+
+        edit.setTypeface(typeface);
+
         setRating(review.getRating());
 
         return rootView;
+
+    }
+
+    public void setTypeface(Typeface typeface) {
+
+        this.typeface = typeface;
 
     }
 

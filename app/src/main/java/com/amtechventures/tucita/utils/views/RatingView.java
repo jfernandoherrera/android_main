@@ -15,7 +15,6 @@ public class RatingView extends RelativeLayout{
 
     TextView means;
     RatingBar ratingBar;
-    Typeface typeface;
 
     public RatingView(Context context, AttributeSet attrs) {
 
@@ -31,8 +30,6 @@ public class RatingView extends RelativeLayout{
         inflater.inflate(R.layout.rating_view, this);
 
         means = (TextView) findViewById(R.id.means);
-
-        means.setTypeface(typeface);
 
         ratingBar = (RatingBar) findViewById(R.id.ratingBar);
 
@@ -93,7 +90,7 @@ public class RatingView extends RelativeLayout{
 
     public void setTypeface(Typeface typeface) {
 
-        this.typeface = typeface;
+        means.setTypeface(typeface);
 
     }
 

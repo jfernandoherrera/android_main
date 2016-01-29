@@ -2,6 +2,7 @@ package com.amtechventures.tucita.activities.reviews.fragments;
 
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ public class ReviewDetailsFragment extends Fragment{
     private CircularImageView circularImageView;
     private RatingBar ratingBar;
     private Review review;
+    private Typeface typeface;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -43,11 +45,19 @@ public class ReviewDetailsFragment extends Fragment{
 
         ratingBar = (RatingBar) itemView.findViewById(R.id.ratingBar);
 
+        setupTypeface();
+
         setupStars();
 
         circularImageView = (CircularImageView) itemView.findViewById(R.id.imageUser);
 
         return itemView;
+    }
+
+    public void setTypeface(Typeface typeface) {
+
+        this.typeface = typeface;
+
     }
 
     public void setReview(Review review) {
@@ -83,6 +93,18 @@ public class ReviewDetailsFragment extends Fragment{
         ratingBar.setRating(review.getRating());
 
         textName.setText(review.getUser().getName());
+
+    }
+
+    private void setupTypeface(){
+
+        textName.setTypeface(typeface, Typeface.BOLD);
+
+        textDate.setTypeface(typeface);
+
+        textTitle.setTypeface(typeface,Typeface.BOLD);
+
+        textDescription.setTypeface(typeface);
 
     }
 

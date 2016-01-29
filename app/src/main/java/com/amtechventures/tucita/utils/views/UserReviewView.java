@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.support.v4.graphics.drawable.DrawableCompat;
@@ -166,6 +167,19 @@ public class UserReviewView extends RelativeLayout{
 
     }
 
+    public void setTypeface(Typeface typeface){
+
+        textDate.setTypeface(typeface);
+
+        textDescription.setTypeface(typeface);
+
+        textName.setTypeface(typeface, Typeface.BOLD);
+
+        textTitle.setTypeface(typeface, Typeface.BOLD);
+
+        edit.setTypeface(typeface, Typeface.BOLD);
+
+    }
 
     public Review getReview() {
 
