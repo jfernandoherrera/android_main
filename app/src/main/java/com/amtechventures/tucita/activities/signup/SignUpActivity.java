@@ -1,7 +1,8 @@
 package com.amtechventures.tucita.activities.signup;
 
-import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.View;
@@ -10,14 +11,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.main.MainActivity;
 import com.amtechventures.tucita.model.context.user.UserCompletion;
 import com.amtechventures.tucita.model.context.user.UserContext;
 import com.amtechventures.tucita.model.domain.user.User;
-import com.amtechventures.tucita.model.domain.user.UserAttributes;
 import com.amtechventures.tucita.model.error.AppError;
+import com.amtechventures.tucita.utils.common.AppFont;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -25,6 +25,7 @@ public class SignUpActivity extends AppCompatActivity {
     private TextView nameView;
     private EditText passwordView;
     private UserContext userContext;
+    private Typeface typeface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +42,23 @@ public class SignUpActivity extends AppCompatActivity {
 
         nameView = (TextView) findViewById(R.id.name);
 
-        Button singUpButton = (Button) findViewById(R.id.buttonSignUp);
+        Button signUpButton = (Button) findViewById(R.id.buttonSignUp);
 
-        singUpButton.setOnClickListener(new View.OnClickListener() {
+        AppFont font = new AppFont();
+
+        typeface = font.getAppFont(getApplicationContext());
+
+        emailView.setTypeface(typeface);
+
+        passwordView.setTypeface(typeface);
+
+        signUpButton.setTypeface(typeface);
+
+        nameView.setTypeface(typeface);
+
+        setupTitlesTypeface();
+
+        signUpButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -53,6 +68,23 @@ public class SignUpActivity extends AppCompatActivity {
             }
 
         });
+
+    }
+
+    private void setupTitlesTypeface(){
+
+        TextInputLayout textInputLayoutEmail = (TextInputLayout) findViewById(R.id.inputEmail);
+
+        TextInputLayout textInputLayoutPassword = (TextInputLayout) findViewById(R.id.inputPassword);
+
+        TextInputLayout textInputLayoutName = (TextInputLayout) findViewById(R.id.inputName);
+
+        textInputLayoutEmail.setTypeface(typeface);
+
+        textInputLayoutPassword.setTypeface(typeface);
+
+        textInputLayoutName.setTypeface(typeface);
+
 
     }
 
@@ -91,16 +123,23 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void processLoggedUser() {
 
-        Intent intent = new Intent(this, MainActivity.class);
-
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-
-        intent.putExtra(UserAttributes.connected, true);
-
-        startActivity(intent);
+        MainActivity.goToCategories(getApplicationContext());
 
         finish();
 
     }
 
+    private void processBack() {
+
+        MainActivity.goToCategoriesFromLogout(getApplicationContext());
+
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        processBack();
+
+    }
 }
