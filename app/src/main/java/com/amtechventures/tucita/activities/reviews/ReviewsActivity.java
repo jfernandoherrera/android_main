@@ -2,6 +2,7 @@ package com.amtechventures.tucita.activities.reviews;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
@@ -48,6 +49,7 @@ public class ReviewsActivity extends AppCompatActivity implements UserReviewView
     private ReviewContext reviewContext;
     private UserContext userContext;
     private RelativeLayout concealer;
+    private Typeface typeface;
 
     @Override
     public void onDetails(Review review) {
@@ -131,60 +133,51 @@ public class ReviewsActivity extends AppCompatActivity implements UserReviewView
 
     }
 
-    private void setupReviews(){
 
-        List<Review> reviews;
+    private void findYourReview(List<Review> reviewList, String userId){
 
         Review toRemove = null;
 
-        final String userId = userContext.currentUser().getParseUser().getObjectId();
+        if (reviewList != null) {
 
-        reviews = reviewContext.getReviewsVenue(venue, new ReviewCompletion.ReviewErrorCompletion() {
-
-            @Override
-            public void completion(List<Review> reviewList, AppError error) {
-
-                Review toRemove = null;
-
-                if(reviewList != null){
-
-                     for(Review review : reviewList){
-
-                        String reviewUserId = review.getUser().getParseUser().getObjectId();
-
-                        if(reviewUserId.equals(userId)){
-
-                            toRemove = review;
-
-                            reviewList.remove(review);
-
-                            break;
-
-                        }
-                    }
-
-                    if(toRemove != null){
-
-                        reviewsFragment.setYours(toRemove);
-
-                    }
-
-                    reviewsFragment.setReviewList(reviewList);
-
-                }
-
-                concealer.setVisibility(View.GONE);
-
-            }
-        });
-
-        if(reviews != null) {
-
-            for(Review review : reviews){
+            for (Review review : reviewList) {
 
                 String reviewUserId = review.getUser().getParseUser().getObjectId();
 
-                if(reviewUserId.equals(userId)){
+                if (reviewUserId.equals(userId)) {
+
+                    toRemove = review;
+
+                    reviewList.remove(review);
+
+                    break;
+
+                }
+            }
+
+            if (toRemove != null) {
+
+                reviewsFragment.setYours(toRemove);
+
+            }
+
+            reviewsFragment.setReviewList(reviewList);
+
+        }
+
+    }
+
+    private void removeYours(  List<Review> reviews, String userId){
+
+        Review toRemove = null;
+
+        if (reviews != null) {
+
+            for (Review review : reviews) {
+
+                String reviewUserId = review.getUser().getParseUser().getObjectId();
+
+                if (reviewUserId.equals(userId)) {
 
                     toRemove = review;
 
@@ -195,7 +188,7 @@ public class ReviewsActivity extends AppCompatActivity implements UserReviewView
                 }
             }
 
-            if(toRemove != null){
+            if (toRemove != null) {
 
                 reviewsFragment.setYours(toRemove);
 
@@ -204,8 +197,62 @@ public class ReviewsActivity extends AppCompatActivity implements UserReviewView
             reviewsFragment.setReviewList(reviews);
 
         }
+    }
+    
+    private void setupReviews(){
+
+        List<Review> reviews;
+
+        User user =  userContext.currentUser();
+
+        if(user != null) {
+
+
+            final String userId = user.getObjectId();
+
+            reviews = reviewContext.getReviewsVenue(venue, new ReviewCompletion.ReviewErrorCompletion() {
+
+                @Override
+                public void completion(List<Review> reviewList, AppError error) {
+
+                    findYourReview(reviewList, userId);
+
+                    concealer.setVisibility(View.GONE);
+
+                }
+            });
+
+           removeYours(reviews, userId);
+
+        }else {
+
+            reviews = reviewContext.getReviewsVenue(venue, new ReviewCompletion.ReviewErrorCompletion() {
+
+                @Override
+                public void completion(List<Review> reviewList, AppError error) {
+
+                    if(reviewList != null){
+
+                        reviewsFragment.setReviewList(reviewList);
+                    }
+
+                    concealer.setVisibility(View.GONE);
+
+                }
+
+            });
+
+            if(reviews != null){
+
+                reviewsFragment.setReviewList(reviews);
+
+            }
+
+        }
 
     }
+
+
 
 
     private void reviewsHide() {
