@@ -1,7 +1,12 @@
 package com.amtechventures.tucita.activities.reviews.fragments;
 
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +43,8 @@ public class ReviewDetailsFragment extends Fragment{
 
         ratingBar = (RatingBar) itemView.findViewById(R.id.ratingBar);
 
+        setupStars();
+
         circularImageView = (CircularImageView) itemView.findViewById(R.id.imageUser);
 
         return itemView;
@@ -48,6 +55,20 @@ public class ReviewDetailsFragment extends Fragment{
         this.review = review;
 
         setupReview();
+
+    }
+
+    private void setupStars(){
+
+        final int yellowColor = Color.argb(255, 251, 197, 70);
+
+        LayerDrawable stars = (LayerDrawable) ratingBar.getProgressDrawable();
+
+        stars.getDrawable(2).setColorFilter(yellowColor, PorterDuff.Mode.SRC_ATOP);
+
+        Drawable progress = ratingBar.getProgressDrawable();
+
+        DrawableCompat.setTint(progress, yellowColor);
 
     }
 

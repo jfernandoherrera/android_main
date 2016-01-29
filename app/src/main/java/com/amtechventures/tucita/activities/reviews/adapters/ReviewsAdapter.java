@@ -1,25 +1,24 @@
 package com.amtechventures.tucita.activities.reviews.adapters;
 
 
-import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.model.context.user.UserContext;
 import com.amtechventures.tucita.model.domain.review.Review;
 import com.amtechventures.tucita.model.domain.user.User;
 import com.mikhaellopez.circularimageview.CircularImageView;
-
 import java.util.Date;
 import java.util.List;
 
@@ -166,6 +165,8 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
 
             ratingBar = (RatingBar) itemView.findViewById(R.id.ratingBar);
 
+            setupStars();
+
             relativeLayout = (LinearLayout) itemView.findViewById(R.id.container);
 
             circularImageView = (CircularImageView) itemView.findViewById(R.id.imageUser);
@@ -189,6 +190,20 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
 
                 }
             });
+
+        }
+
+        private void setupStars(){
+
+            final int yellowColor = Color.argb(255, 251, 197, 70);
+
+            LayerDrawable stars = (LayerDrawable) ratingBar.getProgressDrawable();
+
+            stars.getDrawable(2).setColorFilter(yellowColor, PorterDuff.Mode.SRC_ATOP);
+
+            Drawable progress = ratingBar.getProgressDrawable();
+
+            DrawableCompat.setTint(progress, yellowColor);
 
         }
 

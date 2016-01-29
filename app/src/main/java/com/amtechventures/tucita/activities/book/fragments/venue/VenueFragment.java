@@ -5,10 +5,14 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -152,6 +156,8 @@ public class VenueFragment extends Fragment {
 
         ratingBar = (RatingBar) rootView.findViewById(R.id.ratingBar);
 
+        setupStars();
+
         venueName.setTypeface(typeface, Typeface.BOLD);
 
         textReviews.setTypeface(typeface);
@@ -203,6 +209,19 @@ public class VenueFragment extends Fragment {
 
         return rootView;
 
+    }
+
+    private void setupStars(){
+
+        final int yellowColor = Color.argb(255, 251, 197, 70);
+
+        LayerDrawable stars = (LayerDrawable) ratingBar.getProgressDrawable();
+
+        stars.getDrawable(2).setColorFilter(yellowColor, PorterDuff.Mode.SRC_ATOP);
+
+        Drawable progress = ratingBar.getProgressDrawable();
+
+        DrawableCompat.setTint(progress, yellowColor);
     }
 
     public void setTitlesTypeface(View view){

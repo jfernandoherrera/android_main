@@ -50,13 +50,13 @@
             android:layout_height="30sp">
             <RatingBar
                 android:layout_width="wrap_content"
-                android:layout_height="15sp"
+                android:layout_height="wrap_content"
                 android:numStars="5"
                 android:layout_marginTop="5dp"
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
                 android:id="@+id/searchRatingBar"
-                style="@style/RatingBar"
+                style="?android:attr/ratingBarStyleSmall"
                 />
             <TextView
                 android:layout_width="wrap_content"

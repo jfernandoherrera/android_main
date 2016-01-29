@@ -2,8 +2,13 @@ package com.amtechventures.tucita.activities.reviews.fragments;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -65,6 +70,20 @@ public class ReviewsFragment extends Fragment {
 
     }
 
+    private void setupStars(){
+
+        final int yellowColor = Color.argb(255, 251, 197, 70);
+
+        LayerDrawable stars = (LayerDrawable) ratingBar.getProgressDrawable();
+
+        stars.getDrawable(2).setColorFilter(yellowColor, PorterDuff.Mode.SRC_ATOP);
+
+        Drawable progress = ratingBar.getProgressDrawable();
+
+        DrawableCompat.setTint(progress, yellowColor);
+
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -75,6 +94,8 @@ public class ReviewsFragment extends Fragment {
         textReviews = (TextView) rootView.findViewById(R.id.textReviews);
 
         ratingBar = (RatingBar) rootView.findViewById(R.id.ratingBarVenue);
+
+        setupStars();
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
 

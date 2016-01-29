@@ -1,8 +1,14 @@
 package com.amtechventures.tucita.activities.account.adapters;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.InsetDrawable;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -198,6 +204,8 @@ public class VenuesAdapter extends RecyclerView.Adapter<VenuesAdapter.ViewHolder
 
             ratingBar = (RatingBar) itemView.findViewById(R.id.searchRatingBar);
 
+            setupStars();
+
             ratingBarReview = (RatingBar) itemView.findViewById(R.id.ratingBar);
 
             location.setTypeface(typeface);
@@ -248,6 +256,20 @@ public class VenuesAdapter extends RecyclerView.Adapter<VenuesAdapter.ViewHolder
                 }
 
             });
+
+        }
+
+        private void setupStars(){
+
+            final int yellowColor = Color.argb(255, 251, 197, 70);
+
+            LayerDrawable stars = (LayerDrawable) ratingBar.getProgressDrawable();
+
+            stars.getDrawable(2).setColorFilter(yellowColor, PorterDuff.Mode.SRC_ATOP);
+
+            Drawable progress = ratingBar.getProgressDrawable();
+
+            DrawableCompat.setTint(progress, yellowColor);
 
         }
 

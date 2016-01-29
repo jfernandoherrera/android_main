@@ -3,6 +3,10 @@ package com.amtechventures.tucita.utils.views;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -62,6 +66,20 @@ public class UserReviewView extends RelativeLayout{
 
     }
 
+    private void setupStars(){
+
+        final int yellowColor = Color.argb(255, 251, 197, 70);
+
+        LayerDrawable stars = (LayerDrawable) ratingBar.getProgressDrawable();
+
+        stars.getDrawable(2).setColorFilter(yellowColor, PorterDuff.Mode.SRC_ATOP);
+
+        Drawable progress = ratingBar.getProgressDrawable();
+
+        DrawableCompat.setTint(progress, yellowColor);
+
+    }
+
     private void init(Context context) {
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -77,6 +95,8 @@ public class UserReviewView extends RelativeLayout{
         textDate = (TextView) findViewById(R.id.textDate);
 
         ratingBar = (RatingBar) findViewById(R.id.ratingBar);
+
+        setupStars();
 
         relativeLayout = (LinearLayout) findViewById(R.id.container);
 

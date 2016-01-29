@@ -19,6 +19,7 @@ import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.book.fragments.select.adapters.PagerSelectHourAdapter;
 import com.amtechventures.tucita.activities.book.fragments.select.adapters.SelectHourAdapter;
 import com.amtechventures.tucita.model.domain.venue.Venue;
+import com.amtechventures.tucita.utils.common.AppTabLayout;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -26,7 +27,7 @@ import java.util.Date;
 public class SelectDayFragment extends Fragment {
 
 
-    private TabLayout tabLayout;
+    private AppTabLayout tabLayout;
     private ViewPager viewPager;
     private PagerSelectHourAdapter adapter;
     private SelectHourAdapter.OnSlotSelected listener;
@@ -55,7 +56,7 @@ public class SelectDayFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_select_date, container, false);
 
-        tabLayout = (TabLayout) rootView.findViewById(R.id.tabs);
+        tabLayout = (AppTabLayout) rootView.findViewById(R.id.tabs);
 
         viewPager = (ViewPager) rootView.findViewById(R.id.container);
 
@@ -64,26 +65,6 @@ public class SelectDayFragment extends Fragment {
         viewPager.setAdapter(adapter);
 
         tabLayout.setupWithViewPager(viewPager);
-
-/*
-        for(int index = 0; index < tabLayout.getTabCount(); index ++){
-
-            TabLayout.Tab tab = tabLayout.getTabAt(index);
-
-            String text = (String) tab.getText();
-
-            TextView textView = (TextView) rootView.findViewById(R.id.textName);
-
-            textView.setTextColor(Color.WHITE);
-
-            textView.setTypeface(typeface);
-
-            textView.setText(text);
-
-            tab.setCustomView(textView);
-
-        }*/
-
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 

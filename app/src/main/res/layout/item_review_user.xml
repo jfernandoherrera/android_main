@@ -58,14 +58,14 @@
 
                     <RatingBar
                         android:layout_width="wrap_content"
-                        android:layout_height="15sp"
+                        android:layout_height="wrap_content"
                         android:numStars="5"
                         android:id="@+id/ratingBar"
                         android:isIndicator="true"
                         android:layout_marginTop="2dp"
                         android:layout_marginLeft="@dimen/activity_horizontal_margin"
                         android:layout_marginStart="@dimen/activity_horizontal_margin"
-                        style="@style/RatingBar"
+                        style="?android:attr/ratingBarStyleSmall"
                         />
                     <TextView
                         android:layout_width="wrap_content"
