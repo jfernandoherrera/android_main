@@ -4,10 +4,12 @@
     <color name="colorPrimaryDark">#424242</color>
     <color name="dialogColor">#CC424242</color>
     <color name="colorPrimaryLight">@color/com_facebook_button_login_silver_background_color</color>
+    <color name="titleBackground">#62fafafa</color>
     <color name="colorAccent">#B9A32A</color>
     <color name="black">#000000</color>
     <color name="blackPrimary">#de000000</color>
     <color name="blackSecondary">#8a000000</color>
     <color name="blackHintDisabled">#62000000</color>
     <color name="white">#FFFFFF</color>
+    <color name="expanded_children_color">#FFFFFF</color>
 </resources>

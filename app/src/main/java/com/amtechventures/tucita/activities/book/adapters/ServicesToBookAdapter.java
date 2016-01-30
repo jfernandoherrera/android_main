@@ -1,5 +1,6 @@
 package com.amtechventures.tucita.activities.book.adapters;
 
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.model.domain.service.Service;
+import com.amtechventures.tucita.utils.common.AppFont;
 
 import java.util.List;
 
@@ -97,6 +99,16 @@ public class ServicesToBookAdapter extends RecyclerView.Adapter<ServicesToBookAd
             textPricesFrom = (TextView) itemView.findViewById(R.id.textPrice);
 
             close = (ImageView) itemView.findViewById(R.id.image);
+
+            AppFont appFont = new AppFont();
+
+            Typeface typeface = appFont.getAppFont(itemView.getContext());
+
+            textDuration.setTypeface(typeface);
+
+            textName.setTypeface(typeface);
+
+            textPricesFrom.setTypeface(typeface);
 
             close.setOnTouchListener(new View.OnTouchListener() {
 

@@ -7,4 +7,5 @@ public class ReviewAttributes {
     public static final String rating = "rating";
     public static final String venue = "venue";
     public static final String user = "user";
+    public static final String updatedAt = "updatedAt";
 }

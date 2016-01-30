@@ -1,20 +1,16 @@
 package com.amtechventures.tucita.model.context.review;
 
-import com.amtechventures.tucita.model.domain.appointment.Appointment;
-import com.amtechventures.tucita.model.domain.category.Category;
+
 import com.amtechventures.tucita.model.domain.review.Review;
 import com.amtechventures.tucita.model.domain.review.ReviewAttributes;
 import com.amtechventures.tucita.model.domain.user.User;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.error.AppError;
 import com.parse.FindCallback;
-import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.SaveCallback;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class ReviewRemote {
@@ -42,6 +38,8 @@ public class ReviewRemote {
         setQuery();
 
         query.whereEqualTo(ReviewAttributes.user, user.getParseUser());
+
+        query.orderByAscending(ReviewAttributes.updatedAt);
 
         query.include(ReviewAttributes.venue);
 
@@ -77,7 +75,50 @@ public class ReviewRemote {
         });
     }
 
-    public void createReview(Review review, final ReviewCompletion.ReviewErrorCompletion completion){
+    public void getReviewsVenue(Venue venue, final ReviewCompletion.ReviewErrorCompletion completion){
+
+        setQuery();
+
+        query.whereEqualTo(ReviewAttributes.venue, venue);
+
+        query.orderByAscending(ReviewAttributes.updatedAt);
+
+        query.include(ReviewAttributes.user);
+
+        query.findInBackground(new FindCallback<Review>() {
+            @Override
+            public void done(List<Review> objects, ParseException e) {
+
+                if (e != null) {
+
+                    e.printStackTrace();
+
+                }
+
+                if (objects != null) {
+
+                    try {
+
+                        ParseObject.pinAll(objects);
+
+                    } catch (ParseException pe) {
+
+                        pe.printStackTrace();
+
+                    }
+
+                }
+
+                AppError appError = e != null ? new AppError(Review.class.toString(), 0, null) : null;
+
+                completion.completion(objects, appError);
+
+            }
+        });
+    }
+
+
+    public void saveReview(Review review, final ReviewCompletion.ReviewErrorCompletion completion){
 
         review.saveInBackground(new SaveCallback() {
 

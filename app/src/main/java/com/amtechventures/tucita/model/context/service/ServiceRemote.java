@@ -1,5 +1,8 @@
 package com.amtechventures.tucita.model.context.service;
 
+import android.util.Log;
+
+import com.amtechventures.tucita.model.domain.appointment.Appointment;
 import com.amtechventures.tucita.model.domain.service.Service;
 import com.amtechventures.tucita.model.domain.service.ServiceAttributes;
 import com.amtechventures.tucita.model.domain.subcategory.SubCategory;
@@ -140,6 +143,31 @@ public class ServiceRemote {
 
             @Override
             public void done(List<Service> objects, ParseException e) {
+
+                AppError appError = e != null ? new AppError(Service.class.toString(), 0, null) : null;
+
+                completion.completion(objects, appError);
+
+            }
+
+        });
+
+    }
+
+    public void loadAppointmentServices(ParseQuery<Service> appointment, final ServiceCompletion.ErrorCompletion completion) {
+
+        query = appointment;
+
+        query.findInBackground(new FindCallback<Service>() {
+
+            @Override
+            public void done(List<Service> objects, ParseException e) {
+
+                if(e!=null){
+
+                  e.printStackTrace();
+
+                }
 
                 AppError appError = e != null ? new AppError(Service.class.toString(), 0, null) : null;
 

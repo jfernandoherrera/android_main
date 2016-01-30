@@ -1,5 +1,8 @@
 package com.amtechventures.tucita.model.context.service;
 
+import com.amtechventures.tucita.model.context.venue.VenueCompletion;
+import com.amtechventures.tucita.model.domain.appointment.Appointment;
+import com.amtechventures.tucita.model.domain.appointment.AppointmentAttributes;
 import com.amtechventures.tucita.model.domain.service.Service;
 import com.amtechventures.tucita.model.domain.subcategory.SubCategory;
 import com.amtechventures.tucita.model.domain.venue.Venue;
@@ -77,6 +80,17 @@ public class ServiceContext {
     public void loadCategorizedServices(List<SubCategory> subCategories, ServiceCompletion.ErrorCompletion errorCompletion) {
 
         serviceRemote.loadCategorizedServices(subCategories, errorCompletion);
+
+    }
+
+    public void loadAppointmentServices(Appointment appointment, ServiceCompletion.ErrorCompletion completion){
+
+
+        ParseRelation object = (ParseRelation) appointment.get(AppointmentAttributes.services);
+
+        ParseQuery<Service> queryRemote = object.getQuery();
+
+        serviceRemote.loadAppointmentServices(queryRemote, completion);
 
     }
 

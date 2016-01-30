@@ -1,5 +1,6 @@
 package com.amtechventures.tucita.activities.book.adapters;
 
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,14 +19,17 @@ public class ExpandableParentAdapter extends BaseExpandableListAdapter {
     private ViewUtils viewUtils;
     private int childHeight;
     private final ExpandableListView listViewParent;
+    private Typeface typeface;
 
-    public ExpandableParentAdapter(String description, ExpandableListView listViewParent, ViewUtils viewUtils) {
+    public ExpandableParentAdapter(String description, ExpandableListView listViewParent, ViewUtils viewUtils, Typeface typeface) {
 
         this.description = description;
 
         this.listViewParent = listViewParent;
 
         this.viewUtils = viewUtils;
+
+        this.typeface = typeface;
 
     }
 
@@ -95,6 +99,8 @@ public class ExpandableParentAdapter extends BaseExpandableListAdapter {
 
         CheckedTextView checkedTextView = (CheckedTextView) convertView.findViewById(R.id.textViewGroupName);
 
+        checkedTextView.setTypeface(typeface);
+
         checkedTextView.setText(convertView.getResources().getString(R.string.description));
 
         checkedTextView.setHeight(viewUtils.parentHeight);
@@ -113,6 +119,8 @@ public class ExpandableParentAdapter extends BaseExpandableListAdapter {
             convertView = inflater.inflate(R.layout.list_item, null);
 
             final TextView text = (TextView) convertView.findViewById(R.id.textList);
+
+            text.setTypeface(typeface);
 
             text.setText(description);
 

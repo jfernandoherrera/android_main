@@ -22,11 +22,40 @@ public class ReviewLocal {
 
         query.whereEqualTo(ReviewAttributes.user, user.getParseUser());
 
+        query.orderByAscending(ReviewAttributes.updatedAt);
+
         query.include(ReviewAttributes.venue);
 
         try {
 
            reviews = query.find();
+
+        } catch (ParseException e) {
+
+            e.printStackTrace();
+        }
+
+        return reviews;
+
+    }
+
+    public List<Review> getReviewsVenue(Venue venue){
+
+        List<Review> reviews = null;
+
+        ParseQuery query = Review.getQuery();
+
+        query.fromLocalDatastore();
+
+        query.whereEqualTo(ReviewAttributes.venue, venue);
+
+        query.orderByAscending(ReviewAttributes.updatedAt);
+
+        query.include(ReviewAttributes.user);
+
+        try {
+
+            reviews = query.find();
 
         } catch (ParseException e) {
 

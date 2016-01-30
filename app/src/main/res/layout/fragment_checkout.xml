@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    >
+<LinearLayout
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
     <com.amtechventures.tucita.utils.views.AppointmentView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,6 +28,7 @@
         android:paddingStart="@dimen/high_margin"
         android:paddingRight="@dimen/high_margin"
         android:paddingEnd="@dimen/high_margin"
+        android:id="@+id/client"
         android:background="@color/colorPrimaryLight"
         android:text="@string/client_details"/>
     <TextView
@@ -57,6 +62,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="bottom"
+                android:id="@+id/total"
                 android:textColor="@color/blackSecondary"
                 android:text="@string/order_total"/>
             <TextView
@@ -75,4 +81,4 @@
         android:id="@+id/placeOrder"
         android:text="@string/place_order"/>
     </RelativeLayout>
-</LinearLayout>
+</LinearLayout></ScrollView>

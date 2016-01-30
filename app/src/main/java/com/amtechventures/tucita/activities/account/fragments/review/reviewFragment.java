@@ -2,19 +2,17 @@ package com.amtechventures.tucita.activities.account.fragments.review;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -43,19 +41,12 @@ public class ReviewFragment extends DialogFragment {
     User user;
     Venue venue;
     OnSend listener;
+    float rating;
+    private Typeface typeface;
 
     public interface OnSend{
 
         void onSend();
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-
-        super.onCreate(savedInstanceState);
-
-        reviewContext = ReviewContext.context(reviewContext);
-
     }
 
     @Override
@@ -67,12 +58,27 @@ public class ReviewFragment extends DialogFragment {
 
     }
 
+    public void setTypeface(Typeface typeface) {
+
+        this.typeface = typeface;
+
+    }
+
     @Override
     public void onDetach() {
 
         super.onDetach();
 
         listener = null;
+
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+
+        super.onCreate(savedInstanceState);
+
+        reviewContext = ReviewContext.context(reviewContext);
 
     }
 
@@ -92,7 +98,7 @@ public class ReviewFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_review, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_add_review, container, false);
 
         textName = (TextView) rootView.findViewById(R.id.textName);
 
@@ -106,6 +112,26 @@ public class ReviewFragment extends DialogFragment {
 
         send = (Button) rootView.findViewById(R.id.send);
 
+        TextInputLayout textInputLayout = (TextInputLayout) rootView.findViewById(R.id.textTitleLayout);
+
+        textInputLayout.setTypeface(typeface);
+
+        textInputLayout = (TextInputLayout) rootView.findViewById(R.id.textDescriptionLayout);
+
+        textInputLayout.setTypeface(typeface);
+
+        textTitle.setTypeface(typeface);
+
+        textName.setTypeface(typeface);
+
+        textDescription.setTypeface(typeface);
+
+        ratingView.setTypeface(typeface);
+
+        send.setTypeface(typeface);
+
+        ratingView.setRating(rating);
+
         send.setBackgroundColor(Color.WHITE);
 
         send.setOnTouchListener(new View.OnTouchListener() {
@@ -115,7 +141,7 @@ public class ReviewFragment extends DialogFragment {
 
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
 
-                    send.setBackgroundResource(R.mipmap.ic_close_pressed);
+                    send.setBackgroundResource(R.drawable.pressed_application_background_static);
 
                 } else if (event.getAction() != MotionEvent.ACTION_MOVE) {
 
@@ -141,7 +167,11 @@ public class ReviewFragment extends DialogFragment {
 
         layout = (RelativeLayout) rootView.findViewById(R.id.frames);
 
-        layout.bringToFront();
+        if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+
+            layout.bringToFront();
+
+        }
 
         Window window = getDialog().getWindow();
 
@@ -149,13 +179,18 @@ public class ReviewFragment extends DialogFragment {
 
         String reviewBy = getString(R.string.review_by);
 
-        String text = reviewBy +" " + user.getName();
+        String text = reviewBy + " " + user.getName();
 
         textName.setText(text);
 
         return rootView;
     }
 
+    public void setRating(float rating){
+
+    this.rating = rating;
+
+    }
 
     private void sendReview(){
 
@@ -171,13 +206,13 @@ public class ReviewFragment extends DialogFragment {
 
         review.setTitle(textTitle.getText().toString());
 
-        reviewContext.createReview(review, new ReviewCompletion.ReviewErrorCompletion() {
+        reviewContext.saveReview(review, new ReviewCompletion.ReviewErrorCompletion() {
             @Override
             public void completion(List<Review> reviewList, AppError error) {
 
-                if(error != null){
+                if (error != null) {
 
-                }else{
+                } else {
 
                     listener.onSend();
 

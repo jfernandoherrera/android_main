@@ -1,6 +1,7 @@
 package com.amtechventures.tucita.activities.book.fragments.checkout;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,7 @@ import com.amtechventures.tucita.activities.book.adapters.ExpandableWithoutParen
 import com.amtechventures.tucita.model.context.appointment.AppointmentCompletion;
 import com.amtechventures.tucita.model.context.appointment.AppointmentContext;
 import com.amtechventures.tucita.model.domain.appointment.Appointment;
+import com.amtechventures.tucita.model.domain.appointment.AppointmentAttributes;
 import com.amtechventures.tucita.model.domain.service.Service;
 import com.amtechventures.tucita.model.domain.user.User;
 import com.amtechventures.tucita.model.domain.venue.Venue;
@@ -23,6 +25,7 @@ import com.amtechventures.tucita.model.error.AppError;
 import com.amtechventures.tucita.utils.views.AlertDialogError;
 import com.amtechventures.tucita.utils.views.AppointmentView;
 import com.amtechventures.tucita.utils.views.ViewUtils;
+import com.parse.ParseRelation;
 import com.parse.ParseUser;
 
 import java.util.Calendar;
@@ -44,6 +47,7 @@ public class SecureCheckoutFragment extends Fragment {
     private LayoutInflater inflater;
     private ExpandableWithoutParentAdapter adapter;
     private ExpandableListView listViewServices;
+    private Typeface typeface;
 
     public interface OnPlaceOrder {
 
@@ -66,6 +70,12 @@ public class SecureCheckoutFragment extends Fragment {
         super.onDetach();
 
         listener = null;
+
+    }
+
+    public void setTypeface(Typeface typeface) {
+
+        this.typeface = typeface;
 
     }
 
@@ -92,9 +102,19 @@ public class SecureCheckoutFragment extends Fragment {
 
         textTotal = (TextView) rootView.findViewById(R.id.textPrice);
 
+        textTotal.setTypeface(typeface);
+
+        textEmail.setTypeface(typeface);
+
+        textClientName.setTypeface(typeface);
+
+        appointmentView.setTypeface(typeface);
+
         listViewServices = (ExpandableListView) rootView.findViewById(R.id.listViewServices);
 
         Button button = (Button) rootView.findViewById(R.id.placeOrder);
+
+        button.setTypeface(typeface);
 
         button.setOnClickListener(new View.OnClickListener() {
 
@@ -107,9 +127,23 @@ public class SecureCheckoutFragment extends Fragment {
 
         });
 
+        setupTitlesTypeface(rootView);
+
         this.inflater = inflater;
 
         return rootView;
+
+    }
+
+    private void setupTitlesTypeface(View rootView){
+
+        TextView textClient = (TextView) rootView.findViewById(R.id.client);
+
+        TextView textTotal = (TextView) rootView.findViewById(R.id.total);
+
+        textClient.setTypeface(typeface, Typeface.BOLD);
+
+        textTotal.setTypeface(typeface, Typeface.BOLD);
 
     }
 
@@ -117,7 +151,7 @@ public class SecureCheckoutFragment extends Fragment {
 
         ViewUtils viewUtils = new ViewUtils(getContext());
 
-        adapter = new ExpandableWithoutParentAdapter(services, listViewServices, viewUtils);
+        adapter = new ExpandableWithoutParentAdapter(services, listViewServices, viewUtils, typeface);
 
         adapter.setInflater(inflater);
 
@@ -141,9 +175,13 @@ public class SecureCheckoutFragment extends Fragment {
 
     public void setupAppointmentView() {
 
-        appointmentView.setTextName(venue.getName());
+        String dateString = date.getTime().toLocaleString();
 
-        appointmentView.setTextDate(date.getTime().toLocaleString());
+        appointmentView.setTextDate(dateString);
+
+        String venueName = venue.getName();
+
+        appointmentView.setTextName(venueName);
 
     }
 
@@ -184,6 +222,14 @@ public class SecureCheckoutFragment extends Fragment {
     public void placeOrder(AppointmentCompletion.AppointmentErrorCompletion completion) {
 
         Appointment appointment = new Appointment();
+
+        ParseRelation<Service> serviceParseRelation = appointment.getRelation(AppointmentAttributes.services);
+
+        for(Service service : services){
+
+            serviceParseRelation.add(service);
+
+        }
 
         appointment.setDate(date);
 

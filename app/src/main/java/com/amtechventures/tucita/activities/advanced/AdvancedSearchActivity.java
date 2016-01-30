@@ -1,5 +1,6 @@
 package com.amtechventures.tucita.activities.advanced;
 
+import android.graphics.Typeface;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -8,11 +9,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
+
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.advanced.fragments.LocationOptionsFragment;
 import com.amtechventures.tucita.activities.advanced.fragments.VenuesResultFragment;
 import com.amtechventures.tucita.model.domain.category.CategoryAttributes;
 import com.amtechventures.tucita.model.domain.city.City;
+import com.amtechventures.tucita.utils.common.AppFont;
+
+import java.lang.reflect.Field;
 
 public class AdvancedSearchActivity extends AppCompatActivity implements LocationOptionsFragment.OnCitySelected {
 
@@ -20,6 +26,7 @@ public class AdvancedSearchActivity extends AppCompatActivity implements Locatio
     private String name;
     private VenuesResultFragment venuesResultFragment;
     private LocationOptionsFragment locationOptionsFragment;
+    private Typeface typeface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +40,14 @@ public class AdvancedSearchActivity extends AppCompatActivity implements Locatio
         venuesResultFragment = new VenuesResultFragment();
 
         locationOptionsFragment = new LocationOptionsFragment();
+
+        AppFont appFont = new AppFont();
+
+        typeface = appFont.getAppFont(getApplicationContext());
+
+        venuesResultFragment.setTypeface(typeface);
+
+        locationOptionsFragment.setTypeface(typeface);
 
         setLocationOptionsFragment();
 
@@ -118,6 +133,30 @@ public class AdvancedSearchActivity extends AppCompatActivity implements Locatio
 
     }
 
+    private TextView getActionBarTextView() {
+
+        TextView titleTextView = null;
+
+        String defaultNameTitleMenu = "mTitleTextView";
+
+        try {
+
+            Field field = toolbar.getClass().getDeclaredField(defaultNameTitleMenu);
+
+            field.setAccessible(true);
+
+            titleTextView = (TextView) field.get(toolbar);
+
+        } catch (NoSuchFieldException e) {
+
+        } catch (IllegalAccessException e) {
+
+        }
+
+        return titleTextView;
+
+    }
+
     private void setToolbar() {
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -157,6 +196,8 @@ public class AdvancedSearchActivity extends AppCompatActivity implements Locatio
     public boolean onCreateOptionsMenu(Menu menu) {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        getActionBarTextView().setTypeface(typeface);
 
         getSupportActionBar().setTitle(name);
 

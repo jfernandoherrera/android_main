@@ -7,11 +7,13 @@ import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.domain.venue.VenueAttributes;
 import com.amtechventures.tucita.model.error.AppError;
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.SaveCallback;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -34,6 +36,26 @@ public class AppointmentRemote {
 
         }
 
+    }
+
+    public void getAppointment(String objectId, final AppointmentCompletion.AppointmentErrorCompletion completion){
+
+        setQuery();
+
+        query.whereEqualTo(AppointmentAttributes.objectId, objectId);
+
+        query.include(AppointmentAttributes.venue);
+
+        query.getFirstInBackground(new GetCallback<Appointment>() {
+
+            @Override
+            public void done(Appointment object, ParseException e) {
+
+                AppError appError = e != null ? new AppError(Appointment.class.toString(), 0, null) : null;
+
+                completion.completion(object, appError);
+            }
+        });
     }
 
     public void loadAppointmentsDateVenue(Venue venue, Calendar date, final AppointmentCompletion.AppointmentErrorCompletion completion) {
@@ -82,7 +104,7 @@ public class AppointmentRemote {
 
                 AppError appError = e != null ? new AppError(Appointment.class.toString(), 0, null) : null;
 
-                completion.completion(null, appError);
+                completion.completion(new Appointment(), appError);
 
             }
 
@@ -90,13 +112,17 @@ public class AppointmentRemote {
 
     }
 
-    public void loadUserAppointments(User user, final AppointmentCompletion.AppointmentErrorCompletion completion) {
+    public void loadUserAppointments(User user, final AppointmentCompletion.AppointmentErrorCompletion completion, int skip) {
 
         ParseQuery<Appointment> query = Appointment.getQuery();
 
         query.whereEqualTo(AppointmentAttributes.user, user.getParseUser());
 
         query.orderByDescending(AppointmentAttributes.date);
+
+        query.setSkip(skip);
+
+        query.setLimit(4);
 
         query.include(AppointmentAttributes.venue);
 

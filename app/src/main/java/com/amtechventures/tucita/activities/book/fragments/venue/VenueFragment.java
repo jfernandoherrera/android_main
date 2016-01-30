@@ -5,9 +5,14 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -19,7 +24,6 @@ import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.book.fragments.venue.adapters.ExpandableListAdapter;
 import com.amtechventures.tucita.activities.reviews.ReviewsActivity;
@@ -39,7 +43,6 @@ import com.amtechventures.tucita.model.error.AppError;
 import com.amtechventures.tucita.activities.book.adapters.ExpandableParentAdapter;
 import com.amtechventures.tucita.utils.views.OpeningHourView;
 import com.amtechventures.tucita.utils.views.ViewUtils;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -69,6 +72,9 @@ public class VenueFragment extends Fragment {
     private ProgressDialog progress;
     private ViewUtils viewUtils;
     private ScrollView scrollView;
+    private TextView textReviews;
+    private Typeface typeface;
+    private TextView specials;
 
     public interface OnServiceSelected {
 
@@ -110,6 +116,12 @@ public class VenueFragment extends Fragment {
 
     }
 
+    public void setTypeface(Typeface typeface) {
+
+        this.typeface = typeface;
+
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
@@ -134,11 +146,21 @@ public class VenueFragment extends Fragment {
 
         venuePicture = (ImageView) rootView.findViewById(R.id.imageVenue);
 
+        textReviews = (TextView) rootView.findViewById(R.id.textViewReviews);
+
         venueName = (TextView) rootView.findViewById(R.id.title_Venue);
+
+        specials = (TextView) rootView.findViewById(R.id.textViewTop);
 
         venueDescription = (ExpandableListView) rootView.findViewById(R.id.listViewDescription);
 
         ratingBar = (RatingBar) rootView.findViewById(R.id.ratingBar);
+
+        setupStars();
+
+        venueName.setTypeface(typeface, Typeface.BOLD);
+
+        textReviews.setTypeface(typeface);
 
         RelativeLayout clickRating = (RelativeLayout) rootView.findViewById(R.id.clickRating);
 
@@ -167,7 +189,7 @@ public class VenueFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-            goToReviews();
+                goToReviews();
 
             }
 
@@ -175,19 +197,55 @@ public class VenueFragment extends Fragment {
 
         location = (Button) rootView.findViewById(R.id.watch_location);
 
+        location.setTypeface(typeface);
+
         listViewFullMenu = (ExpandableListView) rootView.findViewById(R.id.listViewFull);
 
         listViewAnotherMenu = (ExpandableListView) rootView.findViewById(R.id.listViewTop);
 
         this.inflater = inflater;
 
+        setTitlesTypeface(rootView);
+
         return rootView;
+
+    }
+
+    private void setupStars(){
+
+        final int yellowColor = Color.argb(255, 251, 197, 70);
+
+        LayerDrawable stars = (LayerDrawable) ratingBar.getProgressDrawable();
+
+        stars.getDrawable(2).setColorFilter(yellowColor, PorterDuff.Mode.SRC_ATOP);
+
+        Drawable progress = ratingBar.getProgressDrawable();
+
+        DrawableCompat.setTint(progress, yellowColor);
+    }
+
+    public void setTitlesTypeface(View view){
+
+        TextView titleFullMenu = (TextView) view.findViewById(R.id.textViewFull);
+
+        TextView titleAbout = (TextView) view.findViewById(R.id.textViewAbout);
+
+        TextView titleSchedule = (TextView) view.findViewById(R.id.textViewOpeningHours);
+
+        titleAbout.setTypeface(typeface, Typeface.BOLD);
+
+        titleFullMenu.setTypeface(typeface, Typeface.BOLD);
+
+        titleSchedule.setTypeface(typeface, Typeface.BOLD);
+
+        specials.setTypeface(typeface,Typeface.BOLD);
 
     }
 
     private void goToReviews(){
 
-        ReviewsActivity.goToReviews(getContext());
+        ReviewsActivity.goToReviews(getContext(), venue.getName(), venue.getAddress());
+
     }
 
     @Override
@@ -239,11 +297,25 @@ public class VenueFragment extends Fragment {
 
             setupFullMenu();
 
+            setupReviews();
+
         } else {
 
             setupProgress();
 
         }
+
+    }
+
+    private void setupReviews(){
+
+        String reviewBy = getString(R.string.review_by);
+
+        String users = getString(R.string.users);
+
+        String textReviewsDone = reviewBy + " " + venue.getReviews() + " " + users;
+
+        textReviews.setText(textReviewsDone);
 
     }
 
@@ -293,7 +365,7 @@ public class VenueFragment extends Fragment {
 
             String description = venue.getDescription();
 
-            parentAdapter = new ExpandableParentAdapter(description, venueDescription, viewUtils);
+            parentAdapter = new ExpandableParentAdapter(description, venueDescription, viewUtils, typeface);
 
             parentAdapter.setInflater(inflater);
 
@@ -340,7 +412,7 @@ public class VenueFragment extends Fragment {
 
         setStringsArray(servicesList);
 
-        fullMenuAdapter = new ExpandableListAdapter(subCategories, services, viewUtils, listViewFullMenu, listener);
+        fullMenuAdapter = new ExpandableListAdapter(subCategories, services, viewUtils, listViewFullMenu, listener, typeface);
 
         fullMenuAdapter.setInflater(inflater);
 
@@ -357,8 +429,6 @@ public class VenueFragment extends Fragment {
             String subCategory = activity.getIntent().getStringExtra(ServiceAttributes.subCategory);
 
             if (subCategory != null) {
-
-                TextView specials = (TextView) getActivity().findViewById(R.id.textViewTop);
 
                 String findService = getResources().getString(R.string.find_service);
 
@@ -386,7 +456,7 @@ public class VenueFragment extends Fragment {
 
                 arrayListServices.add(services.get(indexOf));
 
-                anotherMenuAdapter = new ExpandableListAdapter(arrayList, arrayListServices, viewUtils, listViewAnotherMenu, listener);
+                anotherMenuAdapter = new ExpandableListAdapter(arrayList, arrayListServices, viewUtils, listViewAnotherMenu, listener, typeface);
 
                 anotherMenuAdapter.setInflater(inflater);
 
@@ -548,6 +618,8 @@ public class VenueFragment extends Fragment {
                     break;
             }
 
+            openingHourView.setTypeface(typeface);
+
             setupDay(day, openingHourView);
 
         }
@@ -600,7 +672,7 @@ public class VenueFragment extends Fragment {
 
     private void setupAddressAndLocation() {
 
-        String locationString = venue.getCity().formatedLocation();
+        String locationString = venue.getCity().formattedLocation();
 
         String address = locationString + " " + venue.getAddress();
 

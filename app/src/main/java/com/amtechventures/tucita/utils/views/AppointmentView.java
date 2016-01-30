@@ -1,6 +1,7 @@
 package com.amtechventures.tucita.utils.views;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.RelativeLayout;
@@ -36,6 +37,14 @@ public class AppointmentView extends RelativeLayout {
     public void setTextName(String text) {
 
         textName.setText(text);
+
+    }
+
+    public void setTypeface(Typeface typeface) {
+
+        textDate.setTypeface(typeface);
+
+        textName.setTypeface(typeface);
 
     }
 

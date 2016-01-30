@@ -2,6 +2,7 @@ package com.amtechventures.tucita.utils.views;
 
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.RatingBar;
@@ -41,7 +42,7 @@ public class RatingView extends RelativeLayout{
 
                 int ratingInt = (int) rating;
 
-                if(rating < 1){
+                if (rating < 1) {
 
                     ratingBar.setRating(1);
 
@@ -49,7 +50,7 @@ public class RatingView extends RelativeLayout{
 
                 }
 
-                switch (ratingInt){
+                switch (ratingInt) {
 
                     case 1:
 
@@ -85,7 +86,18 @@ public class RatingView extends RelativeLayout{
             }
         });
 
-        ratingBar.setRating(4);
+    }
+
+    public void setTypeface(Typeface typeface) {
+
+        means.setTypeface(typeface);
+
+    }
+
+    public void setRating(float rating){
+
+        ratingBar.setRating(rating);
+
     }
 
     public int getRating(){

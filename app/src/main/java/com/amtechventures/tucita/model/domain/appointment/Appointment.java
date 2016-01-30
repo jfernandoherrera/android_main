@@ -14,6 +14,12 @@ import java.util.TimeZone;
 @ParseClassName("Appointment")
 public class Appointment extends ParseObject {
 
+    public void putDate(Calendar date){
+
+        put(AppointmentAttributes.date, date.getTime());
+
+    }
+
     public int[] getDuration() {
 
         int[] duration = new int[2];

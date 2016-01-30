@@ -2,6 +2,7 @@ package com.amtechventures.tucita.model.context.user;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.util.Log;
 
 import com.amtechventures.tucita.model.domain.user.User;
 import com.parse.ParseFacebookUtils;
@@ -56,9 +57,13 @@ public class UserContext {
 
     }
 
-    public boolean isFacebook(ParseUser parseUser) {
+    public boolean isFacebook(User user) {
 
-        return ParseFacebookUtils.isLinked(parseUser);
+        user = remote.fetch(user);
+
+        boolean isFacebook =  ParseFacebookUtils.isLinked(user.getParseUser());
+
+        return isFacebook;
 
     }
 

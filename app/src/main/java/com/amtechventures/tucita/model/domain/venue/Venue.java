@@ -52,6 +52,12 @@ public class Venue extends ParseObject {
 
     }
 
+    public int getReviews(){
+
+        return getInt(VenueAttributes.reviewsCount);
+
+    }
+
     public double getRating() {
 
         return getDouble(VenueAttributes.rating);

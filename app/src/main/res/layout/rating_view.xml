@@ -10,18 +10,18 @@
     android:gravity ="center">
     <RatingBar
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_height="60dp"
         android:numStars="5"
         android:id="@+id/ratingBar"
         android:isIndicator="false"
-        style="?android:attr/ratingBarStyleIndicator"
+        style="@style/RatingBarSelector"
         />
 </RelativeLayout>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:textSize="15sp"
-        android:gravity="center_horizontal|top"
+        android:gravity="center_horizontal|bottom"
         android:layout_below="@+id/container"
         android:id="@+id/means"/>
 </RelativeLayout>

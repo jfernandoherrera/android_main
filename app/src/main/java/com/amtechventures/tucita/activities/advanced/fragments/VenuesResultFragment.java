@@ -1,12 +1,14 @@
 package com.amtechventures.tucita.activities.advanced.fragments;
 
 import android.app.ProgressDialog;
+import android.graphics.Typeface;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -58,6 +60,7 @@ public class VenuesResultFragment extends Fragment implements LocationCompletion
     private LinearLayout locationClick;
     private Button button;
     private Location lastLocation;
+    private Typeface typeface;
 
     @Nullable
     @Override
@@ -109,6 +112,10 @@ public class VenuesResultFragment extends Fragment implements LocationCompletion
 
         noResults = (TextView) rootView.findViewById(R.id.noResults);
 
+        noResults.setTypeface(typeface);
+
+        button.setTypeface(typeface);
+
         noResults.setVisibility(View.GONE);
 
         layoutManager = new GridLayoutManager(getContext(), 1);
@@ -116,6 +123,12 @@ public class VenuesResultFragment extends Fragment implements LocationCompletion
         recyclerView.setLayoutManager(layoutManager);
 
         return rootView;
+
+    }
+
+    public void setTypeface(Typeface typeface) {
+
+        this.typeface = typeface;
 
     }
 
@@ -198,7 +211,7 @@ public class VenuesResultFragment extends Fragment implements LocationCompletion
 
                     setupPriceFrom();
 
-                    adapter = new AdvancedSearchAdapter(venues, priceStrings, subCategory.getName());
+                    adapter = new AdvancedSearchAdapter(venues, priceStrings, subCategory.getName(), typeface);
 
                     recyclerView.setAdapter(adapter);
 
@@ -232,7 +245,7 @@ public class VenuesResultFragment extends Fragment implements LocationCompletion
 
                         setupPriceFrom();
 
-                        adapter = new AdvancedSearchAdapter(venues, priceStrings, subCategory.getName());
+                        adapter = new AdvancedSearchAdapter(venues, priceStrings, subCategory.getName(), typeface);
 
                         recyclerView.setAdapter(adapter);
 
@@ -242,9 +255,11 @@ public class VenuesResultFragment extends Fragment implements LocationCompletion
             });
 
         }else{
+
             AlertDialogError alertDialogError = new AlertDialogError();
 
             alertDialogError.noLocationAlert(getContext());
+
         }
     }
 
@@ -257,7 +272,7 @@ public class VenuesResultFragment extends Fragment implements LocationCompletion
 
         setupProgress();
 
-        setCity(city.formatedLocation());
+        setCity(city.formattedLocation());
 
         subCategory = subCategoryContext.findSubCategory(name);
 

@@ -1,56 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:id="@+id/container"
+    android:orientation="horizontal"
     android:layout_height="match_parent">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/image"
-            android:layout_centerVertical="true"
-            android:paddingLeft="@dimen/high_margin"
-            android:paddingStart="@dimen/high_margin"
-            />
+    <com.mikhaellopez.circularimageview.CircularImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_marginLeft="@dimen/high_margin"
+        android:layout_marginStart="@dimen/high_margin"
+        android:layout_marginTop="@dimen/high_margin"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="30dp"
+        android:id="@+id/imageUser"
+        android:layout_gravity="top|center_horizontal"
+        android:padding="5dp"
+        app:border_width="0dp"
+        android:src="@mipmap/ic_user"
+        app:shadow="true"
+        app:shadow_radius="1"
+        app:civ_border_color="@android:color/transparent"
+        />
         <RelativeLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="9"
             android:layout_height="wrap_content"
             android:id="@+id/touched"
-            android:layout_toEndOf="@+id/image"
-            android:layout_toRightOf="@+id/image"
-            android:background="@drawable/ab_transparent_light_holo">
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:id="@+id/textNameUser"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:gravity="center_vertical"
+                style="@style/AppTheme.subTitle"/>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:id="@+id/ratingContainer"
+                android:layout_below="@id/textNameUser"
+                android:layout_height="17sp">
+            <RatingBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numStars="5"
+                android:layout_marginTop="2dp"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:id="@+id/ratingBar"
+                android:isIndicator="true"
+                style="?android:attr/ratingBarStyleSmall"
+                />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_toRightOf="@id/ratingBar"
+                    android:layout_toEndOf="@id/ratingBar"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="24dp"
+                    android:layout_height="15sp"
+                    android:id="@+id/textDate"/>
+            </RelativeLayout>
             <TextView
                 android:layout_width="match_parent"
-                android:id="@+id/textName"
-                android:gravity="bottom"
-                style="@style/AppTheme.ListViewItem"/>
-            <RelativeLayout
-                android:layout_width="match_parent"
+                android:id="@+id/textTitle"
+                android:maxLines="1"
+                android:layout_below="@+id/ratingContainer"
+                android:gravity="top"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:layout_marginEnd="@dimen/high_margin"
+                android:layout_marginRight="@dimen/high_margin"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/textName">
-                <RatingBar
-                    android:layout_width="wrap_content"
-                    android:layout_height="32dp"
-                    android:numStars="5"
-                    android:id="@+id/ratingBar"
-                    android:scaleX="0.5"
-                    android:scaleY="0.5"
-                    android:translationX="-20dp"
-                    android:translationY="-5dp"
-                    android:progressDrawable="@drawable/rating"
-                    />
+                style="@style/AppTheme.Title"/>
                 <TextView
+                    android:maxLines="2"
                     android:layout_width="wrap_content"
-                    android:id="@+id/textDuration"
+                    android:layout_below="@+id/textTitle"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginEnd="@dimen/high_margin"
+                    android:layout_marginRight="@dimen/high_margin"
+                    android:id="@+id/textDescription"
                     style="@style/AppTheme.ListViewItem"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:id="@+id/textPricesFrom"
-                    style="@style/AppTheme.ListViewItem"
-                    android:paddingEnd="@dimen/high_margin"
-                    android:paddingRight="@dimen/high_margin"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true"
-                    />
-            </RelativeLayout>
         </RelativeLayout>
-</RelativeLayout>
+</LinearLayout>

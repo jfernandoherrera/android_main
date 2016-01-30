@@ -1,9 +1,11 @@
 package com.amtechventures.tucita.activities.book.fragments.select;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +42,7 @@ public class SelectHourFragment extends Fragment {
     private boolean isFirst = false;
     private AppointmentContext appointmentContext;
     private SelectHourAdapter.OnSlotSelected listener;
+    private Typeface typeface;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -58,13 +61,23 @@ public class SelectHourFragment extends Fragment {
 
         slots = new ArrayList<>();
 
-        adapter = new SelectHourAdapter(price, slots, listener, date);
+        TextView textView = (TextView) rootView.findViewById(R.id.closed);
+
+        textView.setTypeface(typeface);
+
+        adapter = new SelectHourAdapter(price, slots, listener, date, typeface);
 
         recyclerView.setAdapter(adapter);
 
         loadDay(rootView);
 
         return rootView;
+
+    }
+
+    public void setTypeface(Typeface typeface) {
+
+        this.typeface = typeface;
 
     }
 
@@ -254,6 +267,11 @@ public class SelectHourFragment extends Fragment {
                     }
 
                 }
+
+            }
+
+            @Override
+            public void completion(Appointment appointment, AppError error) {
 
             }
         });

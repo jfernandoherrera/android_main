@@ -3,6 +3,7 @@ package com.amtechventures.tucita.utils.views;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +18,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.book.adapters.ServicesToBookAdapter;
@@ -29,7 +31,7 @@ public class ShoppingCarView extends FrameLayout implements ServicesToBookAdapte
     private ImageView car;
     private Button bookNow;
     private CircleTextView circleTextView;
-    private final double positionRatio = 0.095;
+    private final double positionRatio = 0.085;
     private ArrayList<Service> servicesToBook;
     private RecyclerView recyclerView;
     private ServicesToBookAdapter adapter;
@@ -39,10 +41,18 @@ public class ShoppingCarView extends FrameLayout implements ServicesToBookAdapte
     private OnBookNow listenerBookNow;
     private RelativeLayout shoppingCar;
     private RelativeLayout shoppingCarList;
+    private OnHide onHide;
+    private Button button;
 
     public interface OnBookNow {
 
         void onBookNow();
+
+    }
+
+    public interface OnHide {
+
+        void onHide();
 
     }
 
@@ -89,6 +99,8 @@ public class ShoppingCarView extends FrameLayout implements ServicesToBookAdapte
 
         listener = (OnMoreServices) context;
 
+        onHide = (OnHide) context;
+
         init(context);
 
     }
@@ -119,7 +131,7 @@ public class ShoppingCarView extends FrameLayout implements ServicesToBookAdapte
 
         recyclerView.setAdapter(adapter);
 
-        final Button button = (Button) findViewById(R.id.moreServices);
+        button = (Button) findViewById(R.id.moreServices);
 
         button.setOnTouchListener(new View.OnTouchListener() {
 
@@ -165,7 +177,9 @@ public class ShoppingCarView extends FrameLayout implements ServicesToBookAdapte
 
         car.setImageResource(R.mipmap.ic_launcher);
 
-        circleTextView.setText(" " + String.valueOf(servicesToBook.size()));
+        String circleText = " " + String.valueOf(servicesToBook.size());
+
+        circleTextView.setText(circleText);
 
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 
@@ -178,6 +192,8 @@ public class ShoppingCarView extends FrameLayout implements ServicesToBookAdapte
         int translation = (int) (size.x * positionRatio) / 2;
 
         circleTextView.setTranslationX(translation);
+
+        circleTextView.setTranslationY(-6);
 
         circleTextView.bringToFront();
 
@@ -210,6 +226,20 @@ public class ShoppingCarView extends FrameLayout implements ServicesToBookAdapte
             }
 
         });
+
+    }
+
+    public void setTypeface(Typeface typeface){
+
+        TextView title = (TextView) findViewById(R.id.title);
+
+        title.setTypeface(typeface);
+
+        circleTextView.setTypeface(typeface);
+
+        bookNow.setTypeface(typeface);
+
+        button.setTypeface(typeface);
 
     }
 
@@ -284,6 +314,8 @@ public class ShoppingCarView extends FrameLayout implements ServicesToBookAdapte
 
                     shoppingCar.setVisibility(View.INVISIBLE);
 
+                    onHide.onHide();
+
                 }
 
             });
@@ -343,7 +375,9 @@ public class ShoppingCarView extends FrameLayout implements ServicesToBookAdapte
 
     public void setCount() {
 
-        circleTextView.setText(" " + String.valueOf(servicesToBook.size()));
+        String circleText = " " + String.valueOf(servicesToBook.size());
+
+        circleTextView.setText(circleText);
 
         if (servicesToBook.size() == 1 && shoppingCar.getVisibility() != VISIBLE) {
 

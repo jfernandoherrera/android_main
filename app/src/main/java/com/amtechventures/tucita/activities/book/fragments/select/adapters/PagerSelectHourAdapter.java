@@ -1,11 +1,15 @@
 package com.amtechventures.tucita.activities.book.fragments.select.adapters;
 
+import android.graphics.Typeface;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
 
 import com.amtechventures.tucita.activities.book.fragments.select.SelectHourFragment;
 import com.amtechventures.tucita.model.domain.venue.Venue;
+import com.amtechventures.tucita.utils.views.CustomSpanTypeface;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -24,12 +28,15 @@ public class PagerSelectHourAdapter extends FragmentStatePagerAdapter {
     private int durationHours;
     private int durationMinutes;
     private SelectHourAdapter.OnSlotSelected listener;
+    private Typeface typeface;
 
-    public PagerSelectHourAdapter(FragmentManager fm, SelectHourAdapter.OnSlotSelected listener) {
+    public PagerSelectHourAdapter(FragmentManager fm, SelectHourAdapter.OnSlotSelected listener, Typeface typeface) {
 
         super(fm);
 
         this.listener = listener;
+
+        this.typeface = typeface;
 
         calendarOneMonthMore.add(Calendar.MONTH, 1);
 
@@ -92,6 +99,8 @@ public class PagerSelectHourAdapter extends FragmentStatePagerAdapter {
         selectHourFragment.setDate(getFragmentDay(position));
 
         selectHourFragment.setVenue(venue);
+
+        selectHourFragment.setTypeface(typeface);
 
         selectHourFragment.setDuration(durationHours, durationMinutes);
 

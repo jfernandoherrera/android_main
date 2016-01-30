@@ -3,6 +3,7 @@ package com.amtechventures.tucita.activities.main.fragments.category;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -18,18 +19,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.main.fragments.category.adapters.CategoryGridAdapter;
 import com.amtechventures.tucita.model.context.category.CategoryCompletion;
 import com.amtechventures.tucita.model.context.category.CategoryContext;
+import com.amtechventures.tucita.model.context.user.UserContext;
 import com.amtechventures.tucita.model.domain.category.Category;
+import com.amtechventures.tucita.model.domain.user.User;
 import com.amtechventures.tucita.model.domain.user.UserAttributes;
 import com.amtechventures.tucita.model.error.AppError;
 import com.amtechventures.tucita.utils.views.AlertDialogError;
 import com.amtechventures.tucita.utils.views.CustomSpanTypeface;
-import com.amtechventures.tucita.utils.views.UserImageView;
+import com.mikhaellopez.circularimageview.CircularImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,18 +48,12 @@ public class CategoryFragment extends Fragment {
     private List<Category> categories = new ArrayList<>();
     private ProgressDialog progress;
     private OnItemClicked listener;
-    private Typeface roboto;
-    private UserImageView picture;
+    private Typeface typeface;
+    private UserContext userContext;
 
     public interface OnItemClicked {
 
         void onItemClicked(String name);
-
-    }
-
-    public void setPicture(UserImageView picture) {
-
-        this.picture = picture;
 
     }
 
@@ -66,7 +64,11 @@ public class CategoryFragment extends Fragment {
 
         listener = (OnItemClicked) context;
 
-        roboto = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Roboto-Light.ttf");
+    }
+
+    public void setTypeface(Typeface typeface) {
+
+        this.typeface = typeface;
 
     }
 
@@ -89,6 +91,8 @@ public class CategoryFragment extends Fragment {
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
 
         recyclerView.setHasFixedSize(true);
+
+        userContext = UserContext.context(userContext);
 
         layoutManager = new GridLayoutManager(rootView.getContext(), COLUMNS_IN_CATEGORIES);
 
@@ -122,13 +126,27 @@ public class CategoryFragment extends Fragment {
 
         SpannableStringBuilder stringBuilder = new SpannableStringBuilder(firstString + " " + secondString + " " + thirdString);
 
-        stringBuilder.setSpan(new CustomSpanTypeface(null, Typeface.BOLD, size, null, null, roboto), 0, firstString.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        stringBuilder.setSpan(new CustomSpanTypeface(null, Typeface.BOLD, size, null, null, typeface), 0, firstString.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
 
-        stringBuilder.setSpan(new CustomSpanTypeface(null, Typeface.BOLD, size, ColorStateList.valueOf(Color.rgb(223, 223, 223)), null, roboto), firstString.length() + 1, firstString.length() + secondString.length() + 1, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        stringBuilder.setSpan(new CustomSpanTypeface(null, Typeface.BOLD, size, ColorStateList.valueOf(Color.rgb(223, 223, 223)), null, typeface), firstString.length() + 1, firstString.length() + secondString.length() + 1, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
 
-        stringBuilder.setSpan(new CustomSpanTypeface(null, Typeface.BOLD, size, null, null, roboto), firstString.length() + secondString.length() + 2, firstString.length() + secondString.length() + thirdString.length() + 2, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        stringBuilder.setSpan(new CustomSpanTypeface(null, Typeface.BOLD, size, null, null, typeface), firstString.length() + secondString.length() + 2, firstString.length() + secondString.length() + thirdString.length() + 2, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
 
         return stringBuilder;
+
+    }
+
+    private Bitmap setImageUser(User user, View view){
+
+        Bitmap image = null;
+
+        if(userContext.isFacebook(user)) {
+
+          image = userContext.getPicture();
+
+        }
+
+        return image;
 
     }
 
@@ -138,29 +156,47 @@ public class CategoryFragment extends Fragment {
 
         final Button buttonText = (Button) view.findViewById(R.id.go_to_login);
 
-        final ImageButton button = (ImageButton) view.findViewById(R.id.account);
+        final TextView textView = (TextView) view.findViewById(R.id.account);
 
-        button.setBackgroundResource(R.drawable.log_in_or_signup_click_out);
+        LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.backgroundContainer);
+
+        CircularImageView circularImageView = (CircularImageView) view.findViewById(R.id.imageUser);
+
+        buttonText.setTypeface(typeface);
+
+        textView.setTypeface(typeface);
+
+        linearLayout.setBackgroundResource(R.drawable.log_in_or_signup_click_out);
 
         if (connected) {
 
-            button.setImageDrawable(picture);
+            User user = userContext.currentUser();
+
+            Bitmap image = setImageUser(user, view);
+
+            if(image != null) {
+
+                circularImageView.setImageBitmap(image);
+
+            }
+
+            textView.setText(user.getName());
 
             buttonText.setVisibility(View.GONE);
 
-            button.setOnTouchListener(new View.OnTouchListener() {
+            linearLayout.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
 
                     if (event.getAction() == MotionEvent.ACTION_DOWN) {
 
-                        button.setBackgroundResource(R.drawable.log_in_or_signup_click_in);
+                        v.setBackgroundResource(R.drawable.log_in_or_signup_click_in);
 
                     } else if (event.getAction() == MotionEvent.ACTION_UP) {
 
-                        button.setBackgroundResource(R.drawable.log_in_or_signup_click_out);
+                        v.setBackgroundResource(R.drawable.log_in_or_signup_click_out);
 
-                        button.callOnClick();
+                        v.callOnClick();
 
                     }
 
@@ -171,7 +207,9 @@ public class CategoryFragment extends Fragment {
 
         } else {
 
-            button.setVisibility(View.GONE);
+            circularImageView.setVisibility(View.GONE);
+
+            textView.setVisibility(View.GONE);
 
             buttonText.setText(getStringLoginModified());
 
@@ -247,7 +285,7 @@ public class CategoryFragment extends Fragment {
 
         }
 
-        adapter = new CategoryGridAdapter(categories, categoryContext, roboto, (OnItemClicked) getActivity());
+        adapter = new CategoryGridAdapter(categories, categoryContext, typeface, (OnItemClicked) getActivity());
 
         recyclerView.setAdapter(adapter);
 

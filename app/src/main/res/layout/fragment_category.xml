@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white">
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
@@ -14,15 +13,41 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent"
         >
-    <ImageButton
-        android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:id="@+id/backgroundContainer"
+            android:onClick="goToAccount"
+            android:layout_alignParentBottom="true"
+            android:layout_height="60dp">
+            <com.mikhaellopez.circularimageview.CircularImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_marginLeft="@dimen/high_margin"
+                android:layout_marginStart="@dimen/high_margin"
+                android:layout_marginTop="10dp"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:id="@+id/imageUser"
+                android:layout_gravity="top|center_horizontal"
+                android:padding="5dp"
+                app:border_width="0dp"
+                android:src="@mipmap/ic_user"
+                app:shadow="true"
+                app:shadow_radius="1"
+                app:civ_border_color="@android:color/transparent"
+                />
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="60dp"
+        android:gravity="center"
         android:id="@+id/account"
-        android:layout_alignParentBottom="true"
-        android:onClick="goToAccount"
+        android:textSize="20sp"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
-        />
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+
+        /></LinearLayout>
     <Button
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -32,7 +57,7 @@
         android:layout_alignParentBottom="true"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
-        android:background="@drawable/log_in_or_signup_click_out"
+        android:background="@android:color/transparent"
         />
 </RelativeLayout>
 </RelativeLayout>

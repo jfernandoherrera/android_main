@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.util.Log;
 
 import com.amtechventures.tucita.model.domain.category.Category;
 import com.amtechventures.tucita.model.domain.facebook.FacebookPermissions;
@@ -83,6 +84,12 @@ public class UserRemote {
 
             @Override
             public void done(ParseUser parseUser, ParseException e) {
+
+                if(e != null){
+
+                    e.printStackTrace();
+
+                }
 
                 if (parseUser != null && parseUser.isNew()) {
 
@@ -177,11 +184,32 @@ public class UserRemote {
 
     }
 
+    public User fetch(User user){
+
+        try {
+
+            user.getParseUser().fetch();
+
+        } catch (ParseException e) {
+
+            e.printStackTrace();
+
+        }
+
+        return user;
+    }
+
     private void processLogin(ParseUser parseUser, ParseException e, UserCompletion.UserErrorCompletion completion) {
 
         User user = null;
 
         AppError appError = new AppError(Category.class.toString(), 0, null);
+
+        if(e != null){
+
+            e.printStackTrace();
+
+        }
 
         if (e == null && parseUser != null) {
 

@@ -1,6 +1,7 @@
 package com.amtechventures.tucita.activities.account.fragments.venues;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -8,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.amtechventures.tucita.R;
@@ -32,6 +34,8 @@ public class VenuesFragment extends Fragment {
     private User user;
     private VenuesAdapter.OnReview adapterListener;
     private ReviewContext reviewContext;
+    private RelativeLayout relativeLayout;
+    private Typeface typeface;
 
     @Override
     public void onAttach(Context context) {
@@ -51,6 +55,11 @@ public class VenuesFragment extends Fragment {
 
     }
 
+    public void setTypeface(Typeface typeface) {
+
+        this.typeface = typeface;
+
+    }
 
     public void setVenuesAndUser(List<Venue> venues, User user) {
 
@@ -65,9 +74,15 @@ public class VenuesFragment extends Fragment {
 
     public void setupList(List<Review> reviewList) {
 
+        relativeLayout.setVisibility(View.GONE);
+
         if (venues != null && !venues.isEmpty()) {
 
-            adapter = new VenuesAdapter(venues, reviewList, adapterListener);
+            String reviewBy = getString(R.string.review_by);
+
+            String users = getString(R.string.users);
+
+            adapter = new VenuesAdapter(venues, reviewList, adapterListener, reviewBy, users, typeface);
 
             recyclerView.setAdapter(adapter);
 
@@ -102,6 +117,10 @@ public class VenuesFragment extends Fragment {
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
 
         noResults = (TextView) rootView.findViewById(R.id.noResults);
+
+        noResults.setTypeface(typeface);
+
+        relativeLayout = (RelativeLayout) rootView.findViewById(R.id.concealer);
 
         layoutManager = new GridLayoutManager(getContext(), 1);
 

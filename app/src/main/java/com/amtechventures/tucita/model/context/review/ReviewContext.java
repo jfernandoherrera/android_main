@@ -30,9 +30,9 @@ public class ReviewContext {
         reviewRemote = new ReviewRemote();
     }
 
-    public void createReview(Review review, final ReviewCompletion.ReviewErrorCompletion completion){
+    public void saveReview(Review review, final ReviewCompletion.ReviewErrorCompletion completion){
 
-        reviewRemote.createReview(review, completion);
+        reviewRemote.saveReview(review, completion);
 
     }
 
@@ -41,6 +41,15 @@ public class ReviewContext {
         reviewRemote.getReviewsUser(user, completion);
 
        List<Review> reviews = reviewLocal.getReviewsUser(user);
+
+        return reviews;
+    }
+
+    public List<Review> getReviewsVenue(Venue venue, ReviewCompletion.ReviewErrorCompletion completion) {
+
+       reviewRemote.getReviewsVenue(venue, completion);
+
+        List<Review> reviews = reviewLocal.getReviewsVenue(venue);
 
         return reviews;
     }

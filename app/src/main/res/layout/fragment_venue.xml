@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/scrollView1">
             <RelativeLayout
                 android:layout_width="wrap_content"
+                android:background="@android:color/white"
                 android:layout_height="wrap_content">
                 <ImageView
                     android:layout_width="match_parent"
@@ -15,7 +18,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="35dp"
                     android:textSize="25sp"
-                    android:layout_gravity="center_horizontal"
+                    android:layout_gravity="bottom"
                     android:layout_below="@+id/imageVenue"
                     android:layout_marginStart="@dimen/high_margin"
                     android:layout_marginLeft="@dimen/high_margin"
@@ -24,26 +27,43 @@
                     android:layout_width="match_parent"
                     android:id="@+id/clickRating"
                     android:layout_below="@+id/title_Venue"
-                    android:layout_height="44dp">
+                    android:layout_height="30dp"
+                    android:paddingBottom="@dimen/activity_horizontal_margin">
                 <RatingBar
                     android:layout_width="wrap_content"
-                    android:layout_height="44dp"
+                    android:layout_height="wrap_content"
                     android:numStars="5"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="@dimen/high_margin"
+                    android:layout_marginLeft="@dimen/high_margin"
                     android:id="@+id/ratingBar"
-                    android:scaleX="0.3"
-                    android:scaleY="0.3"
-                    android:translationX="-65dp"
-                    style="@style/RatingBar"
-                    /></RelativeLayout>
+                    android:isIndicator="true"
+                    style="?android:attr/ratingBarStyleSmall"
+                    />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:id="@+id/textViewReviews"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center_vertical"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginEnd="@dimen/high_margin"
+                        android:layout_marginRight="@dimen/high_margin"
+                        android:background="@android:color/transparent" />
+                </RelativeLayout>
                 <TextView
                     android:layout_width="match_parent"
                     android:text="@string/top_services"
                     android:id="@+id/textViewTop"
                     android:layout_below="@+id/clickRating"
-                    android:layout_height="wrap_content"
-                    android:textSize="25sp"
+                    android:layout_height="60dp"
                     android:visibility="gone"
-                    android:background="@color/colorPrimaryLight"
+                    android:textSize="15sp"
+                    android:gravity="bottom"
+                    android:paddingBottom="@dimen/activity_horizontal_margin"
+                    android:background="@drawable/border"
                     android:paddingStart="@dimen/high_margin"
                     android:paddingLeft="@dimen/high_margin"
                     android:paddingEnd="@dimen/high_margin"
@@ -60,36 +80,40 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:text="@string/full_menu"
-                    android:layout_height="35dp"
-                    android:textSize="25sp"
+                    android:layout_height="60dp"
                     android:layout_below="@+id/listViewTop"
                     android:id="@+id/textViewFull"
                     android:paddingStart="@dimen/high_margin"
                     android:paddingLeft="@dimen/high_margin"
                     android:paddingEnd="@dimen/high_margin"
                     android:paddingRight="@dimen/high_margin"
-                    android:background="@color/com_facebook_button_login_silver_background_color"
+                    android:textSize="15sp"
+                    android:gravity="bottom"
+                    android:paddingBottom="@dimen/activity_horizontal_margin"
+                    android:background="@drawable/border"
                     />
                 <ExpandableListView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/listViewFull"
                     android:indicatorLeft="294dp"
                     android:indicatorRight="329dp"
+                    android:id="@+id/listViewFull"
                     android:layout_below="@+id/textViewFull"
                     />
                 <TextView
                     android:layout_width="match_parent"
                     android:text="@string/about"
-                    android:layout_height="35dp"
+                    android:layout_height="60dp"
                     android:layout_below="@+id/listViewFull"
                     android:id="@+id/textViewAbout"
-                    android:textSize="25sp"
+                    android:textSize="15sp"
+                    android:gravity="bottom"
+                    android:paddingBottom="@dimen/activity_horizontal_margin"
+                    android:background="@drawable/border"
                     android:paddingStart="@dimen/high_margin"
                     android:paddingLeft="@dimen/high_margin"
                     android:paddingEnd="@dimen/high_margin"
                     android:paddingRight="@dimen/high_margin"
-                    android:background="@color/com_facebook_button_login_silver_background_color"
                     />
                 <ExpandableListView
                     android:layout_width="match_parent"
@@ -113,13 +137,15 @@
                     android:text="@string/opening_hours"
                     android:id="@+id/textViewOpeningHours"
                     android:layout_below="@+id/watch_location"
-                    android:layout_height="35dp"
-                    android:textSize="25sp"
+                    android:layout_height="60dp"
                     android:paddingStart="@dimen/high_margin"
                     android:paddingLeft="@dimen/high_margin"
                     android:paddingEnd="@dimen/high_margin"
                     android:paddingRight="@dimen/high_margin"
-                    android:background="@color/com_facebook_button_login_silver_background_color"
+                    android:textSize="15sp"
+                    android:gravity="bottom"
+                    android:paddingBottom="@dimen/activity_horizontal_margin"
+                    android:background="@drawable/border"
                     />
                 <com.amtechventures.tucita.utils.views.OpeningHourView
                     android:layout_width="match_parent"
@@ -163,5 +189,6 @@
                     android:layout_below="@+id/radioButton6"
                     />
             </RelativeLayout>
+
 </ScrollView>
 

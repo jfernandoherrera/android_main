@@ -1,5 +1,7 @@
 package com.amtechventures.tucita.model.context.slot;
 
+import com.amtechventures.tucita.activities.main.MainActivity;
+import com.amtechventures.tucita.activities.splash.SplashActivity;
 import com.amtechventures.tucita.model.domain.slot.Slot;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.domain.venue.VenueAttributes;
@@ -30,11 +32,19 @@ public class SlotContext {
 
     public void loadDaySlots(Venue venue, int day, SlotCompletion.SlotErrorCompletion completion) {
 
-        ParseRelation object = (ParseRelation) venue.get(VenueAttributes.slots);
+        try {
 
-        ParseQuery<Slot> queryLocal = object.getQuery();
+            ParseRelation object = (ParseRelation) venue.get(VenueAttributes.slots);
 
-        slotRemote.loadDaySlots(queryLocal, day, completion);
+            ParseQuery<Slot> queryLocal = object.getQuery();
+
+            slotRemote.loadDaySlots(queryLocal, day, completion);
+
+        }catch (NullPointerException e){
+
+            e.printStackTrace();
+
+        }
 
     }
 

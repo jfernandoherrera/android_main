@@ -12,6 +12,7 @@
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
+        android:id="@+id/inputEmail"
         android:layout_height="wrap_content">
 
         <AutoCompleteTextView
@@ -27,6 +28,7 @@
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
+        android:id="@+id/inputPassword"
         android:layout_height="wrap_content">
 
         <EditText
@@ -43,33 +45,45 @@
 
     </android.support.design.widget.TextInputLayout>
 
-    <TextView
-        android:id="@+id/textView2xd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:text="@string/dont_remember_password" />
-
-    <TextView
-        android:id="@+id/newAccount"
-        android:layout_width="152dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="left"
-        android:clickable="true"
-        android:onClick="signup"
-        android:text="@string/create_new_account"
-        android:textColor="#1810ce" />
 
     <Button
         android:id="@+id/email_sign_in_button"
         style="?android:textAppearanceSmall"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="@dimen/activity_horizontal_margin"
         android:onClick="login"
         android:text="@string/action_sign_in_short"
         android:textStyle="bold" />
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_marginBottom="24dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/forgiven"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_alignParentRight="true"
+            android:text="@string/dont_remember_password" />
+
+        <TextView
+            android:id="@+id/newAccount"
+            android:layout_width="152dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginLeft="2dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:clickable="true"
+            android:onClick="signup"
+            android:text="@string/create_new_account"
+            android:textColor="#1810ce" />
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -79,7 +93,9 @@
         <View
             android:layout_width="wrap_content"
             android:layout_height="1dp"
-            android:layout_marginTop="7dp"
+            android:layout_marginTop="9dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginLeft="2dp"
             android:layout_weight="1"
             android:background="@android:color/darker_gray" />
 
@@ -94,7 +110,9 @@
             android:id="@+id/separator2"
             android:layout_width="wrap_content"
             android:layout_height="1dp"
-            android:layout_marginTop="7dp"
+            android:layout_marginEnd="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_marginTop="9dp"
             android:layout_weight="1"
             android:background="@android:color/darker_gray" />
     </LinearLayout>
@@ -106,7 +124,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:layout_marginBottom="@dimen/high_margin"
         android:text="@string/action_sign_in_facebook"
         android:textStyle="bold" />
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:layout_marginTop="9dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginLeft="2dp"
+        android:background="@android:color/darker_gray" />
 
 </LinearLayout>

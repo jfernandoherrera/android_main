@@ -1,5 +1,6 @@
 package com.amtechventures.tucita.activities.book.adapters;
 
+import android.graphics.Typeface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,14 +19,18 @@ public class ExpandableWithoutParentAdapter extends BaseExpandableListAdapter {
     private List<Service> services;
     private ViewUtils viewUtils;
     private final ExpandableListView listViewParent;
+    private Typeface typeface;
 
-    public ExpandableWithoutParentAdapter(List<Service> services, ExpandableListView listViewParent, ViewUtils viewUtils){
+
+    public ExpandableWithoutParentAdapter(List<Service> services, ExpandableListView listViewParent, ViewUtils viewUtils, Typeface typeface){
 
         this.services = services;
 
         this.listViewParent = listViewParent;
 
         this.viewUtils = viewUtils;
+
+        this.typeface = typeface;
 
         if (services.size() == 1){
 
@@ -111,15 +116,19 @@ public class ExpandableWithoutParentAdapter extends BaseExpandableListAdapter {
 
         Service service = services.get(0);
 
-        TextView TextView = (TextView) convertView.findViewById(R.id.textName);
+        TextView textView = (TextView) convertView.findViewById(R.id.textName);
 
-        TextView.setText(service.getName());
+        textView.setText(service.getName());
 
         final TextView textDuration = (TextView) convertView.findViewById(R.id.textDuration);
 
         textDuration.setTextColor(convertView.getResources().getColor(R.color.blackSecondary));
 
         textDuration.setText(service.getDurationInfo());
+
+        textView.setTypeface(typeface);
+
+        textDuration.setTypeface(typeface);
 
         return convertView;
 
@@ -147,6 +156,10 @@ public class ExpandableWithoutParentAdapter extends BaseExpandableListAdapter {
                 textDuration.setTextColor(convertView.getResources().getColor(R.color.blackSecondary));
 
                 textDuration.setText(service.getDurationInfo());
+
+                textName.setTypeface(typeface);
+
+                textDuration.setTypeface(typeface);
 
             }
 

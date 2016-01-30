@@ -18,6 +18,11 @@ public class User {
 
     }
 
+    public String getObjectId(){
+
+        return parseUser.getObjectId();
+    }
+
     public void setUserName(String name) {
 
         parseUser.put(UserAttributes.username, name);

@@ -1,6 +1,7 @@
 package com.amtechventures.tucita.utils.views;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
@@ -73,6 +74,14 @@ public class OpeningHourView extends LinearLayout {
         invalidate();
 
         requestLayout();
+
+    }
+
+    public void setTypeface(Typeface typeface){
+
+        day.setTypeface(typeface);
+
+        hours.setTypeface(typeface);
 
     }
 

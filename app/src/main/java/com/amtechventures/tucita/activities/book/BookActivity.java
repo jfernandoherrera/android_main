@@ -1,6 +1,7 @@
 package com.amtechventures.tucita.activities.book;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.book.fragments.checkout.SecureCheckoutFragment;
@@ -26,17 +29,19 @@ import com.amtechventures.tucita.model.domain.service.Service;
 import com.amtechventures.tucita.model.domain.slot.Slot;
 import com.amtechventures.tucita.model.domain.user.User;
 import com.amtechventures.tucita.model.error.AppError;
+import com.amtechventures.tucita.utils.common.AppFont;
 import com.amtechventures.tucita.utils.views.AlertDialogError;
 import com.amtechventures.tucita.utils.views.ShoppingCarView;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 public class BookActivity extends AppCompatActivity implements VenueFragment.OnServiceSelected,
         ServiceFragment.OnServiceSelected, ShoppingCarView.OnItemClosed,
-        ShoppingCarView.OnMoreServices, ShoppingCarView.OnBookNow, SelectHourAdapter.OnSlotSelected, SecureCheckoutFragment.OnPlaceOrder {
+        ShoppingCarView.OnMoreServices, ShoppingCarView.OnBookNow, SelectHourAdapter.OnSlotSelected, SecureCheckoutFragment.OnPlaceOrder, ShoppingCarView.OnHide {
 
     private VenueFragment venueFragment;
     private ServiceFragment serviceFragment;
@@ -44,9 +49,9 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
     private SecureCheckoutFragment secureCheckoutFragment;
     private Toolbar toolbar;
     private ShoppingCarView shoppingCarView;
-    private Slot toLock;
-    private SlotContext slotContext;
     private UserContext userContext;
+    private RelativeLayout relativeLayout;
+    private Typeface typeface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +70,17 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
         secureCheckoutFragment = new SecureCheckoutFragment();
 
-        slotContext = SlotContext.context(slotContext);
+        AppFont appFont = new AppFont();
+
+        typeface = appFont.getAppFont(getApplicationContext());
+
+        venueFragment.setTypeface(typeface);
+
+        serviceFragment.setTypeface(typeface);
+
+        shoppingCarView.setTypeface(typeface);
+
+        secureCheckoutFragment.setTypeface(typeface);
 
         userContext = UserContext.context(userContext);
 
@@ -88,6 +103,8 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
         secureCheckoutHide();
 
         shoppingCarView.hideView();
+
+        relativeLayout = (RelativeLayout) findViewById(R.id.concealer);
 
     }
 
@@ -285,8 +302,6 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
         venueHide();
 
-        view.setBackgroundColor(getResources().getColor(R.color.colorPrimaryLight));
-
     }
 
     @Override
@@ -294,7 +309,33 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        getActionBarTextView().setTypeface(typeface);
+
         return true;
+
+    }
+
+    private TextView getActionBarTextView() {
+
+        TextView titleTextView = null;
+
+        String defaultNameTitleMenu = "mTitleTextView";
+
+        try {
+
+            Field field = toolbar.getClass().getDeclaredField(defaultNameTitleMenu);
+
+            field.setAccessible(true);
+
+            titleTextView = (TextView) field.get(toolbar);
+
+        } catch (NoSuchFieldException e) {
+
+        } catch (IllegalAccessException e) {
+
+        }
+
+        return titleTextView;
 
     }
 
@@ -527,6 +568,11 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
                 @Override
                 public void completion(List<Appointment> appointmentList, AppError error) {
 
+                }
+
+                @Override
+                public void completion(Appointment appointment, AppError error) {
+
                     if (error != null) {
 
                         AlertDialogError alertDialogError = new AlertDialogError();
@@ -545,4 +591,10 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
     }
 
+    @Override
+    public void onHide() {
+
+        relativeLayout.setVisibility(View.GONE);
+
+    }
 }

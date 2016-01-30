@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:id="@+id/scrollView1"
+    android:layout_height="wrap_content">
+    <com.amtechventures.tucita.utils.views.UserReviewView
+        android:layout_width="match_parent"
+        android:id="@+id/userReview"
+        android:layout_height="wrap_content"/>
+    <RelativeLayout
+        android:layout_below="@+id/userReview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/high_margin"
+        android:layout_marginLeft="@dimen/high_margin"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="32dp"
+        android:id="@+id/venueView">
+    <com.amtechventures.tucita.utils.views.CircleTextView
+        android:id="@+id/textRating"
+        android:textSize="30sp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        />
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_toEndOf="@id/textRating"
+        android:layout_toRightOf="@id/textRating"
+        android:layout_height="wrap_content">
+    <RatingBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:layout_marginStart="@dimen/high_margin"
+        android:layout_marginLeft="@dimen/high_margin"
+        android:id="@+id/ratingBarVenue"
+        android:isIndicator="true"
+        style="?android:attr/ratingBarStyleSmall"
+        />
+    <TextView
+        android:layout_marginLeft="@dimen/high_margin"
+        android:layout_marginStart="@dimen/high_margin"
+        android:layout_width="wrap_content"
+        android:id="@+id/textReviews"
+        android:layout_below="@id/ratingBarVenue"
+        android:layout_height="44dp"
+        />
+</RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>
+<android.support.v7.widget.RecyclerView
+android:id="@+id/recycler_view"
+android:layout_below="@+id/scrollView1"
+android:layout_width="match_parent"
+android:layout_height="400dp"
+    />
+</RelativeLayout>

@@ -1,6 +1,7 @@
 package com.amtechventures.tucita.activities.advanced.fragments;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.amtechventures.tucita.R;
+import com.amtechventures.tucita.activities.advanced.adapters.CityAdapter;
 import com.amtechventures.tucita.model.context.city.CityCompletion;
 import com.amtechventures.tucita.model.context.city.CityContext;
 import com.amtechventures.tucita.model.domain.city.City;
@@ -28,10 +30,11 @@ public class LocationOptionsFragment extends Fragment {
     private TextView textViewCities;
     private SearchView searchView;
     private ListView listViewCities;
-    private ArrayAdapter<String> citiesAdapter;
+    private CityAdapter citiesAdapter;
     private ArrayList<City> currentCities;
     private OnCitySelected listener;
     private final int minimumToSearch = 3;
+    private Typeface typeface;
 
     public interface OnCitySelected{
 
@@ -79,7 +82,13 @@ public class LocationOptionsFragment extends Fragment {
 
         textViewCities.setVisibility(View.GONE);
 
-        citiesAdapter = new ArrayAdapter<>(getContext(), R.layout.list_item);
+        textViewCities.setTypeface(typeface);
+
+        TextView searchText = (TextView) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+
+        searchText.setTypeface(typeface);
+
+        citiesAdapter = new CityAdapter(getContext(), R.layout.list_item, typeface);
 
         listViewCities.setAdapter(citiesAdapter);
 
@@ -128,13 +137,19 @@ public class LocationOptionsFragment extends Fragment {
 
     }
 
+    public void setTypeface(Typeface typeface) {
+
+        this.typeface = typeface;
+
+    }
+
     private ArrayList<String> setCitiesToStringsArray(){
 
         ArrayList<String> stringsCities = new ArrayList<>();
 
         for(City city: currentCities){
 
-            stringsCities.add(city.formatedLocation());
+            stringsCities.add(city.formattedLocation());
 
         }
 

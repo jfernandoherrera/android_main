@@ -1,19 +1,26 @@
 package com.amtechventures.tucita.activities.book.fragments.select;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.book.fragments.select.adapters.PagerSelectHourAdapter;
 import com.amtechventures.tucita.activities.book.fragments.select.adapters.SelectHourAdapter;
 import com.amtechventures.tucita.model.domain.venue.Venue;
+import com.amtechventures.tucita.utils.common.AppFont;
+import com.amtechventures.tucita.utils.common.AppTabLayout;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -21,7 +28,7 @@ import java.util.Date;
 public class SelectDayFragment extends Fragment {
 
 
-    private TabLayout tabLayout;
+    private AppTabLayout tabLayout;
     private ViewPager viewPager;
     private PagerSelectHourAdapter adapter;
     private SelectHourAdapter.OnSlotSelected listener;
@@ -49,11 +56,15 @@ public class SelectDayFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_select_date, container, false);
 
-        tabLayout = (TabLayout) rootView.findViewById(R.id.tabs);
+        tabLayout = (AppTabLayout) rootView.findViewById(R.id.tabs);
 
         viewPager = (ViewPager) rootView.findViewById(R.id.container);
 
-        adapter = new PagerSelectHourAdapter(getChildFragmentManager(), listener);
+        AppFont appFont = new AppFont();
+
+        Typeface typeface = appFont.getAppFont(rootView.getContext());
+
+        adapter = new PagerSelectHourAdapter(getChildFragmentManager(), listener, typeface);
 
         viewPager.setAdapter(adapter);
 

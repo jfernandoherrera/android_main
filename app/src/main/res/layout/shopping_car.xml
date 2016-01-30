@@ -30,8 +30,12 @@
             android:layout_height="50dp"
             android:id="@+id/moreServices"
             android:text="@string/add_more_services"
-            android:gravity="bottom"
+            android:gravity="center_vertical"
             android:layout_below="@+id/recycler_view"
+            android:paddingStart="@dimen/high_margin"
+            android:paddingLeft="@dimen/high_margin"
+            android:paddingEnd="@dimen/high_margin"
+            android:paddingRight="@dimen/high_margin"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             style="@style/AppTheme.Button.ButtonBasket"/>
@@ -40,7 +44,7 @@
     android:id="@+id/containerShoppingView"
     android:layout_gravity="bottom|center"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
+    android:layout_height="70dp"
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
     android:background="@drawable/jog_tab_bar_right_end_confirm_yellow">
@@ -49,12 +53,13 @@
         android:layout_width="wrap_content"
         android:layout_height="70dp"
         android:scaleType="fitXY"
-        android:layout_gravity="start"
         />
     <com.amtechventures.tucita.utils.views.CircleTextView
+        android:layout_marginTop="5dp"
         android:id="@+id/count"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="21dp"
+        android:layout_height="21dp"
+        android:textSize="12sp"
         />
     <Button
         android:id="@+id/bookNow"
@@ -64,4 +69,5 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"/>
 </RelativeLayout>
+
 </merge>

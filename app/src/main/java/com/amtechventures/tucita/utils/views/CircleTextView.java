@@ -7,6 +7,8 @@ import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Point;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -22,13 +24,15 @@ public class CircleTextView extends TextView {
 
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 
-        Display display = wm.getDefaultDisplay();
+        DisplayMetrics metrics = new DisplayMetrics();
 
-        Point size = new Point();
+        wm.getDefaultDisplay().getMetrics(metrics);
 
-        display.getSize(size);
+        double size = metrics.scaledDensity;
 
-        padding = (int) (size.x * 0.08) / 3;
+        padding = (int) ((Integer.parseInt(attrs.getAttributeValue(2).substring(0, 2)) ) * size) / 2;
+
+        setPadding(padding / 3, padding / 3, 0, 0);
 
         circlePaint = new Paint();
 
@@ -43,7 +47,7 @@ public class CircleTextView extends TextView {
     @Override
     protected void onDraw(Canvas canvas) {
 
-        canvas.drawCircle((getMeasuredWidth() / 4) + 2, getMeasuredHeight() / 4, padding, circlePaint);
+        canvas.drawCircle((getMeasuredWidth() / 2) , (getMeasuredHeight() / 2) , padding, circlePaint);
 
         super.onDraw(canvas);
 

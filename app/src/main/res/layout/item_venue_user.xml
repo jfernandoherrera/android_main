@@ -43,30 +43,57 @@
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
             />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:id="@+id/clickRating"
+            android:layout_below="@id/textLocation"
+            android:layout_height="30sp">
+            <RatingBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numStars="5"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:id="@+id/searchRatingBar"
+                style="?android:attr/ratingBarStyleSmall"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:id="@+id/textViewReviews"
+                android:layout_height="30sp"
+                android:textSize="12sp"
+                android:gravity="center_vertical"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:background="@android:color/transparent" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textReview"
+            android:gravity="center"
+            android:layout_below="@+id/clickRating"
+            android:text="@string/make_review"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            />
         <RatingBar
             android:layout_width="wrap_content"
-            android:layout_height="44dp"
+            android:layout_height="60dp"
             android:numStars="5"
-            android:id="@+id/searchRatingBar"
-            android:layout_below="@id/textLocation"
-            android:scaleX="0.3"
-            android:scaleY="0.3"
-            android:translationX="-73dp"
-            android:translationY="-10dp"
-            style="@style/RatingBar"
+            android:layout_below="@id/textReview"
+            android:id="@+id/ratingBar"
+            android:translationX="15dp"
+            android:isIndicator="false"
+            android:foregroundGravity="center"
+            android:layout_marginTop="@dimen/high_margin"
+            android:layout_marginBottom="@dimen/high_margin"
+            style="@style/RatingBarSelector"
             />
-         <Button
-        android:layout_width="180dp"
-        android:layout_height="66dp"
-        android:id="@+id/buttonReview"
-        android:text="@string/make_review"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="4dp"
-        android:layout_marginRight="4dp"
-        android:layout_marginBottom="15dp"
-        />
 
     </RelativeLayout>
 </android.support.v7.widget.CardView>

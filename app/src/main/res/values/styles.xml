@@ -75,7 +75,15 @@
     </style>
     <style name="RatingBar" parent="@android:style/Widget.RatingBar">
         <item name="android:progressDrawable">@drawable/rating</item>
-        <item name="android:minHeight">23dip</item>
-        <item name="android:maxHeight">25dip</item>
+    </style>
+    <style name="RatingBarSelector" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/rating_selector</item>
+    </style>
+    <style name="AppTheme.Base" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="actionOverflowButtonStyle">@style/OverFlow</item>
+    </style>
+
+    <style name="OverFlow" parent="Widget.AppCompat.ActionButton.Overflow">
+        <item name="android:src">@mipmap/ic_name</item>
     </style>
 </resources>
