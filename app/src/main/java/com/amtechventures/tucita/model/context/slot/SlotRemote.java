@@ -1,5 +1,8 @@
 package com.amtechventures.tucita.model.context.slot;
 
+import android.location.LocationListener;
+import android.util.Log;
+
 import com.amtechventures.tucita.model.domain.slot.Slot;
 import com.amtechventures.tucita.model.domain.slot.SlotAttributes;
 import com.amtechventures.tucita.model.error.AppError;

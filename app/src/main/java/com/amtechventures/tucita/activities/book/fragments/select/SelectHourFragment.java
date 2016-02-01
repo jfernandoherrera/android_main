@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -95,7 +94,7 @@ public class SelectHourFragment extends Fragment {
 
     public void loadDay(final View rootView) {
 
-        int day = date.get(Calendar.DAY_OF_WEEK);
+        final int day = date.get(Calendar.DAY_OF_WEEK);
 
         slotContext.loadDaySlots(venue, day, new SlotCompletion.SlotErrorCompletion() {
 
@@ -178,6 +177,8 @@ public class SelectHourFragment extends Fragment {
 
             slots.addAll(slotsDay);
 
+            adapter.notifyDataSetChanged();
+
             slots();
 
             setupSlots();
@@ -198,17 +199,21 @@ public class SelectHourFragment extends Fragment {
 
     private void setupSlots() {
 
-        removeSlots();
+        removeSlotsForAppointments();
 
     }
 
-    private void removeSlots() {
+    private void removeSlotsForAppointments() {
 
         appointmentContext.loadAppointmentsDateVenue(venue, date, new AppointmentCompletion.AppointmentErrorCompletion() {
             @Override
             public void completion(List<Appointment> appointmentList, AppError error) {
 
                 if (appointmentList == null || appointmentList.isEmpty()) {
+
+                    int slotEnd = slots.size() - 1;
+
+                    removeSlotsForDuration(slotEnd);
 
                 } else {
 
@@ -258,7 +263,7 @@ public class SelectHourFragment extends Fragment {
 
                     }
 
-                    removeSlotsForDuration(indexFirst, toRemove);
+                    removeSlotsForDurationAfterAppointments(indexFirst, toRemove);
 
                     if (slots.isEmpty()) {
 
@@ -278,7 +283,41 @@ public class SelectHourFragment extends Fragment {
 
     }
 
-    private void removeSlotsForDuration(List<Integer> indexList, List<Slot> toRemove) {
+    private void removeSlotsForDuration(int slotsEnd){
+
+        int durationHoursToRemove = durationHours;
+
+        int durationMinutesToRemove = durationMinutes;
+
+        int indexInt = slotsEnd;
+
+        List<Slot> toRemove = new ArrayList<>();
+
+        while ( !(durationHoursToRemove <= 0 && durationMinutesToRemove <= 0)) {
+
+            durationHoursToRemove -= slots.get(indexInt).getDuration()[0];
+
+            durationMinutesToRemove -= slots.get(indexInt).getDuration()[1];
+
+            slots.get(indexInt).decrementAmount();
+
+            if (slots.get(indexInt).getAmount() <= 0) {
+
+                toRemove.add(slots.get(indexInt));
+
+            }
+
+            indexInt--;
+
+        }
+
+    slots.removeAll(toRemove);
+
+    adapter.notifyDataSetChanged();
+
+    }
+
+    private void removeSlotsForDurationAfterAppointments(List<Integer> indexList, List<Slot> toRemove) {
 
         for (Integer index : indexList) {
 

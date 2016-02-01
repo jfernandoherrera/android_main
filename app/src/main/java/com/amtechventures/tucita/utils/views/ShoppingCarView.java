@@ -71,6 +71,11 @@ public class ShoppingCarView extends FrameLayout implements ServicesToBookAdapte
         }
 
         if (minutes > 59) {
+
+            hours += (minutes / 60);
+
+            minutes = (minutes % 60) * 60;
+
         }
 
         return new int[]{hours, minutes};

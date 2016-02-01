@@ -75,6 +75,7 @@ public class VenueFragment extends Fragment {
     private TextView textReviews;
     private Typeface typeface;
     private TextView specials;
+    private RelativeLayout clickRating;
 
     public interface OnServiceSelected {
 
@@ -162,7 +163,7 @@ public class VenueFragment extends Fragment {
 
         textReviews.setTypeface(typeface);
 
-        RelativeLayout clickRating = (RelativeLayout) rootView.findViewById(R.id.clickRating);
+        clickRating = (RelativeLayout) rootView.findViewById(R.id.clickRating);
 
         clickRating.setOnTouchListener(new View.OnTouchListener() {
 
@@ -518,7 +519,7 @@ public class VenueFragment extends Fragment {
 
         } else {
 
-            ratingBar.setVisibility(View.INVISIBLE);
+            clickRating.setVisibility(View.INVISIBLE);
 
         }
 

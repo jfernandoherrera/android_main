@@ -34,11 +34,11 @@ public class SlotContext {
 
         try {
 
-            ParseRelation object = (ParseRelation) venue.get(VenueAttributes.slots);
+            ParseRelation<Slot> object = (ParseRelation) venue.get(VenueAttributes.slots);
 
-            ParseQuery<Slot> queryLocal = object.getQuery();
+            ParseQuery<Slot> query = object.getQuery();
 
-            slotRemote.loadDaySlots(queryLocal, day, completion);
+            slotRemote.loadDaySlots(query, day, completion);
 
         }catch (NullPointerException e){
 

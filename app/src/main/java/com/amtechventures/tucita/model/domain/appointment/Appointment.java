@@ -1,5 +1,7 @@
 package com.amtechventures.tucita.model.domain.appointment;
 
+import android.util.Log;
+
 import com.amtechventures.tucita.model.domain.user.User;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.parse.ParseClassName;
