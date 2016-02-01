@@ -28,7 +28,7 @@ import com.mikhaellopez.circularimageview.CircularImageView;
 
 import java.util.List;
 
-public class ReviewFragment extends DialogFragment {
+public class AddReviewFragment extends DialogFragment {
 
     CircularImageView circularImageView;
     RelativeLayout layout;

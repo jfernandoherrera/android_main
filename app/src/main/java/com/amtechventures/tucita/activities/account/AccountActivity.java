@@ -18,7 +18,7 @@ import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.account.adapters.PagerAccountAdapter;
 import com.amtechventures.tucita.activities.account.adapters.VenuesAdapter;
 import com.amtechventures.tucita.activities.account.fragments.bookings.BookingsFragment;
-import com.amtechventures.tucita.activities.account.fragments.review.ReviewFragment;
+import com.amtechventures.tucita.activities.account.fragments.review.AddReviewFragment;
 import com.amtechventures.tucita.activities.account.fragments.venues.VenuesFragment;
 import com.amtechventures.tucita.activities.main.MainActivity;
 import com.amtechventures.tucita.model.context.appointment.AppointmentCompletion;
@@ -36,7 +36,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class AccountActivity extends AppCompatActivity implements VenuesAdapter.OnReview, ReviewFragment.OnSend{
+public class AccountActivity extends AppCompatActivity implements VenuesAdapter.OnReview, AddReviewFragment.OnSend{
 
     private UserContext userContext;
     private Toolbar toolbar;
@@ -169,17 +169,17 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
 
         FragmentManager fragmentManager = getSupportFragmentManager();
 
-        ReviewFragment prev = (ReviewFragment) fragmentManager.findFragmentByTag(ReviewFragment.class.getName());
+        AddReviewFragment prev = (AddReviewFragment) fragmentManager.findFragmentByTag(AddReviewFragment.class.getName());
 
         if (prev == null) {
 
-            prev = new ReviewFragment();
+            prev = new AddReviewFragment();
 
             prev.setTypeface(typeface);
 
         }
 
-        prev.show(fragmentManager, ReviewFragment.class.getName());
+        prev.show(fragmentManager, AddReviewFragment.class.getName());
 
         prev.setUser(user);
 

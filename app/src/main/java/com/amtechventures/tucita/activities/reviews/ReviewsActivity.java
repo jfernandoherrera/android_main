@@ -9,26 +9,21 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.amtechventures.tucita.R;
-import com.amtechventures.tucita.activities.account.fragments.review.ReviewFragment;
 import com.amtechventures.tucita.activities.reviews.adapters.ReviewsAdapter;
 import com.amtechventures.tucita.activities.reviews.fragments.EditReviewFragment;
 import com.amtechventures.tucita.activities.reviews.fragments.ReviewDetailsFragment;
 import com.amtechventures.tucita.activities.reviews.fragments.ReviewsFragment;
-import com.amtechventures.tucita.model.context.city.CityCompletion;
 import com.amtechventures.tucita.model.context.review.ReviewCompletion;
 import com.amtechventures.tucita.model.context.review.ReviewContext;
 import com.amtechventures.tucita.model.context.user.UserContext;
 import com.amtechventures.tucita.model.context.venue.VenueCompletion;
 import com.amtechventures.tucita.model.context.venue.VenueContext;
-import com.amtechventures.tucita.model.domain.category.CategoryAttributes;
 import com.amtechventures.tucita.model.domain.review.Review;
 import com.amtechventures.tucita.model.domain.user.User;
 import com.amtechventures.tucita.model.domain.venue.Venue;
@@ -355,7 +350,7 @@ public class ReviewsActivity extends AppCompatActivity implements UserReviewView
 
         prev.setUser(userContext.currentUser());
 
-        prev.show(fragmentManager, ReviewFragment.class.getName());
+        prev.show(fragmentManager, EditReviewFragment.class.getName());
 
         prev.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
 
