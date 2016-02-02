@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.amtechventures.tucita.R;
@@ -42,6 +43,7 @@ public class SelectHourFragment extends Fragment {
     private AppointmentContext appointmentContext;
     private SelectHourAdapter.OnSlotSelected listener;
     private Typeface typeface;
+    private RelativeLayout relativeLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -63,6 +65,8 @@ public class SelectHourFragment extends Fragment {
         TextView textView = (TextView) rootView.findViewById(R.id.closed);
 
         textView.setTypeface(typeface);
+
+        relativeLayout = (RelativeLayout) rootView.findViewById(R.id.concealer);
 
         adapter = new SelectHourAdapter(price, slots, listener, date, typeface);
 
@@ -94,20 +98,25 @@ public class SelectHourFragment extends Fragment {
 
     public void loadDay(final View rootView) {
 
-        final int day = date.get(Calendar.DAY_OF_WEEK);
+        try {
 
-        slotContext.loadDaySlots(venue, day, new SlotCompletion.SlotErrorCompletion() {
+            final int day = date.get(Calendar.DAY_OF_WEEK);
 
-                    @Override
-                    public void completion(List<Slot> slotList, AppError error) {
+            slotContext.loadDaySlots(venue, day, new SlotCompletion.SlotErrorCompletion() {
 
-                        setup(slotList, rootView);
+                        @Override
+                        public void completion(List<Slot> slotList, AppError error) {
+
+                            setup(slotList, rootView);
+
+                        }
 
                     }
 
-                }
+            );
+        }catch (NullPointerException e){
 
-        );
+        }
 
     }
 
@@ -158,6 +167,8 @@ public class SelectHourFragment extends Fragment {
         textView.setText(test);
 
         recyclerView.setVisibility(View.GONE);
+
+        relativeLayout.setVisibility(View.GONE);
 
     }
 
@@ -311,9 +322,11 @@ public class SelectHourFragment extends Fragment {
 
         }
 
-    slots.removeAll(toRemove);
+        slots.removeAll(toRemove);
 
-    adapter.notifyDataSetChanged();
+        adapter.notifyDataSetChanged();
+
+        relativeLayout.setVisibility(View.GONE);
 
     }
 
@@ -352,6 +365,8 @@ public class SelectHourFragment extends Fragment {
         slots.removeAll(toRemove);
 
         adapter.notifyDataSetChanged();
+
+        relativeLayout.setVisibility(View.GONE);
 
     }
 

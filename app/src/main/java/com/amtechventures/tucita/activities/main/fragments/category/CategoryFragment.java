@@ -196,11 +196,9 @@ public class CategoryFragment extends Fragment {
 
                         v.setBackgroundResource(R.drawable.log_in_or_signup_click_out);
 
-                        v.callOnClick();
-
                     }
 
-                    return true;
+                    return false;
 
                 }
             });
@@ -226,11 +224,9 @@ public class CategoryFragment extends Fragment {
 
                         buttonText.setBackgroundResource(R.drawable.log_in_or_signup_click_out);
 
-                        buttonText.callOnClick();
-
                     }
 
-                    return true;
+                    return false;
 
                 }
 

@@ -164,6 +164,7 @@ public class BookingsFragment extends Fragment {
             completedAppointmentsList = new ArrayList<>();
 
             pendingAppointmentsList = new ArrayList<>();
+
         }
 
         for (Appointment appointment : appointmentList) {
@@ -187,6 +188,7 @@ public class BookingsFragment extends Fragment {
         removePendingRepeated();
 
         setupList();
+
     }
 
     private void removePendingRepeated(){
