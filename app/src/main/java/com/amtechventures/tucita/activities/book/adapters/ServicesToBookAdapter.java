@@ -110,6 +110,8 @@ public class ServicesToBookAdapter extends RecyclerView.Adapter<ServicesToBookAd
 
             textPricesFrom.setTypeface(typeface);
 
+            close.setImageResource(R.mipmap.ic_close);
+
             close.setOnTouchListener(new View.OnTouchListener() {
 
                 @Override
