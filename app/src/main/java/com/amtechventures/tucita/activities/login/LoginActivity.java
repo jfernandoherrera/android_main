@@ -65,6 +65,48 @@ public class LoginActivity extends AppCompatActivity {
 
         emailView.setTypeface(typeface);
 
+        TextView newAccount = (TextView) findViewById(R.id.newAccount);
+
+        newAccount.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+
+                    v.setBackgroundResource(R.drawable.pressed_application_background_static);
+
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+
+                    v.setBackgroundColor(Color.TRANSPARENT);
+
+                }
+
+                return false;
+
+            }
+        });
+
+        TextView dontRemember = (TextView) findViewById(R.id.forgiven);
+
+        dontRemember.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+
+                    v.setBackgroundResource(R.drawable.pressed_application_background_static);
+
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+
+                    v.setBackgroundColor(Color.TRANSPARENT);
+
+                }
+
+                return true;
+
+            }
+        });
+
         Button close = (Button) findViewById(R.id.close);
 
         TextView loginTitle = (TextView) findViewById(R.id.loginTitle);
@@ -187,7 +229,9 @@ public class LoginActivity extends AppCompatActivity {
         DrawableCompat.setTint(drawable, yellowColor);
 
         return drawable;
+
     }
+
     private SpannableStringBuilder getStringLoginModified() {
 
         WindowManager wm = (WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE);

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -52,9 +53,31 @@ public class SignUpActivity extends AppCompatActivity {
 
         passwordView.setTypeface(typeface);
 
-        signUpButton.setTypeface(typeface);
+        signUpButton.setTypeface(typeface, Typeface.BOLD);
 
         nameView.setTypeface(typeface);
+
+        signUpButton.setBackgroundResource(R.drawable.cling_button_normal);
+
+        signUpButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+
+                    v.setBackgroundResource(R.drawable.cling_button_pressed);
+
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+
+                    v.setBackgroundResource(R.drawable.cling_button_normal);
+
+                }
+
+                return false;
+
+            }
+        });
+
 
         setupTitlesTypeface();
 
