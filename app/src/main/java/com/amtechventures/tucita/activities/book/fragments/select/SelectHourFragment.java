@@ -224,7 +224,7 @@ public class SelectHourFragment extends Fragment {
 
                     int slotEnd = slots.size() - 1;
 
-                    removeSlotsForDuration(slotEnd);
+                        removeSlotsForDuration(slotEnd);
 
                 } else {
 
@@ -304,7 +304,7 @@ public class SelectHourFragment extends Fragment {
 
         List<Slot> toRemove = new ArrayList<>();
 
-        while ( !(durationHoursToRemove <= 0 && durationMinutesToRemove <= 0)) {
+        while ( !(durationHoursToRemove <= 0 && durationMinutesToRemove <= 0) && indexInt >= 0) {
 
             durationHoursToRemove -= slots.get(indexInt).getDuration()[0];
 

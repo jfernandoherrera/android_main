@@ -57,7 +57,7 @@ public class ServiceContext {
 
         List services;
 
-        ParseRelation object = (ParseRelation) venue.get(VenueAttributes.services);
+        ParseRelation object = venue.getServices();
 
         ParseQuery<Service> queryLocal = object.getQuery();
 
@@ -86,7 +86,7 @@ public class ServiceContext {
     public void loadAppointmentServices(Appointment appointment, ServiceCompletion.ErrorCompletion completion){
 
 
-        ParseRelation object = (ParseRelation) appointment.get(AppointmentAttributes.services);
+        ParseRelation object = appointment.getServices();
 
         ParseQuery<Service> queryRemote = object.getQuery();
 

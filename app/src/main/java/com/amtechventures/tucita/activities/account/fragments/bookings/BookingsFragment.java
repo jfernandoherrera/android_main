@@ -273,11 +273,19 @@ public class BookingsFragment extends Fragment {
 
             if (noEmpty) {
 
-                adapter = new AppointmentsAdapter(completedAppointmentsList, pendingAppointmentsList, typeface);
+                if(adapter == null) {
 
-                recyclerView.setAdapter(adapter);
+                    adapter = new AppointmentsAdapter(completedAppointmentsList, pendingAppointmentsList, typeface);
 
-                noResults.setVisibility(View.GONE);
+                    recyclerView.setAdapter(adapter);
+
+                    noResults.setVisibility(View.GONE);
+
+                }else{
+
+                    adapter.notifyDataSetChanged();
+
+                }
 
             }
 

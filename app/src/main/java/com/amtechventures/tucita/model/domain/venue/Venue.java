@@ -10,6 +10,7 @@ import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseRelation;
 
 @ParseClassName("Venue")
 
@@ -61,6 +62,12 @@ public class Venue extends ParseObject {
     public double getRating() {
 
         return getDouble(VenueAttributes.rating);
+
+    }
+
+    public ParseRelation getServices(){
+
+        return (ParseRelation) get(VenueAttributes.services);
 
     }
 

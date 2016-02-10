@@ -7,6 +7,7 @@ import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseRelation;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -46,25 +47,9 @@ public class Appointment extends ParseObject {
 
     }
 
-    public Date getDateEnd() {
+    public ParseRelation getServices(){
 
-        TimeZone timezone = TimeZone.getDefault();
-
-        int issueDate = 1900;
-
-        Calendar calendar = new GregorianCalendar(timezone);
-
-        Date date = getDate(AppointmentAttributes.date);
-
-        calendar.set(date.getYear() + issueDate, date.getMonth(), date.getDate(), date.getHours(), date.getMinutes());
-
-        int[] duration = getDuration();
-
-        calendar.add(Calendar.HOUR_OF_DAY, duration[0]);
-
-        calendar.add(Calendar.MINUTE, duration[1]);
-
-        return calendar.getTime();
+    return (ParseRelation) get(AppointmentAttributes.services);
 
     }
 

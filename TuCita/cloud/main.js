@@ -64,7 +64,15 @@ queryUser.equalTo("email", request.object.get("email"));
 
             if(results.length != 0){
 
-            response.error("email exists");
+                if(results[0].id == request.object.get("objectId")){
+
+                    response.success();
+
+                }else {
+
+                response.error("email exists" + results[0].id +" "+ request.object.get("objectId"));
+
+                }
 
             }else{
 
