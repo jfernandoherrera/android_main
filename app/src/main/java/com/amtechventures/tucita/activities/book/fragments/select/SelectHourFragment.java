@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.book.fragments.select.adapters.SelectHourAdapter;
 import com.amtechventures.tucita.model.context.appointment.AppointmentCompletion;
@@ -304,7 +303,7 @@ public class SelectHourFragment extends Fragment {
 
         List<Slot> toRemove = new ArrayList<>();
 
-        while ( !(durationHoursToRemove <= 0 && durationMinutesToRemove <= 0) && indexInt >= 0) {
+        while ( (durationHoursToRemove > 0 || durationMinutesToRemove > 0) && indexInt >= 0) {
 
             durationHoursToRemove -= slots.get(indexInt).getDuration()[0];
 
