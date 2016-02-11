@@ -282,6 +282,10 @@ public class SelectHourFragment extends Fragment {
 
                     removeSlotsForDurationAfterAppointments(indexFirst, toRemove);
 
+                    int index = slots.size()-1 >= 0 ? slots.size()-1 : 0;
+
+                    removeSlotsForDuration(index);
+
                     if (slots.isEmpty()) {
 
                         setupNoSlots(getView());
@@ -302,42 +306,23 @@ public class SelectHourFragment extends Fragment {
 
     private void removeSlotsForDuration(int slotsEnd){
 
-        int durationHoursToRemove = durationHours;
-
-        int durationMinutesToRemove = durationMinutes;
+        int durationMinutesToRemove = durationMinutes + (durationHours * 60);
 
         int indexInt = slotsEnd;
 
         List<Slot> toRemove = new ArrayList<>();
 
-        while ( (durationHoursToRemove > 0 || durationMinutesToRemove > 0)) {
+        while ( durationMinutesToRemove > 0) {
 
-            durationHoursToRemove -= slots.get(indexInt).getDuration()[0];
+            int durationSlot = slots.get(indexInt).getDurationMinutes();
 
-            durationMinutesToRemove -= slots.get(indexInt).getDuration()[1];
+            durationMinutesToRemove -= durationSlot;
 
-            if(durationMinutesToRemove < 0){
-
-                if(durationHoursToRemove >= 1){
-
-                    durationHoursToRemove -= 1;
-
-                    durationMinutesToRemove += 60;
-
-                }else {
-
-                    toRemove.add(slots.get(indexInt));
-
-                    break;
-
-                }
-
-            }
-                toRemove.add(slots.get(indexInt));
+            toRemove.add(slots.get(indexInt));
 
             indexInt--;
 
-            if(indexInt == -1){
+            if (indexInt == -1) {
 
                 break;
 
@@ -359,38 +344,15 @@ public class SelectHourFragment extends Fragment {
 
             index--;
 
-            int durationHoursToRemove = durationHours;
+            int durationMinutesToRemove = durationMinutes + (durationHours * 60);
 
-            int durationMinutesToRemove = durationMinutes;
+            while (index >= 0 && durationMinutesToRemove > 0) {
 
-            while (index >= 0 && !(durationHoursToRemove <= 0 && durationMinutesToRemove <= 0)) {
+                int durationSlot = slots.get(index).getDurationMinutes();
 
-                int indexInt = index;
+                durationMinutesToRemove -= durationSlot;
 
-                durationHoursToRemove -= slots.get(indexInt).getDuration()[0];
-
-                durationMinutesToRemove -= slots.get(indexInt).getDuration()[1];
-
-                if(durationMinutesToRemove < 0){
-
-                    if(durationHoursToRemove >= 1){
-
-
-                    durationHoursToRemove -= 1;
-
-                    durationMinutesToRemove += 60;
-
-                    }else {
-
-                        toRemove.add(slots.get(indexInt));
-
-                        break;
-
-                    }
-
-                }
-
-                    toRemove.add(slots.get(indexInt));
+                toRemove.add(slots.get(index));
 
                 index--;
 

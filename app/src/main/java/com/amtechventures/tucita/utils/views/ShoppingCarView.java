@@ -74,7 +74,7 @@ public class ShoppingCarView extends FrameLayout implements ServicesToBookAdapte
 
             hours += (minutes / 60);
 
-            minutes = (minutes % 60) * 60;
+            minutes = (minutes % 60);
 
         }
 

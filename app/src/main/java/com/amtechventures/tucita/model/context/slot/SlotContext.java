@@ -1,7 +1,5 @@
 package com.amtechventures.tucita.model.context.slot;
 
-import com.amtechventures.tucita.activities.main.MainActivity;
-import com.amtechventures.tucita.activities.splash.SplashActivity;
 import com.amtechventures.tucita.model.domain.slot.Slot;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.domain.venue.VenueAttributes;
