@@ -260,13 +260,15 @@ public class SelectHourFragment extends Fragment {
 
                             if (isFirst || contained || isLast) {
 
-                                if (isFirst) {
+                                slot.decrementAmount();
+
+                                boolean isFull = slot.getAmount() == 0;
+
+                                if (isFirst && isFull) {
 
                                     indexFirst.add(slots.indexOf(slot));
 
                                 }
-
-                                slot.decrementAmount();
 
                                 if (slot.getAmount() <= 0) {
 
@@ -318,7 +320,11 @@ public class SelectHourFragment extends Fragment {
 
             durationMinutesToRemove -= durationSlot;
 
-            toRemove.add(slots.get(indexInt));
+            if(durationMinutesToRemove > 0){
+
+                toRemove.add(slots.get(indexInt));
+
+            }
 
             indexInt--;
 
@@ -352,7 +358,11 @@ public class SelectHourFragment extends Fragment {
 
                 durationMinutesToRemove -= durationSlot;
 
-                toRemove.add(slots.get(index));
+                if(durationMinutesToRemove > 0){
+
+                    toRemove.add(slots.get(index));
+
+                }
 
                 index--;
 
