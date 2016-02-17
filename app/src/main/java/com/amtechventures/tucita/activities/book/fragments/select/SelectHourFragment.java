@@ -270,15 +270,11 @@ public class SelectHourFragment extends Fragment {
 
                                 slot.decrementAmount();
 
-                                boolean isFull = slot.getAmount() == 0;
+                                boolean isFull = slot.getAmount() <= 0;
 
-                                if (isFirst && isFull) {
+                                if (isFull) {
 
                                     indexFirst.add(slots.indexOf(slot));
-
-                                }
-
-                                if (slot.getAmount() <= 0) {
 
                                     toRemove.add(slot);
 
