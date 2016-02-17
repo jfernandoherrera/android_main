@@ -29,6 +29,17 @@ public class User {
 
     }
 
+    public String getTelephone(){
+
+        return parseUser.getString(UserAttributes.telephone);
+
+    }
+
+    public void setTelephone(String telephone){
+
+        parseUser.put(UserAttributes.telephone, telephone);
+
+    }
     public String getUserName() {
 
         return parseUser.getString(UserAttributes.username);

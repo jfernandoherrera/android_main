@@ -3,6 +3,7 @@ package com.amtechventures.tucita.activities.book.fragments.checkout;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
@@ -41,6 +43,8 @@ public class SecureCheckoutFragment extends Fragment {
     private Calendar date;
     private User user;
     private TextView textClientName;
+    private TextView textClientTelephone;
+    private EditText inputClientTelephone;
     private TextView textEmail;
     private TextView textTotal;
     private AppointmentContext appointmentContext;
@@ -49,6 +53,8 @@ public class SecureCheckoutFragment extends Fragment {
     private ExpandableWithoutParentAdapter adapter;
     private ExpandableListView listViewServices;
     private Typeface typeface;
+    private String telephone;
+    private TextInputLayout textInputLayout;
 
     public interface OnPlaceOrder {
 
@@ -101,7 +107,19 @@ public class SecureCheckoutFragment extends Fragment {
 
         textEmail = (TextView) rootView.findViewById(R.id.clientEmail);
 
+        textClientTelephone = (TextView) rootView.findViewById(R.id.clientTelephone);
+
+        inputClientTelephone = (EditText) rootView.findViewById(R.id.inputClientTelephone);
+
         textTotal = (TextView) rootView.findViewById(R.id.textPrice);
+
+        textInputLayout = (TextInputLayout) rootView.findViewById(R.id.inputClient);
+
+        textInputLayout.setTypeface(typeface);
+
+        inputClientTelephone.setTypeface(typeface);
+
+        textClientTelephone.setTypeface(typeface);
 
         textTotal.setTypeface(typeface);
 
@@ -224,6 +242,24 @@ public class SecureCheckoutFragment extends Fragment {
 
             textEmail.setText(user.getEmail());
 
+            telephone = user.getTelephone();
+
+            if(telephone == null ){
+
+                textInputLayout.setVisibility(View.VISIBLE);
+
+                textClientTelephone.setVisibility(View.GONE);
+
+            }else {
+
+                textClientTelephone.setVisibility(View.VISIBLE);
+
+                textClientTelephone.setText(telephone);
+
+                textInputLayout.setVisibility(View.GONE);
+
+            }
+
     }
 
     private void setupTotal() {
@@ -242,7 +278,51 @@ public class SecureCheckoutFragment extends Fragment {
 
     }
 
+    private boolean validateTelephoneInput(){
+
+    boolean is = false;
+
+        String test = inputClientTelephone.getText().toString().trim();
+
+        boolean validateLength = test.length() > 6;
+
+        if(validateLength){
+
+            is = true;
+
+        }
+
+        return is;
+
+    }
+
     public void placeOrder(AppointmentCompletion.AppointmentErrorCompletion completion) {
+
+        if(telephone == null){
+
+            if(validateTelephoneInput()){
+
+               user.setTelephone(String.valueOf(inputClientTelephone.getText()));
+
+                setupAppointmentToPlace(completion);
+
+            }else {
+
+                AlertDialogError alertDialogError = new AlertDialogError();
+
+                alertDialogError.noTelephone(getContext());
+
+            }
+
+        }else {
+
+            setupAppointmentToPlace(completion);
+        }
+
+
+    }
+
+    private void setupAppointmentToPlace(AppointmentCompletion.AppointmentErrorCompletion completion){
 
         Appointment appointment = new Appointment();
 

@@ -50,6 +50,7 @@ queryReview.equalTo("venue", venue);
 
 });
 
+
 Parse.Cloud.beforeSave(Parse.User, function(request, response) {
 
 var user = new Parse.Object.extend("User");
@@ -64,13 +65,13 @@ queryUser.equalTo("email", request.object.get("email"));
 
             if(results.length != 0){
 
-                if(results[0].id == request.object.get("objectId")){
+                if(results[0].id == request.object.id){
 
                     response.success();
 
                 }else {
 
-                response.error("email exists" + results[0].id +" "+ request.object.get("objectId"));
+                response.error("email exists" + results[0].id +" "+ request.object.id);
 
                 }
 

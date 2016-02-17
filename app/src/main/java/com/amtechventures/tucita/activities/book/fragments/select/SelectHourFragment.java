@@ -154,21 +154,29 @@ public class SelectHourFragment extends Fragment {
 
     private void setupNoSlots(View view) {
 
-        TextView textView = (TextView) view.findViewById(R.id.closed);
+        try {
 
-        textView.setVisibility(View.VISIBLE);
+            TextView textView = (TextView) view.findViewById(R.id.closed);
 
-        String sorry = view.getResources().getString(R.string.sorry_there_are_no);
+            textView.setVisibility(View.VISIBLE);
 
-        String please = view.getResources().getString(R.string.pls_select_another_day);
+            String sorry = view.getResources().getString(R.string.sorry_there_are_no);
 
-        String test = sorry + " " + date.get(Calendar.DAY_OF_MONTH) + " " + date.get(Calendar.MONTH) + " " + date.get(Calendar.YEAR) + " " + please;
+            String please = view.getResources().getString(R.string.pls_select_another_day);
 
-        textView.setText(test);
+            String test = sorry + " " + date.get(Calendar.DAY_OF_MONTH) + " " + date.get(Calendar.MONTH) + " " + date.get(Calendar.YEAR) + " " + please;
 
-        recyclerView.setVisibility(View.GONE);
+            textView.setText(test);
 
-        relativeLayout.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.GONE);
+
+            relativeLayout.setVisibility(View.GONE);
+
+        } catch (NullPointerException e){
+
+            e.printStackTrace();
+
+        }
 
     }
 

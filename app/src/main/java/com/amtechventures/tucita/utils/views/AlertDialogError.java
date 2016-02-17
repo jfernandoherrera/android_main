@@ -22,6 +22,20 @@ public class AlertDialogError {
 
     }
 
+    public void noTelephone(Context context) {
+
+        if(context != null) {
+
+            Toast typeMore = Toast.makeText(context, R.string.no_telephone, Toast.LENGTH_SHORT);
+
+            typeMore.setGravity(Gravity.CENTER | Gravity.LEFT, 0, 0);
+
+            typeMore.show();
+
+        }
+
+    }
+
     public void noLocationAlert(Context context) {
 
         Toast typeMore = Toast.makeText(context, R.string.no_Location, Toast.LENGTH_SHORT);
