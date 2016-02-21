@@ -1,5 +1,7 @@
 package com.amtechventures.tucita.activities.book;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v4.app.FragmentManager;
@@ -581,7 +583,29 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
                     } else {
 
-                        goToMain();
+
+                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+
+                                BookActivity.this);
+
+                        String continueString = getString(R.string.continue_option);
+
+                        String successful = getString(R.string.successful_transaction);
+
+                        String message = getString(R.string.app_name);
+
+                        alertDialogBuilder.setTitle(successful)
+
+                                .setPositiveButton(continueString, new DialogInterface.OnClickListener() {
+
+                                    public void onClick(DialogInterface dialog, int id) {
+
+                                        goToMain();
+
+                                    }
+                                }).setCancelable(false)
+
+                        .setMessage(message).show();
 
                     }
 

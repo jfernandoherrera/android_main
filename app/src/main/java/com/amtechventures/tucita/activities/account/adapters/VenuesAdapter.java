@@ -129,6 +129,8 @@ public class VenuesAdapter extends RecyclerView.Adapter<VenuesAdapter.ViewHolder
 
             holder.ratingBar.setVisibility(View.INVISIBLE);
 
+            holder.textViewReviews.setVisibility(View.INVISIBLE);
+
         }
 
         holder.ratingBarReview.setVisibility(View.VISIBLE);

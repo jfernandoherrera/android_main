@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.amtechventures.tucita.R;
@@ -137,6 +138,8 @@ public class SubCategoryFragment extends DialogFragment {
 
         });
 
+        setupCategory(rootView);
+
         setupList();
 
         return rootView;
@@ -171,9 +174,17 @@ public class SubCategoryFragment extends DialogFragment {
 
     }
 
-    public void setupList() {
+    private void setupCategory(View view){
 
         category = categoryContext.findCategory(name);
+
+        ImageView imageView = (ImageView) view.findViewById(R.id.image_service);
+
+        imageView.setImageBitmap(category.getPicture());
+
+    }
+
+    public void setupList() {
 
         List<SubCategory> subCategoriesList = subCategoryContext.loadSubCategories(category, new SubCategoryCompletion.ErrorCompletion() {
 

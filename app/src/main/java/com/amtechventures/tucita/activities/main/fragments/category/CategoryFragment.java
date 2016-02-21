@@ -128,7 +128,7 @@ public class CategoryFragment extends Fragment {
 
         stringBuilder.setSpan(new CustomSpanTypeface(null, Typeface.BOLD, size, null, null, typeface), 0, firstString.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
 
-        stringBuilder.setSpan(new CustomSpanTypeface(null, Typeface.BOLD, size, ColorStateList.valueOf(Color.rgb(223, 223, 223)), null, typeface), firstString.length() + 1, firstString.length() + secondString.length() + 1, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        stringBuilder.setSpan(new CustomSpanTypeface(null, Typeface.BOLD, size, ColorStateList.valueOf(Color.rgb(200, 200, 200)), null, typeface), firstString.length() + 1, firstString.length() + secondString.length() + 1, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
 
         stringBuilder.setSpan(new CustomSpanTypeface(null, Typeface.BOLD, size, null, null, typeface), firstString.length() + secondString.length() + 2, firstString.length() + secondString.length() + thirdString.length() + 2, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
 
@@ -196,11 +196,9 @@ public class CategoryFragment extends Fragment {
 
                         v.setBackgroundResource(R.drawable.log_in_or_signup_click_out);
 
-                        v.callOnClick();
-
                     }
 
-                    return true;
+                    return false;
 
                 }
             });
@@ -226,11 +224,9 @@ public class CategoryFragment extends Fragment {
 
                         buttonText.setBackgroundResource(R.drawable.log_in_or_signup_click_out);
 
-                        buttonText.callOnClick();
-
                     }
 
-                    return true;
+                    return false;
 
                 }
 

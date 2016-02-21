@@ -63,6 +63,8 @@ public class CategoryGridAdapter extends RecyclerView.Adapter<CategoryGridAdapte
 
         viewHolder.category.setText(category.getName());
 
+        viewHolder.categoryIcon.setImageBitmap(category.getPicture());
+
     }
 
     @Override

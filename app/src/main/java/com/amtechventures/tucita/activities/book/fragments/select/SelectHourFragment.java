@@ -9,8 +9,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.book.fragments.select.adapters.SelectHourAdapter;
 import com.amtechventures.tucita.model.context.appointment.AppointmentCompletion;
@@ -43,6 +43,7 @@ public class SelectHourFragment extends Fragment {
     private AppointmentContext appointmentContext;
     private SelectHourAdapter.OnSlotSelected listener;
     private Typeface typeface;
+    private RelativeLayout relativeLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -64,6 +65,8 @@ public class SelectHourFragment extends Fragment {
         TextView textView = (TextView) rootView.findViewById(R.id.closed);
 
         textView.setTypeface(typeface);
+
+        relativeLayout = (RelativeLayout) rootView.findViewById(R.id.concealer);
 
         adapter = new SelectHourAdapter(price, slots, listener, date, typeface);
 
@@ -95,20 +98,25 @@ public class SelectHourFragment extends Fragment {
 
     public void loadDay(final View rootView) {
 
-        int day = date.get(Calendar.DAY_OF_WEEK);
+        try {
 
-        slotContext.loadDaySlots(venue, day, new SlotCompletion.SlotErrorCompletion() {
+            final int day = date.get(Calendar.DAY_OF_WEEK);
 
-                    @Override
-                    public void completion(List<Slot> slotList, AppError error) {
+            slotContext.loadDaySlots(venue, day, new SlotCompletion.SlotErrorCompletion() {
 
-                        setup(slotList, rootView);
+                        @Override
+                        public void completion(List<Slot> slotList, AppError error) {
+
+                            setup(slotList, rootView);
+
+                        }
 
                     }
 
-                }
+            );
+        }catch (NullPointerException e){
 
-        );
+        }
 
     }
 
@@ -146,19 +154,29 @@ public class SelectHourFragment extends Fragment {
 
     private void setupNoSlots(View view) {
 
-        TextView textView = (TextView) view.findViewById(R.id.closed);
+        try {
 
-        textView.setVisibility(View.VISIBLE);
+            TextView textView = (TextView) view.findViewById(R.id.closed);
 
-        String sorry = view.getResources().getString(R.string.sorry_there_are_no);
+            textView.setVisibility(View.VISIBLE);
 
-        String please = view.getResources().getString(R.string.pls_select_another_day);
+            String sorry = view.getResources().getString(R.string.sorry_there_are_no);
 
-        String test = sorry + " " + date.get(Calendar.DAY_OF_MONTH) + " " + date.get(Calendar.MONTH) + " " + date.get(Calendar.YEAR) + " " + please;
+            String please = view.getResources().getString(R.string.pls_select_another_day);
 
-        textView.setText(test);
+            String test = sorry + " " + date.get(Calendar.DAY_OF_MONTH) + " " + date.get(Calendar.MONTH) + " " + date.get(Calendar.YEAR) + " " + please;
 
-        recyclerView.setVisibility(View.GONE);
+            textView.setText(test);
+
+            recyclerView.setVisibility(View.GONE);
+
+            relativeLayout.setVisibility(View.GONE);
+
+        } catch (NullPointerException e){
+
+            e.printStackTrace();
+
+        }
 
     }
 
@@ -177,6 +195,8 @@ public class SelectHourFragment extends Fragment {
             slots.clear();
 
             slots.addAll(slotsDay);
+
+            adapter.notifyDataSetChanged();
 
             slots();
 
@@ -198,17 +218,27 @@ public class SelectHourFragment extends Fragment {
 
     private void setupSlots() {
 
-        removeSlots();
+        removeSlotsForAppointments();
 
     }
 
-    private void removeSlots() {
+    private void removeSlotsForAppointments() {
 
         appointmentContext.loadAppointmentsDateVenue(venue, date, new AppointmentCompletion.AppointmentErrorCompletion() {
             @Override
             public void completion(List<Appointment> appointmentList, AppError error) {
 
                 if (appointmentList == null || appointmentList.isEmpty()) {
+
+                    int slotEnd = slots.size() - 1;
+
+                    removeSlotsForDuration(slotEnd);
+
+                    if (slots.isEmpty()) {
+
+                        setupNoSlots(getView());
+
+                    }
 
                 } else {
 
@@ -238,15 +268,13 @@ public class SelectHourFragment extends Fragment {
 
                             if (isFirst || contained || isLast) {
 
-                                if (isFirst) {
-
-                                    indexFirst.add(slots.indexOf(slot));
-
-                                }
-
                                 slot.decrementAmount();
 
-                                if (slot.getAmount() <= 0) {
+                                boolean isFull = slot.getAmount() <= 0;
+
+                                if (isFull) {
+
+                                    indexFirst.add(slots.indexOf(slot));
 
                                     toRemove.add(slot);
 
@@ -258,7 +286,11 @@ public class SelectHourFragment extends Fragment {
 
                     }
 
-                    removeSlotsForDuration(indexFirst, toRemove);
+                    removeSlotsForDurationAfterAppointments(indexFirst, toRemove);
+
+                    int index = slots.size()-1 >= 0 ? slots.size()-1 : 0;
+
+                    removeSlotsForDuration(index);
 
                     if (slots.isEmpty()) {
 
@@ -278,29 +310,61 @@ public class SelectHourFragment extends Fragment {
 
     }
 
-    private void removeSlotsForDuration(List<Integer> indexList, List<Slot> toRemove) {
+    private void removeSlotsForDuration(int slotsEnd){
+
+        int durationMinutesToRemove = durationMinutes + (durationHours * 60);
+
+        int indexInt = slotsEnd;
+
+        List<Slot> toRemove = new ArrayList<>();
+
+        while ( durationMinutesToRemove > 0) {
+
+            int durationSlot = slots.get(indexInt).getDurationMinutes();
+
+            durationMinutesToRemove -= durationSlot;
+
+            if(durationMinutesToRemove > 0){
+
+                toRemove.add(slots.get(indexInt));
+
+            }
+
+            indexInt--;
+
+            if (indexInt == -1) {
+
+                break;
+
+            }
+
+        }
+
+        slots.removeAll(toRemove);
+
+        adapter.notifyDataSetChanged();
+
+        relativeLayout.setVisibility(View.GONE);
+
+    }
+
+    private void removeSlotsForDurationAfterAppointments(List<Integer> indexList, List<Slot> toRemove) {
 
         for (Integer index : indexList) {
 
             index--;
 
-            int durationHoursToRemove = durationHours;
+            int durationMinutesToRemove = durationMinutes + (durationHours * 60);
 
-            int durationMinutesToRemove = durationMinutes;
+            while (index >= 0 && durationMinutesToRemove > 0) {
 
-            while (index >= 0 && !(durationHoursToRemove <= 0 && durationMinutesToRemove <= 0)) {
+                int durationSlot = slots.get(index).getDurationMinutes();
 
-                int indexInt = index;
+                durationMinutesToRemove -= durationSlot;
 
-                durationHoursToRemove -= slots.get(indexInt).getDuration()[0];
+                if(durationMinutesToRemove > 0){
 
-                durationMinutesToRemove -= slots.get(indexInt).getDuration()[1];
-
-                slots.get(indexInt).decrementAmount();
-
-                if (slots.get(indexInt).getAmount() <= 0) {
-
-                    toRemove.add(slots.get(indexInt));
+                    toRemove.add(slots.get(index));
 
                 }
 
@@ -313,6 +377,8 @@ public class SelectHourFragment extends Fragment {
         slots.removeAll(toRemove);
 
         adapter.notifyDataSetChanged();
+
+        relativeLayout.setVisibility(View.GONE);
 
     }
 

@@ -31,6 +31,12 @@ public class Slot extends ParseObject {
 
     }
 
+    public int getDurationMinutes(){
+
+        return getInt(SlotAttributes.durationMinutes);
+
+    }
+
     public int[] getDuration() {
 
         int[] duration = new int[2];

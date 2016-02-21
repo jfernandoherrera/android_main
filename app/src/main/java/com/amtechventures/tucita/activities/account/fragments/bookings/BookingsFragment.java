@@ -164,6 +164,7 @@ public class BookingsFragment extends Fragment {
             completedAppointmentsList = new ArrayList<>();
 
             pendingAppointmentsList = new ArrayList<>();
+
         }
 
         for (Appointment appointment : appointmentList) {
@@ -187,6 +188,7 @@ public class BookingsFragment extends Fragment {
         removePendingRepeated();
 
         setupList();
+
     }
 
     private void removePendingRepeated(){
@@ -271,11 +273,19 @@ public class BookingsFragment extends Fragment {
 
             if (noEmpty) {
 
-                adapter = new AppointmentsAdapter(completedAppointmentsList, pendingAppointmentsList, typeface);
+                if(adapter == null) {
 
-                recyclerView.setAdapter(adapter);
+                    adapter = new AppointmentsAdapter(completedAppointmentsList, pendingAppointmentsList, typeface);
 
-                noResults.setVisibility(View.GONE);
+                    recyclerView.setAdapter(adapter);
+
+                    noResults.setVisibility(View.GONE);
+
+                }else{
+
+                    adapter.notifyDataSetChanged();
+
+                }
 
             }
 

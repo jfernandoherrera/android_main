@@ -78,11 +78,13 @@ public class AdvancedSearchAdapter extends RecyclerView.Adapter<AdvancedSearchAd
 
         if (rating != 0) {
 
+            viewHolder.ratingBar.setVisibility(View.VISIBLE);
+
             viewHolder.ratingBar.setRating(rating);
 
         } else {
 
-            viewHolder.ratingBar.setVisibility(View.INVISIBLE);
+            viewHolder.ratingBar.setVisibility(View.GONE);
 
         }
 

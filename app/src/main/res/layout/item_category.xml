@@ -20,7 +20,6 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:id="@+id/imageButtonCategory"
-            android:src="@drawable/cantador"
             android:layout_gravity="top|center_horizontal"
             android:padding="5dp"
             app:border_width="0dp"

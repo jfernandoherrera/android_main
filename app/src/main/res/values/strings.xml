@@ -18,6 +18,8 @@
     <string name="i_loved_it">Me ha encantado</string>
     <string name="edit">Editar</string>
     <string name="secure_checkout">Chequeo seguro</string>
+    <string name="continue_option">Continuar</string>
+    <string name="successful_transaction">Transacción Exitosa</string>
     <string name="all">Todos</string>
     <string name="others">Otros</string>
     <string name="yours">TUYA</string>
@@ -99,4 +101,6 @@
     <string name="dialog_progress_title">Cargando...</string>
     <string name="dialog_all_progress_message">Espera mientras cargamos la información</string>
     <string name="dialog_advanced_search_progress_message">Espera mientras encontramos lugares cerca de tí</string>
+    <string name="no_telephone">Falta el teléfono</string>
+    <string name="prompt_telephone">Teléfono</string>
 </resources>
