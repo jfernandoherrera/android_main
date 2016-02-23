@@ -24,9 +24,12 @@ import com.amtechventures.tucita.activities.book.fragments.service.ServiceFragme
 import com.amtechventures.tucita.activities.book.fragments.venue.VenueFragment;
 import com.amtechventures.tucita.activities.splash.SplashActivity;
 import com.amtechventures.tucita.model.context.appointment.AppointmentCompletion;
+import com.amtechventures.tucita.model.context.blockade.BlockadeCompletion;
+import com.amtechventures.tucita.model.context.blockade.BlockadeContext;
 import com.amtechventures.tucita.model.context.slot.SlotContext;
 import com.amtechventures.tucita.model.context.user.UserContext;
 import com.amtechventures.tucita.model.domain.appointment.Appointment;
+import com.amtechventures.tucita.model.domain.blockade.Blockade;
 import com.amtechventures.tucita.model.domain.service.Service;
 import com.amtechventures.tucita.model.domain.slot.Slot;
 import com.amtechventures.tucita.model.domain.user.User;
@@ -54,6 +57,7 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
     private UserContext userContext;
     private RelativeLayout relativeLayout;
     private Typeface typeface;
+    private BlockadeContext blockadeContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +89,8 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
         secureCheckoutFragment.setTypeface(typeface);
 
         userContext = UserContext.context(userContext);
+
+        blockadeContext = BlockadeContext.context(blockadeContext);
 
         shoppingCarView.hideList();
 
@@ -517,9 +523,19 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
         selectDateFragment.reload();
 
-        selectDateShow();
+        blockadeContext.getBlockadeFromVenue(venueFragment.getVenue(), new BlockadeCompletion.ErrorCompletion() {
 
-        shoppingCarView.hideView();
+            @Override
+            public void completion(List<Blockade> blockadeList, AppError error) {
+
+                selectDateFragment.setBlockades(blockadeList);
+
+                selectDateShow();
+
+                shoppingCarView.hideView();
+
+            }
+        });
 
     }
 

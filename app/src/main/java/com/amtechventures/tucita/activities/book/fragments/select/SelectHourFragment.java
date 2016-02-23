@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +43,9 @@ public class SelectHourFragment extends Fragment {
     private SelectHourAdapter.OnSlotSelected listener;
     private Typeface typeface;
     private RelativeLayout relativeLayout;
+    private boolean isBlocked;
+    private List<String> blocked;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -87,6 +89,20 @@ public class SelectHourFragment extends Fragment {
     public void setPrice(int price) {
 
         this.price = price;
+
+    }
+
+    public void setBlocked(List<String> blocked) {
+
+        this.blocked = blocked;
+
+    }
+
+    public void setIsBlocked(boolean isBlocked) {
+
+        this.isBlocked = isBlocked;
+
+        setupNoSlots(getView());
 
     }
 
@@ -182,7 +198,11 @@ public class SelectHourFragment extends Fragment {
 
     public void setup(List<Slot> slotsDay, View view) {
 
-        if (slotsDay == null || slotsDay.isEmpty()) {
+        slots.clear();
+
+        slots.addAll(slotsDay);
+
+        if (slotsDay == null || slotsDay.isEmpty() || isBlocked) {
 
             setupNoSlots(view);
 
@@ -192,13 +212,29 @@ public class SelectHourFragment extends Fragment {
 
         } else {
 
-            slots.clear();
+            if(blocked != null) {
 
-            slots.addAll(slotsDay);
+                for(String objectId : blocked) {
+
+                    for(Slot slot : slots) {
+
+                        if(slot.getObjectId().equals(objectId)) {
+
+                            slots.remove(slot);
+
+                            break;
+
+                        }
+
+                    }
+
+                }
+
+            }
 
             adapter.notifyDataSetChanged();
 
-            slots();
+            slotsSetAmount();
 
             setupSlots();
 
@@ -206,7 +242,7 @@ public class SelectHourFragment extends Fragment {
 
     }
 
-    private void slots() {
+    private void slotsSetAmount() {
 
         for (Slot slot : slots) {
 

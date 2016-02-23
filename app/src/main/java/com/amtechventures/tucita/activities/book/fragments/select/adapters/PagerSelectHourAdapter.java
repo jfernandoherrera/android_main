@@ -6,15 +6,21 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
+import android.util.Log;
 
 import com.amtechventures.tucita.activities.book.fragments.select.SelectHourFragment;
+import com.amtechventures.tucita.model.domain.blockade.Blockade;
+import com.amtechventures.tucita.model.domain.blockade.BlockadeAttributes;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.utils.views.CustomSpanTypeface;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Locale;
+import java.util.StringTokenizer;
 import java.util.TimeZone;
 
 public class PagerSelectHourAdapter extends FragmentStatePagerAdapter {
@@ -29,14 +35,17 @@ public class PagerSelectHourAdapter extends FragmentStatePagerAdapter {
     private int durationMinutes;
     private SelectHourAdapter.OnSlotSelected listener;
     private Typeface typeface;
+    private List<Blockade> blockades;
 
-    public PagerSelectHourAdapter(FragmentManager fm, SelectHourAdapter.OnSlotSelected listener, Typeface typeface) {
+    public PagerSelectHourAdapter(FragmentManager fm, SelectHourAdapter.OnSlotSelected listener, Typeface typeface, List<Blockade> blockades) {
 
         super(fm);
 
         this.listener = listener;
 
         this.typeface = typeface;
+
+        this.blockades = blockades;
 
         calendarOneMonthMore.add(Calendar.MONTH, 1);
 
@@ -96,11 +105,52 @@ public class PagerSelectHourAdapter extends FragmentStatePagerAdapter {
 
         selectHourFragment.setListener(listener);
 
-        selectHourFragment.setDate(getFragmentDay(position));
+        final int dateBug = 1900;
+
+        Calendar fragmentDate = getFragmentDay(position);
+
+        selectHourFragment.setDate(fragmentDate);
 
         selectHourFragment.setVenue(venue);
 
         selectHourFragment.setTypeface(typeface);
+
+        for(Blockade blockade : blockades) {
+
+            if(blockade.getType().equals(BlockadeAttributes.typeDays)) {
+
+                List<Date> datesArray = blockade.getDates();
+
+                for(Date date : datesArray) {
+
+                    Log.i("month " + fragmentDate.get(Calendar.MONTH) + " "+date.getMonth(), "day "+ fragmentDate.get(Calendar.DAY_OF_MONTH)+" "+ date.getDate() +" "+calendar.get(Calendar.YEAR)  +" year "+date.getYear());
+
+                    boolean isSame = fragmentDate.get(Calendar.MONTH) == date.getMonth() && fragmentDate.get(Calendar.DAY_OF_MONTH) == date.getDate() && calendar.get(Calendar.YEAR) == (date.getYear() + dateBug);
+
+                    if(isSame) {
+
+                        selectHourFragment.setIsBlocked(true);
+
+                        break;
+
+                    }
+
+                }
+
+            }else {
+
+                Date date = blockade.getDate();
+
+                boolean isSame = fragmentDate.get(Calendar.MONTH) == date.getMonth() && fragmentDate.get(Calendar.DAY_OF_MONTH) == date.getDate() && calendar.get(Calendar.YEAR) == (date.getYear() + dateBug);
+
+                if ( isSame ){
+
+                    selectHourFragment.setBlocked(blockade.getDataArray());
+
+                }
+            }
+
+        }
 
         selectHourFragment.setDuration(durationHours, durationMinutes);
 
