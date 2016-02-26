@@ -1,8 +1,12 @@
 package com.amtechventures.tucita.activities.advanced;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -27,11 +31,14 @@ public class AdvancedSearchActivity extends AppCompatActivity implements Locatio
     private VenuesResultFragment venuesResultFragment;
     private LocationOptionsFragment locationOptionsFragment;
     private Typeface typeface;
+    private static final int REQUEST_FINE_LOCATION=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
+        loadPermissions(Manifest.permission.ACCESS_FINE_LOCATION, REQUEST_FINE_LOCATION);
 
         setContentView(R.layout.activity_advanced_search);
 
@@ -58,6 +65,39 @@ public class AdvancedSearchActivity extends AppCompatActivity implements Locatio
         hideLocationOptionsFragment();
 
         setToolbar();
+
+    }
+
+    private void loadPermissions(String perm,int requestCode) {
+
+        if (ContextCompat.checkSelfPermission(this, perm) != PackageManager.PERMISSION_GRANTED) {
+
+            if (!ActivityCompat.shouldShowRequestPermissionRationale(this, perm)) {
+
+                ActivityCompat.requestPermissions(this, new String[]{perm}, requestCode);
+
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+
+        switch (requestCode) {
+
+            case REQUEST_FINE_LOCATION: {
+
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // granted
+                }
+                else{
+                    // no granted
+                }
+                return;
+            }
+
+        }
 
     }
 
