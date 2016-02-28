@@ -18,12 +18,15 @@ import android.widget.TextView;
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.book.fragments.select.adapters.PagerSelectHourAdapter;
 import com.amtechventures.tucita.activities.book.fragments.select.adapters.SelectHourAdapter;
+import com.amtechventures.tucita.model.domain.blockade.Blockade;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.utils.common.AppFont;
 import com.amtechventures.tucita.utils.common.AppTabLayout;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class SelectDayFragment extends Fragment {
 
@@ -32,6 +35,7 @@ public class SelectDayFragment extends Fragment {
     private ViewPager viewPager;
     private PagerSelectHourAdapter adapter;
     private SelectHourAdapter.OnSlotSelected listener;
+    private List<Blockade> blockades;
 
     @Override
     public void onAttach(Context context) {
@@ -64,7 +68,9 @@ public class SelectDayFragment extends Fragment {
 
         Typeface typeface = appFont.getAppFont(rootView.getContext());
 
-        adapter = new PagerSelectHourAdapter(getChildFragmentManager(), listener, typeface);
+        blockades = new ArrayList<>();
+
+        adapter = new PagerSelectHourAdapter(getChildFragmentManager(), listener, typeface, blockades);
 
         viewPager.setAdapter(adapter);
 
@@ -102,6 +108,12 @@ public class SelectDayFragment extends Fragment {
         });
 
         return rootView;
+
+    }
+
+    public void setBlockades(List<Blockade> blockades) {
+
+        this.blockades.addAll(blockades);
 
     }
 
