@@ -31,7 +31,7 @@ public class AdvancedSearchActivity extends AppCompatActivity implements Locatio
     private VenuesResultFragment venuesResultFragment;
     private LocationOptionsFragment locationOptionsFragment;
     private Typeface typeface;
-    private static final int REQUEST_FINE_LOCATION=0;
+    private static final int REQUEST_FINE_LOCATION = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,10 +91,15 @@ public class AdvancedSearchActivity extends AppCompatActivity implements Locatio
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // granted
                 }
+
                 else{
-                    // no granted
+
+                    venuesResultFragment.onStop();
+
                 }
+
                 return;
+
             }
 
         }

@@ -50,6 +50,122 @@ queryReview.equalTo("venue", venue);
 
 });
 
+Parse.Cloud.afterSave("Venue", function(request) {
+
+var venue = request.object;
+
+var slots = venue.relation("slots");
+
+var openingHours = venue.relation("openingHours");
+
+slots.query().find({
+
+  success: function(slotList) {
+
+        openingHours.query().find({
+
+            success: function(openingHoursList) {
+
+                if(slotList.length > 0 && openingHoursList.length > 0) {
+
+                var duration = slotList[0].get("durationMinutes");
+
+                Parse.Object.destroyAll(slotList);
+
+                    var Slot = Parse.Object.extend("Slot");
+
+                    var day = "day";
+
+                         venue.fetch({
+
+                    success: function(myObject) {
+
+                    var mySlots = [];
+
+                    for(var i = 0; i < openingHoursList.length; i++) {
+
+                          var startHour = openingHoursList[i].get("startHour");
+
+                          var startMinute = openingHoursList[i].get("startMinute");
+
+                          var endHour = openingHoursList[i].get("endHour");
+
+                          var endMinute = openingHoursList[i].get("endMinute");
+
+                              while(startHour < endHour || (startHour == endHour && startMinute <= endMinute)) {
+
+                                                        var slot = new Slot();
+
+                                                        slot.set(day, openingHoursList[i].get(day));
+
+                                                        slot.set("durationMinutes", duration);
+
+                                                        slot.set("startHour", startHour);
+
+                                                        slot.set("startMinute", startMinute);
+
+                                                        slot.set("amount", 1);
+
+                                                        mySlots.push(slot);
+
+                                                        var minutes = startMinute + duration;
+
+                                                        var hours = startHour;
+
+                                                        if(minutes >= 60) {
+
+                                                        hours += minutes / 60;
+
+                                                        minutes = minutes % 60;
+
+                                                        }
+
+                                                        startHour = hours;
+
+                                                        startMinute = minutes;
+
+                                                    }
+                           }
+
+                          Parse.Object.saveAll(mySlots, {
+
+                          success: function(mySlots) {
+
+                            slots.add(mySlots);
+
+                            venue.save(null, {
+
+                            success: function(venue) {
+
+                            alert('object updated with objectId: ' + venue.id);
+
+                            },
+
+                            error: function(venue, error) {
+
+                            alert('Failed to update object, with error code: ' + error.message);
+
+                            }
+
+                          });
+                           },
+                           error: function(myObject, error) {
+                             // The object was not refreshed successfully.
+                             // error is a Parse.Error with an error code and message.
+                           }
+                         });
+
+                    }
+
+                }
+
+        );
+
+  }
+
+} });
+}});
+});
 
 Parse.Cloud.beforeSave(Parse.User, function(request, response) {
 
