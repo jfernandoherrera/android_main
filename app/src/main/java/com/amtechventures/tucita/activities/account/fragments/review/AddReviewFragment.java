@@ -23,6 +23,7 @@ import com.amtechventures.tucita.model.domain.review.Review;
 import com.amtechventures.tucita.model.domain.user.User;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.error.AppError;
+import com.amtechventures.tucita.utils.views.AlertDialogError;
 import com.amtechventures.tucita.utils.views.RatingView;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
@@ -46,7 +47,7 @@ public class AddReviewFragment extends DialogFragment {
 
     public interface OnSend{
 
-        void onSend();
+        void onSend(Venue venue);
     }
 
     @Override
@@ -212,9 +213,13 @@ public class AddReviewFragment extends DialogFragment {
 
                 if (error != null) {
 
+                    AlertDialogError alertDialogError = new AlertDialogError();
+
+                    alertDialogError.noInternetConnectionAlert(getContext());
+
                 } else {
 
-                    listener.onSend();
+                    listener.onSend(venue);
 
                     dismiss();
 

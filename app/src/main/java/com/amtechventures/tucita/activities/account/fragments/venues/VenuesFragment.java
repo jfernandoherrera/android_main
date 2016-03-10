@@ -15,8 +15,14 @@ import android.widget.TextView;
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.account.adapters.VenuesAdapter;
 import com.amtechventures.tucita.model.context.appointment.AppointmentContext;
+import com.amtechventures.tucita.model.context.appointmentVenue.AppointmentVenueCompletion;
+import com.amtechventures.tucita.model.context.appointmentVenue.AppointmentVenueContext;
+import com.amtechventures.tucita.model.context.appointmentVenue.AppointmentVenueRemote;
 import com.amtechventures.tucita.model.context.review.ReviewCompletion;
 import com.amtechventures.tucita.model.context.review.ReviewContext;
+import com.amtechventures.tucita.model.context.user.UserContext;
+import com.amtechventures.tucita.model.domain.appointment.Appointment;
+import com.amtechventures.tucita.model.domain.appointmentVenue.AppointmentVenue;
 import com.amtechventures.tucita.model.domain.review.Review;
 import com.amtechventures.tucita.model.domain.user.User;
 import com.amtechventures.tucita.model.domain.venue.Venue;
@@ -30,10 +36,9 @@ public class VenuesFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private TextView noResults;
-    private List<Venue> venues;
     private User user;
     private VenuesAdapter.OnReview adapterListener;
-    private ReviewContext reviewContext;
+    private UserContext userContext;
     private RelativeLayout relativeLayout;
     private Typeface typeface;
 
@@ -61,48 +66,45 @@ public class VenuesFragment extends Fragment {
 
     }
 
-    public void setVenuesAndUser(List<Venue> venues, User user) {
-
-        this.venues = venues;
+    public void setUser( User user) {
 
         this.user = user;
 
-        setupReview();
+        setupList();
 
     }
 
 
-    public void setupList(List<Review> reviewList) {
+    public void setupList() {
 
-        relativeLayout.setVisibility(View.GONE);
+        userContext.getAppointmentVenues(user, new AppointmentVenueCompletion.ErrorCompletion() {
+            @Override
+            public void completion(AppError error) {
 
-        if (venues != null && !venues.isEmpty()) {
-
-            String reviewBy = getString(R.string.review_by);
-
-            String users = getString(R.string.users);
-
-            adapter = new VenuesAdapter(venues, reviewList, adapterListener, reviewBy, users, typeface);
-
-            recyclerView.setAdapter(adapter);
-
-            noResults.setVisibility(View.GONE);
-
-        }
-
-    }
-
-    private void setupReview(){
-
-        reviewContext.getReviewsUser(user, new ReviewCompletion.ReviewErrorCompletion() {
+            }
 
             @Override
-            public void completion(List<Review> reviewList, AppError error) {
+            public void completion(List<AppointmentVenue> appointmentVenues, AppError error) {
 
-                setupList(reviewList);
+                relativeLayout.setVisibility(View.GONE);
+
+                if (appointmentVenues != null && !appointmentVenues.isEmpty()) {
+
+                    String reviewBy = getString(R.string.review_by);
+
+                    String users = getString(R.string.users);
+
+                    adapter = new VenuesAdapter(appointmentVenues, adapterListener, reviewBy, users, typeface);
+
+                    recyclerView.setAdapter(adapter);
+
+                    noResults.setVisibility(View.GONE);
+
+                }
 
             }
         });
+
 
     }
 
@@ -110,7 +112,7 @@ public class VenuesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        reviewContext = ReviewContext.context(reviewContext);
+        userContext = UserContext.context(userContext);
 
         View rootView = inflater.inflate(R.layout.fragment_venues, container, false);
 

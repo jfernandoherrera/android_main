@@ -50,33 +50,27 @@ queryReview.equalTo("venue", venue);
 
 });
 
-Parse.Cloud.afterSave("Venue", function(request) {
+Parse.Cloud.beforeSave("EditedOpeningHours", function(request, response) {
 
-var venue = request.object;
+var venue = request.object.get("venue");
 
 var slots = venue.relation("slots");
 
 var openingHours = venue.relation("openingHours");
 
-slots.query().find({
+            openingHours.query().find({
 
-  success: function(slotList) {
+                success: function(openingHoursList) {
 
-        openingHours.query().find({
+                    if(openingHoursList.length > 0) {
 
-            success: function(openingHoursList) {
+                        var duration = request.object.get("durationMinutes");
 
-                if(slotList.length > 0 && openingHoursList.length > 0) {
+                        var Slot = Parse.Object.extend("Slot");
 
-                var duration = slotList[0].get("durationMinutes");
+                        var day = "day";
 
-                Parse.Object.destroyAll(slotList);
-
-                    var Slot = Parse.Object.extend("Slot");
-
-                    var day = "day";
-
-                         venue.fetch({
+                        venue.fetch({
 
                     success: function(myObject) {
 
@@ -137,23 +131,29 @@ slots.query().find({
 
                             success: function(venue) {
 
-                            alert('object updated with objectId: ' + venue.id);
+                            response.success();
 
                             },
 
                             error: function(venue, error) {
 
-                            alert('Failed to update object, with error code: ' + error.message);
+                            response.error('Failed to update object, with error code: ' + error.message);
 
                             }
 
                           });
                            },
                            error: function(myObject, error) {
-                             // The object was not refreshed successfully.
-                             // error is a Parse.Error with an error code and message.
+
+                           response.error('Failed to update object, with error code: ' + error.message);
+
                            }
+                         }).then(function() {
+
+                         response.success();
+
                          });
+
 
                     }
 
@@ -162,8 +162,6 @@ slots.query().find({
         );
 
   }
-
-} });
 }});
 });
 

@@ -4,9 +4,16 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.util.Log;
 
+import com.amtechventures.tucita.model.context.appointmentVenue.AppointmentVenueCompletion;
+import com.amtechventures.tucita.model.domain.appointment.Appointment;
+import com.amtechventures.tucita.model.domain.appointmentVenue.AppointmentVenue;
 import com.amtechventures.tucita.model.domain.user.User;
+import com.amtechventures.tucita.model.domain.venue.Venue;
+import com.amtechventures.tucita.utils.blocks.Completion;
 import com.parse.ParseFacebookUtils;
 import com.parse.ParseUser;
+
+import java.util.List;
 
 public class UserContext {
 
@@ -22,6 +29,11 @@ public class UserContext {
         }
 
         return userContext;
+
+    }
+    public void putAppointmentVenue(AppointmentVenue appointmentVenue, User user, UserCompletion.UserErrorCompletion completion) {
+
+        remote.putAppointmentVenue(appointmentVenue, user, completion);
 
     }
 
@@ -80,6 +92,18 @@ public class UserContext {
         }
 
         return bitmap;
+
+    }
+
+    public AppointmentVenue getAppointmentVenue(Venue venue, User user) {
+
+        return remote.getAppointmentVenue(venue,user);
+
+    }
+
+    public void getAppointmentVenues(User user, AppointmentVenueCompletion.ErrorCompletion completion) {
+
+        remote.getAppointmentVenues(user, completion);
 
     }
 

@@ -94,6 +94,7 @@ public class LocationContext implements GoogleApiClient.OnConnectionFailedListen
         timeMillis += 10000;
 
         LocationServices.FusedLocationApi.requestLocationUpdates(
+
                 googleApiClient, locationRequest, this);
 
     }

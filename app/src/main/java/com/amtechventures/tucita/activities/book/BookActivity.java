@@ -27,8 +27,10 @@ import com.amtechventures.tucita.model.context.appointment.AppointmentCompletion
 import com.amtechventures.tucita.model.context.blockade.BlockadeCompletion;
 import com.amtechventures.tucita.model.context.blockade.BlockadeContext;
 import com.amtechventures.tucita.model.context.slot.SlotContext;
+import com.amtechventures.tucita.model.context.user.UserCompletion;
 import com.amtechventures.tucita.model.context.user.UserContext;
 import com.amtechventures.tucita.model.domain.appointment.Appointment;
+import com.amtechventures.tucita.model.domain.appointmentVenue.AppointmentVenue;
 import com.amtechventures.tucita.model.domain.blockade.Blockade;
 import com.amtechventures.tucita.model.domain.service.Service;
 import com.amtechventures.tucita.model.domain.slot.Slot;
@@ -58,6 +60,7 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
     private RelativeLayout relativeLayout;
     private Typeface typeface;
     private BlockadeContext blockadeContext;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -552,7 +555,7 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
     @Override
     public void onSlotSelected(Slot slot) {
 
-        User user = userContext.currentUser();
+      user = userContext.currentUser();
 
         if (user == null) {
 
@@ -599,35 +602,73 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
                     } else {
 
+                        AppointmentVenue appointmentVenue = userContext.getAppointmentVenue(venueFragment.getVenue(), user);
 
-                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                        if(appointmentVenue != null) {
 
-                                BookActivity.this);
+                            transactionSuccessful();
 
-                        String continueString = getString(R.string.continue_option);
+                        } else {
 
-                        String successful = getString(R.string.successful_transaction);
+                            appointmentVenue = new AppointmentVenue();
 
-                        String message = getString(R.string.app_name);
+                            appointmentVenue.putVenue(venueFragment.getVenue());
 
-                        alertDialogBuilder.setTitle(successful)
+                            userContext.putAppointmentVenue(appointmentVenue, user, new UserCompletion.UserErrorCompletion() {
 
-                                .setPositiveButton(continueString, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void completion(User user, AppError error) {
 
-                                    public void onClick(DialogInterface dialog, int id) {
+                                    if (error == null) {
 
-                                        goToMain();
+                                        transactionSuccessful();
+
+                                    } else {
+
+                                        AlertDialogError alertDialogError = new AlertDialogError();
+
+                                        alertDialogError.noAvailableSlot(getApplicationContext());
 
                                     }
-                                }).setCancelable(false)
 
-                        .setMessage(message).show();
+                                }
+
+                            });
+
+                        }
 
                     }
 
                 }
 
             });
+
+    }
+
+    public void transactionSuccessful() {
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+
+                BookActivity.this);
+
+        String continueString = getString(R.string.continue_option);
+
+        String successful = getString(R.string.successful_transaction);
+
+        String message = getString(R.string.app_name);
+
+        alertDialogBuilder.setTitle(successful)
+
+                .setPositiveButton(continueString, new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int id) {
+
+                        goToMain();
+
+                    }
+                }).setCancelable(false)
+
+                .setMessage(message).show();
 
     }
 
