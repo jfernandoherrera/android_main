@@ -195,7 +195,11 @@ public class MainActivity extends AppCompatActivity implements CategoryFragment.
 
         toolbar.inflateMenu((R.menu.menu_main));
 
-        getActionBarTextView().setTypeface(typeface);
+        TextView toolbarTextView = getActionBarTextView();
+
+        toolbarTextView.setTypeface(typeface);
+
+        toolbarTextView.setText(getString(R.string.categories));
 
         MenuItem searchItem = menu.findItem(R.id.action_search);
 

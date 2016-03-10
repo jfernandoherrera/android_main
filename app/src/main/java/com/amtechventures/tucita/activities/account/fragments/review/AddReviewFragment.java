@@ -44,6 +44,7 @@ public class AddReviewFragment extends DialogFragment {
     OnSend listener;
     float rating;
     private Typeface typeface;
+    boolean doReview;
 
     public interface OnSend{
 
@@ -195,38 +196,48 @@ public class AddReviewFragment extends DialogFragment {
 
     private void sendReview(){
 
-        Review review = new Review();
+        if(! doReview) {
 
-        review.setUser(user);
+            Review review = new Review();
 
-        review.setVenue(venue);
+            review.setUser(user);
 
-        review.setRating(ratingView.getRating());
+            review.setVenue(venue);
 
-        review.setDescription(textDescription.getText().toString());
+            doReview = true;
 
-        review.setTitle(textTitle.getText().toString());
+            review.setRating(ratingView.getRating());
 
-        reviewContext.saveReview(review, new ReviewCompletion.ReviewErrorCompletion() {
-            @Override
-            public void completion(List<Review> reviewList, AppError error) {
+            review.setDescription(textDescription.getText().toString());
 
-                if (error != null) {
+            review.setTitle(textTitle.getText().toString());
 
-                    AlertDialogError alertDialogError = new AlertDialogError();
+            reviewContext.saveReview(review, new ReviewCompletion.ReviewErrorCompletion() {
+                @Override
+                public void completion(List<Review> reviewList, AppError error) {
 
-                    alertDialogError.noInternetConnectionAlert(getContext());
+                    if (error != null) {
 
-                } else {
+                        doReview = false;
 
-                    listener.onSend(venue);
+                        AlertDialogError alertDialogError = new AlertDialogError();
 
-                    dismiss();
+                        alertDialogError.noInternetConnectionAlert(getContext());
+
+                    } else {
+
+                        listener.onSend(venue);
+
+                        listener = null;
+
+                        dismiss();
+
+                    }
 
                 }
+            });
 
-            }
-        });
+        }
 
     }
 

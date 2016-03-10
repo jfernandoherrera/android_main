@@ -77,10 +77,6 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
 
         textName.setTypeface(typeface);
 
-        appointmentContext = AppointmentContext.context(appointmentContext);
-
-        userContext = UserContext.context(userContext);
-
         setupTabs();
 
         setImageUser();
