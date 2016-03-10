@@ -47,7 +47,7 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."</string>
     <string name="cities">Ciudades</string>
-    <string name="category">categoria</string>
+    <string name="categories">categorías</string>
     <string name="action_search">Buscar</string>
     <string name="book_now">Reserva tu cita!</string>
     <string name="action_search_location">Ciudad</string>

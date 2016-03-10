@@ -239,7 +239,7 @@ public class VenueFragment extends Fragment {
 
         titleSchedule.setTypeface(typeface, Typeface.BOLD);
 
-        specials.setTypeface(typeface,Typeface.BOLD);
+        specials.setTypeface(typeface, Typeface.BOLD);
 
     }
 
@@ -310,13 +310,17 @@ public class VenueFragment extends Fragment {
 
     private void setupReviews(){
 
-        String reviewBy = getString(R.string.review_by);
+        if(getActivity() != null) {
 
-        String users = getString(R.string.users);
+            String reviewBy = getString(R.string.review_by);
 
-        String textReviewsDone = reviewBy + " " + venue.getReviews() + " " + users;
+            String users = getString(R.string.users);
 
-        textReviews.setText(textReviewsDone);
+            String textReviewsDone = reviewBy + " " + venue.getReviews() + " " + users;
+
+            textReviews.setText(textReviewsDone);
+
+        }
 
     }
 

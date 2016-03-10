@@ -7,21 +7,31 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
 
+import com.amtechventures.tucita.model.context.appointmentVenue.AppointmentVenueCompletion;
+import com.amtechventures.tucita.model.context.appointmentVenue.AppointmentVenueContext;
+import com.amtechventures.tucita.model.domain.appointment.Appointment;
+import com.amtechventures.tucita.model.domain.appointmentVenue.AppointmentVenue;
+import com.amtechventures.tucita.model.domain.appointmentVenue.AppointmentVenueAttributes;
 import com.amtechventures.tucita.model.domain.category.Category;
 import com.amtechventures.tucita.model.domain.facebook.FacebookPermissions;
 import com.amtechventures.tucita.model.domain.user.User;
 import com.amtechventures.tucita.model.domain.user.UserAttributes;
+import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.error.AppError;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.parse.GetCallback;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseFacebookUtils;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -50,6 +60,99 @@ public class UserRemote {
         });
 
     }
+
+
+    public AppointmentVenue getAppointmentVenue(Venue venue, User user) {
+
+        AppointmentVenue appointmentVenue = null;
+
+        try {
+
+            ParseQuery<ParseUser> query = ParseUser.getQuery();
+
+            query.include(UserAttributes.appointmentVenues);
+
+            query.whereEqualTo("objectId", user.getObjectId());
+
+            ParseUser parseUser = query.getFirst();
+
+        List<AppointmentVenue> appointmentVenues = parseUser.getList(UserAttributes.appointmentVenues);
+
+            if(appointmentVenues != null) {
+
+                for (AppointmentVenue current : appointmentVenues) {
+
+                    try {
+
+                        current.fetch();
+
+                        Venue currentVenue = current.getVenue();
+
+                        if (currentVenue.getObjectId().equals(venue.getObjectId())) {
+
+                            appointmentVenue = current;
+
+                            break;
+
+                        }
+
+                    } catch (ParseException e) {
+
+                        e.printStackTrace();
+
+                    }
+
+                }
+
+            }
+
+        } catch (ParseException e) {
+
+            e.printStackTrace();
+
+        }
+
+        return appointmentVenue;
+
+    }
+
+
+
+    public void getAppointmentVenues(User user, final AppointmentVenueCompletion.ErrorCompletion completion) {
+
+            ParseQuery<ParseUser> query = ParseUser.getQuery();
+
+            query.include(UserAttributes.appointmentVenues);
+
+            String venueOfAppointmentVenue = UserAttributes.appointmentVenues + "." + AppointmentVenueAttributes.venue;
+
+            query.include(venueOfAppointmentVenue);
+
+            query.whereEqualTo("objectId", user.getObjectId());
+
+            query.getFirstInBackground(new GetCallback<ParseUser>() {
+
+                @Override
+                public void done(ParseUser object, ParseException e) {
+
+                    List<AppointmentVenue> appointmentVenues;
+
+                    ParseUser  parseUser = object;
+
+                    appointmentVenues = parseUser.getList(UserAttributes.appointmentVenues);
+
+                    AppError appError = e == null ? null : new AppError(Category.class.toString(), 0, null);
+
+                    completion.completion(appointmentVenues, appError);
+
+                }
+
+            });
+
+    }
+
+
+
 
     public void signup(String email, String password, String name, final UserCompletion.UserErrorCompletion completion) {
 
@@ -85,7 +188,7 @@ public class UserRemote {
             @Override
             public void done(ParseUser parseUser, ParseException e) {
 
-                if(e != null){
+                if (e != null) {
 
                     e.printStackTrace();
 
@@ -142,6 +245,31 @@ public class UserRemote {
 
             }
 
+        });
+
+    }
+
+    public void putAppointmentVenue(AppointmentVenue appointmentVenue, final User user, final UserCompletion.UserErrorCompletion completion) {
+
+        final ParseUser parseUser = user.getParseUser();
+
+        parseUser.addUnique(UserAttributes.appointmentVenues, appointmentVenue);
+
+        parseUser.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+
+                AppError appError = e == null ? null : new AppError(User.class.toString(), 0, null);
+
+                if(e != null){
+
+                    e.printStackTrace();
+
+                }
+
+                completion.completion(user, appError);
+
+            }
         });
 
     }

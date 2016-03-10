@@ -13,4 +13,5 @@ public class BlockadeCompletion {
         void completion(List<Blockade> blockadeList, AppError error);
 
     }
+
 }

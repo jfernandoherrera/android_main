@@ -21,6 +21,8 @@ import android.widget.TextView;
 
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.book.BookActivity;
+import com.amtechventures.tucita.model.domain.appointment.Appointment;
+import com.amtechventures.tucita.model.domain.appointmentVenue.AppointmentVenue;
 import com.amtechventures.tucita.model.domain.review.Review;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.domain.venue.VenueAttributes;
@@ -29,8 +31,7 @@ import java.util.List;
 
 public class VenuesAdapter extends RecyclerView.Adapter<VenuesAdapter.ViewHolder> {
 
-    List<Venue> items;
-    List<Review> reviewList;
+    List<AppointmentVenue> items;
     OnReview listener;
     String reviewBy;
     String users;
@@ -42,7 +43,7 @@ public class VenuesAdapter extends RecyclerView.Adapter<VenuesAdapter.ViewHolder
 
     }
 
-    public VenuesAdapter(List<Venue> venues, List<Review> reviewList, OnReview listener, String reviewBy, String users, Typeface typeface) {
+    public VenuesAdapter(List<AppointmentVenue> venues, OnReview listener, String reviewBy, String users, Typeface typeface) {
 
         super();
 
@@ -55,31 +56,6 @@ public class VenuesAdapter extends RecyclerView.Adapter<VenuesAdapter.ViewHolder
         this.users = users;
 
         items = venues;
-
-        this.reviewList = reviewList;
-
-    }
-
-    private boolean haveReview(Venue venue){
-
-        boolean haveReview = false;
-
-        String idVenue = venue.getObjectId();
-
-        for(Review review : reviewList){
-
-            String id = review.getVenue().getObjectId();
-
-            if(id.equals(idVenue)){
-
-                haveReview = true;
-
-                break;
-
-            }
-        }
-
-        return haveReview;
 
     }
 
@@ -105,9 +81,11 @@ public class VenuesAdapter extends RecyclerView.Adapter<VenuesAdapter.ViewHolder
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
 
-        final Venue venue = items.get(position);
+        final AppointmentVenue appointmentVenue = items.get(position);
 
-        String venueName = venue.getName();
+        final Venue venue = appointmentVenue.getVenue();
+
+        final String venueName = venue.getName();
 
         holder.name.setText(venueName);
 
@@ -144,7 +122,7 @@ public class VenuesAdapter extends RecyclerView.Adapter<VenuesAdapter.ViewHolder
             }
         });
 
-        if(haveReview(venue)){
+        if(appointmentVenue.getRanked()){
 
             holder.textReview.setVisibility(View.GONE);
 

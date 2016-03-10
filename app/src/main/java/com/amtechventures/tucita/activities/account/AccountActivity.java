@@ -23,14 +23,17 @@ import com.amtechventures.tucita.activities.account.fragments.venues.VenuesFragm
 import com.amtechventures.tucita.activities.main.MainActivity;
 import com.amtechventures.tucita.model.context.appointment.AppointmentCompletion;
 import com.amtechventures.tucita.model.context.appointment.AppointmentContext;
+import com.amtechventures.tucita.model.context.appointmentVenue.AppointmentVenueCompletion;
+import com.amtechventures.tucita.model.context.appointmentVenue.AppointmentVenueContext;
 import com.amtechventures.tucita.model.context.user.UserContext;
 import com.amtechventures.tucita.model.domain.appointment.Appointment;
+import com.amtechventures.tucita.model.domain.appointmentVenue.AppointmentVenue;
 import com.amtechventures.tucita.model.domain.user.User;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.error.AppError;
 import com.amtechventures.tucita.utils.common.AppFont;
+import com.amtechventures.tucita.utils.views.AlertDialogError;
 import com.mikhaellopez.circularimageview.CircularImageView;
-
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -40,6 +43,7 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
 
     private UserContext userContext;
     private Toolbar toolbar;
+    private AppointmentVenueContext appointmentVenueContext;
     private ViewPager viewPager;
     private CircularImageView circularImageView;
     private TextView textName;
@@ -52,6 +56,10 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
     protected void onCreate(Bundle savedInstanceState) {
 
         userContext = UserContext.context(userContext);
+
+        appointmentVenueContext = AppointmentVenueContext.context(appointmentVenueContext);
+
+        appointmentContext = AppointmentContext.context(appointmentContext);
 
         super.onCreate(savedInstanceState);
 
@@ -68,10 +76,6 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
         typeface = appFont.getAppFont(getApplicationContext());
 
         textName.setTypeface(typeface);
-
-        appointmentContext = AppointmentContext.context(appointmentContext);
-
-        userContext = UserContext.context(userContext);
 
         setupTabs();
 
@@ -251,7 +255,7 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
 
                 }
 
-                ((VenuesFragment) pagerAccountAdapter.getItem(1)).setVenuesAndUser(venues, user);
+                ((VenuesFragment) pagerAccountAdapter.getItem(1)).setUser(user);
 
             }
 
@@ -412,7 +416,37 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
     }
 
     @Override
-    public void onSend() {
+    public void onSend(Venue venue) {
+
+        AppointmentVenue appointmentVenue = userContext.getAppointmentVenue(venue, user);
+
+        if(! appointmentVenue.getRanked()) {
+
+            appointmentVenue.putRanked(true);
+
+            appointmentVenueContext.saveAppointmentVenue(appointmentVenue, new AppointmentVenueCompletion.ErrorCompletion() {
+
+                @Override
+                public void completion(AppError error) {
+
+                    if (error != null) {
+
+                        AlertDialogError alertDialogError = new AlertDialogError();
+
+                        alertDialogError.noInternetConnectionAlert(getApplicationContext());
+
+                    }
+
+                }
+
+                @Override
+                public void completion(List<AppointmentVenue> appointmentVenues, AppError error) {
+
+                }
+
+            });
+
+        }
 
         setupAppointments();
 

@@ -28,6 +28,13 @@ public class ReviewContext {
         reviewLocal = new ReviewLocal();
 
         reviewRemote = new ReviewRemote();
+
+    }
+
+    public void cancelQuery() {
+
+        reviewRemote.cancelQuery();
+
     }
 
     public void saveReview(Review review, final ReviewCompletion.ReviewErrorCompletion completion){

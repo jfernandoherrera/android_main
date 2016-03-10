@@ -123,8 +123,6 @@ public class PagerSelectHourAdapter extends FragmentStatePagerAdapter {
 
                 for(Date date : datesArray) {
 
-                    Log.i("month " + fragmentDate.get(Calendar.MONTH) + " "+date.getMonth(), "day "+ fragmentDate.get(Calendar.DAY_OF_MONTH)+" "+ date.getDate() +" "+calendar.get(Calendar.YEAR)  +" year "+date.getYear());
-
                     boolean isSame = fragmentDate.get(Calendar.MONTH) == date.getMonth() && fragmentDate.get(Calendar.DAY_OF_MONTH) == date.getDate() && calendar.get(Calendar.YEAR) == (date.getYear() + dateBug);
 
                     if(isSame) {
@@ -137,7 +135,7 @@ public class PagerSelectHourAdapter extends FragmentStatePagerAdapter {
 
                 }
 
-            }else {
+            } else {
 
                 Date date = blockade.getDate();
 

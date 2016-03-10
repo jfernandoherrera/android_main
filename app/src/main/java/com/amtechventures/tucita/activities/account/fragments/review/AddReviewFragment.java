@@ -23,6 +23,7 @@ import com.amtechventures.tucita.model.domain.review.Review;
 import com.amtechventures.tucita.model.domain.user.User;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.error.AppError;
+import com.amtechventures.tucita.utils.views.AlertDialogError;
 import com.amtechventures.tucita.utils.views.RatingView;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
@@ -43,10 +44,11 @@ public class AddReviewFragment extends DialogFragment {
     OnSend listener;
     float rating;
     private Typeface typeface;
+    boolean doReview;
 
     public interface OnSend{
 
-        void onSend();
+        void onSend(Venue venue);
     }
 
     @Override
@@ -194,34 +196,48 @@ public class AddReviewFragment extends DialogFragment {
 
     private void sendReview(){
 
-        Review review = new Review();
+        if(! doReview) {
 
-        review.setUser(user);
+            Review review = new Review();
 
-        review.setVenue(venue);
+            review.setUser(user);
 
-        review.setRating(ratingView.getRating());
+            review.setVenue(venue);
 
-        review.setDescription(textDescription.getText().toString());
+            doReview = true;
 
-        review.setTitle(textTitle.getText().toString());
+            review.setRating(ratingView.getRating());
 
-        reviewContext.saveReview(review, new ReviewCompletion.ReviewErrorCompletion() {
-            @Override
-            public void completion(List<Review> reviewList, AppError error) {
+            review.setDescription(textDescription.getText().toString());
 
-                if (error != null) {
+            review.setTitle(textTitle.getText().toString());
 
-                } else {
+            reviewContext.saveReview(review, new ReviewCompletion.ReviewErrorCompletion() {
+                @Override
+                public void completion(List<Review> reviewList, AppError error) {
 
-                    listener.onSend();
+                    if (error != null) {
 
-                    dismiss();
+                        doReview = false;
+
+                        AlertDialogError alertDialogError = new AlertDialogError();
+
+                        alertDialogError.noInternetConnectionAlert(getContext());
+
+                    } else {
+
+                        listener.onSend(venue);
+
+                        listener = null;
+
+                        dismiss();
+
+                    }
 
                 }
+            });
 
-            }
-        });
+        }
 
     }
 

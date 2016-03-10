@@ -322,15 +322,24 @@ public class SelectHourFragment extends Fragment {
 
                     }
 
-                    removeSlotsForDurationAfterAppointments(indexFirst, toRemove);
-
-                    int index = slots.size()-1 >= 0 ? slots.size()-1 : 0;
-
-                    removeSlotsForDuration(index);
-
                     if (slots.isEmpty()) {
 
                         setupNoSlots(getView());
+
+                    } else {
+                        removeSlotsForDurationAfterAppointments(indexFirst, toRemove);
+
+                        int index = slots.size() - 1 >= 0 ? slots.size() - 1 : 0;
+
+                        if (slots.isEmpty()) {
+
+                            setupNoSlots(getView());
+
+                        } else {
+
+                            removeSlotsForDuration(index);
+
+                        }
 
                     }
 
@@ -376,7 +385,12 @@ public class SelectHourFragment extends Fragment {
 
         }
 
-        slots.removeAll(toRemove);
+            slots.removeAll(toRemove);
+
+        if (slots.isEmpty()) {
+
+            setupNoSlots(getView());
+        }
 
         adapter.notifyDataSetChanged();
 

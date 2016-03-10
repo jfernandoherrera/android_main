@@ -50,6 +50,120 @@ queryReview.equalTo("venue", venue);
 
 });
 
+Parse.Cloud.beforeSave("EditedOpeningHours", function(request, response) {
+
+var venue = request.object.get("venue");
+
+var slots = venue.relation("slots");
+
+var openingHours = venue.relation("openingHours");
+
+            openingHours.query().find({
+
+                success: function(openingHoursList) {
+
+                    if(openingHoursList.length > 0) {
+
+                        var duration = request.object.get("durationMinutes");
+
+                        var Slot = Parse.Object.extend("Slot");
+
+                        var day = "day";
+
+                        venue.fetch({
+
+                    success: function(myObject) {
+
+                    var mySlots = [];
+
+                    for(var i = 0; i < openingHoursList.length; i++) {
+
+                          var startHour = openingHoursList[i].get("startHour");
+
+                          var startMinute = openingHoursList[i].get("startMinute");
+
+                          var endHour = openingHoursList[i].get("endHour");
+
+                          var endMinute = openingHoursList[i].get("endMinute");
+
+                              while(startHour < endHour || (startHour == endHour && startMinute <= endMinute)) {
+
+                                                        var slot = new Slot();
+
+                                                        slot.set(day, openingHoursList[i].get(day));
+
+                                                        slot.set("durationMinutes", duration);
+
+                                                        slot.set("startHour", startHour);
+
+                                                        slot.set("startMinute", startMinute);
+
+                                                        slot.set("amount", 1);
+
+                                                        mySlots.push(slot);
+
+                                                        var minutes = startMinute + duration;
+
+                                                        var hours = startHour;
+
+                                                        if(minutes >= 60) {
+
+                                                        hours += minutes / 60;
+
+                                                        minutes = minutes % 60;
+
+                                                        }
+
+                                                        startHour = hours;
+
+                                                        startMinute = minutes;
+
+                                                    }
+                           }
+
+                          Parse.Object.saveAll(mySlots, {
+
+                          success: function(mySlots) {
+
+                            slots.add(mySlots);
+
+                            venue.save(null, {
+
+                            success: function(venue) {
+
+                            response.success();
+
+                            },
+
+                            error: function(venue, error) {
+
+                            response.error('Failed to update object, with error code: ' + error.message);
+
+                            }
+
+                          });
+                           },
+                           error: function(myObject, error) {
+
+                           response.error('Failed to update object, with error code: ' + error.message);
+
+                           }
+                         }).then(function() {
+
+                         response.success();
+
+                         });
+
+
+                    }
+
+                }
+
+        );
+
+  }
+}});
+});
 
 Parse.Cloud.beforeSave(Parse.User, function(request, response) {
 
