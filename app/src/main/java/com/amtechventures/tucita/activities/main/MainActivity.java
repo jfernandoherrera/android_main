@@ -21,6 +21,7 @@ import com.amtechventures.tucita.activities.main.fragments.category.CategoryFrag
 import com.amtechventures.tucita.activities.login.LoginActivity;
 import com.amtechventures.tucita.activities.main.fragments.search.SearchFragment;
 import com.amtechventures.tucita.activities.main.fragments.subcategory.SubCategoryFragment;
+import com.amtechventures.tucita.activities.signup.SignUpActivity;
 import com.amtechventures.tucita.model.domain.user.UserAttributes;
 import com.amtechventures.tucita.utils.common.AppFont;
 import com.amtechventures.tucita.utils.views.AlertDialogError;
@@ -47,9 +48,11 @@ public class MainActivity extends AppCompatActivity implements CategoryFragment.
 
         AppFont appFont = new AppFont();
 
-        typeface = appFont.getAppFont(getApplicationContext());
+        typeface = appFont.getAppFontLight(getApplicationContext());
 
-        fragment.setTypeface(typeface);
+        Typeface typefaceMedium = appFont.getAppFontMedium(getApplicationContext());
+
+        fragment.setTypeface(typeface, typefaceMedium);
 
         searchFragment.setTypeface(typeface);
 
@@ -91,6 +94,16 @@ public class MainActivity extends AppCompatActivity implements CategoryFragment.
         }
 
         prev.show(fragmentManager, SubCategoryFragment.class.getName());
+
+    }
+
+    public void goToSignUp(View view) {
+
+        Intent intent = new Intent(this, SignUpActivity.class);
+
+        startActivity(intent);
+
+        finish();
 
     }
 

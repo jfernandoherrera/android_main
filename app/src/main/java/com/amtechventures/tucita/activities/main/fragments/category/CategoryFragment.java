@@ -49,6 +49,7 @@ public class CategoryFragment extends Fragment {
     private ProgressDialog progress;
     private OnItemClicked listener;
     private Typeface typeface;
+    private Typeface typefaceMedium;
     private UserContext userContext;
 
     public interface OnItemClicked {
@@ -66,11 +67,13 @@ public class CategoryFragment extends Fragment {
 
     }
 
-    public void setTypeface(Typeface typeface) {
+    public void setTypeface(Typeface typeface, Typeface typefaceMedium) {
 
         this.typeface = typeface;
 
+        this.typefaceMedium = typefaceMedium;
     }
+
 
     @Override
     public void onDetach() {
@@ -106,35 +109,6 @@ public class CategoryFragment extends Fragment {
 
     }
 
-    private SpannableStringBuilder getStringLoginModified() {
-
-        WindowManager wm = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
-
-        DisplayMetrics metrics = new DisplayMetrics();
-
-        wm.getDefaultDisplay().getMetrics(metrics);
-
-        final int initialSize = 18;
-
-        int size = (int) (initialSize * metrics.scaledDensity);
-
-        String firstString = getResources().getString(R.string.action_sign_in_short).toUpperCase();
-
-        String secondString = getResources().getString(R.string.or).toLowerCase();
-
-        String thirdString = getResources().getString(R.string.action_sign_up).toUpperCase();
-
-        SpannableStringBuilder stringBuilder = new SpannableStringBuilder(firstString + " " + secondString + " " + thirdString);
-
-        stringBuilder.setSpan(new CustomSpanTypeface(null, Typeface.BOLD, size, null, null, typeface), 0, firstString.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-
-        stringBuilder.setSpan(new CustomSpanTypeface(null, Typeface.BOLD, size, ColorStateList.valueOf(Color.rgb(200, 200, 200)), null, typeface), firstString.length() + 1, firstString.length() + secondString.length() + 1, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-
-        stringBuilder.setSpan(new CustomSpanTypeface(null, Typeface.BOLD, size, null, null, typeface), firstString.length() + secondString.length() + 2, firstString.length() + secondString.length() + thirdString.length() + 2, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-
-        return stringBuilder;
-
-    }
 
     private Bitmap setImageUser(User user, View view){
 
@@ -154,7 +128,9 @@ public class CategoryFragment extends Fragment {
 
         boolean connected = getActivity().getIntent().getExtras().getBoolean(UserAttributes.connected);
 
-        final Button buttonText = (Button) view.findViewById(R.id.go_to_login);
+        final Button buttonLogin = (Button) view.findViewById(R.id.goToLogin);
+
+        final Button buttonSignUp = (Button) view.findViewById(R.id.goToSignUp);
 
         final TextView textView = (TextView) view.findViewById(R.id.account);
 
@@ -162,11 +138,9 @@ public class CategoryFragment extends Fragment {
 
         CircularImageView circularImageView = (CircularImageView) view.findViewById(R.id.imageUser);
 
-        buttonText.setTypeface(typeface);
-
         textView.setTypeface(typeface);
 
-        linearLayout.setBackgroundResource(R.drawable.log_in_or_signup_click_out);
+        linearLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
 
         if (connected) {
 
@@ -182,26 +156,8 @@ public class CategoryFragment extends Fragment {
 
             textView.setText(user.getName());
 
-            buttonText.setVisibility(View.GONE);
+            buttonLogin.setVisibility(View.GONE);
 
-            linearLayout.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-
-                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
-
-                        v.setBackgroundResource(R.drawable.log_in_or_signup_click_in);
-
-                    } else if (event.getAction() == MotionEvent.ACTION_UP) {
-
-                        v.setBackgroundResource(R.drawable.log_in_or_signup_click_out);
-
-                    }
-
-                    return false;
-
-                }
-            });
 
         } else {
 
@@ -209,28 +165,9 @@ public class CategoryFragment extends Fragment {
 
             textView.setVisibility(View.GONE);
 
-            buttonText.setText(getStringLoginModified());
+            buttonLogin.setTypeface(typefaceMedium);
 
-            buttonText.setOnTouchListener(new View.OnTouchListener() {
-
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-
-                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
-
-                        buttonText.setBackgroundResource(R.drawable.log_in_or_signup_click_in);
-
-                    } else if (event.getAction() == MotionEvent.ACTION_UP) {
-
-                        buttonText.setBackgroundResource(R.drawable.log_in_or_signup_click_out);
-
-                    }
-
-                    return false;
-
-                }
-
-            });
+            buttonSignUp.setTypeface(typefaceMedium);
 
         }
 

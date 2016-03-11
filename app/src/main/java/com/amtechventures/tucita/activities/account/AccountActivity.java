@@ -73,7 +73,7 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
 
         AppFont appFont = new AppFont();
 
-        typeface = appFont.getAppFont(getApplicationContext());
+        typeface = appFont.getAppFontLight(getApplicationContext());
 
         textName.setTypeface(typeface);
 

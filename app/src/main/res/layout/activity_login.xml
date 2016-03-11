@@ -118,7 +118,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:clickable="true"
-            android:onClick="signup"
+            android:onClick="signUp"
             android:text="@string/create_new_account"
             android:textColor="@color/blue_link" />
     </RelativeLayout>

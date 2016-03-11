@@ -26,7 +26,6 @@ import com.amtechventures.tucita.activities.splash.SplashActivity;
 import com.amtechventures.tucita.model.context.appointment.AppointmentCompletion;
 import com.amtechventures.tucita.model.context.blockade.BlockadeCompletion;
 import com.amtechventures.tucita.model.context.blockade.BlockadeContext;
-import com.amtechventures.tucita.model.context.slot.SlotContext;
 import com.amtechventures.tucita.model.context.user.UserCompletion;
 import com.amtechventures.tucita.model.context.user.UserContext;
 import com.amtechventures.tucita.model.domain.appointment.Appointment;
@@ -39,9 +38,6 @@ import com.amtechventures.tucita.model.error.AppError;
 import com.amtechventures.tucita.utils.common.AppFont;
 import com.amtechventures.tucita.utils.views.AlertDialogError;
 import com.amtechventures.tucita.utils.views.ShoppingCarView;
-import com.parse.ParseException;
-import com.parse.ParseUser;
-import com.parse.SaveCallback;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -81,7 +77,7 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
         AppFont appFont = new AppFont();
 
-        typeface = appFont.getAppFont(getApplicationContext());
+        typeface = appFont.getAppFontLight(getApplicationContext());
 
         venueFragment.setTypeface(typeface);
 

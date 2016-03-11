@@ -102,7 +102,7 @@ public class ServicesToBookAdapter extends RecyclerView.Adapter<ServicesToBookAd
 
             AppFont appFont = new AppFont();
 
-            Typeface typeface = appFont.getAppFont(itemView.getContext());
+            Typeface typeface = appFont.getAppFontLight(itemView.getContext());
 
             textDuration.setTypeface(typeface);
 
