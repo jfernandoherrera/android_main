@@ -30,7 +30,7 @@ public class AppTabLayout extends TabLayout {
 
             AppFont appFont = new AppFont();
 
-            typeface = appFont.getAppFont(getContext());
+            typeface = appFont.getLightAppFont(getContext());
 
             this.removeAllTabs();
 

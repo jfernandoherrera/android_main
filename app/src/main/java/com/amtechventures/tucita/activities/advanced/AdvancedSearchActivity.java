@@ -50,7 +50,7 @@ public class AdvancedSearchActivity extends AppCompatActivity implements Locatio
 
         AppFont appFont = new AppFont();
 
-        typeface = appFont.getAppFont(getApplicationContext());
+        typeface = appFont.getLightAppFont(getApplicationContext());
 
         venuesResultFragment.setTypeface(typeface);
 

@@ -81,7 +81,7 @@ public class ReviewsActivity extends AppCompatActivity implements UserReviewView
 
         AppFont font = new AppFont();
 
-        typeface = font.getAppFont(getApplicationContext());
+        typeface = font.getLightAppFont(getApplicationContext());
 
         reviewsFragment.setTypeface(typeface);
 

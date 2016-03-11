@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
@@ -59,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
 
         AppFont appFont = new AppFont();
 
-        typeface = appFont.getAppFont(getApplicationContext());
+        typeface = appFont.getLightAppFont(getApplicationContext());
 
         emailView = (AutoCompleteTextView) findViewById(R.id.email);
 
@@ -401,7 +400,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    public void signup(View view) {
+    public void signUp(View view) {
 
         Intent intent = new Intent(this, SignUpActivity.class);
 

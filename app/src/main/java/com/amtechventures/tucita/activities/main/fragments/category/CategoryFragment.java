@@ -154,7 +154,9 @@ public class CategoryFragment extends Fragment {
 
         boolean connected = getActivity().getIntent().getExtras().getBoolean(UserAttributes.connected);
 
-        final Button buttonText = (Button) view.findViewById(R.id.go_to_login);
+        final Button buttonLogin = (Button) view.findViewById(R.id.goToLogin);
+
+        final Button buttonSignUp = (Button) view.findViewById(R.id.goToSignUp);
 
         final TextView textView = (TextView) view.findViewById(R.id.account);
 
@@ -162,7 +164,9 @@ public class CategoryFragment extends Fragment {
 
         CircularImageView circularImageView = (CircularImageView) view.findViewById(R.id.imageUser);
 
-        buttonText.setTypeface(typeface);
+        buttonLogin.setTypeface(typeface);
+
+        buttonSignUp.setTypeface(typeface);
 
         textView.setTypeface(typeface);
 
@@ -182,8 +186,10 @@ public class CategoryFragment extends Fragment {
 
             textView.setText(user.getName());
 
-            buttonText.setVisibility(View.GONE);
+            buttonLogin.setVisibility(View.GONE);
 
+            buttonSignUp.setVisibility(View.GONE);
+            
             linearLayout.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
@@ -209,20 +215,20 @@ public class CategoryFragment extends Fragment {
 
             textView.setVisibility(View.GONE);
 
-            buttonText.setText(getStringLoginModified());
+            buttonLogin.setText(getStringLoginModified());
 
-            buttonText.setOnTouchListener(new View.OnTouchListener() {
+            buttonLogin.setOnTouchListener(new View.OnTouchListener() {
 
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
 
                     if (event.getAction() == MotionEvent.ACTION_DOWN) {
 
-                        buttonText.setBackgroundResource(R.drawable.log_in_or_signup_click_in);
+                        buttonLogin.setBackgroundResource(R.drawable.log_in_or_signup_click_in);
 
                     } else if (event.getAction() == MotionEvent.ACTION_UP) {
 
-                        buttonText.setBackgroundResource(R.drawable.log_in_or_signup_click_out);
+                        buttonLogin.setBackgroundResource(R.drawable.log_in_or_signup_click_out);
 
                     }
 

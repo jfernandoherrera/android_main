@@ -47,7 +47,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         AppFont font = new AppFont();
 
-        typeface = font.getAppFont(getApplicationContext());
+        typeface = font.getLightAppFont(getApplicationContext());
 
         emailView.setTypeface(typeface);
 

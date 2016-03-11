@@ -6,11 +6,28 @@ import android.graphics.Typeface;
 
 public class AppFont {
 
+    public Typeface getLightAppFont(Context context){
 
-    public Typeface getAppFont(Context context){
-
-        Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Light.ttf");
+        Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/Avenir-Light.ttf");
 
         return typeface;
+
     }
+
+    public Typeface getHeavyAppFont(Context context){
+
+        Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/Avenir-Heavy.ttf");
+
+        return typeface;
+
+    }
+
+    public Typeface getMediumAppFont(Context context){
+
+        Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/Avenir-Heavy.ttf");
+
+        return typeface;
+
+    }
+
 }

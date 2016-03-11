@@ -50,6 +50,72 @@ queryReview.equalTo("venue", venue);
 
 });
 
+Parse.Cloud.beforeSave("Review", function(request, response) {
+
+    var venue = request.object.get("venue");
+
+    var user = request.object.get("user");
+
+    var appointmentVenue = new Parse.Object.extend("AppointmentVenue");
+
+    user.fetch({
+
+      success: function(user) {
+
+      var appointmentVenues = user.get("appointmentVenues");
+
+           for(var i = 0; i < appointmentVenues.length; i++) {
+
+                var appointmentVenueJSon = appointmentVenues[i];
+
+                var queryAppointmentVenue = new Parse.Query(appointmentVenue);
+
+                queryAppointmentVenue.equalTo("objectId", appointmentVenues[i].id);
+
+                queryAppointmentVenue.include("venue");
+
+                queryAppointmentVenue.limit(1);
+
+                queryAppointmentVenue.find({
+
+                    success: function(results) {
+
+                    var appointmentVenueId = results[0].get("venue").id;
+
+                        if(appointmentVenueId ==venue.id) {
+
+                            if(results[0].get("ranked")) {
+
+                               response.error("duplicate");
+
+                            }else {
+
+                                alert("Successfully saved");
+
+                                response.success();
+
+                            }
+
+                        }
+
+
+                    },
+
+                    error: function(error) {
+
+                        response.error("Error: " + error.code + " " + error.message)
+
+                    }
+
+                });
+
+           }}
+
+    });
+
+});
+
+
 Parse.Cloud.beforeSave("EditedOpeningHours", function(request, response) {
 
 var venue = request.object.get("venue");
