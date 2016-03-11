@@ -49,7 +49,7 @@
 
         /></LinearLayout>
     <Button
-        android:layout_width="match_parent"
+        android:layout_width="140dp"
         android:layout_height="60dp"
         android:id="@+id/goToLogin"
         android:textAllCaps="false"
@@ -60,12 +60,14 @@
         android:background="@android:color/transparent"
         />
         <Button
-            android:layout_width="match_parent"
+            android:layout_width="140dp"
             android:layout_height="60dp"
             android:id="@+id/goToSignUp"
             android:textAllCaps="false"
             android:onClick="goToSignUp"
             android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
             android:background="@android:color/transparent"

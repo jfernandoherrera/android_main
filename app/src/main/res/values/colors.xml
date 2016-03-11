@@ -5,6 +5,7 @@
     <color name="dialogColor">#CC424242</color>
     <color name="colorPrimaryLight">@color/com_facebook_button_login_silver_background_color</color>
     <color name="titleBackground">#62fafafa</color>
+    <color name="light_gray">#dcdbdb</color>
     <color name="colorAccent">#00b3ce</color>
     <color name="black">#000000</color>
     <color name="blackPrimary">#de000000</color>

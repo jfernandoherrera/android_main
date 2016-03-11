@@ -170,7 +170,7 @@ public class CategoryFragment extends Fragment {
 
         textView.setTypeface(typeface);
 
-        linearLayout.setBackgroundResource(R.drawable.log_in_or_signup_click_out);
+        linearLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
 
         if (connected) {
 

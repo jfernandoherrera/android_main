@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements CategoryFragment.
     private final int minimumToSearch = 3;
     private CategoryFragment fragment;
     private Typeface typeface;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
