@@ -17,45 +17,64 @@
             android:layout_width="match_parent"
             android:orientation="horizontal"
             android:id="@+id/backgroundContainer"
+            android:gravity="center_vertical"
             android:onClick="goToAccount"
             android:layout_alignParentBottom="true"
-            android:layout_height="60dp">
+            android:layout_height="79dp">
             <com.mikhaellopez.circularimageview.CircularImageView
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_marginLeft="@dimen/high_margin"
                 android:layout_marginStart="@dimen/high_margin"
                 android:layout_marginTop="10dp"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
+                android:layout_width="62dp"
+                android:layout_height="62dp"
                 android:id="@+id/imageUser"
                 android:layout_gravity="top|center_horizontal"
                 android:padding="5dp"
-                app:border_width="0dp"
-                android:src="@mipmap/ic_user"
+                app:border_width="3dp"
+                android:src="@drawable/user_icon"
                 app:shadow="true"
                 app:shadow_radius="1"
-                app:civ_border_color="@android:color/transparent"
+                app:border_color="@color/colorAccent"
                 />
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        android:gravity="center"
-        android:id="@+id/account"
-        android:textSize="20sp"
+        android:layout_height="36dp"
+        android:gravity="bottom"
+        android:id="@+id/accountName"
+        android:textColor="@android:color/white"
+        android:textSize="24sp"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingEnd="@dimen/activity_horizontal_margin"
         android:paddingStart="@dimen/activity_horizontal_margin"
 
         />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_below="@+id/accountName"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:id="@+id/accountMemberFrom"
+                android:textSize="14sp"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingEnd="@dimen/activity_horizontal_margin"
+                android:paddingStart="@dimen/activity_horizontal_margin"
+
+                /></RelativeLayout>
         </LinearLayout><LinearLayout
         android:layout_width="match_parent"
         android:orientation="horizontal"
-        android:gravity="center|bottom"
+        android:gravity="center"
         android:layout_alignParentBottom="true"
-        android:layout_height="130dp">
+        android:layout_height="79dp">
     <Button
-        android:layout_height="60dp"
+        android:layout_height="65dp"
         android:id="@+id/goToLogin"
         android:layout_width="150dp"
         android:text="@string/action_sign_in_short"
@@ -70,7 +89,7 @@
         <Button
         android:layout_width="150dp"
             android:textSize="12sp"
-        android:layout_height="60dp"
+        android:layout_height="65dp"
         android:id="@+id/goToSignUp"
         android:textColor="@android:color/white"
         android:textAllCaps="false"

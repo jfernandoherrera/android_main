@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements CategoryFragment.
     private final int minimumToSearch = 3;
     private CategoryFragment fragment;
     private Typeface typeface;
+    private Typeface typefaceMedium;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -50,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements CategoryFragment.
 
         typeface = appFont.getAppFontLight(getApplicationContext());
 
-        Typeface typefaceMedium = appFont.getAppFontMedium(getApplicationContext());
+        typefaceMedium = appFont.getAppFontMedium(getApplicationContext());
 
         fragment.setTypeface(typeface, typefaceMedium);
 
@@ -210,7 +211,9 @@ public class MainActivity extends AppCompatActivity implements CategoryFragment.
 
         TextView toolbarTextView = getActionBarTextView();
 
-        toolbarTextView.setTypeface(typeface);
+        toolbarTextView.setTextSize(16);
+
+        toolbarTextView.setTypeface(typefaceMedium, Typeface.BOLD);
 
         toolbarTextView.setText(getString(R.string.categories));
 

@@ -35,8 +35,11 @@ import com.amtechventures.tucita.utils.views.AlertDialogError;
 import com.amtechventures.tucita.utils.views.CustomSpanTypeface;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class CategoryFragment extends Fragment {
 
@@ -132,15 +135,40 @@ public class CategoryFragment extends Fragment {
 
         final Button buttonSignUp = (Button) view.findViewById(R.id.goToSignUp);
 
-        final TextView textView = (TextView) view.findViewById(R.id.account);
+        final TextView textView = (TextView) view.findViewById(R.id.accountName);
+
+        final TextView textViewMemberFrom = (TextView) view.findViewById(R.id.accountMemberFrom);
 
         LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.backgroundContainer);
 
-        CircularImageView circularImageView = (CircularImageView) view.findViewById(R.id.imageUser);
+        final CircularImageView circularImageView = (CircularImageView) view.findViewById(R.id.imageUser);
 
-        textView.setTypeface(typeface);
+        textView.setTypeface(typeface, Typeface.BOLD);
 
-        linearLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        textViewMemberFrom.setTypeface(typeface);
+
+        linearLayout.setBackgroundResource(R.drawable.bg_servicio);
+
+        linearLayout.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+
+                    circularImageView.setBorderColor(getResources().getColor(R.color.colorAccent2));
+
+                } else if(event.getAction() != MotionEvent.ACTION_MOVE){
+
+                    circularImageView.setBorderColor(getResources().getColor(R.color.colorAccent));
+
+                }
+
+                return false;
+
+            }
+
+        });
 
         if (connected) {
 
@@ -154,9 +182,23 @@ public class CategoryFragment extends Fragment {
 
             }
 
-            textView.setText(user.getName());
+            Date createdAt = user.getParseUser().getCreatedAt();
+
+            int bugDate = 1900;
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM", Locale.getDefault());
+
+            String memberFrom = getString(R.string.member_from) + " " + dateFormat.format(createdAt) + " " + getString(R.string.of) + " " + (createdAt.getYear() + bugDate);
+
+            String userName = user.getName();
+
+            textView.setText(userName);
+
+            textViewMemberFrom.setText(memberFrom);
 
             buttonLogin.setVisibility(View.GONE);
+
+            buttonSignUp.setVisibility(View.GONE);
 
 
         } else {
@@ -165,9 +207,9 @@ public class CategoryFragment extends Fragment {
 
             textView.setVisibility(View.GONE);
 
-            buttonLogin.setTypeface(typefaceMedium);
+            buttonLogin.setTypeface(typefaceMedium, Typeface.BOLD);
 
-            buttonSignUp.setTypeface(typefaceMedium);
+            buttonSignUp.setTypeface(typefaceMedium, Typeface.BOLD);
 
         }
 
