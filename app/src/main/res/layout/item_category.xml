@@ -5,7 +5,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/card_view"
     android:layout_width="match_parent"
-    android:layout_height="126dp"
+    android:layout_height="130dp"
     card_view:cardBackgroundColor="@color/white"
     card_view:cardElevation="0dp"
     android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -35,13 +35,12 @@
     android:layout_marginLeft="20dp"
     android:id="@+id/categoryInteraction"
     />
-        <TextView
+        <com.amtechventures.tucita.utils.views.AppTextView
             android:layout_marginTop="4dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/textCategory"
             android:layout_gravity="bottom|center_horizontal"
-            style="@style/AppTheme.CategoryText"
             />
     </LinearLayout>
    </android.support.v7.widget.CardView>

@@ -18,7 +18,6 @@
             android:orientation="horizontal"
             android:id="@+id/backgroundContainer"
             android:gravity="center_vertical"
-            android:onClick="goToAccount"
             android:layout_alignParentBottom="true"
             android:layout_height="79dp">
             <com.mikhaellopez.circularimageview.CircularImageView
@@ -40,11 +39,12 @@
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
-    <TextView
+    <com.amtechventures.tucita.utils.views.AppTextView
         android:layout_width="wrap_content"
         android:layout_height="36dp"
         android:gravity="bottom"
         android:id="@+id/accountName"
+        app:bold="true"
         android:textColor="@android:color/white"
         android:textSize="24sp"
         android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -53,7 +53,7 @@
         android:paddingStart="@dimen/activity_horizontal_margin"
 
         />
-            <TextView
+            <com.amtechventures.tucita.utils.views.AppTextView
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
                 android:layout_below="@+id/accountName"

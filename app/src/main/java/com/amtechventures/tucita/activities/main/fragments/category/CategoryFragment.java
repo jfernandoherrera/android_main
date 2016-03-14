@@ -23,6 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.amtechventures.tucita.R;
+import com.amtechventures.tucita.activities.account.AccountActivity;
 import com.amtechventures.tucita.activities.main.fragments.category.adapters.CategoryGridAdapter;
 import com.amtechventures.tucita.model.context.category.CategoryCompletion;
 import com.amtechventures.tucita.model.context.category.CategoryContext;
@@ -51,8 +52,6 @@ public class CategoryFragment extends Fragment {
     private List<Category> categories = new ArrayList<>();
     private ProgressDialog progress;
     private OnItemClicked listener;
-    private Typeface typeface;
-    private Typeface typefaceMedium;
     private UserContext userContext;
 
     public interface OnItemClicked {
@@ -69,14 +68,6 @@ public class CategoryFragment extends Fragment {
         listener = (OnItemClicked) context;
 
     }
-
-    public void setTypeface(Typeface typeface, Typeface typefaceMedium) {
-
-        this.typeface = typeface;
-
-        this.typefaceMedium = typefaceMedium;
-    }
-
 
     @Override
     public void onDetach() {
@@ -143,10 +134,6 @@ public class CategoryFragment extends Fragment {
 
         final CircularImageView circularImageView = (CircularImageView) view.findViewById(R.id.imageUser);
 
-        textView.setTypeface(typeface, Typeface.BOLD);
-
-        textViewMemberFrom.setTypeface(typeface);
-
         linearLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
 
         linearLayout.setOnTouchListener(new View.OnTouchListener() {
@@ -200,6 +187,15 @@ public class CategoryFragment extends Fragment {
 
             buttonSignUp.setVisibility(View.GONE);
 
+            linearLayout.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+
+                    goToAccount();
+
+                }
+            });
 
         } else {
 
@@ -207,11 +203,15 @@ public class CategoryFragment extends Fragment {
 
             textView.setVisibility(View.GONE);
 
-            buttonLogin.setTypeface(typefaceMedium, Typeface.BOLD);
-
-            buttonSignUp.setTypeface(typefaceMedium, Typeface.BOLD);
-
         }
+
+    }
+
+    public void goToAccount() {
+
+        AccountActivity.goToAccount(getContext());
+
+        getActivity().finish();
 
     }
 
@@ -260,7 +260,7 @@ public class CategoryFragment extends Fragment {
 
         }
 
-        adapter = new CategoryGridAdapter(categories, categoryContext, typeface, (OnItemClicked) getActivity());
+        adapter = new CategoryGridAdapter(categories, categoryContext, (OnItemClicked) getActivity());
 
         recyclerView.setAdapter(adapter);
 
