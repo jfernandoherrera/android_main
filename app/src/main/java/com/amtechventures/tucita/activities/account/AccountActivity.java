@@ -57,6 +57,8 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
 
         userContext = UserContext.context(userContext);
 
+        user = userContext.currentUser();
+
         appointmentVenueContext = AppointmentVenueContext.context(appointmentVenueContext);
 
         appointmentContext = AppointmentContext.context(appointmentContext);
@@ -270,7 +272,11 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
 
     private void setImageUser(){
 
-        user = userContext.currentUser();
+       if(user == null) {
+
+           user = userContext.currentUser();
+
+       }
 
         if(userContext.isFacebook(user)) {
 
@@ -282,13 +288,13 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
 
             }else{
 
-                circularImageView.setImageResource(R.mipmap.ic_user);
+                circularImageView.setImageResource(R.drawable.user_icon);
 
             }
 
         } else {
 
-            circularImageView.setImageResource(R.mipmap.ic_user);
+            circularImageView.setImageResource(R.drawable.user_icon);
 
         }
 

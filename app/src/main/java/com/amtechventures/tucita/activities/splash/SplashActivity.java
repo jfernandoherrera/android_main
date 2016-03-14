@@ -26,7 +26,7 @@ public class SplashActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
 
-      //  setContentView(R.layout.activity_splash);
+        setContentView(R.layout.activity_splash);
 
         userContext = UserContext.context(userContext);
 

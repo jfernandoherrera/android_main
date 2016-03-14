@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.amtechventures.tucita.R;
@@ -78,7 +79,9 @@ public class CategoryGridAdapter extends RecyclerView.Adapter<CategoryGridAdapte
 
         protected TextView category;
 
-        private CircularImageView categoryIcon;
+        private ImageView categoryIcon;
+
+        private View interaction;
 
         public ViewHolder(final View itemView) {
 
@@ -88,29 +91,29 @@ public class CategoryGridAdapter extends RecyclerView.Adapter<CategoryGridAdapte
 
             category.setTypeface(typeface, Typeface.BOLD);
 
-            categoryIcon = (CircularImageView) itemView.findViewById(R.id.imageButtonCategory);
+            categoryIcon = (ImageView) itemView.findViewById(R.id.imageButtonCategory);
+
+            interaction = itemView.findViewById(R.id.categoryInteraction);
 
             categoryIcon.setOnTouchListener(new View.OnTouchListener() {
 
-                                                @Override
-                                                public boolean onTouch(View view, MotionEvent event) {
+                                               @Override
+                                               public boolean onTouch(View view, MotionEvent event) {
 
-                                                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                                                   if (event.getAction() == MotionEvent.ACTION_DOWN) {
 
-                                                        Animation animation = AnimationUtils.loadAnimation(view.getContext(), R.anim.circular_image_view);
+                                                       interaction.setBackgroundColor(view.getResources().getColor(R.color.colorAccent));
 
-                                                        categoryIcon.startAnimation(animation);
+                                                   } else if (event.getAction() != MotionEvent.ACTION_MOVE) {
 
-                                                    } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                                                       interaction.setBackgroundColor(view.getResources().getColor(R.color.colorPrimaryLight));
 
-                                                        categoryIcon.callOnClick();
+                                                   }
 
-                                                    }
+                                                   return false;
+                                               }
 
-                                                    return true;
-                                                }
-
-                                            }
+                                           }
 
             );
 

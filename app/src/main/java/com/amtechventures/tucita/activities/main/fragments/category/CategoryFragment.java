@@ -147,7 +147,7 @@ public class CategoryFragment extends Fragment {
 
         textViewMemberFrom.setTypeface(typeface);
 
-        linearLayout.setBackgroundResource(R.drawable.bg_servicio);
+        linearLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
 
         linearLayout.setOnTouchListener(new View.OnTouchListener() {
 
