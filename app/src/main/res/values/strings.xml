@@ -47,13 +47,15 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."</string>
     <string name="cities">Ciudades</string>
-    <string name="categories">categorías</string>
+    <string name="categories">CATEGORÍAS</string>
+    <string name="member_from">Miembro desde</string>
     <string name="action_search">Buscar</string>
     <string name="book_now">Reserva tu cita!</string>
     <string name="action_search_location">Ciudad</string>
     <string name="venues">Lugares</string>
     <string name="venue">Negocio</string>
     <string name="treatments">Tratamientos</string>
+    <string name="of">de</string>
     <string name="recent_treatments">Tratamientos recientes</string>
     <string name="recent_venues">Lugares recientes</string>
     <string name="typing_advertisement">Escribe al menos 3 letras para conseguir sugerencias</string>

@@ -57,6 +57,8 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
 
         userContext = UserContext.context(userContext);
 
+        user = userContext.currentUser();
+
         appointmentVenueContext = AppointmentVenueContext.context(appointmentVenueContext);
 
         appointmentContext = AppointmentContext.context(appointmentContext);
@@ -73,7 +75,7 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
 
         AppFont appFont = new AppFont();
 
-        typeface = appFont.getAppFont(getApplicationContext());
+        typeface = appFont.getAppFontLight(getApplicationContext());
 
         textName.setTypeface(typeface);
 
@@ -270,7 +272,11 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
 
     private void setImageUser(){
 
-        user = userContext.currentUser();
+       if(user == null) {
+
+           user = userContext.currentUser();
+
+       }
 
         if(userContext.isFacebook(user)) {
 
@@ -282,13 +288,13 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
 
             }else{
 
-                circularImageView.setImageResource(R.mipmap.ic_user);
+                circularImageView.setImageResource(R.drawable.user_icon);
 
             }
 
         } else {
 
-            circularImageView.setImageResource(R.mipmap.ic_user);
+            circularImageView.setImageResource(R.drawable.user_icon);
 
         }
 
@@ -296,29 +302,6 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
 
     }
 
-    private TextView getActionBarTextView() {
-
-        TextView titleTextView = null;
-
-        String defaultNameTitleMenu = "mTitleTextView";
-
-        try {
-
-            Field field = toolbar.getClass().getDeclaredField(defaultNameTitleMenu);
-
-            field.setAccessible(true);
-
-            titleTextView = (TextView) field.get(toolbar);
-
-        } catch (NoSuchFieldException e) {
-
-        } catch (IllegalAccessException e) {
-
-        }
-
-        return titleTextView;
-
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -326,8 +309,6 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         getMenuInflater().inflate(R.menu.menu_logout, menu);
-
-        getActionBarTextView().setTypeface(typeface);
 
         MenuItem logoutItem = menu.findItem(R.id.action_logout);
 

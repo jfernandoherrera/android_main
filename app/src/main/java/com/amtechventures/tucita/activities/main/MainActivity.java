@@ -21,19 +21,21 @@ import com.amtechventures.tucita.activities.main.fragments.category.CategoryFrag
 import com.amtechventures.tucita.activities.login.LoginActivity;
 import com.amtechventures.tucita.activities.main.fragments.search.SearchFragment;
 import com.amtechventures.tucita.activities.main.fragments.subcategory.SubCategoryFragment;
+import com.amtechventures.tucita.activities.signup.SignUpActivity;
 import com.amtechventures.tucita.model.domain.user.UserAttributes;
 import com.amtechventures.tucita.utils.common.AppFont;
 import com.amtechventures.tucita.utils.views.AlertDialogError;
+import com.amtechventures.tucita.utils.views.AppToolbar;
 
 import java.lang.reflect.Field;
 
 public class MainActivity extends AppCompatActivity implements CategoryFragment.OnItemClicked, SubCategoryFragment.OnOthersClicked {
 
     private SearchFragment searchFragment;
-    private Toolbar toolbar;
+    private AppToolbar toolbar;
     private final int minimumToSearch = 3;
     private CategoryFragment fragment;
-    private Typeface typeface;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -44,14 +46,6 @@ public class MainActivity extends AppCompatActivity implements CategoryFragment.
         fragment = new CategoryFragment();
 
         searchFragment = new SearchFragment();
-
-        AppFont appFont = new AppFont();
-
-        typeface = appFont.getAppFont(getApplicationContext());
-
-        fragment.setTypeface(typeface);
-
-        searchFragment.setTypeface(typeface);
 
         setCategoryFragment();
 
@@ -87,10 +81,19 @@ public class MainActivity extends AppCompatActivity implements CategoryFragment.
 
             prev = SubCategoryFragment.newInstance(name);
 
-            prev.setTypeface(typeface);
         }
 
         prev.show(fragmentManager, SubCategoryFragment.class.getName());
+
+    }
+
+    public void goToSignUp(View view) {
+
+        Intent intent = new Intent(this, SignUpActivity.class);
+
+        startActivity(intent);
+
+        finish();
 
     }
 
@@ -156,7 +159,7 @@ public class MainActivity extends AppCompatActivity implements CategoryFragment.
 
     private void setToolbar() {
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (AppToolbar) findViewById(R.id.toolbar);
 
         if (toolbar != null) {
 
@@ -166,41 +169,11 @@ public class MainActivity extends AppCompatActivity implements CategoryFragment.
 
     }
 
-    private TextView getActionBarTextView() {
-
-        TextView titleTextView = null;
-
-        String defaultNameTitleMenu = "mTitleTextView";
-
-        try {
-
-            Field field = toolbar.getClass().getDeclaredField(defaultNameTitleMenu);
-
-            field.setAccessible(true);
-
-            titleTextView = (TextView) field.get(toolbar);
-
-        } catch (NoSuchFieldException e) {
-
-        } catch (IllegalAccessException e) {
-
-        }
-
-        return titleTextView;
-
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
         toolbar.inflateMenu((R.menu.menu_main));
-
-        TextView toolbarTextView = getActionBarTextView();
-
-        toolbarTextView.setTypeface(typeface);
-
-        toolbarTextView.setText(getString(R.string.categories));
-
+        
         MenuItem searchItem = menu.findItem(R.id.action_search);
 
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
@@ -288,14 +261,6 @@ public class MainActivity extends AppCompatActivity implements CategoryFragment.
     public void goToLogin(View v) {
 
         LoginActivity.goToLogin(this);
-
-        finish();
-
-    }
-
-    public void goToAccount(View v) {
-
-        AccountActivity.goToAccount(this);
 
         finish();
 

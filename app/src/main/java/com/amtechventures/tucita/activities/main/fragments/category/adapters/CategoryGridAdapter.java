@@ -1,35 +1,27 @@
 package com.amtechventures.tucita.activities.main.fragments.category.adapters;
 
-import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.TextView;
-
+import android.widget.ImageView;
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.main.fragments.category.CategoryFragment;
 import com.amtechventures.tucita.model.context.category.CategoryContext;
 import com.amtechventures.tucita.model.domain.category.Category;
-import com.mikhaellopez.circularimageview.CircularImageView;
-
+import com.amtechventures.tucita.utils.views.AppTextView;
 import java.util.List;
 
 public class CategoryGridAdapter extends RecyclerView.Adapter<CategoryGridAdapter.ViewHolder> {
 
     private List<Category> items;
     private CategoryFragment.OnItemClicked onItemClickListener;
-    private Typeface typeface;
     private CategoryContext categoryContext;
 
-    public CategoryGridAdapter(List<Category> offer, CategoryContext categoryContext, Typeface typeface, CategoryFragment.OnItemClicked onItemClickListener) {
+    public CategoryGridAdapter(List<Category> offer, CategoryContext categoryContext, CategoryFragment.OnItemClicked onItemClickListener) {
 
         super();
-
-        this.typeface = typeface;
 
         this.categoryContext = categoryContext;
 
@@ -76,41 +68,41 @@ public class CategoryGridAdapter extends RecyclerView.Adapter<CategoryGridAdapte
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        protected TextView category;
+        protected AppTextView category;
 
-        private CircularImageView categoryIcon;
+        private ImageView categoryIcon;
+
+        private View interaction;
 
         public ViewHolder(final View itemView) {
 
             super(itemView);
 
-            category = (TextView) itemView.findViewById(R.id.textCategory);
+            category = (AppTextView) itemView.findViewById(R.id.textCategory);
 
-            category.setTypeface(typeface, Typeface.BOLD);
+            categoryIcon = (ImageView) itemView.findViewById(R.id.imageButtonCategory);
 
-            categoryIcon = (CircularImageView) itemView.findViewById(R.id.imageButtonCategory);
+            interaction = itemView.findViewById(R.id.categoryInteraction);
 
             categoryIcon.setOnTouchListener(new View.OnTouchListener() {
 
-                                                @Override
-                                                public boolean onTouch(View view, MotionEvent event) {
+                                               @Override
+                                               public boolean onTouch(View view, MotionEvent event) {
 
-                                                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                                                   if (event.getAction() == MotionEvent.ACTION_DOWN) {
 
-                                                        Animation animation = AnimationUtils.loadAnimation(view.getContext(), R.anim.circular_image_view);
+                                                       interaction.setBackgroundColor(view.getResources().getColor(R.color.colorAccent));
 
-                                                        categoryIcon.startAnimation(animation);
+                                                   } else if (event.getAction() != MotionEvent.ACTION_MOVE) {
 
-                                                    } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                                                       interaction.setBackgroundColor(view.getResources().getColor(R.color.colorPrimaryLight));
 
-                                                        categoryIcon.callOnClick();
+                                                   }
 
-                                                    }
+                                                   return false;
+                                               }
 
-                                                    return true;
-                                                }
-
-                                            }
+                                           }
 
             );
 

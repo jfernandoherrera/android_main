@@ -1,19 +1,14 @@
 package com.amtechventures.tucita.activities.book.fragments.select;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.book.fragments.select.adapters.PagerSelectHourAdapter;
@@ -66,7 +61,7 @@ public class SelectDayFragment extends Fragment {
 
         AppFont appFont = new AppFont();
 
-        Typeface typeface = appFont.getAppFont(rootView.getContext());
+        Typeface typeface = appFont.getAppFontLight(rootView.getContext());
 
         blockades = new ArrayList<>();
 

@@ -23,6 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.amtechventures.tucita.R;
+import com.amtechventures.tucita.activities.account.AccountActivity;
 import com.amtechventures.tucita.activities.main.fragments.category.adapters.CategoryGridAdapter;
 import com.amtechventures.tucita.model.context.category.CategoryCompletion;
 import com.amtechventures.tucita.model.context.category.CategoryContext;
@@ -35,8 +36,11 @@ import com.amtechventures.tucita.utils.views.AlertDialogError;
 import com.amtechventures.tucita.utils.views.CustomSpanTypeface;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class CategoryFragment extends Fragment {
 
@@ -48,7 +52,6 @@ public class CategoryFragment extends Fragment {
     private List<Category> categories = new ArrayList<>();
     private ProgressDialog progress;
     private OnItemClicked listener;
-    private Typeface typeface;
     private UserContext userContext;
 
     public interface OnItemClicked {
@@ -63,12 +66,6 @@ public class CategoryFragment extends Fragment {
         super.onAttach(context);
 
         listener = (OnItemClicked) context;
-
-    }
-
-    public void setTypeface(Typeface typeface) {
-
-        this.typeface = typeface;
 
     }
 
@@ -106,35 +103,6 @@ public class CategoryFragment extends Fragment {
 
     }
 
-    private SpannableStringBuilder getStringLoginModified() {
-
-        WindowManager wm = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
-
-        DisplayMetrics metrics = new DisplayMetrics();
-
-        wm.getDefaultDisplay().getMetrics(metrics);
-
-        final int initialSize = 18;
-
-        int size = (int) (initialSize * metrics.scaledDensity);
-
-        String firstString = getResources().getString(R.string.action_sign_in_short).toUpperCase();
-
-        String secondString = getResources().getString(R.string.or).toLowerCase();
-
-        String thirdString = getResources().getString(R.string.action_sign_up).toUpperCase();
-
-        SpannableStringBuilder stringBuilder = new SpannableStringBuilder(firstString + " " + secondString + " " + thirdString);
-
-        stringBuilder.setSpan(new CustomSpanTypeface(null, Typeface.BOLD, size, null, null, typeface), 0, firstString.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-
-        stringBuilder.setSpan(new CustomSpanTypeface(null, Typeface.BOLD, size, ColorStateList.valueOf(Color.rgb(200, 200, 200)), null, typeface), firstString.length() + 1, firstString.length() + secondString.length() + 1, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-
-        stringBuilder.setSpan(new CustomSpanTypeface(null, Typeface.BOLD, size, null, null, typeface), firstString.length() + secondString.length() + 2, firstString.length() + secondString.length() + thirdString.length() + 2, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-
-        return stringBuilder;
-
-    }
 
     private Bitmap setImageUser(User user, View view){
 
@@ -154,19 +122,40 @@ public class CategoryFragment extends Fragment {
 
         boolean connected = getActivity().getIntent().getExtras().getBoolean(UserAttributes.connected);
 
-        final Button buttonText = (Button) view.findViewById(R.id.go_to_login);
+        final Button buttonLogin = (Button) view.findViewById(R.id.goToLogin);
 
-        final TextView textView = (TextView) view.findViewById(R.id.account);
+        final Button buttonSignUp = (Button) view.findViewById(R.id.goToSignUp);
+
+        final TextView textView = (TextView) view.findViewById(R.id.accountName);
+
+        final TextView textViewMemberFrom = (TextView) view.findViewById(R.id.accountMemberFrom);
 
         LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.backgroundContainer);
 
-        CircularImageView circularImageView = (CircularImageView) view.findViewById(R.id.imageUser);
+        final CircularImageView circularImageView = (CircularImageView) view.findViewById(R.id.imageUser);
 
-        buttonText.setTypeface(typeface);
+        linearLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
 
-        textView.setTypeface(typeface);
+        linearLayout.setOnTouchListener(new View.OnTouchListener() {
 
-        linearLayout.setBackgroundResource(R.drawable.log_in_or_signup_click_out);
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+
+                    circularImageView.setBorderColor(getResources().getColor(R.color.colorAccent2));
+
+                } else if(event.getAction() != MotionEvent.ACTION_MOVE){
+
+                    circularImageView.setBorderColor(getResources().getColor(R.color.colorAccent));
+
+                }
+
+                return false;
+
+            }
+
+        });
 
         if (connected) {
 
@@ -180,25 +169,30 @@ public class CategoryFragment extends Fragment {
 
             }
 
-            textView.setText(user.getName());
+            Date createdAt = user.getParseUser().getCreatedAt();
 
-            buttonText.setVisibility(View.GONE);
+            int bugDate = 1900;
 
-            linearLayout.setOnTouchListener(new View.OnTouchListener() {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM", Locale.getDefault());
+
+            String memberFrom = getString(R.string.member_from) + " " + dateFormat.format(createdAt) + " " + getString(R.string.of) + " " + (createdAt.getYear() + bugDate);
+
+            String userName = user.getName();
+
+            textView.setText(userName);
+
+            textViewMemberFrom.setText(memberFrom);
+
+            buttonLogin.setVisibility(View.GONE);
+
+            buttonSignUp.setVisibility(View.GONE);
+
+            linearLayout.setOnClickListener(new View.OnClickListener() {
+
                 @Override
-                public boolean onTouch(View v, MotionEvent event) {
+                public void onClick(View v) {
 
-                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
-
-                        v.setBackgroundResource(R.drawable.log_in_or_signup_click_in);
-
-                    } else if (event.getAction() == MotionEvent.ACTION_UP) {
-
-                        v.setBackgroundResource(R.drawable.log_in_or_signup_click_out);
-
-                    }
-
-                    return false;
+                    goToAccount();
 
                 }
             });
@@ -209,30 +203,15 @@ public class CategoryFragment extends Fragment {
 
             textView.setVisibility(View.GONE);
 
-            buttonText.setText(getStringLoginModified());
-
-            buttonText.setOnTouchListener(new View.OnTouchListener() {
-
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-
-                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
-
-                        buttonText.setBackgroundResource(R.drawable.log_in_or_signup_click_in);
-
-                    } else if (event.getAction() == MotionEvent.ACTION_UP) {
-
-                        buttonText.setBackgroundResource(R.drawable.log_in_or_signup_click_out);
-
-                    }
-
-                    return false;
-
-                }
-
-            });
-
         }
+
+    }
+
+    public void goToAccount() {
+
+        AccountActivity.goToAccount(getContext());
+
+        getActivity().finish();
 
     }
 
@@ -281,7 +260,7 @@ public class CategoryFragment extends Fragment {
 
         }
 
-        adapter = new CategoryGridAdapter(categories, categoryContext, typeface, (OnItemClicked) getActivity());
+        adapter = new CategoryGridAdapter(categories, categoryContext, (OnItemClicked) getActivity());
 
         recyclerView.setAdapter(adapter);
 

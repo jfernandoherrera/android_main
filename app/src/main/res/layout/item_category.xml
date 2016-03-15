@@ -5,7 +5,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/card_view"
     android:layout_width="match_parent"
-    android:layout_height="126dp"
+    android:layout_height="130dp"
     card_view:cardBackgroundColor="@color/white"
     card_view:cardElevation="0dp"
     android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -13,25 +13,34 @@
     android:layout_marginTop="2dp"
     card_view:cardUseCompatPadding="true"
     android:layout_marginBottom="@dimen/activity_horizontal_margin"
-
     >
-        <com.mikhaellopez.circularimageview.CircularImageView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+        <ImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:id="@+id/imageButtonCategory"
             android:layout_gravity="top|center_horizontal"
             android:padding="5dp"
-            app:border_width="0dp"
-            app:shadow="true"
-            app:shadow_radius="1"
-            app:civ_border_color="@android:color/transparent"
             />
-        <TextView
+<View
+    android:layout_width="match_parent"
+    android:layout_height="2dp"
+    android:layout_marginEnd="20dp"
+    android:layout_marginRight="20dp"
+    android:layout_marginStart="20dp"
+    android:background="@color/colorPrimaryLight"
+    android:layout_marginLeft="20dp"
+    android:id="@+id/categoryInteraction"
+    />
+        <com.amtechventures.tucita.utils.views.AppTextView
+            android:layout_marginTop="4dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/textCategory"
             android:layout_gravity="bottom|center_horizontal"
-            style="@style/AppTheme.CategoryText"
             />
+    </LinearLayout>
    </android.support.v7.widget.CardView>

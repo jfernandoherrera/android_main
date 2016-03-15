@@ -318,7 +318,7 @@ public class UserRemote {
 
             user.getParseUser().fetch();
 
-        } catch (ParseException e) {
+        } catch (Exception e) {
 
             e.printStackTrace();
 

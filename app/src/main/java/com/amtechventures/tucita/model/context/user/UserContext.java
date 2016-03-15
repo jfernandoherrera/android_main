@@ -71,9 +71,19 @@ public class UserContext {
 
     public boolean isFacebook(User user) {
 
+        boolean isFacebook = false;
+
         user = remote.fetch(user);
 
-        boolean isFacebook =  ParseFacebookUtils.isLinked(user.getParseUser());
+        try {
+
+            isFacebook = ParseFacebookUtils.isLinked(user.getParseUser());
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        }
 
         return isFacebook;
 
