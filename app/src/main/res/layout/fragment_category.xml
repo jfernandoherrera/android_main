@@ -8,6 +8,7 @@
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="80dp"
         />
     <RelativeLayout
     android:layout_height="match_parent"
@@ -51,7 +52,6 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingEnd="@dimen/activity_horizontal_margin"
         android:paddingStart="@dimen/activity_horizontal_margin"
-
         />
             <com.amtechventures.tucita.utils.views.AppTextView
                 android:layout_width="wrap_content"
@@ -65,7 +65,6 @@
                 android:paddingRight="@dimen/activity_horizontal_margin"
                 android:paddingEnd="@dimen/activity_horizontal_margin"
                 android:paddingStart="@dimen/activity_horizontal_margin"
-
                 /></RelativeLayout>
         </LinearLayout><LinearLayout
         android:layout_width="match_parent"
@@ -74,25 +73,29 @@
         android:layout_alignParentBottom="true"
         android:layout_height="79dp">
     <com.amtechventures.tucita.utils.views.AppButton
-        android:layout_height="65dp"
+        android:layout_height="45dp"
         android:id="@+id/goToLogin"
-        android:layout_width="150dp"
+        android:layout_width="130dp"
         android:text="@string/action_sign_in_short"
         android:textSize="12sp"
         android:textAllCaps="false"
         android:textColor="@android:color/white"
         android:onClick="goToLogin"
         android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:background="@drawable/button_interaction"
         />
         <com.amtechventures.tucita.utils.views.AppButton
-        android:layout_width="150dp"
+        android:layout_width="130dp"
             android:textSize="12sp"
-        android:layout_height="65dp"
+        android:layout_height="45dp"
         android:id="@+id/goToSignUp"
         android:textColor="@android:color/white"
         android:textAllCaps="false"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
         android:text="@string/action_sign_up"
         android:onClick="goToSignUp"
         android:paddingLeft="@dimen/activity_horizontal_margin"
