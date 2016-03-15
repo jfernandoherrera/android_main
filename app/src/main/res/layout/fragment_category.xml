@@ -73,7 +73,7 @@
         android:gravity="center"
         android:layout_alignParentBottom="true"
         android:layout_height="79dp">
-    <Button
+    <com.amtechventures.tucita.utils.views.AppButton
         android:layout_height="65dp"
         android:id="@+id/goToLogin"
         android:layout_width="150dp"
@@ -86,7 +86,7 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:background="@drawable/button_interaction"
         />
-        <Button
+        <com.amtechventures.tucita.utils.views.AppButton
         android:layout_width="150dp"
             android:textSize="12sp"
         android:layout_height="65dp"
