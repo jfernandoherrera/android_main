@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.support.v4.app.DialogFragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -23,6 +24,7 @@ import com.amtechventures.tucita.model.domain.category.Category;
 import com.amtechventures.tucita.model.domain.category.CategoryAttributes;
 import com.amtechventures.tucita.model.domain.subcategory.SubCategory;
 import com.amtechventures.tucita.model.error.AppError;
+import com.amtechventures.tucita.utils.views.AppTextView;
 import com.parse.ParseObject;
 
 import java.util.ArrayList;
@@ -39,7 +41,9 @@ public class SubCategoryFragment extends DialogFragment {
     private String name;
     private OnOthersClicked listener;
     private ProgressDialog progress;
-    private Typeface typeface;
+    Drawable first;
+    Drawable last;
+    Drawable contained;
 
     public interface OnOthersClicked {
 
@@ -98,11 +102,6 @@ public class SubCategoryFragment extends DialogFragment {
 
     }
 
-    public void setTypeface(Typeface typeface) {
-
-        this.typeface = typeface;
-
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -110,6 +109,16 @@ public class SubCategoryFragment extends DialogFragment {
         View rootView = inflater.inflate(R.layout.fragment_sub_categories, container, false);
 
         listView = (ListView) rootView.findViewById(R.id.listViewServices);
+
+        AppTextView appTextView = (AppTextView) rootView.findViewById(R.id.categoryName);
+
+        appTextView.setText(name);
+
+        first = getResources().getDrawable(R.drawable.chosen_subcategory);
+
+        last = getResources().getDrawable(R.drawable.otros_subcategory);
+
+        contained = getResources().getDrawable(R.drawable.list_subcategory);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -154,10 +163,6 @@ public class SubCategoryFragment extends DialogFragment {
 
         if (activity != null) {
 
-            String all = activity.getString(R.string.all);
-
-            stringsSubCategories.add(all + " " + category.getName());
-
             for (ParseObject subCategory : subCategories) {
 
                 stringsSubCategories.add(subCategory.getString(CategoryAttributes.name));
@@ -180,7 +185,7 @@ public class SubCategoryFragment extends DialogFragment {
 
         ImageView imageView = (ImageView) view.findViewById(R.id.image_service);
 
-        imageView.setImageBitmap(category.getPicture());
+        imageView.setImageBitmap(category.getPictureSubCategories());
 
     }
 
@@ -224,7 +229,7 @@ public class SubCategoryFragment extends DialogFragment {
 
         }
 
-        adapter = new SubCategoryAdapter(getContext(), R.layout.item_sub_category, setStringsArray(), typeface);
+        adapter = new SubCategoryAdapter(getContext(), R.layout.item_sub_category, setStringsArray(), first, last, contained);
 
         listView.setAdapter(adapter);
 

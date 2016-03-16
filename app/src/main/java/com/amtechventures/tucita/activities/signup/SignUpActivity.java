@@ -19,14 +19,14 @@ import com.amtechventures.tucita.model.context.user.UserContext;
 import com.amtechventures.tucita.model.domain.user.User;
 import com.amtechventures.tucita.model.error.AppError;
 import com.amtechventures.tucita.utils.common.AppFont;
+import com.amtechventures.tucita.utils.views.AppEditText;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    private TextView emailView;
-    private TextView nameView;
+    private AppEditText emailView;
+    private AppEditText nameView;
     private EditText passwordView;
     private UserContext userContext;
-    private Typeface typeface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,47 +39,11 @@ public class SignUpActivity extends AppCompatActivity {
 
         passwordView = (EditText) findViewById(R.id.password);
 
-        emailView = (AutoCompleteTextView) findViewById(R.id.email);
+        emailView = (AppEditText) findViewById(R.id.email);
 
-        nameView = (TextView) findViewById(R.id.name);
+        nameView = (AppEditText) findViewById(R.id.name);
 
         Button signUpButton = (Button) findViewById(R.id.buttonSignUp);
-
-        AppFont font = new AppFont();
-
-        typeface = font.getAppFontLight(getApplicationContext());
-
-        emailView.setTypeface(typeface);
-
-        passwordView.setTypeface(typeface);
-
-        signUpButton.setTypeface(typeface, Typeface.BOLD);
-
-        nameView.setTypeface(typeface);
-
-        signUpButton.setBackgroundResource(R.drawable.cling_button_normal);
-
-        signUpButton.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-
-                    v.setBackgroundResource(R.drawable.cling_button_pressed);
-
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-
-                    v.setBackgroundResource(R.drawable.cling_button_normal);
-
-                }
-
-                return false;
-
-            }
-        });
-
-
-        setupTitlesTypeface();
 
         signUpButton.setOnClickListener(new View.OnClickListener() {
 
@@ -94,22 +58,6 @@ public class SignUpActivity extends AppCompatActivity {
 
     }
 
-    private void setupTitlesTypeface(){
-
-        TextInputLayout textInputLayoutEmail = (TextInputLayout) findViewById(R.id.inputEmail);
-
-        TextInputLayout textInputLayoutPassword = (TextInputLayout) findViewById(R.id.inputPassword);
-
-        TextInputLayout textInputLayoutName = (TextInputLayout) findViewById(R.id.inputName);
-
-        textInputLayoutEmail.setTypeface(typeface);
-
-        textInputLayoutPassword.setTypeface(typeface);
-
-        textInputLayoutName.setTypeface(typeface);
-
-
-    }
 
     private void signup() {
 

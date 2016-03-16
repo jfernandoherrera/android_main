@@ -49,6 +49,31 @@ public class Category extends ParseObject {
 
     }
 
+
+    public Bitmap getPictureSubCategories() {
+
+        ParseFile picture = getParseFile(CategoryAttributes.pictureSubCategories);
+
+        Bitmap bm = null;
+
+        if (picture != null) {
+
+            try {
+
+                bm = BitmapFactory.decodeByteArray(picture.getData(), 0, picture.getData().length);
+
+            } catch (ParseException e) {
+
+                e.printStackTrace();
+
+            }
+
+        }
+
+        return bm;
+
+    }
+
     public static ParseQuery<Category> getQuery() {
 
         ParseQuery<Category> query = ParseQuery.getQuery(Category.class);
