@@ -9,22 +9,39 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.amtechventures.tucita.R;
+import com.amtechventures.tucita.activities.advanced.adapters.CityAdapter;
 import com.amtechventures.tucita.activities.advanced.fragments.LocationOptionsFragment;
 import com.amtechventures.tucita.activities.advanced.fragments.VenuesResultFragment;
+import com.amtechventures.tucita.model.context.city.CityCompletion;
+import com.amtechventures.tucita.model.context.city.CityContext;
 import com.amtechventures.tucita.model.domain.category.CategoryAttributes;
 import com.amtechventures.tucita.model.domain.city.City;
+import com.amtechventures.tucita.model.error.AppError;
 import com.amtechventures.tucita.utils.common.AppFont;
+import com.amtechventures.tucita.utils.strings.Strings;
+import com.amtechventures.tucita.utils.views.AlertDialogError;
+import com.amtechventures.tucita.utils.views.AppEditText;
+import com.amtechventures.tucita.utils.views.AppTextView;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
-public class AdvancedSearchActivity extends AppCompatActivity implements LocationOptionsFragment.OnCitySelected {
+public class AdvancedSearchActivity extends AppCompatActivity  {
 
     private Toolbar toolbar;
     private String name;
@@ -32,6 +49,14 @@ public class AdvancedSearchActivity extends AppCompatActivity implements Locatio
     private LocationOptionsFragment locationOptionsFragment;
     private Typeface typeface;
     private static final int REQUEST_FINE_LOCATION = 0;
+    private ListView listViewCities;
+    private CityAdapter citiesAdapter;
+    private ArrayList<City> currentCities;
+    private CityContext cityContext;
+    private AppEditText searchView;
+    private TextView textViewCities;
+    private final int minimumToSearch = 3;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,23 +73,112 @@ public class AdvancedSearchActivity extends AppCompatActivity implements Locatio
 
         locationOptionsFragment = new LocationOptionsFragment();
 
-        AppFont appFont = new AppFont();
+        searchView = (AppEditText) findViewById(R.id.searchCities);
 
-        typeface = appFont.getAppFontLight(getApplicationContext());
+        searchView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-        venuesResultFragment.setTypeface(typeface);
+            }
 
-        locationOptionsFragment.setTypeface(typeface);
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                String text = String.valueOf(searchView.getText());
+
+                if (text.length() < minimumToSearch) {
+
+                    AlertDialogError alertDialogError = new AlertDialogError();
+
+                    alertDialogError.noTypedEnough(getApplicationContext());
+
+                }
+                setupCities(text);
+
+            }
+        });
+
+        textViewCities = (TextView) findViewById(R.id.textViewCities);
+
+        listViewCities = (ListView) findViewById(R.id.listViewCities);
+
+        cityContext = CityContext.context(cityContext);
+
+        currentCities = new ArrayList<>();
+
+        citiesAdapter = new CityAdapter(getApplicationContext(), R.layout.list_item);
+
+        listViewCities.setAdapter(citiesAdapter);
+
+        listViewCities.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+              onCitySelected(currentCities.get(position));
+
+            }
+
+        });
 
         setLocationOptionsFragment();
-
-        setVenuesResultFragment();
-
-        showVenuesResultFragment();
 
         hideLocationOptionsFragment();
 
         setToolbar();
+
+    }
+
+
+    public void setupCities(String like){
+
+        cityContext.loadLikeCities(like, new CityCompletion.ErrorCompletion() {
+
+            @Override
+            public void completion(List<City> cities, AppError error) {
+
+                currentCities.clear();
+
+                citiesAdapter.clear();
+
+                if(cities != null && ! cities.isEmpty()){
+
+                    currentCities.addAll(cities);
+
+                    citiesAdapter.addAll(setCitiesToStringsArray());
+
+                    textViewCities.setVisibility(View.VISIBLE);
+
+                    citiesAdapter.notifyDataSetChanged();
+
+                } else{
+
+                    textViewCities.setVisibility(View.GONE);
+
+                }
+
+            }
+
+        });
+
+    }
+
+    private ArrayList<String> setCitiesToStringsArray(){
+
+        ArrayList<String> stringsCities = new ArrayList<>();
+
+        for(City city: currentCities){
+
+            stringsCities.add(city.formattedLocation());
+
+        }
+
+        return stringsCities;
 
     }
 
@@ -130,7 +244,13 @@ public class AdvancedSearchActivity extends AppCompatActivity implements Locatio
 
     }
 
-    private void showVenuesResultFragment() {
+    private void showVenuesResultFragment(City city) {
+
+        if(city != null) {
+
+            venuesResultFragment.setCity(city);
+
+        }
 
         FragmentManager fragmentManager = getSupportFragmentManager();
 
@@ -224,7 +344,7 @@ public class AdvancedSearchActivity extends AppCompatActivity implements Locatio
 
             hideLocationOptionsFragment();
 
-            showVenuesResultFragment();
+            showVenuesResultFragment(null);
 
         }
 
@@ -234,6 +354,12 @@ public class AdvancedSearchActivity extends AppCompatActivity implements Locatio
     public void onBackPressed() {
 
         back();
+
+    }
+
+    private void setCity(String city){
+
+       searchView.setText(city);
 
     }
 
@@ -267,14 +393,15 @@ public class AdvancedSearchActivity extends AppCompatActivity implements Locatio
 
     }
 
-    @Override
     public void onCitySelected(City city) {
 
-        venuesResultFragment.setupList(city);
+        setCity(city.formattedLocation());
+
+        setVenuesResultFragment();
 
         hideLocationOptionsFragment();
 
-        showVenuesResultFragment();
+        showVenuesResultFragment(city);
 
     }
 

@@ -9,6 +9,7 @@
     android:paddingStart="@dimen/high_margin"
     android:paddingLeft="@dimen/high_margin"
     android:paddingEnd="@dimen/high_margin"
+    android:drawablePadding="10dp"
     android:paddingRight="@dimen/high_margin"
-    android:background="@android:color/transparent"
+    android:background="@android:color/white"
     />

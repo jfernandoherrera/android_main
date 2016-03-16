@@ -8,12 +8,49 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        android:background="@color/colorPrimary"
-
+        android:background="@color/colorAccent"
         />
     <RelativeLayout
-        android:layout_below="@+id/toolbar"
+        android:layout_below="@+id/inputCities"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/myDrawView1"/>
+    <com.amtechventures.tucita.utils.views.AppTextInputLayout
+        android:layout_width="match_parent"
+        android:id="@+id/inputCities"
+        android:layout_marginTop="6dp"
+        android:layout_marginLeft="17dp"
+        android:layout_below="@+id/toolbar"
+        android:layout_marginStart="17dp"
+        android:layout_marginRight="@dimen/high_margin"
+        android:layout_marginEnd="@dimen/high_margin"
+        android:layout_marginBottom="8dp"
+        android:layout_height="50dp">
+    <com.amtechventures.tucita.utils.views.AppEditText
+        android:layout_width="match_parent"
+        android:id="@+id/searchCities"
+        android:drawableLeft="@drawable/pin_line"
+        android:drawablePadding="10dp"
+        android:drawableRight="@mipmap/ic_close"
+        android:hint="@string/near"
+        android:layout_height="50dp"
+        android:background="@android:color/transparent"/>
+    </com.amtechventures.tucita.utils.views.AppTextInputLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_below="@+id/inputCities"
+        android:textSize="25sp"
+        android:visibility="gone"
+        android:text="@string/cities"
+        android:layout_marginLeft="@dimen/high_margin"
+        android:layout_marginStart="@dimen/high_margin"
+        android:id="@+id/textViewCities"
+        android:background="@color/com_facebook_button_login_silver_background_color"
+        />
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/listViewCities"
+        android:layout_below="@+id/textViewCities"/>
 </RelativeLayout>

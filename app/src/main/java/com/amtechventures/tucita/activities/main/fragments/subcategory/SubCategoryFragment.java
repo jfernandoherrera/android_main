@@ -127,9 +127,7 @@ public class SubCategoryFragment extends DialogFragment {
 
                 int others = subCategories.size();
 
-                if (position == 0) {
-
-                } else if (position == others + 1) {
+                if (position == others + 1) {
 
                     listener.onOthersClicked();
 
@@ -137,7 +135,7 @@ public class SubCategoryFragment extends DialogFragment {
 
                 } else {
 
-                    String name = subCategories.get(position - 1).getName();
+                    String name = subCategories.get(position).getName();
 
                     goToAdvancedSearch(name, false);
 

@@ -26,32 +26,10 @@ import java.util.List;
 
 public class LocationOptionsFragment extends Fragment {
 
-    private CityContext cityContext;
-    private TextView textViewCities;
-    private SearchView searchView;
-    private ListView listViewCities;
-    private CityAdapter citiesAdapter;
-    private ArrayList<City> currentCities;
-    private OnCitySelected listener;
-    private final int minimumToSearch = 3;
-    private Typeface typeface;
-
-    public interface OnCitySelected{
-
-        void onCitySelected(City city);
-
-    }
-
     @Override
     public void onAttach(Context context) {
 
         super.onAttach(context);
-
-        try {
-
-            listener = (OnCitySelected) context;
-
-        } catch (ClassCastException e) {}
 
     }
 
@@ -59,8 +37,6 @@ public class LocationOptionsFragment extends Fragment {
     public void onDetach() {
 
         super.onDetach();
-
-        listener = null;
 
     }
 
@@ -70,123 +46,7 @@ public class LocationOptionsFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_location_options, container, false);
 
-        textViewCities = (TextView) rootView.findViewById(R.id.textViewCities);
-
-        searchView = (SearchView) rootView.findViewById(R.id.searchCities);
-
-        listViewCities = (ListView) rootView.findViewById(R.id.listViewCities);
-
-        cityContext = CityContext.context(cityContext);
-
-        currentCities = new ArrayList<>();
-
-        textViewCities.setVisibility(View.GONE);
-
-        textViewCities.setTypeface(typeface);
-
-        TextView searchText = (TextView) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
-
-        searchText.setTypeface(typeface);
-
-        citiesAdapter = new CityAdapter(getContext(), R.layout.list_item, typeface);
-
-        listViewCities.setAdapter(citiesAdapter);
-
-        listViewCities.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                listener.onCitySelected(currentCities.get(position));
-
-            }
-
-        });
-
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-
-                return false;
-
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-
-                if (newText.length() < minimumToSearch) {
-
-                    AlertDialogError alertDialogError = new AlertDialogError();
-
-                    alertDialogError.noTypedEnough(getContext());
-
-                } else {
-
-                    setupCities(newText);
-
-                }
-
-                return false;
-
-            }
-
-        });
-
         return rootView;
-
-    }
-
-    public void setTypeface(Typeface typeface) {
-
-        this.typeface = typeface;
-
-    }
-
-    private ArrayList<String> setCitiesToStringsArray(){
-
-        ArrayList<String> stringsCities = new ArrayList<>();
-
-        for(City city: currentCities){
-
-            stringsCities.add(city.formattedLocation());
-
-        }
-
-        return stringsCities;
-
-    }
-
-    public void setupCities(String like){
-
-        cityContext.loadLikeCities(like, new CityCompletion.ErrorCompletion() {
-
-            @Override
-            public void completion(List<City> cities, AppError error) {
-
-                currentCities.clear();
-
-                citiesAdapter.clear();
-
-                if(cities != null && ! cities.isEmpty()){
-
-                    currentCities.addAll(cities);
-
-                    citiesAdapter.addAll(setCitiesToStringsArray());
-
-                    textViewCities.setVisibility(View.VISIBLE);
-
-                    citiesAdapter.notifyDataSetChanged();
-
-                } else{
-
-                    textViewCities.setVisibility(View.GONE);
-
-                }
-
-            }
-
-        });
 
     }
 

@@ -10,13 +10,13 @@ import android.widget.TextView;
 
 public class CityAdapter extends ArrayAdapter {
 
-    Typeface typeface;
 
-    public CityAdapter(Context context, int resource, Typeface typeface) {
+
+    public CityAdapter(Context context, int resource) {
 
         super(context, resource);
 
-        this.typeface = typeface;
+
     }
 
     @Override
@@ -24,7 +24,7 @@ public class CityAdapter extends ArrayAdapter {
     {
         TextView textView = (TextView) super.getView(position, view, viewGroup);
 
-        textView.setTypeface(typeface);
+
 
         return textView;
     }

@@ -1,5 +1,6 @@
 package com.amtechventures.tucita.activities.advanced.fragments;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.graphics.Typeface;
 import android.location.Location;
@@ -57,10 +58,8 @@ public class VenuesResultFragment extends Fragment implements LocationCompletion
     private LocationContext locationContext;
     private TextView noResults;
     private CategoryContext categoryContext;
-    private LinearLayout locationClick;
-    private Button button;
     private Location lastLocation;
-    private Typeface typeface;
+    private City city;
 
     @Nullable
     @Override
@@ -84,37 +83,9 @@ public class VenuesResultFragment extends Fragment implements LocationCompletion
 
         recyclerView = (RecyclerView)rootView.findViewById(R.id.recycler_view);
 
-        button = (Button) rootView.findViewById(R.id.locationOptions);
-
-        locationClick = (LinearLayout) rootView.findViewById(R.id.locationClick);
-
-        button.setOnTouchListener(new View.OnTouchListener() {
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-
-                    locationClick.setBackgroundResource(R.drawable.pressed_application_background_static);
-
-                } else if(event.getAction() != MotionEvent.ACTION_MOVE){
-
-                    locationClick.setBackgroundResource(R.drawable.btn_default_pressed_holo_dark);
-                }
-
-                return false;
-
-            }
-
-        });
-
         recyclerView.setHasFixedSize(true);
 
         noResults = (TextView) rootView.findViewById(R.id.noResults);
-
-        noResults.setTypeface(typeface);
-
-        button.setTypeface(typeface);
 
         noResults.setVisibility(View.GONE);
 
@@ -122,13 +93,17 @@ public class VenuesResultFragment extends Fragment implements LocationCompletion
 
         recyclerView.setLayoutManager(layoutManager);
 
+        setupList();
+
         return rootView;
 
     }
 
-    public void setTypeface(Typeface typeface) {
+    @Override
+    public void onAttach(Activity activity) {
 
-        this.typeface = typeface;
+        super.onAttach(activity);
+
 
     }
 
@@ -211,7 +186,7 @@ public class VenuesResultFragment extends Fragment implements LocationCompletion
 
                     setupPriceFrom();
 
-                    adapter = new AdvancedSearchAdapter(venues, priceStrings, subCategory.getName(), typeface);
+                    adapter = new AdvancedSearchAdapter(venues, priceStrings, subCategory.getName());
 
                     recyclerView.setAdapter(adapter);
 
@@ -245,7 +220,7 @@ public class VenuesResultFragment extends Fragment implements LocationCompletion
 
                         setupPriceFrom();
 
-                        adapter = new AdvancedSearchAdapter(venues, priceStrings, subCategory.getName(), typeface);
+                        adapter = new AdvancedSearchAdapter(venues, priceStrings, subCategory.getName());
 
                         recyclerView.setAdapter(adapter);
 
@@ -263,16 +238,15 @@ public class VenuesResultFragment extends Fragment implements LocationCompletion
         }
     }
 
-    private void setCity(String city){
+    public void setCity(City city) {
 
-        button.setText(city);
+        this.city = city;
+
     }
 
-    public void setupList(final City city) {
+    public void setupList() {
 
         setupProgress();
-
-        setCity(city.formattedLocation());
 
         subCategory = subCategoryContext.findSubCategory(name);
 

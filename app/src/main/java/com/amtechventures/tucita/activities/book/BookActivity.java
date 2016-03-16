@@ -674,4 +674,5 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
         relativeLayout.setVisibility(View.GONE);
 
     }
+
 }

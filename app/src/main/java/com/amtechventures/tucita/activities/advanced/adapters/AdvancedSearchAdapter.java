@@ -34,15 +34,13 @@ public class AdvancedSearchAdapter extends RecyclerView.Adapter<AdvancedSearchAd
 
     String subCategory;
 
-    Typeface typeface;
-
-    public AdvancedSearchAdapter(List<Venue> venues, List<String> priceStrings, String subCategory, Typeface typeface) {
+    public AdvancedSearchAdapter(List<Venue> venues, List<String> priceStrings, String subCategory) {
 
         super();
 
         items = venues;
 
-        this.typeface = typeface;
+
 
         this.priceStrings = priceStrings;
 
@@ -156,12 +154,6 @@ public class AdvancedSearchAdapter extends RecyclerView.Adapter<AdvancedSearchAd
             setupStars();
 
             pricesFrom = (TextView) itemView.findViewById(R.id.textPricesFrom);
-
-            pricesFrom.setTypeface(typeface);
-
-            name.setTypeface(typeface);
-
-            location.setTypeface(typeface);
 
             from = itemView.getContext().getString(R.string.from);
 
