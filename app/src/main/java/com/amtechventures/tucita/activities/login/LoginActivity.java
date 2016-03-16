@@ -35,16 +35,16 @@ import com.amtechventures.tucita.model.domain.user.User;
 import com.amtechventures.tucita.model.domain.user.UserAttributes;
 import com.amtechventures.tucita.model.error.AppError;
 import com.amtechventures.tucita.utils.common.AppFont;
+import com.amtechventures.tucita.utils.views.AppEditText;
 import com.amtechventures.tucita.utils.views.AppTextView;
 import com.amtechventures.tucita.utils.views.CustomSpanTypeface;
 import com.parse.ParseFacebookUtils;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private TextView emailView;
+    private AppEditText emailView;
     private EditText passwordView;
     private UserContext userContext;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,49 +57,7 @@ public class LoginActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_login);
 
-        emailView = (AutoCompleteTextView) findViewById(R.id.email);
-
-        TextView newAccount = (AppTextView) findViewById(R.id.newAccount);
-
-        newAccount.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-
-                    v.setBackgroundResource(R.drawable.pressed_application_background_static);
-
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-
-                    v.setBackgroundColor(Color.TRANSPARENT);
-
-                }
-
-                return false;
-
-            }
-        });
-
-        TextView dontRemember = (TextView) findViewById(R.id.forgiven);
-
-        dontRemember.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-
-                    v.setBackgroundResource(R.drawable.pressed_application_background_static);
-
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-
-                    v.setBackgroundColor(Color.TRANSPARENT);
-
-                }
-
-                return true;
-
-            }
-        });
+        emailView = (AppEditText) findViewById(R.id.email);
 
         passwordView = (EditText) findViewById(R.id.password);
 

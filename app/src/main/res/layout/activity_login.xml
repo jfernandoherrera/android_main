@@ -12,7 +12,7 @@
             android:background="@drawable/logo_login"
             android:layout_height="180dp" />
 
-    <android.support.design.widget.TextInputLayout
+    <com.amtechventures.tucita.utils.views.AppTextInputLayout
         android:layout_width="match_parent"
         android:id="@+id/inputEmail"
         android:layout_marginTop="6dp"
@@ -23,7 +23,7 @@
         android:layout_marginBottom="8dp"
         android:layout_height="wrap_content">
 
-        <AutoCompleteTextView
+        <com.amtechventures.tucita.utils.views.AppEditText
             android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -34,9 +34,9 @@
             android:maxLines="1"
             android:singleLine="true" />
 
-    </android.support.design.widget.TextInputLayout>
+    </com.amtechventures.tucita.utils.views.AppTextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
+    <com.amtechventures.tucita.utils.views.AppTextInputLayout
         android:layout_width="match_parent"
         android:id="@+id/inputPassword"
         android:layout_marginLeft="16dp"
@@ -46,7 +46,7 @@
         android:layout_marginBottom="13dp"
         android:layout_height="wrap_content">
 
-        <EditText
+        <com.amtechventures.tucita.utils.views.AppEditText
             android:id="@+id/password"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -60,7 +60,7 @@
             android:maxLines="1"
             android:singleLine="true" />
 
-    </android.support.design.widget.TextInputLayout>
+    </com.amtechventures.tucita.utils.views.AppTextInputLayout>
     <com.amtechventures.tucita.utils.views.AppButton
         android:id="@+id/email_sign_in_button"
         android:layout_width="match_parent"

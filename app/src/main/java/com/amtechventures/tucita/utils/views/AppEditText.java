@@ -1,25 +1,23 @@
 package com.amtechventures.tucita.utils.views;
 
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
-import android.widget.TextView;
+import android.widget.EditText;
 
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.utils.common.AppFont;
 
-public class AppTextView extends TextView{
+public class AppEditText extends EditText{
 
+    public AppEditText(Context context, AttributeSet attrs) {
 
-    public AppTextView(Context context, AttributeSet attrs) {
-
-        this(context, attrs, 0);
+        this(context, attrs, 	android.R.attr.editTextStyle);
 
     }
 
-    public AppTextView(Context context, AttributeSet attrs, int defStyle) {
+    public AppEditText(Context context, AttributeSet attrs, int defStyle) {
 
         super(context, attrs, defStyle);
 
@@ -42,5 +40,4 @@ public class AppTextView extends TextView{
         }
 
     }
-
 }
