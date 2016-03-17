@@ -41,7 +41,7 @@ import com.amtechventures.tucita.utils.views.AlertDialogError;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VenuesResultFragment extends Fragment implements LocationCompletion.LocationErrorCompletion {
+public class VenuesResultFragment extends Fragment  {
 
     private ProgressDialog progress;
     private RecyclerView.LayoutManager layoutManager;
@@ -55,10 +55,10 @@ public class VenuesResultFragment extends Fragment implements LocationCompletion
     private SubCategory subCategory;
     private boolean category;
     private ArrayList priceStrings = new ArrayList<>();
-    private LocationContext locationContext;
+
     private TextView noResults;
     private CategoryContext categoryContext;
-    private Location lastLocation;
+
     private City city;
 
     @Nullable
@@ -74,8 +74,6 @@ public class VenuesResultFragment extends Fragment implements LocationCompletion
         serviceContext = ServiceContext.context(serviceContext);
 
         categoryContext = CategoryContext.context(categoryContext);
-
-        locationContext = LocationContext.context(locationContext, getContext(), this);
 
         name = getActivity().getIntent().getStringExtra(CategoryAttributes.name);
 
@@ -113,47 +111,6 @@ public class VenuesResultFragment extends Fragment implements LocationCompletion
 
     }
 
-    @Override
-    public void onStart() {
-
-        super.onStart();
-
-        if (locationContext.checkPlayServices()) {
-
-            locationContext.onStart();
-
-        }else {
-
-            AlertDialogError alertDialogError = new AlertDialogError();
-
-            alertDialogError.noLocationAlert(getContext());
-
-        }
-
-    }
-
-    @Override
-    public void onPause() {
-
-        super.onPause();
-
-        subCategoryContext.cancelQuery();
-
-        serviceContext.cancelQuery();
-
-        venueContext.cancelQuery();
-
-    }
-
-    @Override
-    public void onStop() {
-
-        super.onStop();
-
-        locationContext.onStop();
-
-    }
-
     private void setupPriceFrom(){
 
         for (Venue venue : venues) {
@@ -163,8 +120,11 @@ public class VenuesResultFragment extends Fragment implements LocationCompletion
             if(price != 0) {
 
                 priceStrings.add(String.valueOf(price));
+
             }
+
         }
+
     }
 
     private void setupCityVenues(List<Service> services, City city){
@@ -192,57 +152,17 @@ public class VenuesResultFragment extends Fragment implements LocationCompletion
 
                     progress.dismiss();
                 }
+
             }
         });
+
     }
-
-    private void setupNearVenues(List<Service> services) {
-
-        if (lastLocation != null) {
-
-            venueContext.loadSubCategorizedNearVenues(services, lastLocation, new VenueCompletion.ErrorCompletion() {
-
-                @Override
-                public void completion(List<Venue> venueList, AppError error) {
-
-                    progress.dismiss();
-
-                    if (venueList != null) {
-
-                        if(venueList.isEmpty()){
-
-                            noResults.setVisibility(View.VISIBLE);
-                        }
-
-                        venues.clear();
-
-                        venues.addAll(venueList);
-
-                        setupPriceFrom();
-
-                        adapter = new AdvancedSearchAdapter(venues, priceStrings, subCategory.getName());
-
-                        recyclerView.setAdapter(adapter);
-
-                    }
-                }
-
-            });
-
-        }else{
-
-            AlertDialogError alertDialogError = new AlertDialogError();
-
-            alertDialogError.noLocationAlert(getContext());
-
-        }
-    }
-
     public void setCity(City city) {
 
         this.city = city;
 
     }
+
 
     public void setupList() {
 
@@ -266,94 +186,9 @@ public class VenuesResultFragment extends Fragment implements LocationCompletion
 
                     alertDialogError.noInternetConnectionAlert(getContext());
                 }
+
             }
         });
-    }
-
-    private void setupListFromCategory() {
-
-        setupProgress();
-
-        Category category = categoryContext.findCategory(name);
-
-        subCategoryContext.loadSubCategories(category, new SubCategoryCompletion.ErrorCompletion() {
-            @Override
-            public void completion(List<SubCategory> subCategoriesList, AppError error) {
-
-                if (subCategoriesList != null) {
-
-                    setupCategorizedVenues(subCategoriesList);
-
-                } else {
-
-                    progress.dismiss();
-
-                    AlertDialogError alertDialogError = new AlertDialogError();
-
-                    alertDialogError.noInternetConnectionAlert(getContext());
-                }
-            }
-        });
-    }
-
-    private void setupCategorizedVenues(List<SubCategory> subCategoriesList){
-
-        serviceContext.loadCategorizedServices(subCategoriesList, new ServiceCompletion.ErrorCompletion() {
-            @Override
-            public void completion(List<Service> servicesList, AppError error) {
-
-                progress.dismiss();
-
-                if (servicesList != null) {
-
-                    setupNearVenues(servicesList);
-
-                } else {
-
-                    AlertDialogError alertDialogError = new AlertDialogError();
-
-                    alertDialogError.noInternetConnectionAlert(getContext());
-                }
-            }
-        });
-    }
-
-    private void setupListFromSubCategory() {
-
-        setupProgress();
-
-        subCategory = subCategoryContext.findSubCategory(name);
-
-        serviceContext.loadSubCategorizedServices(subCategory, new ServiceCompletion.ErrorCompletion() {
-            @Override
-            public void completion(List<Service> servicesList, AppError error) {
-
-                progress.dismiss();
-
-                if (servicesList != null) {
-
-                    setupNearVenues(servicesList);
-
-                } else {
-
-                    AlertDialogError alertDialogError = new AlertDialogError();
-
-                    alertDialogError.noInternetConnectionAlert(getContext());
-                }
-            }
-        });
-    }
-
-
-    public void locationCompletion(Location location, AppError error) {
-
-        if (location != null) {
-
-            lastLocation = location;
-
-            setupListFromSubCategory();
-
-        }
 
     }
 

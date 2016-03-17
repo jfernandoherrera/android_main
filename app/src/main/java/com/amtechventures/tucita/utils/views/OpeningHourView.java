@@ -1,7 +1,12 @@
 package com.amtechventures.tucita.utils.views;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
@@ -12,7 +17,6 @@ import com.amtechventures.tucita.R;
 
 public class OpeningHourView extends LinearLayout {
 
-    private ImageView state_drawable;
     private TextView day;
     private TextView hours;
     private String closed;
@@ -41,8 +45,6 @@ public class OpeningHourView extends LinearLayout {
 
         this.setOrientation(HORIZONTAL);
 
-        state_drawable = (ImageView) findViewById(R.id.state_drawable);
-
         day = (TextView) findViewById(R.id.day);
 
         hours = (TextView) findViewById(R.id.hours);
@@ -53,14 +55,15 @@ public class OpeningHourView extends LinearLayout {
 
         if (state_drawable) {
 
-            this.state_drawable.setImageResource(R.mipmap.ic_state_drawable_activated);
+;          day.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.current_day_icon), null, null, null);
 
         } else {
 
-            this.state_drawable.setImageResource(R.mipmap.ic_state_drawable_desactivated);
+            day.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.day_icon), null, null, null);
 
         }
 
+        day.setBackgroundResource(R.drawable.border3);
         invalidate();
 
         requestLayout();

@@ -17,7 +17,7 @@ public class LocationContext implements GoogleApiClient.OnConnectionFailedListen
     private Context context;
     private LocationRemote locationRemote;
     private GoogleApiClient googleApiClient;
-    private int timeMillis = 5000;
+    private int timeMillis = 40000;
 
 
     private LocationCompletion.LocationErrorCompletion completion;
@@ -91,7 +91,7 @@ public class LocationContext implements GoogleApiClient.OnConnectionFailedListen
 
         locationRequest.setInterval(timeMillis);
 
-        timeMillis += 10000;
+        locationRequest.setFastestInterval(timeMillis);
 
         LocationServices.FusedLocationApi.requestLocationUpdates(
 

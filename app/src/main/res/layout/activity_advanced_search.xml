@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
+    android:focusableInTouchMode="true"
     android:layout_height="wrap_content"
   >
     <android.support.v7.widget.Toolbar
@@ -25,16 +26,18 @@
         android:layout_marginRight="@dimen/high_margin"
         android:layout_marginEnd="@dimen/high_margin"
         android:layout_marginBottom="8dp"
-        android:layout_height="50dp">
+        android:layout_height="wrap_content">
     <com.amtechventures.tucita.utils.views.AppEditText
         android:layout_width="match_parent"
         android:id="@+id/searchCities"
         android:drawableLeft="@drawable/pin_line"
+        android:maxLines="1"
+        android:singleLine="true"
         android:drawablePadding="10dp"
         android:drawableRight="@mipmap/ic_close"
         android:hint="@string/near"
         android:layout_height="50dp"
-        android:background="@android:color/transparent"/>
+        />
     </com.amtechventures.tucita.utils.views.AppTextInputLayout>
     <TextView
         android:layout_width="match_parent"

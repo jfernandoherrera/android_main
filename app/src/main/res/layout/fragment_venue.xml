@@ -8,62 +8,70 @@
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:background="@android:color/white"
+
                 android:layout_height="wrap_content">
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="180dp"
                     android:id="@+id/imageVenue"
                     android:scaleType="fitXY"/>
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:id="@+id/backgroundContainer"
+                    android:background="@drawable/bg_top"
+                    android:gravity="center_vertical"
+                    android:layout_below="@+id/imageVenue"
+                    android:layout_height="82dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="35dp"
                     android:textSize="25sp"
                     android:layout_gravity="bottom"
-                    android:layout_below="@+id/imageVenue"
-                    android:layout_marginStart="@dimen/high_margin"
-                    android:layout_marginLeft="@dimen/high_margin"
+                    android:textColor="@android:color/white"
+                    android:layout_marginStart="11dp"
+                    android:layout_marginLeft="11dp"
                     android:id="@+id/title_Venue"/>
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:id="@+id/clickRating"
+                    android:gravity="top"
                     android:layout_below="@+id/title_Venue"
-                    android:layout_height="30dp"
-                    android:paddingBottom="@dimen/activity_horizontal_margin">
+                    android:layout_height="20dp">
                 <RatingBar
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="12dp"
                     android:numStars="5"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="1dp"
                     android:layout_marginStart="@dimen/high_margin"
                     android:layout_marginLeft="@dimen/high_margin"
                     android:id="@+id/ratingBar"
                     android:isIndicator="true"
-                    style="?android:attr/ratingBarStyleSmall"
+                    style="@style/RatingBar"
                     />
                     <TextView
                         android:layout_width="wrap_content"
                         android:id="@+id/textViewReviews"
                         android:layout_height="wrap_content"
-                        android:textSize="12sp"
-                        android:layout_marginTop="8dp"
-                        android:gravity="center_vertical"
+                        android:textSize="15sp"
+                        android:textColor="@android:color/white"
+                        android:gravity="top"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
                         android:layout_marginEnd="@dimen/high_margin"
                         android:layout_marginRight="@dimen/high_margin"
                         android:background="@android:color/transparent" />
-                </RelativeLayout>
+                </RelativeLayout></RelativeLayout>
                 <TextView
                     android:layout_width="match_parent"
                     android:text="@string/top_services"
                     android:id="@+id/textViewTop"
-                    android:layout_below="@+id/clickRating"
+                    android:layout_below="@+id/backgroundContainer"
                     android:layout_height="60dp"
                     android:visibility="gone"
                     android:textSize="15sp"
-                    android:gravity="bottom"
                     android:paddingBottom="@dimen/activity_horizontal_margin"
-                    android:background="@drawable/border"
+                    android:gravity="center_vertical"
+                    android:background="@color/colorPrimary"
                     android:paddingStart="@dimen/high_margin"
                     android:paddingLeft="@dimen/high_margin"
                     android:paddingEnd="@dimen/high_margin"
@@ -87,7 +95,7 @@
                     android:paddingEnd="@dimen/high_margin"
                     android:paddingRight="@dimen/high_margin"
                     android:textSize="15sp"
-                    android:gravity="bottom"
+                    android:gravity="center_vertical"
                     android:paddingBottom="@dimen/activity_horizontal_margin"
                     android:background="@drawable/border"
                     />
@@ -105,9 +113,10 @@
                     android:layout_below="@+id/listViewFull"
                     android:id="@+id/textViewAbout"
                     android:textSize="15sp"
-                    android:gravity="bottom"
+                    android:gravity="center_vertical"
                     android:paddingBottom="@dimen/activity_horizontal_margin"
-                    android:background="@drawable/border"
+                    android:textColor="@android:color/white"
+                    android:background="@color/colorPrimary"
                     android:paddingStart="@dimen/high_margin"
                     android:paddingLeft="@dimen/high_margin"
                     android:paddingEnd="@dimen/high_margin"
@@ -125,22 +134,28 @@
 
                 <Button
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
+                    android:layout_height="50dp"
+                    android:drawableLeft="@drawable/pinfull_icon"
+                    android:paddingStart="20dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="25dp"
                     android:layout_below = "@+id/listViewDescription"
                     android:id="@+id/watch_location"
-                    android:background="@drawable/log_in_or_signup_click_out" />
+                    android:background="@drawable/border2"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:text="@string/opening_hours"
                     android:id="@+id/textViewOpeningHours"
                     android:layout_below="@+id/watch_location"
-                    android:layout_height="60dp"
+                    android:layout_height="50dp"
                     android:paddingStart="@dimen/high_margin"
                     android:paddingLeft="@dimen/high_margin"
                     android:paddingEnd="@dimen/high_margin"
                     android:paddingRight="@dimen/high_margin"
+                    android:drawableLeft="@drawable/calendar_icon"
+                    android:drawablePadding="10dp"
                     android:textSize="15sp"
-                    android:gravity="bottom"
+                    android:gravity="center_vertical"
                     android:paddingBottom="@dimen/activity_horizontal_margin"
                     android:background="@drawable/border"
                     />

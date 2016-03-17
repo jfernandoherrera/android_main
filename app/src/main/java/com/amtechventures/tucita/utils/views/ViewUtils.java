@@ -14,7 +14,7 @@ import static android.view.View.MeasureSpec.makeMeasureSpec;
 
 public class ViewUtils {
 
-    public int childHeight = 100;
+    public int childHeight = 83;
     public int parentHeight = 48;
     private final int twelveHoursClock = 12;
     private final int oneDigitNumber = 9;

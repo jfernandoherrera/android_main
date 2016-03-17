@@ -157,33 +157,11 @@ public class VenueFragment extends Fragment {
 
         ratingBar = (RatingBar) rootView.findViewById(R.id.ratingBar);
 
-        setupStars();
-
         venueName.setTypeface(typeface, Typeface.BOLD);
 
         textReviews.setTypeface(typeface);
 
         clickRating = (RelativeLayout) rootView.findViewById(R.id.clickRating);
-
-        clickRating.setOnTouchListener(new View.OnTouchListener() {
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-
-                    v.setBackgroundResource(R.drawable.pressed_application_background_static);
-
-                } else if (event.getAction() != MotionEvent.ACTION_MOVE) {
-
-                    v.setBackgroundColor(Color.TRANSPARENT);
-
-                }
-
-                return false;
-
-            }
-        });
 
         clickRating.setOnClickListener(new View.OnClickListener() {
 
@@ -210,19 +188,6 @@ public class VenueFragment extends Fragment {
 
         return rootView;
 
-    }
-
-    private void setupStars(){
-
-        final int yellowColor = Color.argb(255, 251, 197, 70);
-
-        LayerDrawable stars = (LayerDrawable) ratingBar.getProgressDrawable();
-
-        stars.getDrawable(2).setColorFilter(yellowColor, PorterDuff.Mode.SRC_ATOP);
-
-        Drawable progress = ratingBar.getProgressDrawable();
-
-        DrawableCompat.setTint(progress, yellowColor);
     }
 
     public void setTitlesTypeface(View view){
@@ -682,27 +647,6 @@ public class VenueFragment extends Fragment {
         String address = locationString + " " + venue.getAddress();
 
         location.setText(address);
-
-        location.setOnTouchListener(new View.OnTouchListener() {
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-
-                    location.setBackgroundResource(R.drawable.pressed_application_background_static);
-
-                } else if (event.getAction() != MotionEvent.ACTION_MOVE) {
-
-                    location.setBackgroundResource(R.drawable.log_in_or_signup_click_out);
-
-                }
-
-                return false;
-
-            }
-
-        });
 
         location.setOnClickListener(new View.OnClickListener() {
 

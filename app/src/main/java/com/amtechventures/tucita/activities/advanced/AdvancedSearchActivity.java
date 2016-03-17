@@ -128,8 +128,6 @@ public class AdvancedSearchActivity extends AppCompatActivity  {
 
         setLocationOptionsFragment();
 
-        hideLocationOptionsFragment();
-
         setToolbar();
 
     }

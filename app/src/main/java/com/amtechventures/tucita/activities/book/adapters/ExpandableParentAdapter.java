@@ -93,7 +93,7 @@ public class ExpandableParentAdapter extends BaseExpandableListAdapter {
 
         if (convertView == null) {
 
-            convertView = inflater.inflate(R.layout.parent_view, null);
+            convertView = inflater.inflate(R.layout.parent_description_view, null);
 
         }
 
@@ -104,8 +104,6 @@ public class ExpandableParentAdapter extends BaseExpandableListAdapter {
         checkedTextView.setText(convertView.getResources().getString(R.string.description));
 
         checkedTextView.setHeight(viewUtils.parentHeight);
-
-        checkedTextView.setPadding(24, 20, 0, 0);
 
         return convertView;
 
