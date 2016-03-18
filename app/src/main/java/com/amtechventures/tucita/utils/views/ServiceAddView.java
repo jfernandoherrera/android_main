@@ -27,27 +27,6 @@ public class ServiceAddView extends RelativeLayout {
 
         init(context);
 
-        setOnTouchListener(new View.OnTouchListener() {
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-
-                    backgroundClicked();
-
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-
-                    backgroundNormal();
-
-                }
-
-                return false;
-
-            }
-
-        });
-
     }
 
     public void setPlus(boolean value) {
@@ -110,18 +89,6 @@ public class ServiceAddView extends RelativeLayout {
 
     }
 
-    public void backgroundClicked() {
-
-        relativeLayout.setBackgroundResource(R.drawable.pressed_application_background_static);
-
-    }
-
-    public void backgroundNormal() {
-
-        relativeLayout.setBackgroundColor(Color.TRANSPARENT);
-
-    }
-
     public void setImageView() {
 
         if (plus) {
@@ -138,13 +105,13 @@ public class ServiceAddView extends RelativeLayout {
 
     private void plusImage() {
 
-        imageView.setImageResource(R.mipmap.ic_plus);
+        imageView.setImageResource(R.drawable.add_icon);
 
     }
 
     private void checkImage() {
 
-        imageView.setImageResource(R.mipmap.ic_check);
+        imageView.setImageResource(R.drawable.check_icon);
 
     }
 

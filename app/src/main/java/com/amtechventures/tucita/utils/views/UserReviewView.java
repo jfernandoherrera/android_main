@@ -105,26 +105,6 @@ public class UserReviewView extends RelativeLayout{
 
         edit = (Button) findViewById(R.id.edit);
 
-        edit.setOnTouchListener(new View.OnTouchListener() {
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-
-                    v.setBackgroundResource(R.drawable.pressed_application_background_static);
-
-                } else if (event.getAction() != MotionEvent.ACTION_MOVE) {
-
-                    v.setBackgroundColor(Color.TRANSPARENT);
-
-                }
-
-                return false;
-
-            }
-        });
-
         edit.setOnClickListener(new OnClickListener() {
 
             @Override
@@ -134,26 +114,6 @@ public class UserReviewView extends RelativeLayout{
 
             }
 
-        });
-
-        relativeLayout.setOnTouchListener(new View.OnTouchListener() {
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-
-                    v.setBackgroundResource(R.drawable.pressed_application_background_static);
-
-                } else if (event.getAction() != MotionEvent.ACTION_MOVE) {
-
-                    v.setBackgroundColor(Color.TRANSPARENT);
-
-                }
-
-                return false;
-
-            }
         });
 
         relativeLayout.setOnClickListener(new OnClickListener() {

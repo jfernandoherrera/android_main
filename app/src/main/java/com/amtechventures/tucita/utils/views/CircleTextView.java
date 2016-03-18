@@ -6,6 +6,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Point;
+import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -13,10 +15,13 @@ import android.view.Display;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.amtechventures.tucita.R;
+import com.amtechventures.tucita.utils.common.AppFont;
+
 public class CircleTextView extends TextView {
 
     private int padding;
-    private Paint circlePaint;
+    private Drawable circlePaint;
 
     public CircleTextView(Context context, AttributeSet attrs) {
 
@@ -32,26 +37,22 @@ public class CircleTextView extends TextView {
 
         padding = (int) ((Integer.parseInt(attrs.getAttributeValue(2).substring(0, 2)) ) * size) / 2;
 
-        setPadding(padding / 3, padding / 3, 0, 0);
+        setPadding(padding / 2, padding / 3, 0, 0);
 
-        circlePaint = new Paint();
+        circlePaint = context.getResources().getDrawable(R.drawable.rate_05);
 
-        circlePaint.setStyle(Style.FILL);
+        setBackgroundDrawable(circlePaint);
 
-        circlePaint.setAntiAlias(true);
+        AppFont appFont = new AppFont();
 
-        circlePaint.setColor(Color.rgb(16, 215, 218));
+        setTextColor(context.getResources().getColor(R.color.white));
 
-    }
-
-    @Override
-    protected void onDraw(Canvas canvas) {
-
-        canvas.drawCircle((getMeasuredWidth() / 2) , (getMeasuredHeight() / 2) , padding, circlePaint);
-
-        super.onDraw(canvas);
+        setTypeface(appFont.getAppFontMedium(context), Typeface.BOLD);
 
     }
+
+
+
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {

@@ -2,17 +2,18 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <android.support.v7.widget.Toolbar
+    <com.amtechventures.tucita.utils.views.AppToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorAccent"
         />
     <RelativeLayout
         android:layout_below="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_marginBottom="@dimen/high_margin"
+        android:paddingBottom="@dimen/high_margin"
+        android:background="@color/colorPrimary"
         android:layout_height="match_parent"
         android:id="@+id/drawView"/>
     <RelativeLayout
@@ -22,7 +23,7 @@
         android:id="@+id/concealer"
         android:layout_height="match_parent">
         <ProgressBar
-
+            android:indeterminateDrawable="@drawable/progress_bar_states"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_centerInParent="true"

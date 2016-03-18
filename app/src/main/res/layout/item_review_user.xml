@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:id="@+id/container"
+    android:background="@color/colorAccent"
     android:orientation="horizontal"
     android:layout_height="wrap_content">
     <com.mikhaellopez.circularimageview.CircularImageView
@@ -16,7 +17,7 @@
         android:layout_gravity="top|center_horizontal"
         android:padding="5dp"
         app:border_width="0dp"
-        android:src="@mipmap/ic_user"
+        android:src="@drawable/user_gray_icon"
         app:shadow="true"
         app:shadow_radius="1"
         app:civ_border_color="@android:color/transparent"
@@ -32,22 +33,24 @@
                 android:layout_width="wrap_content"
                 android:id="@+id/containerC"
                 android:layout_height="wrap_content">
-                <TextView
+                <com.amtechventures.tucita.utils.views.AppTextView
                     android:layout_width="wrap_content"
                     android:id="@+id/textNameUser"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:textColor="@color/white"
                     android:layout_marginLeft="@dimen/activity_horizontal_margin"
                     android:layout_marginTop="@dimen/activity_horizontal_margin"
                     android:gravity="center_vertical"
                     style="@style/AppTheme.subTitle"/>
-                <Button
+                <com.amtechventures.tucita.utils.views.AppButton
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:id="@+id/edit"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true"
                     android:gravity="center"
+                    android:textColor="@color/white"
                     android:background="@android:color/transparent"
                     android:text="@string/edit"/>
                 <RelativeLayout
@@ -58,27 +61,28 @@
 
                     <RatingBar
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="12dp"
                         android:numStars="5"
                         android:id="@+id/ratingBar"
                         android:isIndicator="true"
                         android:layout_marginTop="2dp"
                         android:layout_marginLeft="@dimen/activity_horizontal_margin"
                         android:layout_marginStart="@dimen/activity_horizontal_margin"
-                        style="?android:attr/ratingBarStyleSmall"
+                        style="@style/RatingBar"
                         />
-                    <TextView
+                    <com.amtechventures.tucita.utils.views.AppTextView
                         android:layout_width="wrap_content"
                         android:layout_toRightOf="@id/ratingBar"
                         android:layout_toEndOf="@id/ratingBar"
                         android:layout_marginStart="@dimen/activity_horizontal_margin"
                         android:layout_marginLeft="@dimen/activity_horizontal_margin"
                         android:gravity="top"
+                        android:textColor="@color/or_color"
                         android:layout_height="30sp"
                         android:id="@+id/textDate"/>
                 </RelativeLayout>
             </RelativeLayout>
-        <TextView
+        <com.amtechventures.tucita.utils.views.AppTextView
             android:layout_width="match_parent"
             android:id="@+id/textTitle"
             android:maxLines="1"
@@ -90,7 +94,7 @@
             android:layout_marginEnd="@dimen/high_margin"
             android:layout_marginRight="@dimen/high_margin"
             style="@style/AppTheme.Title"/>
-        <TextView
+        <com.amtechventures.tucita.utils.views.AppTextView
             android:maxLines="2"
             android:layout_width="wrap_content"
             android:layout_below="@+id/textTitle"

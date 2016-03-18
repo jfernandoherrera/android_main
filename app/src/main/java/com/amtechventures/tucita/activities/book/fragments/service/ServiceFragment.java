@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.model.domain.service.Service;
 import com.amtechventures.tucita.activities.book.adapters.ExpandableParentAdapter;
+import com.amtechventures.tucita.model.domain.venue.VenueAttributes;
 import com.amtechventures.tucita.utils.views.ServiceAddView;
 import com.amtechventures.tucita.utils.views.ViewUtils;
 
@@ -118,7 +119,7 @@ public class ServiceFragment extends Fragment {
 
             ViewUtils viewUtils = new ViewUtils(getContext());
 
-            parentAdapter = new ExpandableParentAdapter(description, listViewParent, viewUtils, typeface);
+            parentAdapter = new ExpandableParentAdapter(description, listViewParent, viewUtils);
 
             parentAdapter.setInflater(inflater);
 
@@ -155,7 +156,30 @@ public class ServiceFragment extends Fragment {
         serviceAddView.setPrice(service.getPrice());
 
     }
+/*
+    private void setupAddressAndLocation() {
 
+        String locationString = venue.getCity().formattedLocation();
+
+        String address = locationString + " " + venue.getAddress();
+
+        location.setText(address);
+
+        location.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                String url = VenueAttributes.linkToLocation + venue.getLatitude() + "," + venue.getLongitude();
+
+                openWebURL(url);
+
+            }
+
+        });
+
+    }
+    */
     public void setServiceState(boolean state) {
 
         serviceAddView.setPlus(state);

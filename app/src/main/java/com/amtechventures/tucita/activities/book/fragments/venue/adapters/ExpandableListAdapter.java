@@ -27,9 +27,8 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     private final ExpandableListView expandableListView;
     private VenueFragment.OnServiceSelected listener;
     private ViewUtils viewUtils;
-    private Typeface typeface;
 
-    public ExpandableListAdapter(List<SubCategory> parents, List<ArrayList<Service>> children, ViewUtils viewUtils, ExpandableListView expandableListView, VenueFragment.OnServiceSelected listener, Typeface typeface) {
+    public ExpandableListAdapter(List<SubCategory> parents, List<ArrayList<Service>> children, ViewUtils viewUtils, ExpandableListView expandableListView, VenueFragment.OnServiceSelected listener) {
 
         this.parentItems = (ArrayList<SubCategory>) parents;
 
@@ -38,8 +37,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         this.expandableListView = expandableListView;
 
         this.viewUtils = viewUtils;
-
-        this.typeface = typeface;
 
         this.listener = listener;
 
@@ -77,12 +74,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         textPricesFrom = (TextView) convertView.findViewById(R.id.textPricesFrom);
 
         textName = (TextView) convertView.findViewById(R.id.textName);
-
-        textDuration.setTypeface(typeface);
-
-        textName.setTypeface(typeface);
-
-        textPricesFrom.setTypeface(typeface);
 
         textName.setText(serviceName);
 
@@ -136,8 +127,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         }
 
         ((CheckedTextView) convertView).setText(parentItems.get(groupPosition).getName());
-
-        ((CheckedTextView) convertView).setTypeface(typeface);
 
         ((CheckedTextView) convertView).setHeight(viewUtils.parentHeight);
 

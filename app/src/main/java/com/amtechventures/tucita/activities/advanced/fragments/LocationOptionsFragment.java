@@ -67,21 +67,26 @@ public class LocationOptionsFragment extends Fragment implements LocationComplet
             @Override
             public void completion(List<Service> servicesList, AppError error) {
 
-                progress.dismiss();
+                if (progress != null) {
 
-                if (servicesList != null) {
+                    progress.dismiss();
 
-                    setupNearVenues(servicesList);
+                    if (servicesList != null) {
 
-                } else {
+                        setupNearVenues(servicesList);
 
-                    AlertDialogError alertDialogError = new AlertDialogError();
+                    } else {
 
-                    alertDialogError.noInternetConnectionAlert(getContext());
+                        AlertDialogError alertDialogError = new AlertDialogError();
+
+                        alertDialogError.noInternetConnectionAlert(getContext());
+
+                    }
 
                 }
 
             }
+
         });
 
     }

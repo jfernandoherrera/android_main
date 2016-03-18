@@ -31,18 +31,14 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
 
     private UserContext userContext;
 
-    private Typeface typeface;
-
     public interface OnReviewClicked{
 
         void onReviewClicked(Review review);
     }
 
-    public ReviewsAdapter(List<Review> reviews, OnReviewClicked onReviewClicked, UserContext user, Typeface typeface) {
+    public ReviewsAdapter(List<Review> reviews, OnReviewClicked onReviewClicked, UserContext user) {
 
         listener = onReviewClicked;
-
-        this.typeface = typeface;
 
         reviewList = reviews;
 
@@ -167,14 +163,6 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
             textTitle = (TextView) itemView.findViewById(R.id.textTitle);
 
             textDate = (TextView) itemView.findViewById(R.id.textDate);
-
-            textDate.setTypeface(typeface);
-
-            textName.setTypeface(typeface, Typeface.BOLD);
-
-            textDescription.setTypeface(typeface);
-
-            textTitle.setTypeface(typeface, Typeface.BOLD);
 
             ratingBar = (RatingBar) itemView.findViewById(R.id.ratingBar);
 

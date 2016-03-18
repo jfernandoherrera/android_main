@@ -38,7 +38,7 @@ public class EditReviewFragment extends DialogFragment {
     float rating;
     OnEdited onEdited;
     User user;
-    private Typeface typeface;
+
 
     public interface OnEdited{
 
@@ -93,27 +93,6 @@ public class EditReviewFragment extends DialogFragment {
 
         edit.setBackgroundColor(Color.WHITE);
 
-        edit.setOnTouchListener(new View.OnTouchListener() {
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-
-                    edit.setBackgroundResource(R.drawable.pressed_application_background_static);
-
-                } else if (event.getAction() != MotionEvent.ACTION_MOVE) {
-
-                    edit.setBackgroundColor(Color.WHITE);
-
-                }
-
-                return false;
-
-            }
-        });
-
-
         edit.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -142,33 +121,9 @@ public class EditReviewFragment extends DialogFragment {
 
         textDescription.setText(review.getDescription());
 
-        TextInputLayout textInputLayout = (TextInputLayout) rootView.findViewById(R.id.textTitleLayout);
-
-        textInputLayout.setTypeface(typeface);
-
-        textInputLayout = (TextInputLayout) rootView.findViewById(R.id.textDescriptionLayout);
-
-        textInputLayout.setTypeface(typeface);
-
-        textTitle.setTypeface(typeface);
-
-        textName.setTypeface(typeface);
-
-        textDescription.setTypeface(typeface);
-
-        ratingView.setTypeface(typeface);
-
-        edit.setTypeface(typeface);
-
         setRating(review.getRating());
 
         return rootView;
-
-    }
-
-    public void setTypeface(Typeface typeface) {
-
-        this.typeface = typeface;
 
     }
 

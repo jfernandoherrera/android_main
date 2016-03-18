@@ -54,7 +54,6 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
     private ShoppingCarView shoppingCarView;
     private UserContext userContext;
     private RelativeLayout relativeLayout;
-    private Typeface typeface;
     private BlockadeContext blockadeContext;
     private User user;
 
@@ -74,18 +73,6 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
         selectDateFragment = new SelectDayFragment();
 
         secureCheckoutFragment = new SecureCheckoutFragment();
-
-        AppFont appFont = new AppFont();
-
-        typeface = appFont.getAppFontLight(getApplicationContext());
-
-        venueFragment.setTypeface(typeface);
-
-        serviceFragment.setTypeface(typeface);
-
-        shoppingCarView.setTypeface(typeface);
-
-        secureCheckoutFragment.setTypeface(typeface);
 
         userContext = UserContext.context(userContext);
 
@@ -316,33 +303,8 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        getActionBarTextView().setTypeface(typeface);
 
         return true;
-
-    }
-
-    private TextView getActionBarTextView() {
-
-        TextView titleTextView = null;
-
-        String defaultNameTitleMenu = "mTitleTextView";
-
-        try {
-
-            Field field = toolbar.getClass().getDeclaredField(defaultNameTitleMenu);
-
-            field.setAccessible(true);
-
-            titleTextView = (TextView) field.get(toolbar);
-
-        } catch (NoSuchFieldException e) {
-
-        } catch (IllegalAccessException e) {
-
-        }
-
-        return titleTextView;
 
     }
 

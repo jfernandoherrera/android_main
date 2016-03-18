@@ -30,6 +30,7 @@ import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.domain.venue.VenueAttributes;
 import com.amtechventures.tucita.model.error.AppError;
 import com.amtechventures.tucita.utils.common.AppFont;
+import com.amtechventures.tucita.utils.views.AppToolbar;
 import com.amtechventures.tucita.utils.views.UserReviewView;
 
 import java.lang.reflect.Field;
@@ -37,7 +38,7 @@ import java.util.List;
 
 public class ReviewsActivity extends AppCompatActivity implements UserReviewView.OnEdit, EditReviewFragment.OnEdited, ReviewsFragment.OnDetails, ReviewsAdapter.OnReviewClicked {
 
-    private Toolbar toolbar;
+    private AppToolbar toolbar;
     private String name;
     private String address;
     private VenueContext venueContext;
@@ -47,7 +48,6 @@ public class ReviewsActivity extends AppCompatActivity implements UserReviewView
     private ReviewContext reviewContext;
     private UserContext userContext;
     private RelativeLayout concealer;
-    private Typeface typeface;
 
     @Override
     public void onDetails(Review review) {
@@ -78,14 +78,6 @@ public class ReviewsActivity extends AppCompatActivity implements UserReviewView
         reviewsFragment = new ReviewsFragment();
 
         reviewDetailsFragment = new ReviewDetailsFragment();
-
-        AppFont font = new AppFont();
-
-        typeface = font.getAppFontLight(getApplicationContext());
-
-        reviewsFragment.setTypeface(typeface);
-
-        reviewDetailsFragment.setTypeface(typeface);
 
         setup();
 
@@ -322,7 +314,7 @@ public class ReviewsActivity extends AppCompatActivity implements UserReviewView
 
     private void setToolbar() {
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (AppToolbar) findViewById(R.id.toolbar);
 
         if (toolbar != null) {
 
@@ -341,9 +333,6 @@ public class ReviewsActivity extends AppCompatActivity implements UserReviewView
         if (prev == null) {
 
             prev = new EditReviewFragment();
-
-            prev.setTypeface(typeface);
-
         }
 
         prev.setReview(review);
@@ -361,35 +350,10 @@ public class ReviewsActivity extends AppCompatActivity implements UserReviewView
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        getActionBarTextView().setTypeface(typeface);
 
-        getSupportActionBar().setTitle(name);
+       toolbar.setTitle(name);
 
         return true;
-
-    }
-
-    private TextView getActionBarTextView() {
-
-        TextView titleTextView = null;
-
-        String defaultNameTitleMenu = "mTitleTextView";
-
-        try {
-
-            Field field = toolbar.getClass().getDeclaredField(defaultNameTitleMenu);
-
-            field.setAccessible(true);
-
-            titleTextView = (TextView) field.get(toolbar);
-
-        } catch (NoSuchFieldException e) {
-
-        } catch (IllegalAccessException e) {
-
-        }
-
-        return titleTextView;
 
     }
 

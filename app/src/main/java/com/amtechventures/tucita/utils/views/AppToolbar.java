@@ -26,10 +26,6 @@ public class AppToolbar extends Toolbar {
 
         textView = (TextView) findViewById(R.id.toolbarTextView);
 
-        AppFont appFont = new AppFont();
-
-        textView.setTypeface(appFont.getAppFontMedium(context), Typeface.BOLD);
-
     }
 
     @Override

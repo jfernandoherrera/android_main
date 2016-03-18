@@ -47,7 +47,6 @@ public class ReviewsFragment extends Fragment {
     Review yours;
     UserReviewView userReviewView;
     int reviewsCount;
-    private Typeface typeface;
 
     public interface OnDetails{
 
@@ -95,10 +94,6 @@ public class ReviewsFragment extends Fragment {
 
         textReviews = (TextView) rootView.findViewById(R.id.textReviews);
 
-        textRating.setTypeface(typeface);
-
-        textReviews.setTypeface(typeface);
-
         ratingBar = (RatingBar) rootView.findViewById(R.id.ratingBarVenue);
 
         setupStars();
@@ -107,15 +102,13 @@ public class ReviewsFragment extends Fragment {
 
         userReviewView = (UserReviewView) rootView.findViewById(R.id.userReview);
 
-        userReviewView.setTypeface(typeface);
-
         layoutManager = new LinearLayoutManager(getContext());
 
         recyclerView.setLayoutManager(layoutManager);
 
         if(reviewList != null){
 
-            adapter = new ReviewsAdapter(reviewList, (ReviewsAdapter.OnReviewClicked) getActivity(), user, typeface);
+            adapter = new ReviewsAdapter(reviewList, (ReviewsAdapter.OnReviewClicked) getActivity(), user);
 
             recyclerView.setAdapter(adapter);
 
@@ -126,12 +119,6 @@ public class ReviewsFragment extends Fragment {
         setupYours();
 
         return rootView;
-    }
-
-    public void setTypeface(Typeface typeface) {
-
-        this.typeface = typeface;
-
     }
 
     public void setRating(float rating) {
@@ -243,7 +230,7 @@ public class ReviewsFragment extends Fragment {
 
             if(recyclerView != null){
 
-                adapter = new ReviewsAdapter(reviewList, (ReviewsAdapter.OnReviewClicked) getActivity(), user, typeface);
+                adapter = new ReviewsAdapter(reviewList, (ReviewsAdapter.OnReviewClicked) getActivity(), user);
 
                 recyclerView.setAdapter(adapter);
 

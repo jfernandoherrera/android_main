@@ -27,17 +27,35 @@ public class AppTextView extends TextView{
 
         boolean isBold = a.getBoolean(R.styleable.AppTextView_bold, false);
 
+        boolean isLight = a.getBoolean(R.styleable.AppTextView_light, true);
+
         a.recycle();
 
         AppFont appFont = new AppFont();
 
-        if(isBold) {
+        if(isLight) {
 
-            setTypeface(appFont.getAppFontLight(context), Typeface.BOLD);
+            if (isBold) {
+
+                setTypeface(appFont.getAppFontLight(context), Typeface.BOLD);
+
+            } else {
+
+                setTypeface(appFont.getAppFontLight(context));
+
+            }
 
         } else {
 
-            setTypeface(appFont.getAppFontLight(context));
+            if (isBold) {
+
+                setTypeface(appFont.getAppFontMedium(context), Typeface.BOLD);
+
+            } else {
+
+                setTypeface(appFont.getAppFontMedium(context));
+
+            }
 
         }
 
