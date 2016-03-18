@@ -136,27 +136,6 @@ public class CategoryFragment extends Fragment {
 
         linearLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
 
-        linearLayout.setOnTouchListener(new View.OnTouchListener() {
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-
-                    circularImageView.setBorderColor(getResources().getColor(R.color.colorAccent2));
-
-                } else if(event.getAction() != MotionEvent.ACTION_MOVE){
-
-                    circularImageView.setBorderColor(getResources().getColor(R.color.colorAccent));
-
-                }
-
-                return false;
-
-            }
-
-        });
-
         if (connected) {
 
             User user = userContext.currentUser();

@@ -173,7 +173,9 @@ public class MainActivity extends AppCompatActivity implements CategoryFragment.
     public boolean onCreateOptionsMenu(Menu menu) {
 
         toolbar.inflateMenu((R.menu.menu_main));
-        
+
+        toolbar.setTitle(getString(R.string.categories));
+
         MenuItem searchItem = menu.findItem(R.id.action_search);
 
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);

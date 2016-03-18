@@ -1,6 +1,8 @@
 package com.amtechventures.tucita.utils.views;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.Gravity;
 import android.widget.Toast;
 
@@ -48,7 +50,7 @@ public class AlertDialogError {
 
     public void noTypedEnough(Context context) {
 
-        Toast typeMore = Toast.makeText(context, R.string.typing_advertisement, Toast.LENGTH_SHORT);
+        Toast typeMore = Toast.makeText(context, R.string.typing_help, Toast.LENGTH_SHORT);
 
         typeMore.setGravity(Gravity.CENTER | Gravity.LEFT, 0, 0);
 

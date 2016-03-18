@@ -8,6 +8,7 @@
         android:layout_width="match_parent"
         android:id="@+id/loginLogo"
         android:background="@drawable/logo_login"
+        android:elevation="8dp"
         android:layout_height="180dp" />
     <com.amtechventures.tucita.utils.views.AppTextInputLayout android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -91,7 +92,7 @@
         android:paddingEnd="-5dp"
         android:background="@drawable/button_interaction"
         android:paddingRight="-5dp"
-
+        android:elevation="8dp"
         android:layout_centerHorizontal="true" />
 </RelativeLayout>
 

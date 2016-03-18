@@ -17,7 +17,7 @@ public class LocationContext implements GoogleApiClient.OnConnectionFailedListen
     private Context context;
     private LocationRemote locationRemote;
     private GoogleApiClient googleApiClient;
-    private int timeMillis = 40000;
+    private int timeMillis = 60000;
 
 
     private LocationCompletion.LocationErrorCompletion completion;

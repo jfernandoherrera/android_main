@@ -1,6 +1,9 @@
 package com.amtechventures.tucita.activities.advanced;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.support.v4.app.ActivityCompat;
@@ -20,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.amtechventures.tucita.R;
@@ -36,6 +40,7 @@ import com.amtechventures.tucita.utils.strings.Strings;
 import com.amtechventures.tucita.utils.views.AlertDialogError;
 import com.amtechventures.tucita.utils.views.AppEditText;
 import com.amtechventures.tucita.utils.views.AppTextView;
+import com.amtechventures.tucita.utils.views.AppToolbar;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -43,7 +48,7 @@ import java.util.List;
 
 public class AdvancedSearchActivity extends AppCompatActivity  {
 
-    private Toolbar toolbar;
+    private AppToolbar toolbar;
     private String name;
     private VenuesResultFragment venuesResultFragment;
     private LocationOptionsFragment locationOptionsFragment;
@@ -54,6 +59,7 @@ public class AdvancedSearchActivity extends AppCompatActivity  {
     private ArrayList<City> currentCities;
     private CityContext cityContext;
     private AppEditText searchView;
+    private RelativeLayout alert;
     private TextView textViewCities;
     private final int minimumToSearch = 3;
 
@@ -76,6 +82,7 @@ public class AdvancedSearchActivity extends AppCompatActivity  {
         searchView = (AppEditText) findViewById(R.id.searchCities);
 
         searchView.addTextChangedListener(new TextWatcher() {
+
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -93,15 +100,17 @@ public class AdvancedSearchActivity extends AppCompatActivity  {
 
                 if (text.length() < minimumToSearch) {
 
-                    AlertDialogError alertDialogError = new AlertDialogError();
-
-                    alertDialogError.noTypedEnough(getApplicationContext());
+                  noTypedEnough();
 
                 }
+
                 setupCities(text);
 
             }
+
         });
+
+        alert = (RelativeLayout) findViewById(R.id.alert);
 
         textViewCities = (TextView) findViewById(R.id.textViewCities);
 
@@ -111,7 +120,7 @@ public class AdvancedSearchActivity extends AppCompatActivity  {
 
         currentCities = new ArrayList<>();
 
-        citiesAdapter = new CityAdapter(getApplicationContext(), R.layout.list_item);
+        citiesAdapter = new CityAdapter(getApplicationContext(), R.layout.city_list_item);
 
         listViewCities.setAdapter(citiesAdapter);
 
@@ -132,7 +141,17 @@ public class AdvancedSearchActivity extends AppCompatActivity  {
 
     }
 
+    public void noTypedEnough() {
 
+     alert.setVisibility(View.VISIBLE);
+
+    }
+
+    public void continueTypying(View view) {
+
+        alert.setVisibility(View.GONE);
+
+    }
     public void setupCities(String like){
 
         cityContext.loadLikeCities(like, new CityCompletion.ErrorCompletion() {
@@ -152,9 +171,13 @@ public class AdvancedSearchActivity extends AppCompatActivity  {
 
                     textViewCities.setVisibility(View.VISIBLE);
 
+                    searchView.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.pin_line), null, getResources().getDrawable(R.mipmap.ic_close), null);
+
                     citiesAdapter.notifyDataSetChanged();
 
                 } else{
+
+                    searchView.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.pin_line), null, null, null);
 
                     textViewCities.setVisibility(View.GONE);
 
@@ -296,33 +319,10 @@ public class AdvancedSearchActivity extends AppCompatActivity  {
 
     }
 
-    private TextView getActionBarTextView() {
-
-        TextView titleTextView = null;
-
-        String defaultNameTitleMenu = "mTitleTextView";
-
-        try {
-
-            Field field = toolbar.getClass().getDeclaredField(defaultNameTitleMenu);
-
-            field.setAccessible(true);
-
-            titleTextView = (TextView) field.get(toolbar);
-
-        } catch (NoSuchFieldException e) {
-
-        } catch (IllegalAccessException e) {
-
-        }
-
-        return titleTextView;
-
-    }
 
     private void setToolbar() {
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (AppToolbar) findViewById(R.id.toolbar);
 
         if (toolbar != null) {
 
@@ -366,9 +366,7 @@ public class AdvancedSearchActivity extends AppCompatActivity  {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        getActionBarTextView().setTypeface(typeface);
-
-        getSupportActionBar().setTitle(name);
+        toolbar.setTitle(name);
 
         return true;
 

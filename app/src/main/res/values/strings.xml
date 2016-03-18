@@ -58,7 +58,7 @@
     <string name="of">de</string>
     <string name="recent_treatments">Tratamientos recientes</string>
     <string name="recent_venues">Lugares recientes</string>
-    <string name="typing_advertisement">Escribe al menos 3 letras para conseguir sugerencias</string>
+    <string name="typing_help">Escribe al menos 3 letras para conseguir sugerencias</string>
     <string name="near">Lugares cerca de tí</string>
     <string name="dont_remember_password"> <u>Olvido la contraseña?</u>.</string>
     <string name="sorry_there_are_no">Lo sentimos, no hay espacios disponibles para la fecha </string>

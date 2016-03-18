@@ -48,13 +48,14 @@ public class LocationOptionsFragment extends Fragment implements LocationComplet
     private CategoryContext categoryContext;
     private String name;
     private SubCategoryContext subCategoryContext;
-    private TextView noResults;
+
     private Location lastLocation;
     private SubCategory subCategory;
     private VenueContext venueContext;
     private LocationContext locationContext;
     private MapView mapView;
     private GoogleMap map;
+    boolean zoomed;
 
     private void setupListFromSubCategory() {
 
@@ -126,6 +127,10 @@ public class LocationOptionsFragment extends Fragment implements LocationComplet
 
         super.onCreate(savedInstanceState);
 
+        zoomed = false;
+
+        subCategoryContext = SubCategoryContext.context(subCategoryContext );
+
         venueContext = VenueContext.context(venueContext);
 
         serviceContext = ServiceContext.context(serviceContext);
@@ -133,6 +138,7 @@ public class LocationOptionsFragment extends Fragment implements LocationComplet
         categoryContext = CategoryContext.context(categoryContext);
 
         locationContext = LocationContext.context(locationContext, getContext(), this);
+
     }
 
     @Override
@@ -197,7 +203,7 @@ public class LocationOptionsFragment extends Fragment implements LocationComplet
 
                         if(venueList.isEmpty()){
 
-                            noResults.setVisibility(View.VISIBLE);
+
 
                         } else {
 
@@ -220,15 +226,19 @@ public class LocationOptionsFragment extends Fragment implements LocationComplet
                                 map.addMarker(markerOptions);
 
                             }
+if(! zoomed) {
 
-                            LatLngBounds bounds = builder.build();
+    LatLngBounds bounds = builder.build();
 
-                            int padding = 20;
+    int padding = 140;
 
-                            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+    CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, padding);
 
-                            map.animateCamera(cameraUpdate);
+    map.animateCamera(cameraUpdate);
 
+    zoomed = true;
+
+}
                         }
 
                     }

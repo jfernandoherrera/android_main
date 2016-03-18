@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.amtechventures.tucita.R;
+
 
 public class CityAdapter extends ArrayAdapter {
 
@@ -23,8 +25,6 @@ public class CityAdapter extends ArrayAdapter {
     public View getView(int position, View view, ViewGroup viewGroup)
     {
         TextView textView = (TextView) super.getView(position, view, viewGroup);
-
-
 
         return textView;
     }
