@@ -42,32 +42,46 @@
     </RelativeLayout>
 <RelativeLayout
     android:id="@+id/containerShoppingView"
-    android:layout_gravity="bottom|center"
+    android:layout_gravity="bottom"
     android:layout_width="match_parent"
     android:layout_height="70dp"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
-    android:background="@drawable/jog_tab_bar_right_end_confirm_yellow">
+    android:background="@color/colorPrimary">
+    <RelativeLayout
+        android:layout_width="190dp"
+        android:layout_centerInParent="true"
+        android:layout_height="wrap_content">
+    <FrameLayout
+        android:layout_width="50dp"
+        android:layout_toLeftOf="@+id/bookNow"
+        android:background="@drawable/button_accent3"
+        android:layout_height="40dp">
     <ImageView
         android:id="@+id/car"
-        android:layout_width="wrap_content"
-        android:layout_height="70dp"
-        android:scaleType="fitXY"
+        android:layout_width="28dp"
+        android:layout_height="25dp"
+        android:layout_gravity="center"
+        android:background="@drawable/cart_icon"
         />
     <com.amtechventures.tucita.utils.views.CircleTextView
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="4dp"
         android:id="@+id/count"
+        android:layout_marginLeft="12.5dp"
+        android:visibility="gone"
         android:layout_width="21dp"
+        android:background="@drawable/list_subcategory"
         android:layout_height="21dp"
         android:textSize="12sp"
-        />
-    <Button
+        /></FrameLayout>
+    <com.amtechventures.tucita.utils.views.AppButton
         android:id="@+id/bookNow"
-        android:layout_centerInParent="true"
-        android:background="@android:color/transparent"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/button_accent2"
         android:text="@string/book_now"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"/>
+        android:textSize="15sp"
+        android:textColor="@android:color/white"
+        android:layout_width="140dp"
+        android:layout_height="40dp"/></RelativeLayout>
 </RelativeLayout>
 
 </merge>

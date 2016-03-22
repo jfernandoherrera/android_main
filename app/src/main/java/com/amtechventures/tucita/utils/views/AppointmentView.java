@@ -13,6 +13,7 @@ public class AppointmentView extends RelativeLayout {
 
     private TextView textName;
     private TextView textDate;
+    private TextView textHour;
 
     public AppointmentView(Context context, AttributeSet attrs) {
 
@@ -32,6 +33,7 @@ public class AppointmentView extends RelativeLayout {
 
         textDate = (TextView) findViewById(R.id.textDate);
 
+        textHour = (TextView) findViewById(R.id.textHour);
     }
 
     public void setTextName(String text) {
@@ -40,17 +42,11 @@ public class AppointmentView extends RelativeLayout {
 
     }
 
-    public void setTypeface(Typeface typeface) {
+    public void setTextDate(String date, String hour) {
 
-        textDate.setTypeface(typeface);
+        textDate.setText(date);
 
-        textName.setTypeface(typeface);
-
-    }
-
-    public void setTextDate(String text) {
-
-        textDate.setText(text);
+        textHour.setText(hour);
 
     }
 

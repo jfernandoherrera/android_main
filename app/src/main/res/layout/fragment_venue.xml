@@ -59,7 +59,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_marginEnd="@dimen/high_margin"
                         android:layout_marginRight="@dimen/high_margin"
-                        android:background="@android:color/transparent" />
+                       />
                 </RelativeLayout></RelativeLayout>
                 <com.amtechventures.tucita.utils.views.AppTextView
                     android:layout_width="match_parent"
@@ -146,9 +146,10 @@
                     android:gravity="center_vertical"
                     android:paddingRight="25dp"
                     android:textSize="13sp"
+                    android:background="@drawable/border2"
                     android:layout_below = "@+id/listViewDescription"
                     android:id="@+id/watch_location"
-                    android:background="@drawable/border2"/>
+                    />
                 <com.amtechventures.tucita.utils.views.AppTextView
                     android:layout_width="match_parent"
                     android:text="@string/opening_hours"

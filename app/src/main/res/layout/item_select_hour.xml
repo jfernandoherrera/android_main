@@ -6,6 +6,8 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="0dp"
         android:layout_weight="9"
+        android:drawableLeft="@drawable/add_icon"
+        android:drawablePadding="10dp"
         android:gravity="center_vertical"
         android:id="@+id/textHour"
         android:background="@android:color/transparent"

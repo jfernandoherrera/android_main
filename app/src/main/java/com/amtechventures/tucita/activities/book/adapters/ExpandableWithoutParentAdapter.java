@@ -1,7 +1,5 @@
 package com.amtechventures.tucita.activities.book.adapters;
 
-import android.graphics.Typeface;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,18 +17,14 @@ public class ExpandableWithoutParentAdapter extends BaseExpandableListAdapter {
     private List<Service> services;
     private ViewUtils viewUtils;
     private final ExpandableListView listViewParent;
-    private Typeface typeface;
 
-
-    public ExpandableWithoutParentAdapter(List<Service> services, ExpandableListView listViewParent, ViewUtils viewUtils, Typeface typeface){
+    public ExpandableWithoutParentAdapter(List<Service> services, ExpandableListView listViewParent, ViewUtils viewUtils){
 
         this.services = services;
 
         this.listViewParent = listViewParent;
 
         this.viewUtils = viewUtils;
-
-        this.typeface = typeface;
 
         if (services.size() == 1){
 
@@ -110,7 +104,7 @@ public class ExpandableWithoutParentAdapter extends BaseExpandableListAdapter {
 
         if (convertView == null) {
 
-            convertView = inflater.inflate(R.layout.item_service, null);
+            convertView = inflater.inflate(R.layout.item_service_checkout, null);
 
         }
 
@@ -122,13 +116,7 @@ public class ExpandableWithoutParentAdapter extends BaseExpandableListAdapter {
 
         final TextView textDuration = (TextView) convertView.findViewById(R.id.textDuration);
 
-        textDuration.setTextColor(convertView.getResources().getColor(R.color.blackSecondary));
-
         textDuration.setText(service.getDurationInfo());
-
-        textView.setTypeface(typeface);
-
-        textDuration.setTypeface(typeface);
 
         return convertView;
 
@@ -145,7 +133,7 @@ public class ExpandableWithoutParentAdapter extends BaseExpandableListAdapter {
 
                 Service service = services.get(childPosition);
 
-                convertView = inflater.inflate(R.layout.item_service, null);
+                convertView = inflater.inflate(R.layout.item_service_checkout, null);
 
                 final TextView textName = (TextView) convertView.findViewById(R.id.textName);
 
@@ -156,10 +144,6 @@ public class ExpandableWithoutParentAdapter extends BaseExpandableListAdapter {
                 textDuration.setTextColor(convertView.getResources().getColor(R.color.blackSecondary));
 
                 textDuration.setText(service.getDurationInfo());
-
-                textName.setTypeface(typeface);
-
-                textDuration.setTypeface(typeface);
 
             }
 

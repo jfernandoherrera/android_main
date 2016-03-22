@@ -25,6 +25,7 @@ import com.amtechventures.tucita.model.domain.venue.VenueAttributes;
 import com.amtechventures.tucita.utils.views.AppointmentView;
 import com.amtechventures.tucita.utils.views.ViewUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -103,8 +104,6 @@ public class AppointmentDetailsFragment extends Fragment{
         details.setTypeface(typeface);
 
         location.setTypeface(typeface);
-
-        appointmentView.setTypeface(typeface);
 
         button.setTypeface(typeface);
 
@@ -290,9 +289,17 @@ public class AppointmentDetailsFragment extends Fragment{
 
     private void setupAppointment(){
 
-        String date = appointment.getDate().toLocaleString();
+        Date date = appointment.getDate();
 
-        appointmentView.setTextDate(date);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM d/y");
+
+              String dateString = simpleDateFormat.format(date);
+
+        simpleDateFormat = new SimpleDateFormat("hh:mm a");
+
+        String hour = simpleDateFormat.format(date);
+
+        appointmentView.setTextDate(dateString, hour);
 
         String venueName = appointment.getVenue().getName();
 
@@ -310,7 +317,7 @@ public class AppointmentDetailsFragment extends Fragment{
 
         ViewUtils viewUtils = new ViewUtils(getContext());
 
-        adapter = new ExpandableWithoutParentAdapter(services, listViewServices, viewUtils, typeface);
+        adapter = new ExpandableWithoutParentAdapter(services, listViewServices, viewUtils);
 
         adapter.setInflater(inflater);
 

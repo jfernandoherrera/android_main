@@ -1,6 +1,7 @@
 package com.amtechventures.tucita.utils.views;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -19,29 +20,23 @@ import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.utils.common.AppFont;
 
 public class CircleTextView extends TextView {
-
-    private int padding;
-    private Drawable circlePaint;
+    int padding;
 
     public CircleTextView(Context context, AttributeSet attrs) {
 
         super(context, attrs);
 
-        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        int [] attributes = new int [] {android.R.attr.layout_height};
 
-        DisplayMetrics metrics = new DisplayMetrics();
+        TypedArray arr = context.obtainStyledAttributes(attrs, attributes);
 
-        wm.getDefaultDisplay().getMetrics(metrics);
+        padding = arr.hasValue(0) ? arr.getDimensionPixelOffset(0, 1) : 1;
 
-        double size = metrics.scaledDensity;
+        arr.recycle();
 
-        padding = (int) ((Integer.parseInt(attrs.getAttributeValue(2).substring(0, 2)) ) * size) / 2;
+        padding = ((padding) / 2);
 
         setPadding(padding / 2, padding / 3, 0, 0);
-
-        circlePaint = context.getResources().getDrawable(R.drawable.rate_05);
-
-        setBackgroundDrawable(circlePaint);
 
         AppFont appFont = new AppFont();
 

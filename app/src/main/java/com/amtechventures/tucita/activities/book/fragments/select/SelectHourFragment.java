@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -180,9 +182,15 @@ public class SelectHourFragment extends Fragment {
 
             String please = view.getResources().getString(R.string.pls_select_another_day);
 
-            String test = sorry + " " + date.get(Calendar.DAY_OF_MONTH) + " " + date.get(Calendar.MONTH) + " " + date.get(Calendar.YEAR) + " " + please;
+            String dateString = date.get(Calendar.DAY_OF_MONTH) + " " + date.get(Calendar.MONTH) + " " + date.get(Calendar.YEAR);
 
-            textView.setText(test);
+            String test = sorry + " " + dateString + " " + please;
+
+            SpannableStringBuilder builder = new SpannableStringBuilder(test);
+
+            builder.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.colorAccentText)), sorry.length(), sorry.length() + dateString.length() + 1, 0);
+
+            textView.setText(builder);
 
             recyclerView.setVisibility(View.GONE);
 

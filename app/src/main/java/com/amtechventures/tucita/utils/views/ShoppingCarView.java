@@ -180,8 +180,6 @@ public class ShoppingCarView extends FrameLayout implements ServicesToBookAdapte
 
         circleTextView = (CircleTextView) findViewById(R.id.count);
 
-        car.setImageResource(R.mipmap.ic_launcher);
-
         String circleText = " " + String.valueOf(servicesToBook.size());
 
         circleTextView.setText(circleText);
@@ -194,13 +192,6 @@ public class ShoppingCarView extends FrameLayout implements ServicesToBookAdapte
 
         display.getSize(size);
 
-        int translation = (int) (size.x * positionRatio) / 2;
-
-        circleTextView.setTranslationX(translation);
-
-        circleTextView.setTranslationY(-6);
-
-        circleTextView.bringToFront();
 
         car.setOnClickListener(new OnClickListener() {
 

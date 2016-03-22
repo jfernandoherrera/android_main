@@ -37,6 +37,7 @@ import com.amtechventures.tucita.model.domain.user.User;
 import com.amtechventures.tucita.model.error.AppError;
 import com.amtechventures.tucita.utils.common.AppFont;
 import com.amtechventures.tucita.utils.views.AlertDialogError;
+import com.amtechventures.tucita.utils.views.AppToolbar;
 import com.amtechventures.tucita.utils.views.ShoppingCarView;
 
 import java.lang.reflect.Field;
@@ -50,7 +51,7 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
     private ServiceFragment serviceFragment;
     private SelectDayFragment selectDateFragment;
     private SecureCheckoutFragment secureCheckoutFragment;
-    private Toolbar toolbar;
+    private AppToolbar toolbar;
     private ShoppingCarView shoppingCarView;
     private UserContext userContext;
     private RelativeLayout relativeLayout;
@@ -217,7 +218,7 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
         String venue = getString(R.string.venue);
 
-        getSupportActionBar().setTitle(venue);
+       toolbar.setTitle(venue);
 
     }
 
@@ -239,13 +240,15 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
         FragmentTransaction transaction = fragmentManager.beginTransaction();
 
+        serviceFragment.setVenue(venueFragment.getVenue());
+
         transaction.show(serviceFragment);
 
         transaction.commit();
 
         String serviceName = serviceFragment.getService().getName();
 
-        getSupportActionBar().setTitle(serviceName);
+        toolbar.setTitle(serviceName);
 
     }
 
@@ -275,7 +278,7 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
     private void setToolbar() {
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (AppToolbar) findViewById(R.id.toolbar);
 
         if (toolbar != null) {
 

@@ -9,8 +9,6 @@
     <com.amtechventures.tucita.utils.views.AppointmentView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/high_margin"
-        android:layout_marginLeft="@dimen/high_margin"
         android:id="@+id/appointment"/>
         <ExpandableListView
             android:layout_width="match_parent"

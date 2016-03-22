@@ -39,7 +39,7 @@
     android:paddingRight="@dimen/double_high_margin"
     android:gravity="center_vertical"
 />
-<TextView
+<com.amtechventures.tucita.utils.views.AppTextView
     android:layout_width="wrap_content"
     android:id="@+id/textPricesFrom"
     android:layout_height="48dp"

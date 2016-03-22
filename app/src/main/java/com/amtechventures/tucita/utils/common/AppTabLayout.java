@@ -7,7 +7,12 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+
+import com.amtechventures.tucita.R;
 
 public class AppTabLayout extends TabLayout {
 
@@ -30,7 +35,7 @@ public class AppTabLayout extends TabLayout {
 
             AppFont appFont = new AppFont();
 
-            typeface = appFont.getAppFontLight(getContext());
+            typeface = appFont.getAppFontMedium(getContext());
 
             this.removeAllTabs();
 
@@ -44,7 +49,7 @@ public class AppTabLayout extends TabLayout {
 
                 AppCompatTextView view = (AppCompatTextView) ((ViewGroup)slidingTabStrip.getChildAt(i)).getChildAt(1);
 
-                view.setTypeface(typeface, Typeface.NORMAL);
+                view.setTypeface(typeface, Typeface.BOLD);
 
             }
         }

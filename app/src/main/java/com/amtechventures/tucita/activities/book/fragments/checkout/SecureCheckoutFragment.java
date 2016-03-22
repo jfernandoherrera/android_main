@@ -31,6 +31,7 @@ import com.amtechventures.tucita.utils.views.ViewUtils;
 import com.parse.ParseRelation;
 import com.parse.ParseUser;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
@@ -52,7 +53,6 @@ public class SecureCheckoutFragment extends Fragment {
     private LayoutInflater inflater;
     private ExpandableWithoutParentAdapter adapter;
     private ExpandableListView listViewServices;
-    private Typeface typeface;
     private String telephone;
     private TextInputLayout textInputLayout;
 
@@ -77,12 +77,6 @@ public class SecureCheckoutFragment extends Fragment {
         super.onDetach();
 
         listener = null;
-
-    }
-
-    public void setTypeface(Typeface typeface) {
-
-        this.typeface = typeface;
 
     }
 
@@ -115,47 +109,11 @@ public class SecureCheckoutFragment extends Fragment {
 
         textInputLayout = (TextInputLayout) rootView.findViewById(R.id.inputClient);
 
-        textInputLayout.setTypeface(typeface);
-
-        inputClientTelephone.setTypeface(typeface);
-
-        textClientTelephone.setTypeface(typeface);
-
-        textTotal.setTypeface(typeface);
-
-        textEmail.setTypeface(typeface);
-
-        textClientName.setTypeface(typeface);
-
-        appointmentView.setTypeface(typeface);
-
         listViewServices = (ExpandableListView) rootView.findViewById(R.id.listViewServices);
 
         Button button = (Button) rootView.findViewById(R.id.placeOrder);
 
-        button.setTypeface(typeface, Typeface.BOLD);
-
         button.setBackgroundResource(R.drawable.cling_button_normal);
-
-        button.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-
-                    v.setBackgroundResource(R.drawable.cling_button_pressed);
-
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-
-                    v.setBackgroundResource(R.drawable.cling_button_normal);
-
-                }
-
-                return false;
-
-            }
-        });
-
 
         button.setOnClickListener(new View.OnClickListener() {
 
@@ -168,31 +126,18 @@ public class SecureCheckoutFragment extends Fragment {
 
         });
 
-        setupTitlesTypeface(rootView);
-
         this.inflater = inflater;
 
         return rootView;
 
     }
 
-    private void setupTitlesTypeface(View rootView){
-
-        TextView textClient = (TextView) rootView.findViewById(R.id.client);
-
-        TextView textTotal = (TextView) rootView.findViewById(R.id.total);
-
-        textClient.setTypeface(typeface, Typeface.BOLD);
-
-        textTotal.setTypeface(typeface, Typeface.BOLD);
-
-    }
 
     private void setupServices() {
 
         ViewUtils viewUtils = new ViewUtils(getContext());
 
-        adapter = new ExpandableWithoutParentAdapter(services, listViewServices, viewUtils, typeface);
+        adapter = new ExpandableWithoutParentAdapter(services, listViewServices, viewUtils);
 
         adapter.setInflater(inflater);
 
@@ -216,9 +161,15 @@ public class SecureCheckoutFragment extends Fragment {
 
     public void setupAppointmentView() {
 
-        String dateString = date.getTime().toLocaleString();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("M d/y");
 
-        appointmentView.setTextDate(dateString);
+        String dateString = simpleDateFormat.format(date.getTime());
+
+        simpleDateFormat = new SimpleDateFormat("hh:mm a");
+
+        String hour = simpleDateFormat.format(date.getTime());
+
+        appointmentView.setTextDate(dateString, hour);
 
         String venueName = venue.getName();
 

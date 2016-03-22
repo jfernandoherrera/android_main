@@ -1,7 +1,9 @@
 package com.amtechventures.tucita.activities.book.fragments.service;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,7 +15,9 @@ import android.widget.RelativeLayout;
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.model.domain.service.Service;
 import com.amtechventures.tucita.activities.book.adapters.ExpandableParentAdapter;
+import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.domain.venue.VenueAttributes;
+import com.amtechventures.tucita.utils.views.AppTextView;
 import com.amtechventures.tucita.utils.views.ServiceAddView;
 import com.amtechventures.tucita.utils.views.ViewUtils;
 
@@ -27,6 +31,8 @@ public class ServiceFragment extends Fragment {
     private LayoutInflater inflater;
     private OnServiceSelected listener;
     private Typeface typeface;
+    private Venue venue;
+    private AppTextView location;
 
     public interface OnServiceSelected {
 
@@ -37,6 +43,14 @@ public class ServiceFragment extends Fragment {
     public Service getService() {
 
         return service;
+
+    }
+
+    public void setVenue(Venue venue) {
+
+        this.venue = venue;
+
+        setupAddressAndLocation();
 
     }
 
@@ -72,6 +86,8 @@ public class ServiceFragment extends Fragment {
         relativeLayout = (RelativeLayout) rootView.findViewById(R.id.serviceContainer);
 
         serviceAddView = (ServiceAddView) rootView.findViewById(R.id.first);
+
+        location = (AppTextView) rootView.findViewById(R.id.textLocation);
 
         listViewParent = (ExpandableListView) rootView.findViewById(R.id.listViewDescription);
 
@@ -156,30 +172,43 @@ public class ServiceFragment extends Fragment {
         serviceAddView.setPrice(service.getPrice());
 
     }
-/*
+
+
+
     private void setupAddressAndLocation() {
 
-        String locationString = venue.getCity().formattedLocation();
+        if(venue != null ) {
 
-        String address = locationString + " " + venue.getAddress();
+            String locationString = venue.getCity().formattedLocation();
 
-        location.setText(address);
+            String address = locationString + " " + venue.getAddress();
 
-        location.setOnClickListener(new View.OnClickListener() {
+            location.setText(address);
 
-            @Override
-            public void onClick(View v) {
+            location.setOnClickListener(new View.OnClickListener() {
 
-                String url = VenueAttributes.linkToLocation + venue.getLatitude() + "," + venue.getLongitude();
+                @Override
+                public void onClick(View v) {
 
-                openWebURL(url);
+                    String url = VenueAttributes.linkToLocation + venue.getLatitude() + "," + venue.getLongitude();
 
-            }
+                    openWebURL(url);
 
-        });
+                }
+
+            });
+
+        }
 
     }
-    */
+    public void openWebURL(String inURL) {
+
+        Intent browse = new Intent(Intent.ACTION_VIEW, Uri.parse(inURL));
+
+        startActivity(browse);
+
+    }
+
     public void setServiceState(boolean state) {
 
         serviceAddView.setPlus(state);

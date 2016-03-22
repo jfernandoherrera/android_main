@@ -81,27 +81,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
         textPricesFrom.setText(servicePrice);
 
-        convertView.setOnTouchListener(new View.OnTouchListener() {
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-
-                    v.setBackgroundResource(R.drawable.pressed_application_background_static);
-
-                } else if (event.getAction() != MotionEvent.ACTION_MOVE) {
-
-                    v.setBackgroundColor(v.getResources().getColor(R.color.expanded_children_color));
-
-                }
-
-                return false;
-
-            }
-
-        });
-
         convertView.setOnClickListener(new View.OnClickListener() {
 
             @Override
