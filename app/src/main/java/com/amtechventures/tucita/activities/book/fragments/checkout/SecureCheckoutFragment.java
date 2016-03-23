@@ -1,6 +1,7 @@
 package com.amtechventures.tucita.activities.book.fragments.checkout;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
@@ -19,6 +20,8 @@ import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.book.adapters.ExpandableWithoutParentAdapter;
 import com.amtechventures.tucita.model.context.appointment.AppointmentCompletion;
 import com.amtechventures.tucita.model.context.appointment.AppointmentContext;
+import com.amtechventures.tucita.model.context.user.UserCompletion;
+import com.amtechventures.tucita.model.context.user.UserContext;
 import com.amtechventures.tucita.model.domain.appointment.Appointment;
 import com.amtechventures.tucita.model.domain.appointment.AppointmentAttributes;
 import com.amtechventures.tucita.model.domain.service.Service;
@@ -28,12 +31,15 @@ import com.amtechventures.tucita.model.error.AppError;
 import com.amtechventures.tucita.utils.views.AlertDialogError;
 import com.amtechventures.tucita.utils.views.AppointmentView;
 import com.amtechventures.tucita.utils.views.ViewUtils;
+import com.mikhaellopez.circularimageview.CircularImageView;
 import com.parse.ParseRelation;
 import com.parse.ParseUser;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class SecureCheckoutFragment extends Fragment {
 
@@ -50,11 +56,14 @@ public class SecureCheckoutFragment extends Fragment {
     private TextView textTotal;
     private AppointmentContext appointmentContext;
     private OnPlaceOrder listener;
+    private UserContext userContext;
     private LayoutInflater inflater;
     private ExpandableWithoutParentAdapter adapter;
     private ExpandableListView listViewServices;
     private String telephone;
+    private CircularImageView circularImageView;
     private TextInputLayout textInputLayout;
+    private TextView  textViewMemberFrom;
 
     public interface OnPlaceOrder {
 
@@ -93,11 +102,15 @@ public class SecureCheckoutFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        userContext = UserContext.context(userContext);
+
         View rootView = inflater.inflate(R.layout.fragment_checkout, container, false);
 
         appointmentView = (AppointmentView) rootView.findViewById(R.id.appointment);
 
-        textClientName = (TextView) rootView.findViewById(R.id.clientName);
+        textClientName = (TextView) rootView.findViewById(R.id.accountName);
+
+        textViewMemberFrom= (TextView) rootView.findViewById(R.id.accountMemberFrom);
 
         textEmail = (TextView) rootView.findViewById(R.id.clientEmail);
 
@@ -107,13 +120,13 @@ public class SecureCheckoutFragment extends Fragment {
 
         textTotal = (TextView) rootView.findViewById(R.id.textPrice);
 
+        circularImageView = (CircularImageView) rootView.findViewById(R.id.imageUser);
+
         textInputLayout = (TextInputLayout) rootView.findViewById(R.id.inputClient);
 
         listViewServices = (ExpandableListView) rootView.findViewById(R.id.listViewServices);
 
         Button button = (Button) rootView.findViewById(R.id.placeOrder);
-
-        button.setBackgroundResource(R.drawable.cling_button_normal);
 
         button.setOnClickListener(new View.OnClickListener() {
 
@@ -187,9 +200,43 @@ public class SecureCheckoutFragment extends Fragment {
 
     }
 
+    private Bitmap setImageUser(User user){
+
+        Bitmap image = null;
+
+        if(userContext.isFacebook(user)) {
+
+            image = userContext.getPicture();
+
+        }
+
+        return image;
+
+    }
+
     private void setupUser(){
 
-            textClientName.setText(user.getName());
+        Bitmap image = setImageUser(user);
+
+        if(image != null) {
+
+            circularImageView.setImageBitmap(image);
+
+        }
+
+        Date createdAt = user.getParseUser().getCreatedAt();
+
+        int bugDate = 1900;
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM", Locale.getDefault());
+
+        String memberFrom = getString(R.string.member_from) + " " + dateFormat.format(createdAt) + " " + getString(R.string.of) + " " + (createdAt.getYear() + bugDate);
+
+        String userName = user.getName();
+
+        textViewMemberFrom.setText(memberFrom);
+
+            textClientName.setText(userName);
 
             textEmail.setText(user.getEmail());
 

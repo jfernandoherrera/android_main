@@ -35,9 +35,12 @@ import com.amtechventures.tucita.utils.common.AppFont;
 import com.amtechventures.tucita.utils.views.AlertDialogError;
 import com.mikhaellopez.circularimageview.CircularImageView;
 import java.lang.reflect.Field;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class AccountActivity extends AppCompatActivity implements VenuesAdapter.OnReview, AddReviewFragment.OnSend{
 
@@ -299,6 +302,18 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
         }
 
         setNameUser(user);
+
+        Date createdAt = user.getParseUser().getCreatedAt();
+
+        int bugDate = 1900;
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM", Locale.getDefault());
+
+        String memberFrom = getString(R.string.member_from) + " " + dateFormat.format(createdAt) + " " + getString(R.string.of) + " " + (createdAt.getYear() + bugDate);
+
+        TextView textView = (TextView) findViewById(R.id.accountMemberFrom);
+
+        textView.setText(memberFrom);
 
     }
 

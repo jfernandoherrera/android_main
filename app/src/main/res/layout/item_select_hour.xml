@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:paddingTop="8dp"
+    android:background="@drawable/border_up_down"
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="60dp">
-    <TextView
+    <com.amtechventures.tucita.utils.views.AppTextView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="0dp"
         android:layout_weight="9"
@@ -12,11 +14,10 @@
         android:id="@+id/textHour"
         android:background="@android:color/transparent"
         style="@style/AppTheme.ListViewItem"/>
-    <TextView
+    <com.amtechventures.tucita.utils.views.AppTextView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="0dp"
         android:layout_weight="1"
         android:id="@+id/textPrice"
-        android:background="@android:color/transparent"
         style="@style/AppTheme.ListViewItem"/>
 </LinearLayout>

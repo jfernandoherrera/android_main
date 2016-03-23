@@ -10,6 +10,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.amtechventures.tucita.R;
@@ -50,6 +51,8 @@ public class AppTabLayout extends TabLayout {
                 AppCompatTextView view = (AppCompatTextView) ((ViewGroup)slidingTabStrip.getChildAt(i)).getChildAt(1);
 
                 view.setTypeface(typeface, Typeface.BOLD);
+
+                view.setPadding(0,0,0,8);
 
             }
         }

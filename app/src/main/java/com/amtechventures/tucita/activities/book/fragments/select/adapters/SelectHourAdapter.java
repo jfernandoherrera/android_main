@@ -1,17 +1,13 @@
 package com.amtechventures.tucita.activities.book.fragments.select.adapters;
 
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.model.domain.slot.Slot;
-
 import java.util.Calendar;
 import java.util.List;
 
@@ -21,7 +17,7 @@ public class SelectHourAdapter extends RecyclerView.Adapter<SelectHourAdapter.Vi
     private int price;
     private OnSlotSelected listener;
     private Calendar date;
-    private Typeface typeface;
+
 
     public interface OnSlotSelected {
 
@@ -29,7 +25,7 @@ public class SelectHourAdapter extends RecyclerView.Adapter<SelectHourAdapter.Vi
 
     }
 
-    public SelectHourAdapter(int price, List<Slot> slots, OnSlotSelected listener, Calendar date, Typeface typeface) {
+    public SelectHourAdapter(int price, List<Slot> slots, OnSlotSelected listener, Calendar date) {
 
         this.date = date;
 
@@ -38,8 +34,6 @@ public class SelectHourAdapter extends RecyclerView.Adapter<SelectHourAdapter.Vi
         this.slots = slots;
 
         this.price = price;
-
-        this.typeface = typeface;
 
     }
 
@@ -90,34 +84,7 @@ public class SelectHourAdapter extends RecyclerView.Adapter<SelectHourAdapter.Vi
 
             textPricesFrom = (TextView) itemView.findViewById(R.id.textPrice);
 
-            textHour.setTypeface(typeface);
-
-            textPricesFrom.setTypeface(typeface);
-
             textPricesFrom.setVisibility(View.GONE);
-
-            itemView.setOnTouchListener(new View.OnTouchListener() {
-
-                                            @Override
-                                            public boolean onTouch(View v, MotionEvent event) {
-
-                                                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-
-                                                    v.setBackgroundResource(R.drawable.pressed_application_background_static);
-
-                                                } else if (event.getAction() != MotionEvent.ACTION_MOVE) {
-
-                                                    v.setBackgroundColor(Color.TRANSPARENT);
-
-                                                }
-
-                                                return false;
-
-                                            }
-
-                                        }
-
-            );
 
             itemView.setOnClickListener(new View.OnClickListener() {
 

@@ -118,6 +118,12 @@ public class ExpandableWithoutParentAdapter extends BaseExpandableListAdapter {
 
         textDuration.setText(service.getDurationInfo());
 
+        final TextView textPrice = (TextView) convertView.findViewById(R.id.textPrices);
+
+        String price ="$" + service.getPrice();
+
+        textPrice.setText(price);
+
         return convertView;
 
     }
@@ -144,6 +150,12 @@ public class ExpandableWithoutParentAdapter extends BaseExpandableListAdapter {
                 textDuration.setTextColor(convertView.getResources().getColor(R.color.blackSecondary));
 
                 textDuration.setText(service.getDurationInfo());
+
+                final TextView textPrice = (TextView) convertView.findViewById(R.id.textPrices);
+
+                String price ="$" + service.getPrice();
+
+                textPrice.setText(price);
 
             }
 

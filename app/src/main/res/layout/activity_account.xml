@@ -6,47 +6,79 @@
     tools:context="com.amtechventures.tucita.activities.account.AccountActivity">
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
       >
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        <android.support.v7.widget.Toolbar
+        <com.amtechventures.tucita.utils.views.AppToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="62dp"
             android:theme="@style/AppTheme.Base"
-            android:background="@color/colorPrimary"
+            android:background="@color/colorAccent"
             android:paddingBottom="@dimen/high_margin"/>
-        <com.mikhaellopez.circularimageview.CircularImageView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginTop="20dp"
-            android:id="@+id/imageUser"
-            android:layout_gravity="top|center_horizontal"
-            android:padding="5dp"
-            app:border_width="0dp"
-            app:shadow="true"
-            app:shadow_radius="1"
-            app:civ_border_color="@android:color/transparent"
-            />
-        </FrameLayout>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/white"
-            android:textSize="20sp"
-            android:layout_marginTop="5dp"
-            android:layout_gravity="center"
-            android:id="@+id/textName"/>
-        <android.support.design.widget.TabLayout
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:id="@+id/backgroundContainer"
+            android:elevation="8dp"
+            android:gravity="center_vertical"
+            android:layout_alignParentBottom="true"
+            android:layout_height="79dp">
+            <com.mikhaellopez.circularimageview.CircularImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_marginLeft="@dimen/high_margin"
+                android:layout_marginStart="@dimen/high_margin"
+                android:layout_marginTop="10dp"
+                android:layout_width="62dp"
+                android:layout_height="62dp"
+                android:id="@+id/imageUser"
+                android:layout_gravity="top|center_horizontal"
+                android:padding="5dp"
+                app:border_width="3dp"
+                android:src="@drawable/user_icon"
+                app:shadow="true"
+                app:shadow_radius="1"
+                app:border_color="@color/colorAccent"
+                />
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <com.amtechventures.tucita.utils.views.AppTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:gravity="bottom"
+                    android:id="@+id/textName"
+                    app:bold="true"
+                    android:textSize="24sp"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:paddingRight="@dimen/activity_horizontal_margin"
+                    android:paddingEnd="@dimen/activity_horizontal_margin"
+                    android:paddingStart="@dimen/activity_horizontal_margin"
+                    />
+                <com.amtechventures.tucita.utils.views.AppTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_below="@+id/textName"
+                    android:gravity="center"
+                    android:id="@+id/accountMemberFrom"
+                    android:textSize="14sp"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:paddingRight="@dimen/activity_horizontal_margin"
+                    android:paddingEnd="@dimen/activity_horizontal_margin"
+                    android:paddingStart="@dimen/activity_horizontal_margin"
+                    /></RelativeLayout>
+        </LinearLayout>
+        <com.amtechventures.tucita.utils.common.AppTabLayout
             android:id="@+id/tabs"
             android:layout_width="wrap_content"
+            app:tabTextColor="@color/titleBackground"
+            app:tabSelectedTextColor="@color/colorAccent3"
+            app:tabBackground="@drawable/tab_bg"
+            app:tabIndicatorColor="@color/colorAccent3"
             android:layout_height="wrap_content"
             app:tabMode="scrollable"
-            app:tabIndicatorHeight="5dp"
+            app:tabIndicatorHeight="2dp"
             android:layout_gravity="center"/>
 
     </android.support.design.widget.AppBarLayout>

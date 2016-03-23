@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 <LinearLayout
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -18,26 +18,70 @@
             android:indicatorRight="329dp"
             android:foregroundGravity="bottom"
             />
-    <TextView
+    <com.amtechventures.tucita.utils.views.AppTextView
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:paddingLeft="@dimen/high_margin"
-        android:gravity="bottom"
+        android:gravity="center_vertical"
         android:paddingStart="@dimen/high_margin"
         android:paddingRight="@dimen/high_margin"
         android:paddingEnd="@dimen/high_margin"
+        android:textColor="@color/white"
         android:id="@+id/client"
-        android:background="@color/colorPrimaryLight"
+        android:background="@color/colorPrimary"
         android:text="@string/client_details"/>
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:id="@+id/backgroundContainer"
+        android:elevation="8dp"
         android:gravity="center_vertical"
-        android:layout_marginLeft="@dimen/high_margin"
-        android:layout_marginStart="@dimen/high_margin"
-        android:id="@+id/clientName"
-        />
-    <TextView
+        android:layout_height="79dp">
+        <com.mikhaellopez.circularimageview.CircularImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_marginLeft="@dimen/high_margin"
+            android:layout_marginStart="@dimen/high_margin"
+            android:layout_marginTop="10dp"
+            android:layout_width="62dp"
+            android:layout_height="62dp"
+            android:id="@+id/imageUser"
+            android:layout_gravity="top|center_horizontal"
+            android:padding="5dp"
+            app:border_width="0dp"
+            android:src="@drawable/user_icon"
+            app:shadow="true"
+            app:shadow_radius="1"
+            app:border_color="@color/colorAccent"
+            />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <com.amtechventures.tucita.utils.views.AppTextView
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:gravity="bottom"
+                android:id="@+id/accountName"
+                app:bold="true"
+                android:textSize="24sp"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingEnd="@dimen/activity_horizontal_margin"
+                android:paddingStart="@dimen/activity_horizontal_margin"
+                />
+            <com.amtechventures.tucita.utils.views.AppTextView
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_below="@+id/accountName"
+                android:gravity="center"
+                android:id="@+id/accountMemberFrom"
+                android:textSize="14sp"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingEnd="@dimen/activity_horizontal_margin"
+                android:paddingStart="@dimen/activity_horizontal_margin"
+                /></RelativeLayout>
+    </LinearLayout>
+    <com.amtechventures.tucita.utils.views.AppTextView
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="center_vertical"
@@ -46,7 +90,7 @@
         android:id="@+id/clientTelephone"
         android:visibility="gone"
         />
-    <android.support.design.widget.TextInputLayout
+    <com.amtechventures.tucita.utils.views.AppTextInputLayout
         android:layout_width="match_parent"
         android:id="@+id/inputClient"
         android:layout_marginTop="2dp"
@@ -57,7 +101,7 @@
         android:layout_marginBottom="8dp"
         android:visibility="gone"
         android:layout_height="wrap_content">
-    <EditText
+    <com.amtechventures.tucita.utils.views.AppEditText
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="center_vertical"
@@ -67,8 +111,8 @@
         android:inputType="phone"
         android:id="@+id/inputClientTelephone"/>
 
-    </android.support.design.widget.TextInputLayout>
-    <TextView
+    </com.amtechventures.tucita.utils.views.AppTextInputLayout>
+    <com.amtechventures.tucita.utils.views.AppTextView
         android:layout_width="match_parent"
         android:gravity="center_vertical"
         android:layout_height="50dp"
@@ -79,7 +123,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/com_facebook_button_login_silver_background_color"
+        android:background="@color/bg_title"
         android:padding="@dimen/high_margin">
         <LinearLayout
             android:orientation="vertical"
@@ -87,23 +131,28 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true">
-            <TextView
+            <com.amtechventures.tucita.utils.views.AppTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="bottom"
+                app:bold="true"
+                app:light="false"
                 android:id="@+id/total"
-                android:textColor="@color/blackSecondary"
+                android:textColor="@color/colorAccentText"
                 android:text="@string/order_total"/>
-            <TextView
+            <com.amtechventures.tucita.utils.views.AppTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/textPrice"
                 />
         </LinearLayout>
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <com.amtechventures.tucita.utils.views.AppButton
+        android:layout_width="130dp"
+        android:layout_height="40dp"
+        android:background="@drawable/normal"
         android:layout_alignParentRight="true"
+        android:textSize="13sp"
+        android:textColor="@color/white"
         android:layout_alignParentEnd="true"
         android:layout_marginLeft="@dimen/high_margin"
         android:layout_marginStart="@dimen/high_margin"

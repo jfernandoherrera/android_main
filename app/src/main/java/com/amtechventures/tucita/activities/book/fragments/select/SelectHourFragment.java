@@ -6,7 +6,9 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
+import android.text.style.TypefaceSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +24,7 @@ import com.amtechventures.tucita.model.domain.appointment.Appointment;
 import com.amtechventures.tucita.model.domain.slot.Slot;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.error.AppError;
+import com.amtechventures.tucita.utils.common.AppFont;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -72,7 +75,7 @@ public class SelectHourFragment extends Fragment {
 
         relativeLayout = (RelativeLayout) rootView.findViewById(R.id.concealer);
 
-        adapter = new SelectHourAdapter(price, slots, listener, date, typeface);
+        adapter = new SelectHourAdapter(price, slots, listener, date);
 
         recyclerView.setAdapter(adapter);
 
@@ -182,13 +185,19 @@ public class SelectHourFragment extends Fragment {
 
             String please = view.getResources().getString(R.string.pls_select_another_day);
 
-            String dateString = date.get(Calendar.DAY_OF_MONTH) + " " + date.get(Calendar.MONTH) + " " + date.get(Calendar.YEAR);
+            String day = date.get(Calendar.DAY_OF_MONTH) < 10 ? "0" + date.get(Calendar.DAY_OF_MONTH) : date.get(Calendar.DAY_OF_MONTH) + "";
 
-            String test = sorry + " " + dateString + " " + please;
+            String month = (date.get(Calendar.MONTH) + 1) < 10 ? "0" + (date.get(Calendar.MONTH) + 1): (date.get(Calendar.MONTH) + 1) + "";
+
+            String dateString = day + "/" + month + "/" + date.get(Calendar.YEAR);
+
+            String test = sorry + " " + dateString + ". " + please;
 
             SpannableStringBuilder builder = new SpannableStringBuilder(test);
 
             builder.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.colorAccentText)), sorry.length(), sorry.length() + dateString.length() + 1, 0);
+
+            builder.setSpan (new TypefaceSpan("bold"), sorry.length(), sorry.length() + dateString.length() + 1, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
 
             textView.setText(builder);
 

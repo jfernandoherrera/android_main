@@ -275,7 +275,7 @@ public class BookingsFragment extends Fragment {
 
                 if(adapter == null) {
 
-                    adapter = new AppointmentsAdapter(completedAppointmentsList, pendingAppointmentsList, typeface);
+                    adapter = new AppointmentsAdapter(completedAppointmentsList, pendingAppointmentsList);
 
                     recyclerView.setAdapter(adapter);
 

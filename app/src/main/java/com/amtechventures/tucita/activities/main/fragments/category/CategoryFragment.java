@@ -104,7 +104,7 @@ public class CategoryFragment extends Fragment {
     }
 
 
-    private Bitmap setImageUser(User user, View view){
+    private Bitmap setImageUser(User user){
 
         Bitmap image = null;
 
@@ -140,7 +140,7 @@ public class CategoryFragment extends Fragment {
 
             User user = userContext.currentUser();
 
-            Bitmap image = setImageUser(user, view);
+            Bitmap image = setImageUser(user);
 
             if(image != null) {
 
