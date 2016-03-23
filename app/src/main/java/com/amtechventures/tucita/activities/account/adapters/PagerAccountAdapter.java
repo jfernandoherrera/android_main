@@ -1,10 +1,8 @@
 package com.amtechventures.tucita.activities.account.adapters;
 
-import android.graphics.Typeface;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-
 import com.amtechventures.tucita.activities.account.fragments.bookings.BookingsFragment;
 import com.amtechventures.tucita.activities.account.fragments.venues.VenuesFragment;
 
@@ -15,7 +13,7 @@ public class PagerAccountAdapter extends FragmentStatePagerAdapter {
     VenuesFragment venuesFragment;
 
 
-    public PagerAccountAdapter(FragmentManager fm, int NumOfTabs, Typeface typeface) {
+    public PagerAccountAdapter(FragmentManager fm, int NumOfTabs) {
 
         super(fm);
 
@@ -24,10 +22,6 @@ public class PagerAccountAdapter extends FragmentStatePagerAdapter {
         bookingsFragment = new BookingsFragment();
 
         venuesFragment = new VenuesFragment();
-
-        bookingsFragment.setTypeface(typeface);
-
-        venuesFragment.setTypeface(typeface);
 
     }
 

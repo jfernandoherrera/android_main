@@ -15,8 +15,10 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.amtechventures.tucita.R;
@@ -35,7 +37,6 @@ public class VenuesAdapter extends RecyclerView.Adapter<VenuesAdapter.ViewHolder
     OnReview listener;
     String reviewBy;
     String users;
-    Typeface typeface;
 
     public interface OnReview {
 
@@ -43,11 +44,9 @@ public class VenuesAdapter extends RecyclerView.Adapter<VenuesAdapter.ViewHolder
 
     }
 
-    public VenuesAdapter(List<AppointmentVenue> venues, OnReview listener, String reviewBy, String users, Typeface typeface) {
+    public VenuesAdapter(List<AppointmentVenue> venues, OnReview listener, String reviewBy, String users) {
 
         super();
-
-        this.typeface = typeface;
 
         this.listener = listener;
 
@@ -97,7 +96,7 @@ public class VenuesAdapter extends RecyclerView.Adapter<VenuesAdapter.ViewHolder
 
         holder.venueImage.setImageBitmap(venue.getPicture());
 
-        float rating = (float)venue.getRating();
+        final float rating = (float)venue.getRating();
 
         if(rating != 0) {
 
@@ -111,11 +110,11 @@ public class VenuesAdapter extends RecyclerView.Adapter<VenuesAdapter.ViewHolder
 
         }
 
-        holder.ratingBarReview.setVisibility(View.VISIBLE);
+        holder.rating.setVisibility(View.VISIBLE);
 
-        holder.ratingBarReview.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+        holder.rating.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+            public void onClick(View v) {
 
                 listener.onReview(venue, rating);
 
@@ -124,9 +123,19 @@ public class VenuesAdapter extends RecyclerView.Adapter<VenuesAdapter.ViewHolder
 
         if(appointmentVenue.getRanked()){
 
-            holder.textReview.setVisibility(View.GONE);
+            holder.withReview.setBackgroundDrawable(null);
 
-            holder.ratingBarReview.setVisibility(View.GONE);
+            holder.withoutReview.setBackgroundResource(R.drawable.bg_top);
+
+            holder.rating.setVisibility(View.GONE);
+
+        }else {
+
+            holder.withReview.setBackgroundResource(R.drawable.bg_top);
+
+            holder.withoutReview.setBackgroundColor(Color.TRANSPARENT);
+
+            holder.rating.setVisibility(View.VISIBLE);
 
         }
     }
@@ -147,8 +156,6 @@ public class VenuesAdapter extends RecyclerView.Adapter<VenuesAdapter.ViewHolder
 
         protected TextView location;
 
-        protected TextView textReview;
-
         protected TextView textViewReviews;
 
         protected RatingBar ratingBar;
@@ -157,9 +164,13 @@ public class VenuesAdapter extends RecyclerView.Adapter<VenuesAdapter.ViewHolder
 
         private CardView venueIcon;
 
-        protected RatingBar ratingBarReview;
+        private TextView rating;
 
         protected String from;
+
+        protected RelativeLayout withReview;
+
+        protected RelativeLayout withoutReview;
 
         public void setAddress(String address) {
 
@@ -172,8 +183,6 @@ public class VenuesAdapter extends RecyclerView.Adapter<VenuesAdapter.ViewHolder
 
             location = (TextView) itemView.findViewById(R.id.textLocation);
 
-            textReview = (TextView) itemView.findViewById(R.id.textReview);
-
             textViewReviews = (TextView) itemView.findViewById(R.id.textViewReviews);
 
             name = (TextView) itemView.findViewById(R.id.textName);
@@ -184,41 +193,13 @@ public class VenuesAdapter extends RecyclerView.Adapter<VenuesAdapter.ViewHolder
 
             ratingBar = (RatingBar) itemView.findViewById(R.id.searchRatingBar);
 
+            rating = (TextView) itemView.findViewById(R.id.ratingButton);
+
+            withoutReview = (RelativeLayout) itemView.findViewById(R.id.withoutReview);
+
+            withReview = (RelativeLayout) itemView.findViewById(R.id.withReview);
+
             setupStars();
-
-            ratingBarReview = (RatingBar) itemView.findViewById(R.id.ratingBar);
-
-            location.setTypeface(typeface);
-
-            textReview.setTypeface(typeface);
-
-            textViewReviews.setTypeface(typeface);
-
-            name.setTypeface(typeface);
-
-            if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-
-
-                venueIcon.setOnTouchListener(new View.OnTouchListener() {
-                    @Override
-                    public boolean onTouch(View v, MotionEvent event) {
-
-                        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-
-                            venueIcon.setCardElevation(0);
-
-
-                        } else if (event.getAction() != MotionEvent.ACTION_MOVE) {
-
-                            venueIcon.setCardElevation(6);
-
-                        }
-
-                        return false;
-                    }
-                });
-
-            }
 
             venueIcon.setOnClickListener(new View.OnClickListener() {
 

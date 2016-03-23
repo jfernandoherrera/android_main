@@ -127,7 +127,7 @@ public class SubCategoryFragment extends DialogFragment {
 
                 int others = subCategories.size();
 
-                if (position == others + 1) {
+                if (position == others ) {
 
                     listener.onOthersClicked();
 

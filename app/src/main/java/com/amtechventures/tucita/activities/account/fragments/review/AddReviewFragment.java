@@ -1,6 +1,7 @@
 package com.amtechventures.tucita.activities.account.fragments.review;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.model.context.review.ReviewCompletion;
 import com.amtechventures.tucita.model.context.review.ReviewContext;
+import com.amtechventures.tucita.model.context.user.UserContext;
 import com.amtechventures.tucita.model.domain.review.Review;
 import com.amtechventures.tucita.model.domain.user.User;
 import com.amtechventures.tucita.model.domain.venue.Venue;
@@ -38,12 +40,12 @@ public class AddReviewFragment extends DialogFragment {
     TextView textTitle;
     TextView textDescription;
     TextView textName;
-    Button send;
+    TextView send;
+    UserContext userContext;
     User user;
     Venue venue;
     OnSend listener;
     float rating;
-    private Typeface typeface;
     boolean doReview;
 
     public interface OnSend{
@@ -60,11 +62,6 @@ public class AddReviewFragment extends DialogFragment {
 
     }
 
-    public void setTypeface(Typeface typeface) {
-
-        this.typeface = typeface;
-
-    }
 
     @Override
     public void onDetach() {
@@ -96,9 +93,25 @@ public class AddReviewFragment extends DialogFragment {
 
     }
 
+    private Bitmap setImageUser(User user){
+
+        Bitmap image = null;
+
+        if(userContext.isFacebook(user)) {
+
+            image = userContext.getPicture();
+
+        }
+
+        return image;
+
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        userContext = UserContext.context(userContext);
 
         View rootView = inflater.inflate(R.layout.fragment_add_review, container, false);
 
@@ -112,57 +125,16 @@ public class AddReviewFragment extends DialogFragment {
 
         ratingView = (RatingView) rootView.findViewById(R.id.ratingView);
 
-        send = (Button) rootView.findViewById(R.id.send);
-
-        TextInputLayout textInputLayout = (TextInputLayout) rootView.findViewById(R.id.textTitleLayout);
-
-        textInputLayout.setTypeface(typeface);
-
-        textInputLayout = (TextInputLayout) rootView.findViewById(R.id.textDescriptionLayout);
-
-        textInputLayout.setTypeface(typeface);
-
-        textTitle.setTypeface(typeface);
-
-        textName.setTypeface(typeface);
-
-        textDescription.setTypeface(typeface);
-
-        ratingView.setTypeface(typeface);
-
-        send.setTypeface(typeface);
+        send = (TextView) rootView.findViewById(R.id.send);
 
         ratingView.setRating(rating);
-
-        send.setBackgroundColor(Color.WHITE);
-
-        send.setOnTouchListener(new View.OnTouchListener() {
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-
-                    send.setBackgroundResource(R.drawable.pressed_application_background_static);
-
-                } else if (event.getAction() != MotionEvent.ACTION_MOVE) {
-
-                    send.setBackgroundColor(Color.WHITE);
-
-                }
-
-                return false;
-
-            }
-        });
-
 
         send.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
 
-        sendReview();
+                sendReview();
 
             }
         });
@@ -184,6 +156,17 @@ public class AddReviewFragment extends DialogFragment {
         String text = reviewBy + " " + user.getName();
 
         textName.setText(text);
+
+        Bitmap image = setImageUser(user);
+
+        if(image != null) {
+
+            circularImageView.setBorderColor(getResources().getColor(R.color.colorAccent));
+
+            circularImageView.setImageBitmap(image);
+
+        }
+
 
         return rootView;
     }

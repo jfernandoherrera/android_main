@@ -94,7 +94,7 @@ public class VenuesFragment extends Fragment {
 
                     String users = getString(R.string.users);
 
-                    adapter = new VenuesAdapter(appointmentVenues, adapterListener, reviewBy, users, typeface);
+                    adapter = new VenuesAdapter(appointmentVenues, adapterListener, reviewBy, users);
 
                     recyclerView.setAdapter(adapter);
 

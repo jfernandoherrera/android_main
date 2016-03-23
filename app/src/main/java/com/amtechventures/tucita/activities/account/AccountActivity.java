@@ -50,7 +50,6 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
     private ViewPager viewPager;
     private CircularImageView circularImageView;
     private TextView textName;
-    Typeface typeface;
     private AppointmentContext appointmentContext;
     PagerAccountAdapter pagerAccountAdapter;
     User user;
@@ -75,12 +74,6 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
         circularImageView = (CircularImageView) findViewById(R.id.imageUser);
 
         textName = (TextView) findViewById(R.id.textName);
-
-        AppFont appFont = new AppFont();
-
-        typeface = appFont.getAppFontLight(getApplicationContext());
-
-        textName.setTypeface(typeface);
 
         setupTabs();
 
@@ -118,9 +111,9 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
 
         TextView tabText = (TextView) tab.getCustomView();
 
-        tabText.setText(R.string.bookings);
+        tabText.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bookings, 0, 0, 0);
 
-        tabText.setTypeface(typeface, Typeface.BOLD);
+        tabText.setText(R.string.bookings);
 
         TabLayout.Tab tab1 = tabLayout.newTab();
 
@@ -128,7 +121,7 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
 
         TextView tabText1 = (TextView) tab1.getCustomView();
 
-        tabText1.setTypeface(typeface);
+        tabText1.setCompoundDrawablesWithIntrinsicBounds(R.drawable.venues, 0, 0, 0);
 
         tabText1.setText(R.string.venues);
 
@@ -138,7 +131,7 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
 
         viewPager = (ViewPager) findViewById(R.id.container);
 
-        pagerAccountAdapter = new PagerAccountAdapter(getSupportFragmentManager(), tabLayout.getTabCount(), typeface);
+        pagerAccountAdapter = new PagerAccountAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
 
         viewPager.setAdapter(pagerAccountAdapter);
 
@@ -149,20 +142,15 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
 
-                TextView tabText = (TextView) tab.getCustomView();
+
 
                 viewPager.setCurrentItem(tab.getPosition());
 
-                tabText.setTypeface(typeface, Typeface.BOLD);
 
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-
-                TextView tabText = (TextView) tab.getCustomView();
-
-                tabText.setTypeface(typeface, Typeface.NORMAL);
 
             }
 
@@ -183,8 +171,6 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
         if (prev == null) {
 
             prev = new AddReviewFragment();
-
-            prev.setTypeface(typeface);
 
         }
 

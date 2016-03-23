@@ -20,4 +20,5 @@
     <color name="separator_color">#d5de94</color>
     <color name="expanded_children_color">#FFFFFF</color>
     <color name="bg_title">#e7e7e7</color>
+    <color name="bg_review_button">#0a4e51</color>
 </resources>

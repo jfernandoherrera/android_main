@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.amtechventures.tucita.R;
 
@@ -44,16 +45,22 @@ public class AppTabLayout extends TabLayout {
 
             for (int i = 0, count = adapter.getCount(); i < count; i++) {
 
-                Tab tab = this.newTab();
+                Tab tab = newTab();
 
                 this.addTab(tab.setText(adapter.getPageTitle(i)));
 
                 AppCompatTextView view = (AppCompatTextView) ((ViewGroup)slidingTabStrip.getChildAt(i)).getChildAt(1);
 
-                view.setTypeface(typeface, Typeface.BOLD);
+                view.setTypeface(typeface);
 
                 view.setPadding(0,0,0,8);
 
             }
         }
+
+    @NonNull
+    @Override
+    public Tab newTab() {
+        return super.newTab();
     }
+}

@@ -21,7 +21,12 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:textSize="15sp"
-        android:gravity="center_horizontal|bottom"
+        android:paddingLeft="18dp"
+        android:paddingRight="16dp"
+        android:drawableLeft="@drawable/line"
+        android:drawableRight="@drawable/line"
+        android:textColor="@color/colorAccentText"
+        android:gravity="center"
         android:layout_below="@+id/container"
         android:id="@+id/means"/>
 </RelativeLayout>
