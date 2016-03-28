@@ -26,7 +26,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private final int typeVenue = 1;
     public static final int typeSection = 2;
     private Context context;
-    protected Typeface typeface;
+
 
     public interface OnItemClickListener {
 
@@ -40,9 +40,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     }
 
-    public SearchAdapter(List<Venue> venues, List<SubCategory> subCategories, Context context, Typeface typeface) {
-
-        this.typeface = typeface;
+    public SearchAdapter(List<Venue> venues, List<SubCategory> subCategories, Context context) {
 
         this.venues = venues;
 
@@ -182,8 +180,6 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
             name = (TextView) itemView.findViewById(R.id.text);
 
-            name.setTypeface(typeface, Typeface.BOLD);
-
         }
 
     }
@@ -201,31 +197,6 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             name = (TextView) itemView.findViewById(R.id.textName);
 
             location = (TextView) itemView.findViewById(R.id.textLocation);
-
-            name.setTypeface(typeface, Typeface.BOLD);
-
-            location.setTypeface(typeface, Typeface.BOLD);
-
-            itemView.setOnTouchListener(new View.OnTouchListener() {
-
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-
-                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
-
-                        itemView.setBackgroundResource(R.drawable.pressed_application_background_static);
-
-                    } else if (event.getAction() != MotionEvent.ACTION_MOVE) {
-
-                        itemView.setBackgroundColor(Color.TRANSPARENT);
-
-                    }
-
-                    return false;
-
-                }
-
-            });
 
             itemView.setOnClickListener(this);
 
@@ -249,28 +220,6 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             super(itemView);
 
             name = (TextView) itemView.findViewById(R.id.textList);
-
-            name.setTypeface(typeface, Typeface.BOLD);
-
-            itemView.setOnTouchListener(new View.OnTouchListener() {
-
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-
-                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
-
-                        itemView.setBackgroundResource(R.drawable.pressed_application_background_static);
-
-                    } else if (event.getAction() != MotionEvent.ACTION_MOVE) {
-
-                        itemView.setBackgroundColor(Color.TRANSPARENT);
-
-                    }
-
-                    return false;
-                }
-
-            });
 
             itemView.setOnClickListener(this);
 

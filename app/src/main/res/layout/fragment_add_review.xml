@@ -34,7 +34,7 @@
         android:layout_height="65dp"
         android:layout_gravity="bottom|center_horizontal"
         >
-        <TextView
+        <com.amtechventures.tucita.utils.views.AppTextView
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:textColor="@android:color/white"
@@ -56,7 +56,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/ratingView"
         />
-    <android.support.design.widget.TextInputLayout
+    <com.amtechventures.tucita.utils.views.AppTextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/textTitleLayout"
@@ -79,8 +79,8 @@
             android:nextFocusForward="@+id/description"
            />
 
-    </android.support.design.widget.TextInputLayout>
-    <android.support.design.widget.TextInputLayout
+    </com.amtechventures.tucita.utils.views.AppTextInputLayout>
+    <com.amtechventures.tucita.utils.views.AppTextInputLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:id="@+id/textDescriptionLayout"
@@ -99,7 +99,7 @@
             android:hint="@string/description"
             />
 
-    </android.support.design.widget.TextInputLayout>
+    </com.amtechventures.tucita.utils.views.AppTextInputLayout>
     <com.amtechventures.tucita.utils.views.AppTextView
         android:layout_width="80dp"
         android:layout_height="40dp"

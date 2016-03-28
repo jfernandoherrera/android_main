@@ -38,7 +38,7 @@ public class SearchFragment extends Fragment {
     private List<Venue> venues = new ArrayList<>();
     private List<SubCategory> recentSubCategories = new ArrayList<>();
     private List<Venue> recentVenues = new ArrayList<>();
-    private Typeface typeface;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -49,7 +49,7 @@ public class SearchFragment extends Fragment {
 
         venueContext = VenueContext.context(venueContext);
 
-        searchAdapter = new SearchAdapter(venues, subCategories, getContext(), typeface);
+        searchAdapter = new SearchAdapter(venues, subCategories, getContext());
 
         searchAdapter.setOnItemClickListener(new SearchAdapter.OnItemClickListener() {
 
@@ -84,12 +84,6 @@ public class SearchFragment extends Fragment {
         recyclerView.setAdapter(searchAdapter);
 
         return rootView;
-
-    }
-
-    public void setTypeface(Typeface typeface) {
-
-        this.typeface = typeface;
 
     }
 

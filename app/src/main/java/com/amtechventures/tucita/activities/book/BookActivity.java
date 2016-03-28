@@ -492,7 +492,11 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
             @Override
             public void completion(List<Blockade> blockadeList, AppError error) {
 
-                selectDateFragment.setBlockades(blockadeList);
+                if(blockadeList != null) {
+
+                    selectDateFragment.setBlockades(blockadeList);
+
+                }
 
                 selectDateShow();
 

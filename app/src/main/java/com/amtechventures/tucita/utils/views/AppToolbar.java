@@ -2,6 +2,7 @@ package com.amtechventures.tucita.utils.views;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -25,6 +26,14 @@ public class AppToolbar extends Toolbar {
         inflater.inflate(R.layout.toolbar_view, this);
 
         textView = (TextView) findViewById(R.id.toolbarTextView);
+
+        setNavigationIcon(getResources().getDrawable(R.drawable.back_arrow));
+
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+            setElevation(8);
+
+        }
 
     }
 

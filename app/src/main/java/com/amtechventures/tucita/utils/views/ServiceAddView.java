@@ -15,7 +15,6 @@ import com.amtechventures.tucita.R;
 public class ServiceAddView extends RelativeLayout {
 
     private ImageView imageView;
-    private RelativeLayout relativeLayout;
     private TextView name;
     private TextView duration;
     private TextView price;
@@ -49,23 +48,11 @@ public class ServiceAddView extends RelativeLayout {
 
         imageView = (ImageView) findViewById(R.id.image);
 
-        relativeLayout = (RelativeLayout) findViewById(R.id.container);
-
         name = (TextView) findViewById(R.id.textName);
 
         duration = (TextView) findViewById(R.id.textDuration);
 
         price = (TextView) findViewById(R.id.textPricesFrom);
-
-    }
-
-    public void setTypeface(Typeface typeface){
-
-        name.setTypeface(typeface);
-
-        duration.setTypeface(typeface);
-
-        price.setTypeface(typeface);
 
     }
 

@@ -3,7 +3,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android">
-<TextView
+<com.amtechventures.tucita.utils.views.AppTextView
     android:layout_width="match_parent"
     android:id="@+id/textName"
     android:gravity="bottom"
@@ -11,7 +11,7 @@
     android:layout_marginStart="@dimen/high_margin"
     android:layout_height="50dp"
     style="@style/AppTheme.Title"/>
-        <TextView
+        <com.amtechventures.tucita.utils.views.AppTextView
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginLeft="@dimen/high_margin"

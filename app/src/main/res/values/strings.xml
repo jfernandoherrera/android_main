@@ -40,7 +40,7 @@
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
     <string name="create_new_account">Crear una cuenta</string>
-    <string name="client_details">Detalles del cliente</string>
+    <string name="client_details">DETALLES DEL CLIENTE</string>
     <string name="venue_details">DETALLES DEL LUGAR</string>
     <string name="change_date">Cambiar fecha</string>
     <string name="place_order">Realizar pedido</string>
@@ -79,7 +79,7 @@
     <string name="client_parse_id">Fr71FqI5chgnNWBbrDa6d9rhxo3PiL8pngM7MUt4</string>
     <string name="name">name</string>
     <string name="title_activity_main">MainActivity</string>
-    <string name="find_service">Servicios que puedes estar buscando!</string>
+    <string name="find_service">SERVICIOS QUE PUEDES ESTAR BUSCANDO!</string>
     <string name="want_eVoucher">Lo quiero como eVoucher</string>
     <string name="fine_print">Letra pequeña</string>
     <string name="content_close">Imagen para cerrar</string>

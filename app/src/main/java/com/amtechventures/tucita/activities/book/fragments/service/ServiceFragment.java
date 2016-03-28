@@ -30,7 +30,6 @@ public class ServiceFragment extends Fragment {
     private Service service;
     private LayoutInflater inflater;
     private OnServiceSelected listener;
-    private Typeface typeface;
     private Venue venue;
     private AppTextView location;
 
@@ -60,12 +59,6 @@ public class ServiceFragment extends Fragment {
         super.onAttach(context);
 
         listener = (OnServiceSelected) context;
-
-    }
-
-    public void setTypeface(Typeface typeface) {
-
-        this.typeface = typeface;
 
     }
 
@@ -104,7 +97,7 @@ public class ServiceFragment extends Fragment {
 
         this.inflater = inflater;
 
-        serviceAddView.setTypeface(typeface);
+
 
         return rootView;
 

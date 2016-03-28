@@ -26,8 +26,9 @@
         android:paddingStart="@dimen/high_margin"
         android:paddingRight="@dimen/high_margin"
         android:paddingEnd="@dimen/high_margin"
+        app:bold="true"
+        android:textSize="13sp"
         android:textColor="@color/white"
-        android:id="@+id/client"
         android:background="@color/colorPrimary"
         android:text="@string/client_details"/>
     <LinearLayout

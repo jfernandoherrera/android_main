@@ -2,7 +2,6 @@ package com.amtechventures.tucita.activities.appointment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -10,8 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
-
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.appointment.fragments.details.AppointmentDetailsFragment;
 import com.amtechventures.tucita.activities.book.fragments.select.SelectDayFragment;
@@ -25,16 +22,14 @@ import com.amtechventures.tucita.model.domain.appointment.Appointment;
 import com.amtechventures.tucita.model.domain.service.Service;
 import com.amtechventures.tucita.model.domain.slot.Slot;
 import com.amtechventures.tucita.model.error.AppError;
-import com.amtechventures.tucita.utils.common.AppFont;
 import com.amtechventures.tucita.utils.views.AlertDialogError;
-
-import java.lang.reflect.Field;
+import com.amtechventures.tucita.utils.views.AppToolbar;
 import java.util.Date;
 import java.util.List;
 
 public class AppointmentActivity extends AppCompatActivity implements AppointmentDetailsFragment.OnChangeDate, SelectHourAdapter.OnSlotSelected{
 
-    private Toolbar toolbar;
+    private AppToolbar toolbar;
     private AppointmentDetailsFragment appointmentDetailsFragment;
     private AppointmentContext appointmentContext;
     private ServiceContext serviceContext;
@@ -134,13 +129,13 @@ public class AppointmentActivity extends AppCompatActivity implements Appointmen
 
         String venue = getString(R.string.details);
 
-        getSupportActionBar().setTitle(venue);
+        toolbar.setTitle(venue);
 
     }
 
     private void setToolbar() {
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (AppToolbar) findViewById(R.id.toolbar);
 
         if (toolbar != null) {
 

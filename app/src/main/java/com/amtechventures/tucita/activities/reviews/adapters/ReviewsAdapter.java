@@ -172,26 +172,6 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
 
             circularImageView = (CircularImageView) itemView.findViewById(R.id.imageUser);
 
-            relativeLayout.setOnTouchListener(new View.OnTouchListener() {
-
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-
-                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
-
-                        v.setBackgroundResource(R.drawable.pressed_application_background_static);
-
-                    } else if (event.getAction() != MotionEvent.ACTION_MOVE) {
-
-                        v.setBackgroundColor(Color.TRANSPARENT);
-
-                    }
-
-                    return false;
-
-                }
-            });
-
         }
 
         private void setupStars(){

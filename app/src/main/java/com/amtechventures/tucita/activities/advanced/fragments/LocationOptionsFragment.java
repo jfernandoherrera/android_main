@@ -235,7 +235,7 @@ if(! zoomed) {
 
     LatLngBounds bounds = builder.build();
 
-    int padding = 140;
+    int padding = venueList.size() < 1 ? 140 : 40;
 
     CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, padding);
 

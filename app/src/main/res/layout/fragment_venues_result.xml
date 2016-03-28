@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryLight">
 
-    <TextView
+    <com.amtechventures.tucita.utils.views.AppTextView
         android:layout_width="match_parent"
         android:text="@string/no_results"
         android:id="@+id/noResults"
@@ -12,6 +12,7 @@
         android:layout_height="match_parent" />
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
+        android:background="@color/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         />

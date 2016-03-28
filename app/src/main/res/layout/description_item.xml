@@ -3,13 +3,12 @@
 <com.amtechventures.tucita.utils.views.AppTextView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:textColor="@color/black"
     android:id="@+id/textList"
-    android:layout_height="45dp"
     android:gravity="center_vertical"
-    android:paddingStart="@dimen/high_margin"
     android:paddingLeft="@dimen/high_margin"
-    android:paddingEnd="@dimen/high_margin"
-    android:drawablePadding="10dp"
     android:paddingRight="@dimen/high_margin"
-    android:background="@android:color/white"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
     />

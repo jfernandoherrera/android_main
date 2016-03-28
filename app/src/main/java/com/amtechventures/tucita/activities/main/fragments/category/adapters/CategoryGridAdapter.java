@@ -72,8 +72,6 @@ public class CategoryGridAdapter extends RecyclerView.Adapter<CategoryGridAdapte
 
         private ImageView categoryIcon;
 
-        private View interaction;
-
         public ViewHolder(final View itemView) {
 
             super(itemView);
@@ -81,30 +79,6 @@ public class CategoryGridAdapter extends RecyclerView.Adapter<CategoryGridAdapte
             category = (AppTextView) itemView.findViewById(R.id.textCategory);
 
             categoryIcon = (ImageView) itemView.findViewById(R.id.imageButtonCategory);
-
-            interaction = itemView.findViewById(R.id.categoryInteraction);
-
-            categoryIcon.setOnTouchListener(new View.OnTouchListener() {
-
-                                               @Override
-                                               public boolean onTouch(View view, MotionEvent event) {
-
-                                                   if (event.getAction() == MotionEvent.ACTION_DOWN) {
-
-                                                       interaction.setBackgroundColor(view.getResources().getColor(R.color.colorAccent));
-
-                                                   } else if (event.getAction() != MotionEvent.ACTION_MOVE) {
-
-                                                       interaction.setBackgroundColor(view.getResources().getColor(R.color.colorPrimaryLight));
-
-                                                   }
-
-                                                   return false;
-                                               }
-
-                                           }
-
-            );
 
             categoryIcon.setOnClickListener(new View.OnClickListener() {
 

@@ -110,7 +110,7 @@ public class ExpandableParentAdapter extends BaseExpandableListAdapter {
 
         if (convertView == null) {
 
-            convertView = inflater.inflate(R.layout.list_item, null);
+            convertView = inflater.inflate(R.layout.description_item, null);
 
             final TextView text = (TextView) convertView.findViewById(R.id.textList);
 

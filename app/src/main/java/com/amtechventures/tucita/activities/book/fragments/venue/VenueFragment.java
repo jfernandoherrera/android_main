@@ -74,7 +74,6 @@ public class VenueFragment extends Fragment {
     private ViewUtils viewUtils;
     private ScrollView scrollView;
     private TextView textReviews;
-
     private TextView specials;
     private RelativeLayout clickRating;
 
