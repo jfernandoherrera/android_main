@@ -41,7 +41,7 @@
     <string name="error_field_required">This field is required</string>
     <string name="create_new_account">Crear una cuenta</string>
     <string name="client_details">Detalles del cliente</string>
-    <string name="venue_details">Detalles del Lugar</string>
+    <string name="venue_details">DETALLES DEL LUGAR</string>
     <string name="change_date">Cambiar fecha</string>
     <string name="place_order">Realizar pedido</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email

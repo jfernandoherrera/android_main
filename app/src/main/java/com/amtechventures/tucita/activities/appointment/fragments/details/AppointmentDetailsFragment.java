@@ -22,6 +22,7 @@ import com.amtechventures.tucita.model.domain.city.City;
 import com.amtechventures.tucita.model.domain.service.Service;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.domain.venue.VenueAttributes;
+import com.amtechventures.tucita.utils.views.AppTextView;
 import com.amtechventures.tucita.utils.views.AppointmentView;
 import com.amtechventures.tucita.utils.views.ViewUtils;
 
@@ -40,10 +41,9 @@ public class AppointmentDetailsFragment extends Fragment{
     private Appointment appointment;
     private Venue venue;
     private List<Service> services;
-    private Button location;
+    private AppTextView location;
     private OnChangeDate listener;
-    private Typeface typeface;
-
+    private AppTextView button;
 
     public interface OnChangeDate{
 
@@ -69,12 +69,6 @@ public class AppointmentDetailsFragment extends Fragment{
 
     }
 
-    public void setTypeface(Typeface typeface) {
-
-        this.typeface = typeface;
-
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -83,59 +77,35 @@ public class AppointmentDetailsFragment extends Fragment{
 
         appointmentView = (AppointmentView) rootView.findViewById(R.id.appointment);
 
-        location = (Button) rootView.findViewById(R.id.watch_location);
+        location = (AppTextView) rootView.findViewById(R.id.watch_location);
 
         textTotal = (TextView) rootView.findViewById(R.id.textPrice);
 
-        TextView total = (TextView) rootView.findViewById(R.id.total);
-
-        TextView details = (TextView) rootView.findViewById(R.id.details);
-
         listViewServices = (ExpandableListView) rootView.findViewById(R.id.listViewServices);
 
-        Button button = (Button) rootView.findViewById(R.id.changeDate);
+        button = (AppTextView) rootView.findViewById(R.id.changeDate);
+
+        this.inflater = inflater;
+
+        setupChangeDate();
+
+        return rootView;
+
+    }
+
+    private void setupChangeDate() {
 
         Calendar calendar = Calendar.getInstance();
-
-        textTotal.setTypeface(typeface);
-
-        total.setTypeface(typeface, Typeface.BOLD);
-
-        details.setTypeface(typeface);
-
-        location.setTypeface(typeface);
-
-        button.setTypeface(typeface);
 
         int oneDay = 24;
 
         calendar.add(Calendar.HOUR, oneDay);
 
         Date tomorrow = calendar.getTime();
+
         try {
 
             if (tomorrow.before(appointment.getDate())) {
-
-                button.setOnTouchListener(new View.OnTouchListener() {
-
-                    @Override
-                    public boolean onTouch(View v, MotionEvent event) {
-
-                        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-
-                            v.setBackgroundResource(R.drawable.pressed_application_background_static);
-
-                        } else if (event.getAction() != MotionEvent.ACTION_MOVE) {
-
-                            v.setBackgroundResource(R.drawable.log_in_or_signup_click_out);
-
-                        }
-
-                        return false;
-
-                    }
-
-                });
 
                 button.setOnClickListener(new View.OnClickListener() {
 
@@ -158,9 +128,6 @@ public class AppointmentDetailsFragment extends Fragment{
             e.printStackTrace();
 
         }
-        this.inflater = inflater;
-
-        return rootView;
 
     }
 
@@ -195,6 +162,8 @@ public class AppointmentDetailsFragment extends Fragment{
     }
 
     public void setup(){
+
+        setupChangeDate();
 
         setupAppointment();
 
@@ -307,12 +276,6 @@ public class AppointmentDetailsFragment extends Fragment{
 
     }
 
-    private void setupVenue(){
-
-
-    }
-
-
     private void setupServices() {
 
         ViewUtils viewUtils = new ViewUtils(getContext());
@@ -330,4 +293,5 @@ public class AppointmentDetailsFragment extends Fragment{
         this.appointment = appointment;
 
     }
+
 }

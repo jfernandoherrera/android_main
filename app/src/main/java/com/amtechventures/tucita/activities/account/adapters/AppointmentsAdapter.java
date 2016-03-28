@@ -77,6 +77,8 @@ public class AppointmentsAdapter extends RecyclerView.Adapter<AppointmentsAdapte
 
             Date date = appointment.getDate();
 
+            viewHolder.objectId = appointment.getObjectId();
+
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM d/y");
 
             String dateString = simpleDateFormat.format(date);

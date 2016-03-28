@@ -39,7 +39,6 @@ public class AppointmentActivity extends AppCompatActivity implements Appointmen
     private AppointmentContext appointmentContext;
     private ServiceContext serviceContext;
     private SelectDayFragment selectDateFragment;
-    private Typeface typeface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,12 +52,6 @@ public class AppointmentActivity extends AppCompatActivity implements Appointmen
         serviceContext = ServiceContext.context(serviceContext);
 
         selectDateFragment = new SelectDayFragment();
-
-        AppFont appFont = new AppFont();
-
-        typeface = appFont.getAppFontLight(getApplicationContext());
-
-        appointmentDetailsFragment.setTypeface(typeface);
 
         setContentView(R.layout.activity_appointment);
 
@@ -172,33 +165,7 @@ public class AppointmentActivity extends AppCompatActivity implements Appointmen
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        getActionBarTextView().setTypeface(typeface);
-
         return true;
-
-    }
-
-    private TextView getActionBarTextView() {
-
-        TextView titleTextView = null;
-
-        String defaultNameTitleMenu = "mTitleTextView";
-
-        try {
-
-            Field field = toolbar.getClass().getDeclaredField(defaultNameTitleMenu);
-
-            field.setAccessible(true);
-
-            titleTextView = (TextView) field.get(toolbar);
-
-        } catch (NoSuchFieldException e) {
-
-        } catch (IllegalAccessException e) {
-
-        }
-
-        return titleTextView;
 
     }
 
@@ -256,6 +223,7 @@ public class AppointmentActivity extends AppCompatActivity implements Appointmen
                 }
 
             }
+
         });
 
         if(appointment != null){
