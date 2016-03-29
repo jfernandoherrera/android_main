@@ -48,7 +48,6 @@ public class LocationOptionsFragment extends Fragment implements LocationComplet
     private CategoryContext categoryContext;
     private String name;
     private SubCategoryContext subCategoryContext;
-
     private Location lastLocation;
     private SubCategory subCategory;
     private VenueContext venueContext;

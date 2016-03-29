@@ -52,7 +52,6 @@ public class AdvancedSearchActivity extends AppCompatActivity  {
     private String name;
     private VenuesResultFragment venuesResultFragment;
     private LocationOptionsFragment locationOptionsFragment;
-    private Typeface typeface;
     private static final int REQUEST_FINE_LOCATION = 0;
     private ListView listViewCities;
     private CityAdapter citiesAdapter;
@@ -80,6 +79,34 @@ public class AdvancedSearchActivity extends AppCompatActivity  {
         locationOptionsFragment = new LocationOptionsFragment();
 
         searchView = (AppEditText) findViewById(R.id.searchCities);
+
+        textViewCities = (TextView) findViewById(R.id.textViewCities);
+
+        searchView.setDrawableClickListener(new DrawableClickListener() {
+
+            @Override
+            public void onClick(DrawablePosition target) {
+
+                switch (target) {
+
+                    case RIGHT:
+
+                        searchView.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.pin_line), null, null, null);
+
+                        textViewCities.setVisibility(View.GONE);
+
+                        citiesAdapter.clear();
+
+                        citiesAdapter.notifyDataSetChanged();
+
+                        break;
+
+                    default:
+                        break;
+                }
+
+            }
+        });
 
         searchView.addTextChangedListener(new TextWatcher() {
 
@@ -111,8 +138,6 @@ public class AdvancedSearchActivity extends AppCompatActivity  {
         });
 
         alert = (RelativeLayout) findViewById(R.id.alert);
-
-        textViewCities = (TextView) findViewById(R.id.textViewCities);
 
         listViewCities = (ListView) findViewById(R.id.listViewCities);
 
@@ -147,11 +172,20 @@ public class AdvancedSearchActivity extends AppCompatActivity  {
 
     }
 
-    public void continueTypying(View view) {
+    public interface DrawableClickListener {
+
+        public static enum DrawablePosition { TOP, BOTTOM, LEFT, RIGHT };
+
+        public void onClick(DrawablePosition target);
+
+    }
+
+    public void continueTyping(View view) {
 
         alert.setVisibility(View.GONE);
 
     }
+
     public void setupCities(String like){
 
         cityContext.loadLikeCities(like, new CityCompletion.ErrorCompletion() {

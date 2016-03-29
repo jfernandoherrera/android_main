@@ -12,8 +12,55 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
     android:background="@color/colorAccent"/>
     <RelativeLayout
-        android:layout_marginTop="6dp"
-        android:layout_below="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_below="@id/toolbar"
+        android:visibility="gone"
+        android:id="@+id/alert"
+        android:elevation="8dp"
+        android:layout_marginTop="@dimen/high_margin"
+        android:layout_marginLeft="@dimen/high_margin"
+        android:layout_marginStart="@dimen/high_margin"
+        android:layout_marginRight="@dimen/high_margin"
+        android:layout_marginEnd="@dimen/high_margin"
+        android:background="@color/white"
+        android:layout_height="100dp">
+
+        <com.amtechventures.tucita.utils.views.AppTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawablePadding="10dp"
+            android:layout_marginTop="@dimen/high_margin"
+            android:layout_marginLeft="@dimen/high_margin"
+            android:layout_marginStart="@dimen/high_margin"
+            android:layout_marginRight="@dimen/high_margin"
+            android:layout_marginEnd="@dimen/high_margin"
+            android:drawableLeft="@drawable/warning_icon"
+            android:text="@string/typing_help"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginLeft="@dimen/high_margin"
+            android:layout_marginStart="@dimen/high_margin"
+            android:layout_marginBottom="20dp"
+            android:layout_marginRight="116dp"
+            android:layout_marginEnd="116dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorAccent"/>
+        <com.amtechventures.tucita.utils.views.AppButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:textColor="@color/colorAccent"
+            android:layout_marginRight="@dimen/high_margin"
+            android:layout_marginEnd="@dimen/high_margin"
+            android:background="@android:color/transparent"
+            android:layout_alignParentEnd="true"
+            android:onClick="continueTyping"
+            android:layout_alignParentRight="true"
+            android:text="@string/continue_option"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_below="@+id/alert"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         android:id="@+id/layout_main"

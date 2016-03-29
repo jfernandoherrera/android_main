@@ -127,8 +127,6 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
             sections.name.setText(context.getString(R.string.venues));
 
-            sections.name.setGravity(0x50);
-
         } else if (subCategoriesEmpty && viewHolder instanceof ViewHolderSubCategories) {
 
             SubCategory subCategory = subCategories.get(position - 1);

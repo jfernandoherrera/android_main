@@ -112,7 +112,7 @@
             android:layout_marginEnd="@dimen/high_margin"
             android:background="@android:color/transparent"
             android:layout_alignParentEnd="true"
-            android:onClick="continueTypying"
+            android:onClick="continueTyping"
             android:layout_alignParentRight="true"
             android:text="@string/continue_option"/>
     </RelativeLayout>

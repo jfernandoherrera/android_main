@@ -1,34 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    >
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/high_margin"
         android:id="@+id/listContainer"
         android:layout_marginLeft="@dimen/high_margin"
         android:layout_marginRight="@dimen/high_margin"
         android:layout_marginTop="@dimen/high_margin"
-        android:layout_marginBottom="80dp"
+        android:layout_marginBottom="73dp"
         android:background="@android:color/white"
         >
         <com.amtechventures.tucita.utils.views.AppTextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
+            app:bold="true"
             android:text="@string/basket"
+            android:paddingLeft="16dp"
+
+            android:gravity="center_vertical"
             android:id="@+id/title"
+            android:textColor="@android:color/white"
+            android:background="@color/colorAccent"
             style="@style/AppTheme.Title"/>
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_below="@+id/title"
             android:layout_width="wrap_content"
-            android:layout_height="330dp"
+            android:layout_height="320dp"
             />
         <com.amtechventures.tucita.utils.views.AppButton
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:id="@+id/moreServices"
+            android:layout_margin="16dp"
             android:text="@string/add_more_services"
             android:gravity="center_vertical"
             android:layout_below="@+id/recycler_view"

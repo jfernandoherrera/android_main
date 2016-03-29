@@ -1,15 +1,17 @@
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <item android:id="@android:id/background" android:drawable="@drawable/rate01">
-
-    </item>
-
-    <item android:id="@android:id/secondaryProgress" android:drawable="@drawable/rate02">
-
-    </item>
-
-    <item android:id="@android:id/progress" android:drawable="@drawable/rate04">
-
-    </item>
-
-</layer-list>
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="false"
+    >
+    <item
+        android:drawable="@drawable/rate01"
+        android:duration="250"/>
+    <item
+        android:drawable="@drawable/rate02"
+        android:duration="250"/>
+    <item
+        android:drawable="@drawable/rate_03"
+        android:duration="250"/>
+    <item
+        android:drawable="@drawable/rate_05"
+        android:duration="250"/>
+</animation-list>

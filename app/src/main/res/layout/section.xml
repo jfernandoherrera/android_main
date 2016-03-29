@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.amtechventures.tucita.utils.views.AppTextView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.amtechventures.tucita.utils.views.AppTextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    android:layout_marginLeft="@dimen/high_margin"
-    android:layout_marginStart="@dimen/high_margin"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingLeft="@dimen/high_margin"
+    android:gravity="center_vertical"
+    android:paddingStart="@dimen/high_margin"
     android:id="@+id/text"
-    style="@style/AppTheme.TitleLight"/>
+    android:background="@color/colorPrimary"
+    android:textColor="@android:color/white"
+    android:textSize="18sp"
+    app:light="false"
+    app:bold="true"/>

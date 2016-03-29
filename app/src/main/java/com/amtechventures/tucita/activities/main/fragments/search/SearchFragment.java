@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.book.BookActivity;
@@ -38,6 +39,7 @@ public class SearchFragment extends Fragment {
     private List<Venue> venues = new ArrayList<>();
     private List<SubCategory> recentSubCategories = new ArrayList<>();
     private List<Venue> recentVenues = new ArrayList<>();
+
 
 
     @Override
@@ -74,6 +76,7 @@ public class SearchFragment extends Fragment {
 
             }
         });
+
 
         layoutManager = new GridLayoutManager(getContext(), 1);
 

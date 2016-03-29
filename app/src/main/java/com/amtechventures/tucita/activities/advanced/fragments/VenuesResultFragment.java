@@ -130,6 +130,7 @@ public class VenuesResultFragment extends Fragment  {
     private void setupCityVenues(List<Service> services, City city){
 
         venueContext.loadSubCategorizedCityVenues(services, city, new VenueCompletion.ErrorCompletion() {
+
             @Override
             public void completion(List<Venue> venueList, AppError error) {
 
@@ -151,12 +152,14 @@ public class VenuesResultFragment extends Fragment  {
                     recyclerView.setAdapter(adapter);
 
                     progress.dismiss();
+
                 }
 
             }
         });
 
     }
+
     public void setCity(City city) {
 
         this.city = city;

@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.amtechventures.tucita.R;
@@ -35,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements CategoryFragment.
     private AppToolbar toolbar;
     private final int minimumToSearch = 3;
     private CategoryFragment fragment;
-
+    private RelativeLayout alert;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -46,6 +47,8 @@ public class MainActivity extends AppCompatActivity implements CategoryFragment.
         fragment = new CategoryFragment();
 
         searchFragment = new SearchFragment();
+
+        alert = (RelativeLayout) findViewById(R.id.alert);
 
         setCategoryFragment();
 
@@ -106,6 +109,12 @@ public class MainActivity extends AppCompatActivity implements CategoryFragment.
         transaction.add(R.id.layout_main, searchFragment);
 
         transaction.commit();
+
+    }
+
+    public void continueTyping(View view) {
+
+        alert.setVisibility(View.GONE);
 
     }
 
@@ -215,13 +224,15 @@ public class MainActivity extends AppCompatActivity implements CategoryFragment.
 
                     searchFragment.setupRecentSubCategoryList();
 
+                    alert.setVisibility(View.GONE);
+
                 } else if (newText.length() < minimumToSearch) {
 
-                    AlertDialogError alertDialogError = new AlertDialogError();
-
-                    alertDialogError.noTypedEnough(getApplicationContext());
+                    alert.setVisibility(View.VISIBLE);
 
                 } else {
+
+                    alert.setVisibility(View.GONE);
 
                     searchFragment.setupSubCategoryList(newText);
 

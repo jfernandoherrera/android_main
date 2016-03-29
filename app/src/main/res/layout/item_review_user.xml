@@ -49,6 +49,7 @@
                     android:id="@+id/edit"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true"
+                    android:layout_marginRight="8dp"
                     android:gravity="center"
                     android:textColor="@color/white"
                     android:background="@android:color/transparent"

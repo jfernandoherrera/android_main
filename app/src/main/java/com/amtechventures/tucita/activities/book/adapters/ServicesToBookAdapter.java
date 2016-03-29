@@ -1,18 +1,13 @@
 package com.amtechventures.tucita.activities.book.adapters;
 
-import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.model.domain.service.Service;
-import com.amtechventures.tucita.utils.common.AppFont;
-
 import java.util.List;
 
 public class ServicesToBookAdapter extends RecyclerView.Adapter<ServicesToBookAdapter.ViewHolder> {
@@ -100,37 +95,7 @@ public class ServicesToBookAdapter extends RecyclerView.Adapter<ServicesToBookAd
 
             close = (ImageView) itemView.findViewById(R.id.image);
 
-            AppFont appFont = new AppFont();
-
-            Typeface typeface = appFont.getAppFontLight(itemView.getContext());
-
-            textDuration.setTypeface(typeface);
-
-            textName.setTypeface(typeface);
-
-            textPricesFrom.setTypeface(typeface);
-
             close.setImageResource(R.mipmap.ic_close);
-
-            close.setOnTouchListener(new View.OnTouchListener() {
-
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-
-                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
-
-                        close.setImageResource(R.mipmap.ic_close_pressed);
-
-                    } else if (event.getAction() != MotionEvent.ACTION_MOVE) {
-
-                        close.setImageResource(R.mipmap.ic_close);
-
-                    }
-
-                    return false;
-
-                }
-            });
 
         }
 

@@ -138,27 +138,6 @@ public class ShoppingCarView extends FrameLayout implements ServicesToBookAdapte
 
         button = (Button) findViewById(R.id.moreServices);
 
-        button.setOnTouchListener(new View.OnTouchListener() {
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-
-                    button.setBackgroundResource(R.drawable.pressed_application_background_static);
-
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-
-                    button.setBackgroundColor(Color.TRANSPARENT);
-
-                }
-
-                return false;
-
-            }
-
-        });
-
         button.setOnClickListener(new View.OnClickListener() {
 
                                       @Override
@@ -192,7 +171,6 @@ public class ShoppingCarView extends FrameLayout implements ServicesToBookAdapte
 
         display.getSize(size);
 
-
         car.setOnClickListener(new OnClickListener() {
 
             @Override
@@ -222,20 +200,6 @@ public class ShoppingCarView extends FrameLayout implements ServicesToBookAdapte
             }
 
         });
-
-    }
-
-    public void setTypeface(Typeface typeface){
-
-        TextView title = (TextView) findViewById(R.id.title);
-
-        title.setTypeface(typeface);
-
-        circleTextView.setTypeface(typeface);
-
-        bookNow.setTypeface(typeface);
-
-        button.setTypeface(typeface);
 
     }
 
