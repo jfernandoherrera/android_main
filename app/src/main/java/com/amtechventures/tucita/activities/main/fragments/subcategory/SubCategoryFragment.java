@@ -25,6 +25,7 @@ import com.amtechventures.tucita.model.domain.category.CategoryAttributes;
 import com.amtechventures.tucita.model.domain.subcategory.SubCategory;
 import com.amtechventures.tucita.model.error.AppError;
 import com.amtechventures.tucita.utils.views.AppTextView;
+import com.amtechventures.tucita.utils.views.TuCitaProgressDialog;
 import com.parse.ParseObject;
 
 import java.util.ArrayList;
@@ -40,10 +41,11 @@ public class SubCategoryFragment extends DialogFragment {
     private CategoryContext categoryContext;
     private String name;
     private OnOthersClicked listener;
-    private ProgressDialog progress;
+
     Drawable first;
     Drawable last;
     Drawable contained;
+    private TuCitaProgressDialog progress;
 
     public interface OnOthersClicked {
 
@@ -255,9 +257,30 @@ public class SubCategoryFragment extends DialogFragment {
 
     }
 
+
     private void setupProgress() {
 
-        progress = ProgressDialog.show(getContext(), getResources().getString(R.string.dialog_progress_title), getResources().getString(R.string.dialog_all_progress_message), true);
+        if (progress == null) {
+
+            progress = new TuCitaProgressDialog(getContext(),R.style.TuCitaDialogTheme);
+
+            progress.setCancelable(false);
+
+            progress.setIndeterminate(true);
+
+        }
+
+        progress.show();
+
+    }
+
+    public void hideLoading() {
+
+        if (progress != null) {
+
+            progress.dismiss();
+
+        }
 
     }
 

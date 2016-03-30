@@ -23,6 +23,7 @@ import com.amtechventures.tucita.activities.login.LoginActivity;
 import com.amtechventures.tucita.activities.main.fragments.search.SearchFragment;
 import com.amtechventures.tucita.activities.main.fragments.subcategory.SubCategoryFragment;
 import com.amtechventures.tucita.activities.signup.SignUpActivity;
+import com.amtechventures.tucita.activities.splash.SplashActivity;
 import com.amtechventures.tucita.model.domain.user.UserAttributes;
 import com.amtechventures.tucita.utils.common.AppFont;
 import com.amtechventures.tucita.utils.views.AlertDialogError;
@@ -59,6 +60,32 @@ public class MainActivity extends AppCompatActivity implements CategoryFragment.
         searchHide();
 
         setToolbar();
+
+    }
+
+
+
+    public static void processAnonymousUser(Context c) {
+
+        Class activity = MainActivity.class;
+
+        Intent intent = new Intent(c, activity);
+
+        intent.putExtra(UserAttributes.connected, false);
+
+        c.startActivity(intent);
+
+    }
+
+    public static void processLoggedUser(Context context) {
+
+        Class activity = MainActivity.class;
+
+        Intent intent = new Intent(context, activity);
+
+        intent.putExtra(UserAttributes.connected, true);
+
+        context.startActivity(intent);
 
     }
 

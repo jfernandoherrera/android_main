@@ -86,41 +86,13 @@ public class SplashActivity extends AppCompatActivity {
 
         if (userContext.currentUser() == null) {
 
-            processAnonymousUser();
+            MainActivity.processAnonymousUser(this);
 
         } else {
 
-            processLoggedUser();
+            MainActivity.processLoggedUser(this);
 
         }
-
-    }
-
-    private void processAnonymousUser() {
-
-        Class activity = MainActivity.class;
-
-        Intent intent = new Intent(SplashActivity.this, activity);
-
-        intent.putExtra(UserAttributes.connected, false);
-
-        startActivity(intent);
-
-        finish();
-
-    }
-
-    private void processLoggedUser() {
-
-        Class activity = MainActivity.class;
-
-        Intent intent = new Intent(SplashActivity.this, activity);
-
-        intent.putExtra(UserAttributes.connected, true);
-
-        startActivity(intent);
-
-        finish();
 
     }
 
