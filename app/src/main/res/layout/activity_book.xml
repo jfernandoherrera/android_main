@@ -18,20 +18,9 @@
         <com.amtechventures.tucita.utils.views.ShoppingCarView
            android:layout_height="wrap_content"
             android:layout_width="match_parent"
+            android:elevation="16dp"
             style="@style/AppTheme.subTitle"
             android:id="@+id/shoppingCar"
             android:layout_alignParentBottom="true"
             />
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:background="@android:color/white"
-        android:id="@+id/concealer"
-        android:layout_height="match_parent">
-        <ProgressBar
-            android:indeterminateDrawable="@drawable/progress_bar_states"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:indeterminateOnly="true"/>
-    </RelativeLayout>
 </RelativeLayout>

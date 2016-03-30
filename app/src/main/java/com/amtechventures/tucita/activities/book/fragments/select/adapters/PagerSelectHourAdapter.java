@@ -34,16 +34,13 @@ public class PagerSelectHourAdapter extends FragmentStatePagerAdapter {
     private int durationHours;
     private int durationMinutes;
     private SelectHourAdapter.OnSlotSelected listener;
-    private Typeface typeface;
     private List<Blockade> blockades;
 
-    public PagerSelectHourAdapter(FragmentManager fm, SelectHourAdapter.OnSlotSelected listener, Typeface typeface, List<Blockade> blockades) {
+    public PagerSelectHourAdapter(FragmentManager fm, SelectHourAdapter.OnSlotSelected listener, List<Blockade> blockades) {
 
         super(fm);
 
         this.listener = listener;
-
-        this.typeface = typeface;
 
         this.blockades = blockades;
 
@@ -112,8 +109,6 @@ public class PagerSelectHourAdapter extends FragmentStatePagerAdapter {
         selectHourFragment.setDate(fragmentDate);
 
         selectHourFragment.setVenue(venue);
-
-        selectHourFragment.setTypeface(typeface);
 
         for(Blockade blockade : blockades) {
 

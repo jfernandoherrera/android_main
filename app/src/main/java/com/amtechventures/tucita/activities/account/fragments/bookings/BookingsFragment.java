@@ -21,6 +21,7 @@ import com.amtechventures.tucita.model.context.appointment.AppointmentContext;
 import com.amtechventures.tucita.model.domain.appointment.Appointment;
 import com.amtechventures.tucita.model.domain.user.User;
 import com.amtechventures.tucita.model.error.AppError;
+import com.amtechventures.tucita.utils.views.TuCitaProgressDialog;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -34,8 +35,7 @@ public class BookingsFragment extends Fragment {
     private TextView noResults;
     private List<Appointment> completedAppointmentsList;
     private List<Appointment> pendingAppointmentsList;
-    private RelativeLayout relativeLayout;
-    private Typeface typeface;
+    private TuCitaProgressDialog progress;
     private AppointmentContext appointmentContext;
     private User user;
 
@@ -53,15 +53,35 @@ public class BookingsFragment extends Fragment {
 
     }
 
-    public void setTypeface(Typeface typeface) {
-
-        this.typeface = typeface;
-
-    }
-
     public void setUser(User user) {
 
         this.user = user;
+
+    }
+
+    private void setupProgress() {
+
+        if (progress == null) {
+
+            progress = new TuCitaProgressDialog(getContext(),R.style.TuCitaDialogTheme);
+
+            progress.setCancelable(false);
+
+            progress.setIndeterminate(true);
+
+        }
+
+        progress.show();
+
+    }
+
+    public void hideLoading() {
+
+        if (progress != null) {
+
+            progress.dismiss();
+
+        }
 
     }
 
@@ -83,6 +103,8 @@ public class BookingsFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_bookings, container, false);
 
+        setupProgress();
+
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
 
         noResults = (TextView) rootView.findViewById(R.id.noResults);
@@ -90,10 +112,6 @@ public class BookingsFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getContext());
 
         recyclerView.setLayoutManager(layoutManager);
-
-        noResults.setTypeface(typeface);
-
-        relativeLayout = (RelativeLayout) rootView.findViewById(R.id.concealer);
 
         recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
 
@@ -137,8 +155,6 @@ public class BookingsFragment extends Fragment {
                             setAppointmentList(appointments);
 
                         }
-
-                        Log.v("...", "Last Item Wow !" + skip);
 
                         skip += 4;
 
@@ -261,15 +277,16 @@ public class BookingsFragment extends Fragment {
         }
 
         completedAppointmentsList.removeAll(toRemove);
+
     }
 
     public void setupList() {
 
         if (recyclerView != null) {
 
-            relativeLayout.setVisibility(View.GONE);
+            hideLoading();
 
-            boolean noEmpty = !completedAppointmentsList.isEmpty() || !pendingAppointmentsList.isEmpty();
+            boolean noEmpty = ! completedAppointmentsList.isEmpty() || ! pendingAppointmentsList.isEmpty();
 
             if (noEmpty) {
 

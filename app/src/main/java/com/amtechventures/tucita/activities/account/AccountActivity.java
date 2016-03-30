@@ -376,6 +376,8 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
 
         MainActivity.goToCategories(getApplicationContext());
 
+        pagerAccountAdapter.hideLoading();
+
         super.onBackPressed();
 
     }

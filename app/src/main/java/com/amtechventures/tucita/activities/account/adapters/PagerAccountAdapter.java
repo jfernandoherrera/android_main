@@ -55,4 +55,11 @@ public class PagerAccountAdapter extends FragmentStatePagerAdapter {
 
     }
 
+    public void hideLoading() {
+
+        bookingsFragment.hideLoading();
+
+        venuesFragment.hideLoading();
+
+    }
 }

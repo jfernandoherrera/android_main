@@ -26,6 +26,7 @@ import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.domain.venue.VenueAttributes;
 import com.amtechventures.tucita.model.error.AppError;
 import com.amtechventures.tucita.utils.views.AlertDialogError;
+import com.amtechventures.tucita.utils.views.TuCitaProgressDialog;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -122,7 +123,17 @@ public class LocationOptionsFragment extends Fragment implements LocationComplet
 
     private void setupProgress() {
 
-        progress = ProgressDialog.show(getContext(), getResources().getString(R.string.dialog_progress_title), getResources().getString(R.string.dialog_advanced_search_progress_message), true);
+        if (progress == null) {
+
+            progress = new TuCitaProgressDialog(getContext(),R.style.TuCitaDialogTheme);
+
+            progress.setCancelable(false);
+
+            progress.setIndeterminate(true);
+
+        }
+
+        progress.show();
 
     }
 
@@ -230,19 +241,20 @@ public class LocationOptionsFragment extends Fragment implements LocationComplet
                                 map.addMarker(markerOptions);
 
                             }
-if(! zoomed) {
 
-    LatLngBounds bounds = builder.build();
+                            if(! zoomed) {
 
-    int padding = venueList.size() < 1 ? 140 : 40;
+                                LatLngBounds bounds = builder.build();
 
-    CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+                                int padding = venueList.size() < 1 ? 140 : 40;
 
-    map.animateCamera(cameraUpdate);
+                                CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, padding);
 
-    zoomed = true;
+                                map.animateCamera(cameraUpdate);
 
-}
+                                zoomed = true;
+
+                            }
                         }
 
                     }
@@ -283,6 +295,16 @@ if(! zoomed) {
         super.onLowMemory();
 
         mapView.onLowMemory();
+
+    }
+
+    public void hideLoading() {
+
+        if (progress != null) {
+
+            progress.dismiss();
+
+        }
 
     }
 

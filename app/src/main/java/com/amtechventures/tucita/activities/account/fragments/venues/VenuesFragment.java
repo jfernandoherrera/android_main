@@ -27,6 +27,7 @@ import com.amtechventures.tucita.model.domain.review.Review;
 import com.amtechventures.tucita.model.domain.user.User;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.error.AppError;
+import com.amtechventures.tucita.utils.views.TuCitaProgressDialog;
 
 import java.util.List;
 
@@ -39,9 +40,7 @@ public class VenuesFragment extends Fragment {
     private User user;
     private VenuesAdapter.OnReview adapterListener;
     private UserContext userContext;
-    private RelativeLayout relativeLayout;
-    private Typeface typeface;
-
+    private TuCitaProgressDialog progress;
     @Override
     public void onAttach(Context context) {
 
@@ -60,12 +59,6 @@ public class VenuesFragment extends Fragment {
 
     }
 
-    public void setTypeface(Typeface typeface) {
-
-        this.typeface = typeface;
-
-    }
-
     public void setUser( User user) {
 
         this.user = user;
@@ -74,6 +67,32 @@ public class VenuesFragment extends Fragment {
 
     }
 
+
+    private void setupProgress() {
+
+        if (progress == null) {
+
+            progress = new TuCitaProgressDialog(getContext(),R.style.TuCitaDialogTheme);
+
+            progress.setCancelable(false);
+
+            progress.setIndeterminate(true);
+
+        }
+
+        progress.show();
+
+    }
+
+    public void hideLoading() {
+
+        if (progress != null) {
+
+            progress.dismiss();
+
+        }
+
+    }
 
     public void setupList() {
 
@@ -86,7 +105,7 @@ public class VenuesFragment extends Fragment {
             @Override
             public void completion(List<AppointmentVenue> appointmentVenues, AppError error) {
 
-                relativeLayout.setVisibility(View.GONE);
+               hideLoading();
 
                 if (appointmentVenues != null && !appointmentVenues.isEmpty()) {
 
@@ -116,13 +135,11 @@ public class VenuesFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_venues, container, false);
 
+        setupProgress();
+
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
 
         noResults = (TextView) rootView.findViewById(R.id.noResults);
-
-        noResults.setTypeface(typeface);
-
-        relativeLayout = (RelativeLayout) rootView.findViewById(R.id.concealer);
 
         layoutManager = new GridLayoutManager(getContext(), 1);
 

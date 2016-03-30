@@ -31,6 +31,7 @@ import com.amtechventures.tucita.model.domain.venue.VenueAttributes;
 import com.amtechventures.tucita.model.error.AppError;
 import com.amtechventures.tucita.utils.common.AppFont;
 import com.amtechventures.tucita.utils.views.AppToolbar;
+import com.amtechventures.tucita.utils.views.TuCitaProgressDialog;
 import com.amtechventures.tucita.utils.views.UserReviewView;
 
 import java.lang.reflect.Field;
@@ -47,7 +48,7 @@ public class ReviewsActivity extends AppCompatActivity implements UserReviewView
     private ReviewDetailsFragment reviewDetailsFragment;
     private ReviewContext reviewContext;
     private UserContext userContext;
-    private RelativeLayout concealer;
+    private TuCitaProgressDialog progress;
 
     @Override
     public void onDetails(Review review) {
@@ -67,7 +68,7 @@ public class ReviewsActivity extends AppCompatActivity implements UserReviewView
 
         setContentView(R.layout.activity_reviews);
 
-        concealer = (RelativeLayout) findViewById(R.id.concealer);
+        setupProgress();
 
         venueContext = VenueContext.context(venueContext);
 
@@ -128,6 +129,32 @@ public class ReviewsActivity extends AppCompatActivity implements UserReviewView
     private void setupUser(){
 
         reviewsFragment.setUser(userContext);
+
+    }
+
+    private void setupProgress() {
+
+        if (progress == null) {
+
+            progress = new TuCitaProgressDialog(this,R.style.TuCitaDialogTheme);
+
+            progress.setCancelable(false);
+
+            progress.setIndeterminate(true);
+
+        }
+
+        progress.show();
+
+    }
+
+    public void hideLoading() {
+
+        if (progress != null) {
+
+            progress.dismiss();
+
+        }
 
     }
 
@@ -214,7 +241,7 @@ public class ReviewsActivity extends AppCompatActivity implements UserReviewView
 
                     findYourReview(reviewList, userId);
 
-                    concealer.setVisibility(View.GONE);
+                    progress.dismiss();
 
                 }
             });
@@ -233,7 +260,7 @@ public class ReviewsActivity extends AppCompatActivity implements UserReviewView
                         reviewsFragment.setReviewList(reviewList);
                     }
 
-                    concealer.setVisibility(View.GONE);
+                    progress.dismiss();
 
                 }
 
@@ -369,13 +396,13 @@ public class ReviewsActivity extends AppCompatActivity implements UserReviewView
 
         }else if(reviewsFragment.isHidden()){
 
-        reviewsShow();
+                reviewsShow();
 
-        reviewDetailsHide();
+                reviewDetailsHide();
 
             }else {
 
-            finish();
+                finish();
 
             }
 
@@ -385,7 +412,9 @@ public class ReviewsActivity extends AppCompatActivity implements UserReviewView
     @Override
     public void onBackPressed() {
 
-     back();
+        hideLoading();
+
+        back();
 
     }
 

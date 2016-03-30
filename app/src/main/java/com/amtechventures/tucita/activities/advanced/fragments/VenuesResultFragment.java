@@ -37,6 +37,7 @@ import com.amtechventures.tucita.model.domain.subcategory.SubCategory;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.error.AppError;
 import com.amtechventures.tucita.utils.views.AlertDialogError;
+import com.amtechventures.tucita.utils.views.TuCitaProgressDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -107,9 +108,30 @@ public class VenuesResultFragment extends Fragment  {
 
     private void setupProgress() {
 
-        progress = ProgressDialog.show(getContext(), getResources().getString(R.string.dialog_progress_title), getResources().getString(R.string.dialog_advanced_search_progress_message), true);
+        if (progress == null) {
+
+            progress = new TuCitaProgressDialog(getContext(),R.style.TuCitaDialogTheme);
+
+            progress.setCancelable(false);
+
+            progress.setIndeterminate(true);
+
+        }
+
+        progress.show();
 
     }
+
+    public void hideLoading() {
+
+        if (progress != null) {
+
+            progress.dismiss();
+
+        }
+
+    }
+
 
     private void setupPriceFrom(){
 

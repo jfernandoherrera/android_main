@@ -59,13 +59,9 @@ public class SelectDayFragment extends Fragment {
 
         viewPager = (ViewPager) rootView.findViewById(R.id.container);
 
-        AppFont appFont = new AppFont();
-
-        Typeface typeface = appFont.getAppFontLight(rootView.getContext());
-
         blockades = new ArrayList<>();
 
-        adapter = new PagerSelectHourAdapter(getChildFragmentManager(), listener, typeface, blockades);
+        adapter = new PagerSelectHourAdapter(getChildFragmentManager(), listener, blockades);
 
         viewPager.setAdapter(adapter);
 

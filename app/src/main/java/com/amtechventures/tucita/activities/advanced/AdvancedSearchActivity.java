@@ -1,23 +1,15 @@
 package com.amtechventures.tucita.activities.advanced;
 
 import android.Manifest;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.pm.PackageManager;
-import android.graphics.Typeface;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,7 +17,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.advanced.adapters.CityAdapter;
 import com.amtechventures.tucita.activities.advanced.fragments.LocationOptionsFragment;
@@ -35,14 +26,8 @@ import com.amtechventures.tucita.model.context.city.CityContext;
 import com.amtechventures.tucita.model.domain.category.CategoryAttributes;
 import com.amtechventures.tucita.model.domain.city.City;
 import com.amtechventures.tucita.model.error.AppError;
-import com.amtechventures.tucita.utils.common.AppFont;
-import com.amtechventures.tucita.utils.strings.Strings;
-import com.amtechventures.tucita.utils.views.AlertDialogError;
 import com.amtechventures.tucita.utils.views.AppEditText;
-import com.amtechventures.tucita.utils.views.AppTextView;
 import com.amtechventures.tucita.utils.views.AppToolbar;
-
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -384,6 +369,10 @@ public class AdvancedSearchActivity extends AppCompatActivity  {
 
     @Override
     public void onBackPressed() {
+
+        venuesResultFragment.hideLoading();
+
+        locationOptionsFragment.hideLoading();
 
         back();
 

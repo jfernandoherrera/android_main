@@ -39,6 +39,7 @@ import com.amtechventures.tucita.utils.common.AppFont;
 import com.amtechventures.tucita.utils.views.AlertDialogError;
 import com.amtechventures.tucita.utils.views.AppToolbar;
 import com.amtechventures.tucita.utils.views.ShoppingCarView;
+import com.amtechventures.tucita.utils.views.TuCitaProgressDialog;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -54,9 +55,9 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
     private AppToolbar toolbar;
     private ShoppingCarView shoppingCarView;
     private UserContext userContext;
-    private RelativeLayout relativeLayout;
     private BlockadeContext blockadeContext;
     private User user;
+    private TuCitaProgressDialog progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +100,33 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
 
         shoppingCarView.hideView();
 
-        relativeLayout = (RelativeLayout) findViewById(R.id.concealer);
+        setupProgress();
+
+    }
+
+    private void setupProgress() {
+
+        if (progress == null) {
+
+            progress = new TuCitaProgressDialog(this, R.style.TuCitaDialogTheme);
+
+            progress.setCancelable(false);
+
+            progress.setIndeterminate(true);
+
+        }
+
+        progress.show();
+
+    }
+
+    public void hideLoading() {
+
+        if (progress != null) {
+
+            progress.dismiss();
+
+        }
 
     }
 
@@ -435,7 +462,7 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
     @Override
     public void onItemClosed(Service service) {
 
-        if (!serviceFragment.isHidden() && serviceFragment.getService().equals(service)) {
+        if (! serviceFragment.isHidden() && serviceFragment.getService().equals(service)) {
 
             serviceFragment.setServiceState(true);
 
@@ -450,7 +477,7 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
     @Override
     public void onMoreServices() {
 
-        if (!serviceFragment.isHidden()) {
+        if (! serviceFragment.isHidden()) {
 
             serviceHide();
 
@@ -640,7 +667,7 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
     @Override
     public void onHide() {
 
-        relativeLayout.setVisibility(View.GONE);
+        hideLoading();
 
     }
 

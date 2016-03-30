@@ -25,6 +25,7 @@ import com.amtechventures.tucita.model.domain.slot.Slot;
 import com.amtechventures.tucita.model.domain.venue.Venue;
 import com.amtechventures.tucita.model.error.AppError;
 import com.amtechventures.tucita.utils.common.AppFont;
+import com.amtechventures.tucita.utils.views.TuCitaProgressDialog;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -46,11 +47,35 @@ public class SelectHourFragment extends Fragment {
     private boolean isFirst = false;
     private AppointmentContext appointmentContext;
     private SelectHourAdapter.OnSlotSelected listener;
-    private Typeface typeface;
-    private RelativeLayout relativeLayout;
     private boolean isBlocked;
     private List<String> blocked;
+    private TuCitaProgressDialog progress;
 
+    private void setupProgress() {
+
+        if (progress == null) {
+
+            progress = new TuCitaProgressDialog(getContext(),R.style.TuCitaDialogTheme);
+
+            progress.setCancelable(false);
+
+            progress.setIndeterminate(true);
+
+        }
+
+        progress.show();
+
+    }
+
+    public void hideLoading() {
+
+        if (progress != null) {
+
+            progress.dismiss();
+
+        }
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -58,6 +83,8 @@ public class SelectHourFragment extends Fragment {
         final View rootView = inflater.inflate(R.layout.fragment_select_hour, container, false);
 
         slotContext = SlotContext.context(slotContext);
+
+        setupProgress();
 
         appointmentContext = AppointmentContext.context(appointmentContext);
 
@@ -71,10 +98,6 @@ public class SelectHourFragment extends Fragment {
 
         TextView textView = (TextView) rootView.findViewById(R.id.closed);
 
-        textView.setTypeface(typeface);
-
-        relativeLayout = (RelativeLayout) rootView.findViewById(R.id.concealer);
-
         adapter = new SelectHourAdapter(price, slots, listener, date);
 
         recyclerView.setAdapter(adapter);
@@ -82,12 +105,6 @@ public class SelectHourFragment extends Fragment {
         loadDay(rootView);
 
         return rootView;
-
-    }
-
-    public void setTypeface(Typeface typeface) {
-
-        this.typeface = typeface;
 
     }
 
@@ -203,7 +220,7 @@ public class SelectHourFragment extends Fragment {
 
             recyclerView.setVisibility(View.GONE);
 
-            relativeLayout.setVisibility(View.GONE);
+            hideLoading();
 
         } catch (NullPointerException e){
 
@@ -411,7 +428,7 @@ public class SelectHourFragment extends Fragment {
 
         adapter.notifyDataSetChanged();
 
-        relativeLayout.setVisibility(View.GONE);
+        hideLoading();
 
     }
 
@@ -445,7 +462,7 @@ public class SelectHourFragment extends Fragment {
 
         adapter.notifyDataSetChanged();
 
-        relativeLayout.setVisibility(View.GONE);
+        hideLoading();
 
     }
 
