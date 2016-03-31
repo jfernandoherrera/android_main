@@ -6,6 +6,9 @@
     </declare-styleable>
     <declare-styleable name="OpeningHourView">
 </declare-styleable>
+    <declare-styleable name="AppToolbar">
+        <attr name="navigationBack" format="boolean"/>
+    </declare-styleable>
     <declare-styleable name="CircleImageView">
         <attr name="civ_border_width" format="dimension" />
         <attr name="civ_border_color" format="color" />

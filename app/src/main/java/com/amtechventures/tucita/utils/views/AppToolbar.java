@@ -1,7 +1,9 @@
 package com.amtechventures.tucita.utils.views;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
@@ -17,9 +19,9 @@ public class AppToolbar extends Toolbar {
 
     public AppToolbar(Context context, AttributeSet attrs) {
 
-        super(context, attrs);
+       super(context, attrs);
 
-        setTitle("");
+        super.setTitle("");
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -27,13 +29,29 @@ public class AppToolbar extends Toolbar {
 
         textView = (TextView) findViewById(R.id.toolbarTextView);
 
-        setNavigationIcon(getResources().getDrawable(R.drawable.back_arrow));
-
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 
             setElevation(8);
 
         }
+
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AppToolbar, 0, 0);
+
+        boolean isBack = a.getBoolean(R.styleable.AppToolbar_navigationBack, false);
+
+        if(isBack) {
+
+            setNavigationIcon(R.drawable.back_arrow);
+
+        }
+
+        a.recycle();
+    }
+
+    public AppToolbar(Context context, AttributeSet attrs, int defStyle) {
+
+        super(context, attrs, defStyle);
+
 
     }
 
@@ -41,6 +59,13 @@ public class AppToolbar extends Toolbar {
     public void setTitle(int resId) {
 
         textView.setText(resId);
+
+    }
+
+    @Override
+    public void setTitle(CharSequence text) {
+
+        textView.setText(text);
 
     }
 

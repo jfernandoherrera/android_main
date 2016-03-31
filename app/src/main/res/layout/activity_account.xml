@@ -16,7 +16,8 @@
             android:layout_height="62dp"
             android:theme="@style/AppTheme.Base"
             android:background="@color/colorAccent"
-            android:paddingBottom="@dimen/high_margin"/>
+            app:navigationBack="true"
+            />
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="horizontal"
