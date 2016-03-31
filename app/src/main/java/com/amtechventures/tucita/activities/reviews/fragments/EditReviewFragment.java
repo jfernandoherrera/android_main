@@ -20,6 +20,7 @@ import com.amtechventures.tucita.model.context.review.ReviewContext;
 import com.amtechventures.tucita.model.domain.review.Review;
 import com.amtechventures.tucita.model.domain.user.User;
 import com.amtechventures.tucita.model.error.AppError;
+import com.amtechventures.tucita.utils.views.AppTextView;
 import com.amtechventures.tucita.utils.views.RatingView;
 import com.mikhaellopez.circularimageview.CircularImageView;
 import java.util.List;
@@ -33,7 +34,7 @@ public class EditReviewFragment extends DialogFragment {
     TextView textTitle;
     TextView textDescription;
     TextView textName;
-    Button edit;
+    AppTextView edit;
     Review review;
     float rating;
     OnEdited onEdited;
@@ -89,9 +90,7 @@ public class EditReviewFragment extends DialogFragment {
 
         ratingView = (RatingView) rootView.findViewById(R.id.ratingView);
 
-        edit = (Button) rootView.findViewById(R.id.send);
-
-        edit.setBackgroundColor(Color.WHITE);
+        edit = (AppTextView) rootView.findViewById(R.id.send);
 
         edit.setOnClickListener(new View.OnClickListener() {
 
