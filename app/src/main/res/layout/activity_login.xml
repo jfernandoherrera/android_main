@@ -7,11 +7,23 @@
     android:orientation="vertical"
     tools:context="com.amtechventures.tucita.activities.login.LoginActivity">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:elevation="8dp"
+        android:background="@drawable/bg_top"
+        android:layout_height="180dp">
         <ImageView
-            android:layout_width="match_parent"
-            android:background="@drawable/logo_login"
-            android:elevation="8dp"
-            android:layout_height="180dp" />
+            android:layout_width="100dp"
+            android:background="@drawable/icon_clock"
+          android:layout_centerInParent="true"
+            android:layout_height="100dp" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:background="@drawable/triangle"
+            android:layout_centerInParent="true"
+            android:layout_alignParentBottom="true"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
 
     <com.amtechventures.tucita.utils.views.AppTextInputLayout
         android:layout_width="match_parent"
@@ -149,7 +161,7 @@
             android:textSize="17sp"
             android:text="@string/action_sign_in_facebook"
             android:textColor="@android:color/white"
-            android:textStyle="bold" />
+          />
 
     </RelativeLayout>
 

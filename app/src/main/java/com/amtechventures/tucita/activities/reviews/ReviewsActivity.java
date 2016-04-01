@@ -276,9 +276,6 @@ public class ReviewsActivity extends AppCompatActivity implements UserReviewView
 
     }
 
-
-
-
     private void reviewsHide() {
 
         FragmentManager fragmentManager = getSupportFragmentManager();

@@ -4,14 +4,17 @@
     >
     <item
         android:drawable="@drawable/rate01"
-        android:duration="250"/>
+        android:duration="200"/>
     <item
         android:drawable="@drawable/rate02"
-        android:duration="250"/>
+        android:duration="200"/>
     <item
-        android:drawable="@drawable/rate_03"
-        android:duration="250"/>
+        android:drawable="@drawable/rate03"
+        android:duration="200"/>
     <item
-        android:drawable="@drawable/rate_05"
-        android:duration="250"/>
+        android:drawable="@drawable/rate04"
+        android:duration="200"/>
+    <item
+        android:drawable="@drawable/rate05"
+        android:duration="200"/>
 </animation-list>
