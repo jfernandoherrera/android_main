@@ -52,7 +52,6 @@ public class AppToolbar extends Toolbar {
 
         super(context, attrs, defStyle);
 
-
     }
 
     @Override

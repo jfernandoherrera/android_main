@@ -391,6 +391,8 @@ public class BookActivity extends AppCompatActivity implements VenueFragment.OnS
     @Override
     public void onBackPressed() {
 
+        hideLoading();
+
         back();
 
     }
