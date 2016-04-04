@@ -23,5 +23,12 @@ public class AppFont {
 
     }
 
+    public Typeface getAppFontHeavy(Context context){
+
+        Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/Avenir-Heavy.ttf");
+
+        return typeface;
+
+    }
 
 }

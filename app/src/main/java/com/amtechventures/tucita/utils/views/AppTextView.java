@@ -49,7 +49,7 @@ public class AppTextView extends TextView{
 
             if (isBold) {
 
-                setTypeface(appFont.getAppFontMedium(context), Typeface.BOLD);
+                setTypeface(appFont.getAppFontHeavy(context));
 
             } else {
 
