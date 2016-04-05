@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import com.amtechventures.tucita.R;
 import com.amtechventures.tucita.activities.account.adapters.PagerAccountAdapter;
@@ -109,7 +110,7 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
 
         tab.setCustomView(R.layout.item_tab);
 
-        TextView tabText = (TextView) tab.getCustomView();
+        final TextView tabText = (TextView) tab.getCustomView();
 
         tabText.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bookings, 0, 0, 0);
 
@@ -119,7 +120,7 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
 
         tab1.setCustomView(R.layout.item_tab);
 
-        TextView tabText1 = (TextView) tab1.getCustomView();
+        final TextView tabText1 = (TextView) tab1.getCustomView();
 
         tabText1.setCompoundDrawablesWithIntrinsicBounds(R.drawable.venues, 0, 0, 0);
 
@@ -135,6 +136,8 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
 
         viewPager.setAdapter(pagerAccountAdapter);
 
+        tabText.setTextColor(getResources().getColor(R.color.colorAccent3));
+
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -143,6 +146,19 @@ public class AccountActivity extends AppCompatActivity implements VenuesAdapter.
             public void onTabSelected(TabLayout.Tab tab) {
 
 
+                if(tab.getPosition() == 0) {
+
+                    tabText.setTextColor(getResources().getColor(R.color.colorAccent3));
+
+                    tabText1.setTextColor(getResources().getColor(R.color.white));
+
+                } else {
+
+                    tabText.setTextColor(getResources().getColor(R.color.white));
+
+                    tabText1.setTextColor(getResources().getColor(R.color.colorAccent3));
+
+                }
 
                 viewPager.setCurrentItem(tab.getPosition());
 

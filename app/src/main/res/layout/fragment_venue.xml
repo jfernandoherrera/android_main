@@ -18,7 +18,7 @@
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:id="@+id/backgroundContainer"
-                    android:background="@drawable/bg_top"
+                    android:background="@drawable/bg_bottom_business"
                     android:gravity="center_vertical"
                     android:layout_below="@+id/imageVenue"
                     android:layout_height="82dp">
@@ -26,6 +26,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="35dp"
                     android:textSize="25sp"
+                    app:bold="true"
                     android:layout_gravity="bottom"
                     android:textColor="@android:color/white"
                     android:layout_marginStart="11dp"
@@ -36,10 +37,10 @@
                     android:id="@+id/clickRating"
                     android:gravity="top"
                     android:layout_below="@+id/title_Venue"
-                    android:layout_height="20dp">
+                    android:layout_height="28dp">
                 <RatingBar
                     android:layout_width="wrap_content"
-                    android:layout_height="12dp"
+                    android:layout_height="24dp"
                     android:numStars="5"
                     android:layout_marginTop="1dp"
                     android:layout_marginStart="@dimen/high_margin"
@@ -54,7 +55,7 @@
                         android:layout_height="wrap_content"
                         android:textSize="15sp"
                         android:textColor="@android:color/white"
-                        android:gravity="top"
+                        android:gravity="center_vertical"
                         app:bold="true"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"

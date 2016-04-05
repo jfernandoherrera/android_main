@@ -125,13 +125,13 @@ public class VenuesAdapter extends RecyclerView.Adapter<VenuesAdapter.ViewHolder
 
             holder.withReview.setBackgroundDrawable(null);
 
-            holder.withoutReview.setBackgroundResource(R.drawable.bg_top);
+            holder.withoutReview.setBackgroundResource(R.drawable.bg_bottom_results);
 
             holder.rating.setVisibility(View.GONE);
 
         }else {
 
-            holder.withReview.setBackgroundResource(R.drawable.bg_top);
+            holder.withReview.setBackgroundResource(R.drawable.bg_bottom_results);
 
             holder.withoutReview.setBackgroundColor(Color.TRANSPARENT);
 

@@ -26,12 +26,11 @@
         android:layout_alignParentTop="true"
         android:scaleType="fitXY"
             /><RelativeLayout
-android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_below="@+id/imageSearchVenue"
-android:layout_height="80dp">
+    android:layout_height="80dp">
     <RelativeLayout
         android:layout_width="match_parent"
-
         android:background="@drawable/bg_top"
         android:layout_height="wrap_content">
     <com.amtechventures.tucita.utils.views.AppTextView

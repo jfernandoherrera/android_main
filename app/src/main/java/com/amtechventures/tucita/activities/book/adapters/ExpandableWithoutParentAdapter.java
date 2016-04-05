@@ -29,13 +29,9 @@ public class ExpandableWithoutParentAdapter extends BaseExpandableListAdapter {
 
         if (services.size() == 1){
 
-            listViewParent.setGroupIndicator(null);
-
             viewUtils.setListViewHeightBasedOnChildren(listViewParent);
 
         }else{
-
-            listViewParent.setGroupIndicator(listViewParent.getResources().getDrawable(R.drawable.indicator));
 
             viewUtils.setListViewHeightBasedOnChildren(listViewParent);
 
