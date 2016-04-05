@@ -55,7 +55,7 @@ public class OpeningHourView extends LinearLayout {
 
         if (state_drawable) {
 
-;          day.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.current_day_icon), null, null, null);
+;          day.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.day_sunday), null, null, null);
 
         } else {
 

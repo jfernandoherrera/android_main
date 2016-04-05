@@ -36,7 +36,7 @@
         android:layout_height="56dp">
     <RatingBar
         android:layout_width="wrap_content"
-        android:layout_height="12dp"
+        android:layout_height="24dp"
         android:numStars="5"
         android:layout_marginStart="@dimen/high_margin"
         android:layout_marginLeft="@dimen/high_margin"

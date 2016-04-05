@@ -52,10 +52,10 @@
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_below="@id/textNameUser"
-                android:layout_height="17sp">
+                android:layout_height="29sp">
             <RatingBar
                 android:layout_width="wrap_content"
-                android:layout_height="12dp"
+                android:layout_height="24dp"
                 android:numStars="5"
                 android:layout_marginTop="2dp"
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"

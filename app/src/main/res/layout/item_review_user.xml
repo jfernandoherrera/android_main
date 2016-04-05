@@ -62,7 +62,7 @@
 
                     <RatingBar
                         android:layout_width="wrap_content"
-                        android:layout_height="12dp"
+                        android:layout_height="24dp"
                         android:numStars="5"
                         android:id="@+id/ratingBar"
                         android:isIndicator="true"
